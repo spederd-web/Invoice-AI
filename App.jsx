@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 var L = {
@@ -2336,6 +2337,7 @@ export default function App() {
   var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies"].indexOf(page) >= 0;
   return (
     <>
+      <SpeedInsights />
       <style>{FONTS}</style>
       <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F5F0E8; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} />}
