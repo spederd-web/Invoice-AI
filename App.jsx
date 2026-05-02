@@ -224,6 +224,8 @@ function Nav(props) {
   var page = props.page;
   var setPage = props.setPage;
   var openModal = props.openModal;
+  var openAuth = props.openAuth;
+  var user = props.user;
   var lang = props.lang || "en";
   var setLang = props.setLang;
   var [menuOpen, setMenuOpen] = useState(false);
@@ -247,9 +249,25 @@ function Nav(props) {
             );
           })}
         </div>
-        <button onClick={function(){ openModal("nav"); }} className="nav-cta" style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)", flexShrink:0 }}>
-          {t(lang,"navStart")}
-        </button>
+        {user ? (
+          <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+            <div style={{ width:30, height:30, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:"#fff", fontWeight:600 }}>
+              {user.email ? user.email[0].toUpperCase() : "U"}
+            </div>
+            <button onClick={function(){ setPage("Dashboard"); }} style={{ background:L.accentGlow, color:L.accent, border:"1px solid "+L.accent+"44", padding:"7px 14px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
+              Dashboard
+            </button>
+          </div>
+        ) : (
+          <div className="nav-cta" style={{ display:"flex", gap:7, flexShrink:0 }}>
+            <button onClick={openAuth} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13 }}>
+              Log in
+            </button>
+            <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
+              {t(lang,"navStart")}
+            </button>
+          </div>
+        )}
         <div style={{ display:"flex", gap:2, flexShrink:0, marginLeft:4 }}>
           {["de","en"].map(function(l) {
             return (
@@ -509,6 +527,30 @@ function PricingSection(props) {
   var openModal = props.openModal;
   var embedded = props.embedded;
   var lang = props.lang || "en";
+  var [checkoutLoading, setCheckoutLoading] = useState(null);
+
+  function startCheckout(planName) {
+    setCheckoutLoading(planName);
+    fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan: planName.toLowerCase() }),
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      setCheckoutLoading(null);
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        // Stripe not set up yet — fall back to waitlist modal
+        openModal("pricing-" + planName.toLowerCase());
+      }
+    })
+    .catch(function() {
+      setCheckoutLoading(null);
+      openModal("pricing-" + planName.toLowerCase());
+    });
+  }
   return (
     <section style={{ background:embedded ? L.paper : L.white, padding:"72px 24px" }}>
       <div style={{ maxWidth:860, margin:"0 auto" }}>
@@ -543,8 +585,8 @@ function PricingSection(props) {
                     );
                   })}
                 </div>
-                <button onClick={function(){ openModal("pricing-"+plan.name.toLowerCase()); }} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>
-{t(lang,"pricingCta")}
+                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:13, fontWeight:500, opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
+                  {checkoutLoading === plan.name.toLowerCase() ? "Loading…" : t(lang,"pricingCta")}
                 </button>
               </div>
             );
@@ -2360,6 +2402,107 @@ function SupportBot() {
 }
 
 
+// ── Auth Modal ────────────────────────────────────────────────────────────────
+function AuthModal(props) {
+  var onClose = props.onClose;
+  var onAuth  = props.onAuth;
+  var [mode, setMode] = useState("signin"); // signin | signup | magic | done
+  var [email, setEmail] = useState("");
+  var [password, setPassword] = useState("");
+  var [loading, setLoading] = useState(false);
+  var [error, setError] = useState("");
+
+  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none", marginBottom:10 };
+
+  function submit() {
+    if (!email.trim()) { setError("Email required."); return; }
+    if (mode !== "magic" && !password.trim()) { setError("Password required."); return; }
+    setError(""); setLoading(true);
+
+    var action = mode === "signup" ? "signup" : mode === "magic" ? "magic" : "signin";
+
+    fetch("/api/auth", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ action, email: email.trim(), password: password.trim() }),
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      setLoading(false);
+      if (data.error) { setError(data.error); return; }
+      if (action === "magic") { setMode("done"); return; }
+      if (data.session) { onAuth(data.user, data.session); onClose(); }
+    })
+    .catch(function() {
+      setLoading(false);
+      setError("Connection error — please try again.");
+    });
+  }
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(26,31,46,0.6)", zIndex:1000, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }} onClick={function(e){ if(e.target===e.currentTarget) onClose(); }}>
+      <div style={{ background:L.white, borderRadius:20, width:"100%", maxWidth:400, overflow:"hidden", boxShadow:"0 24px 64px rgba(26,31,46,0.2)" }}>
+        <div style={{ background:L.accent, padding:"22px 28px 18px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(255,255,255,0.6)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>invoice-ai.de</div>
+            <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>
+              {mode==="signup" ? "Create account" : mode==="magic" ? "Magic link" : "Welcome back"}
+            </h2>
+          </div>
+          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+        </div>
+
+        {mode === "done" ? (
+          <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
+            <div style={{ fontSize:40, marginBottom:14 }}>📬</div>
+            <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:800, color:L.ink, marginBottom:8 }}>Check your email</h3>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, lineHeight:1.6 }}>We sent a magic link to <strong style={{ color:L.ink }}>{email}</strong>. Click it to sign in — no password needed.</p>
+          </div>
+        ) : (
+          <div style={{ padding:"24px 28px 28px" }}>
+            <div style={{ display:"flex", gap:6, marginBottom:20 }}>
+              {[["signin","Sign in"],["signup","Sign up"],["magic","Magic link"]].map(function(pair) {
+                return (
+                  <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:mode===pair[0] ? 500 : 400 }}>
+                    {pair[1]}
+                  </button>
+                );
+              })}
+            </div>
+
+            <input
+              type="email"
+              value={email}
+              onChange={function(e){ setEmail(e.target.value); }}
+              placeholder="you@studio.de"
+              style={inp}
+            />
+            {mode !== "magic" && (
+              <input
+                type="password"
+                value={password}
+                onChange={function(e){ setPassword(e.target.value); }}
+                placeholder={mode==="signup" ? "Create a password" : "Password"}
+                style={inp}
+              />
+            )}
+
+            {error && <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, marginBottom:10 }}>{error}</p>}
+
+            <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(59,91,219,0.3)" }}>
+              {loading ? "Loading…" : mode==="signup" ? "Create account →" : mode==="magic" ? "Send magic link →" : "Sign in →"}
+            </button>
+
+            <p style={{ fontFamily:fMono, fontSize:9, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>
+              {mode==="signup" ? "By signing up you agree to our Terms of Service." : "Forgot your password? Use the Magic link tab."}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── Signup Modal ──────────────────────────────────────────────────────────────
 var EU_COUNTRIES_LIST = ["Germany","France","Italy","Netherlands","Spain","Belgium","Austria","Sweden","Poland","Portugal","Denmark","Finland","Ireland","Czech Republic","Romania","Hungary","Greece","Other EU","Outside EU"];
 
@@ -2380,12 +2523,25 @@ function SignupModal(props) {
     if (!name.trim() || !email.trim() || !role) { setError("Please fill in all fields."); return; }
     if (email.indexOf("@") < 0) { setError("Please enter a valid email."); return; }
     setError(""); setLoading(true);
-    // Replace this with your real Loops/Mailchimp endpoint:
-    // fetch("https://app.loops.so/api/v1/contacts/create", {
-    //   method:"POST", headers:{"Content-Type":"application/json","Authorization":"Bearer YOUR_KEY"},
-    //   body: JSON.stringify({ email:email.trim(), firstName:name.trim().split(" ")[0], country:country, userGroup:role, source:"waitlist-"+source })
-    // })
-    setTimeout(function() { setLoading(false); setDone(true); }, 900);
+
+    fetch("/api/loops", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email:     email.trim(),
+        firstName: name.trim().split(" ")[0],
+        lastName:  name.trim().split(" ").slice(1).join(" "),
+        country:   country,
+        userGroup: role,
+        source:    "waitlist-" + source,
+      }),
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() { setLoading(false); setDone(true); })
+    .catch(function() {
+      // Still show success — don't block signup on API errors
+      setLoading(false); setDone(true);
+    });
   }
 
   var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none" };
@@ -2526,9 +2682,12 @@ export default function App() {
   var [modal, setModal] = useState(null);
   var [lang, setLang] = useState("de");
   var [cookieDismissed, setCookieDismissed] = useState(false);
+  var [authOpen, setAuthOpen] = useState(false);
+  var [user, setUser] = useState(null);
 
   function openModal(source) { setModal(source); }
   function closeModal() { setModal(null); }
+  function handleAuth(u, session) { setUser(u); setPage("Dashboard"); }
 
   useEffect(function() {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2539,7 +2698,7 @@ export default function App() {
     <>
       <style>{FONTS}</style>
       <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } }"}</style>
-      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} />}
+      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
       {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
@@ -2555,6 +2714,7 @@ export default function App() {
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
       {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
+      {authOpen && <AuthModal onClose={function(){ setAuthOpen(false); }} onAuth={handleAuth} />}
       {!cookieDismissed && page !== "ClientPortal" && (
         <CookieBanner
           onAccept={function(){ setCookieDismissed(true); }}
