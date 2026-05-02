@@ -2,24 +2,24 @@ import { useState, useEffect, useRef } from "react";
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 var L = {
-  ink:        "#2C2416",
-  paper:      "#F5F0E8",
-  cream:      "#EDE8DC",
-  sand:       "#E4DDCF",
-  white:      "#FAF7F2",
-  accent:     "#C8502A",
-  accentLt:   "#E8896A",
-  accentGlow: "rgba(200,80,42,0.08)",
+  ink:        "#1A1F2E",
+  paper:      "#F8F9FC",
+  cream:      "#EEF1F8",
+  sand:       "#E4E8F2",
+  white:      "#FFFFFF",
+  accent:     "#3B5BDB",
+  accentLt:   "#748FFC",
+  accentGlow: "rgba(59,91,219,0.08)",
   gold:       "#9A7820",
   goldGlow:   "rgba(154,120,32,0.1)",
-  muted:      "#7A6F62",
-  faint:      "#B0A898",
-  border:     "#D8D0C4",
-  borderLt:   "#EAE4DA",
+  muted:      "#6B7280",
+  faint:      "#9CA3AF",
+  border:     "#E2E5EF",
+  borderLt:   "#EEF0F6",
   green:      "#2A7A54",
-  greenGlow:  "rgba(42,122,84,0.1)",
-  blue:       "#2A5E9A",
-  blueGlow:   "rgba(42,94,154,0.08)",
+  greenGlow:  "rgba(42,122,84,0.08)",
+  blue:       "#3B5BDB",
+  blueGlow:   "rgba(59,91,219,0.08)",
 };
 
 var fSans  = "'DM Sans',sans-serif";
@@ -103,6 +103,26 @@ var TR = {
 function t(lang, key) {
   return (TR[lang] || TR.en)[key] || TR.en[key] || key;
 }
+
+// ── Logo Mark ─────────────────────────────────────────────────────────────────
+function LogoMark(props) {
+  var size = props.size || 32;
+  var bg = props.bg || L.accent;
+  var fg = props.fg || "#fff";
+  var r = Math.round(size * 0.22);
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink:0 }}>
+      <rect width="48" height="48" rx={r} fill={bg} />
+      <rect x="11" y="10" width="20" height="26" rx="2.5" fill="none" stroke={fg} strokeWidth="2" opacity="0.9"/>
+      <line x1="15" y1="18" x2="27" y2="18" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
+      <line x1="15" y1="22" x2="27" y2="22" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
+      <line x1="15" y1="26" x2="22" y2="26" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
+      <circle cx="34" cy="15" r="7" fill={fg} opacity="0.15"/>
+      <path d="M34 10 L35.3 13.7 L39 15 L35.3 16.3 L34 20 L32.7 16.3 L29 15 L32.7 13.7 Z" fill={fg}/>
+    </svg>
+  );
+}
+
 
 
 // ── EU Countries ──────────────────────────────────────────────────────────────
@@ -211,9 +231,7 @@ function Nav(props) {
     <nav style={{ position:"sticky", top:0, zIndex:100, background:L.white, borderBottom:"1px solid "+L.border, flexShrink:0 }}>
       <div style={{ height:56, display:"flex", alignItems:"center", padding:"0 20px", gap:12 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer", flexShrink:0 }} onClick={function(){ setPage("Home"); setMenuOpen(false); }}>
-          <div style={{ width:28, height:28, background:L.accent, borderRadius:7, display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <span style={{ color:"#fff", fontFamily:fSerif, fontSize:15, fontWeight:900 }}>I</span>
-          </div>
+          <LogoMark size={32} />
           <div>
             <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:17, color:L.ink, lineHeight:1.1, letterSpacing:"-0.02em" }}>InvoiceAI</div>
             <div style={{ fontFamily:fMono, fontSize:7, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
@@ -376,12 +394,16 @@ function FeaturesSection(props) {
 var EU_FEATURES = [
   { icon:"hash",    title:"Sequential Numbering",        badge:"Art. 226 VAT Dir.",  desc:"Every invoice gets a unique unbroken number. InvoiceAI manages the sequence automatically — no gaps, no duplicates." },
   { icon:"reverse", title:"Reverse Charge (Art. 44)",    badge:"Auto-detected",      desc:"Invoicing a VAT-registered client in another EU country? RC is auto-detected, VAT set to 0%, legal text added." },
-  { icon:"eu",      title:"VAT per Country",             badge:"15 countries",       desc:"Germany 19%, France 20%, Italy 22%, Netherlands 21%, Sweden 25% — correct rates, formats and legal text per country." },
+  { icon:"eu",      title:"VIES VAT Validation",         badge:"Live check",         desc:"Client VAT numbers are validated live against the EU VIES register. Catches invalid numbers before you send — protects your reverse charge." },
   { icon:"bank",    title:"SEPA Bank Transfer",          badge:"ISO 20022",          desc:"Professional SEPA block on every invoice with IBAN validation and payment reference for easy reconciliation." },
   { icon:"shield",  title:"GDPR Notice",                 badge:"Art. 6(1)(b)",       desc:"Auto-adds a legally compliant GDPR data processing notice to every invoice. Best practice for EU B2B." },
   { icon:"clock",   title:"Late Payment Interest",       badge:"EU Dir. 2011/7/EU",  desc:"Statutory interest at 8% above ECB base rate. Your legal right on overdue B2B invoices — added automatically." },
-  { icon:"document","title":"Credit Notes",             badge:"Separate numbering",  desc:"Legally distinct from invoices in the EU. InvoiceAI manages CN-YYYY-XXX sequences separately." },
-  { icon:"send",    title:"E-Invoice XML",               badge:"Coming Q4 2026",     desc:"XRechnung (DE), Factur-X (FR), XML/SDI (IT). Compliant with current and upcoming EU mandates." },
+  { icon:"document","title":"Credit Notes",              badge:"Separate numbering", desc:"Legally distinct from invoices in the EU. InvoiceAI manages CN-YYYY-XXX sequences separately." },
+  { icon:"send",    title:"E-Invoice XML",               badge:"Coming Q4 2026",     desc:"XRechnung (DE), Factur-X (FR, Sept 2026), KSeF (PL, April 2026), Peppol (BE, live now). Compliant with all current EU mandates." },
+  { icon:"eu",      title:"OSS — One Stop Shop",         badge:"B2C digital €10k+",  desc:"Selling digital services to EU consumers? Once you exceed €10,000 cross-border B2C revenue, InvoiceAI flags when OSS registration is required." },
+  { icon:"hash",    title:"VAT Thresholds by Country",   badge:"10 countries",       desc:"DE €22k, FR €37.5k, NL €20k, PL ~€46k — InvoiceAI shows the small-business threshold for each country so you know when to register." },
+  { icon:"reverse", title:"Non-EU Invoicing",            badge:"UK · CH · US",       desc:"Post-Brexit UK and Switzerland are third countries. InvoiceAI adds the correct exemption notice ('service not taxable') for non-EU clients automatically." },
+  { icon:"archive", title:"10-Year Archive",             badge:"GoBD · LPF · CAF",   desc:"German GoBD (§147 AO), French LPF, Italian CAF all require 10-year invoice retention. InvoiceAI archives every invoice automatically." },
 ];
 
 function EUComplianceSection(props) {
@@ -497,12 +519,12 @@ function PricingSection(props) {
           </h2>
           <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
         </div>
-        <div style={{ display:"flex", gap:12, overflowX:"auto", WebkitOverflowScrolling:"touch", paddingBottom:8 }}>
+        <div className="pricing-scroll" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
           {PLANS.map(function(plan) {
             return (
-              <div key={plan.name} style={{ background:plan.hi ? L.accent : L.white, border:plan.hi ? "2px solid "+L.accent : "1.5px solid "+L.border, borderRadius:16, padding:"26px 22px", flex:"0 0 230px", minWidth:230, position:"relative", boxShadow:plan.hi ? "0 12px 36px rgba(200,80,42,0.25)" : "none" }}>
+              <div key={plan.name} style={{ background:plan.hi ? L.accent : L.white, border:plan.hi ? "2px solid "+L.accent : "1.5px solid "+L.border, borderRadius:16, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 12px 36px rgba(200,80,42,0.25)" : "none" }}>
                 {plan.badge && (
-                  <div style={{ position:"absolute", top:-12, left:"50%", transform:"translateX(-50%)", background:L.gold, color:"#fff", padding:"3px 14px", borderRadius:99, fontFamily:fMono, fontSize:9, letterSpacing:"0.08em", whiteSpace:"nowrap" }}>
+                  <div style={{ position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)", background:L.gold, color:"#fff", padding:"4px 16px", borderRadius:99, fontFamily:fMono, fontSize:9, letterSpacing:"0.08em", whiteSpace:"nowrap", boxShadow:"0 2px 8px rgba(154,120,32,0.3)" }}>
                     {plan.badge}
                   </div>
                 )}
@@ -569,7 +591,7 @@ function InvoicePreviewPanel(props) {
         ← Back to form
       </button>
       <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
-        <button style={{ background:L.ink, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
+        <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
           <Icon name="download" size={13} color="#fff" />
           Export PDF
         </button>
@@ -578,7 +600,7 @@ function InvoicePreviewPanel(props) {
           Share with client →
         </button>
       </div>
-      <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
+      <div id="print-invoice" style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
         {s.creditNote && (
           <div style={{ background:L.goldGlow, border:"1.5px solid "+L.gold+"55", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
             <Icon name="document" size={14} color={L.gold} />
@@ -620,9 +642,16 @@ function InvoicePreviewPanel(props) {
           })}
         </div>
         {s.rc && (
-          <div style={{ background:"rgba(42,94,154,0.06)", border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:14, display:"flex", alignItems:"center", gap:6 }}>
+          <div style={{ background:"rgba(42,94,154,0.06)", border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
             <Icon name="reverse" size={11} color={L.blue} />
             <p style={{ fontFamily:fSans, fontSize:11, color:L.blue, margin:0 }}>Reverse charge — VAT liability transfers to the recipient (Art. 44 EU VAT Dir. 2006/112/EC)</p>
+          </div>
+        )}
+        {s.rc && (
+          <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
+            <p style={{ fontFamily:fSans, fontSize:10, color:L.blue, margin:0 }}>
+              📋 <strong>Zusammenfassende Meldung:</strong> This RC transaction must be reported quarterly to your tax authority. Keep a record for your ZM/recapitulative statement filing.
+            </p>
           </div>
         )}
         {s.vatExempt && (
@@ -809,7 +838,13 @@ function InvoiceForm(props) {
               <div><label style={lblStyle}>City</label><input value={s.cCity} onChange={function(e){ u("cCity",e.target.value); }} placeholder="75001 Paris" style={inpStyle} /></div>
             </div>
             <label style={lblStyle}>Client VAT (triggers reverse charge if cross-border)</label>
-            <input value={s.cVAT} onChange={function(e){ u("cVAT",e.target.value); }} placeholder="e.g. FR12345678901" style={monoStyle} />
+            <div style={{ position:"relative" }}>
+              <input value={s.cVAT} onChange={function(e){ u("cVAT",e.target.value); }} placeholder="e.g. FR12345678901" style={monoStyle} />
+              <VIESBadge status={useVIES(s.cVAT)} />
+            </div>
+            {useVIES(s.cVAT) === "invalid" && (
+              <p style={{ fontFamily:fSans, fontSize:10, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
+            )}
             {s.rc && (
               <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginTop:6, display:"flex", alignItems:"center", gap:6 }}>
                 <Icon name="reverse" size={12} color={L.blue} />
@@ -1232,7 +1267,7 @@ function Dashboard(props) {
   ];
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#F0EDE6" }}>
-      <div className="dash-aside" style={{ width:220, background:"#2C2416", padding:"20px 0", flexShrink:0 }}>
+      <div className="dash-aside" style={{ width:220, background:"#1A1F2E", padding:"20px 0", flexShrink:0 }}>
         <div style={{ padding:"0 16px 20px", borderBottom:"1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:"#FAF7F2", marginBottom:2 }}>InvoiceAI</div>
           <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(250,247,242,0.3)", letterSpacing:"0.08em" }}>for Europe</div>
@@ -1562,14 +1597,12 @@ function Footer(props) {
     { title:"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"]] },
   ];
   return (
-    <footer style={{ background:L.ink, borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px" }}>
+    <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
         <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:32, marginBottom:40 }}>
           <div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-              <div style={{ width:26, height:26, background:L.accent, borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ color:"#fff", fontFamily:fSerif, fontSize:13, fontWeight:900 }}>I</span>
-              </div>
+              <LogoMark size={28} />
               <div>
                 <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:15, color:L.paper, lineHeight:1.1 }}>InvoiceAI</div>
                 <div style={{ fontFamily:fMono, fontSize:7, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
@@ -1975,9 +2008,7 @@ function ClientPortal(props) {
     <div style={{ background:"#F0EDE6", minHeight:"100vh" }}>
       <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 24px", height:52, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:24, height:24, background:L.accent, borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <span style={{ color:"#fff", fontFamily:fSerif, fontSize:13, fontWeight:900 }}>I</span>
-          </div>
+          <LogoMark size={26} />
           <span style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
           <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>· secure invoice portal</span>
         </div>
@@ -2267,9 +2298,7 @@ function SupportBot() {
         <div className="bot-panel" style={{ position:"absolute", bottom:60, right:0, width:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:16, boxShadow:"0 16px 48px rgba(44,36,22,0.18)", overflow:"hidden", display:"flex", flexDirection:"column" }}>
           <div style={{ background:L.accent, padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
             <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-              <div style={{ width:28, height:28, borderRadius:"50%", background:"rgba(255,255,255,0.2)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <Icon name="bolt" size={14} color="#fff" />
-              </div>
+              <LogoMark size={28} bg="rgba(255,255,255,0.2)" />
               <div>
                 <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:"#fff" }}>InvoiceAI Support</div>
                 <div style={{ fontFamily:fMono, fontSize:8, color:"rgba(255,255,255,0.65)", letterSpacing:"0.06em" }}>Usually replies instantly</div>
@@ -2424,19 +2453,92 @@ function SignupModal(props) {
   );
 }
 
+// ── Cookie Banner ─────────────────────────────────────────────────────────────
+function CookieBanner(props) {
+  var onAccept = props.onAccept;
+  var onDecline = props.onDecline;
+  var setPage = props.setPage;
+  return (
+    <div style={{ position:"fixed", bottom:24, left:24, zIndex:998, maxWidth:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"18px 18px 14px", boxShadow:"0 8px 32px rgba(44,36,22,0.15)" }}>
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:10 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <span style={{ fontSize:18 }}>🍪</span>
+          <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>Cookie settings</span>
+        </div>
+      </div>
+      <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.55, marginBottom:14, fontWeight:300 }}>
+        We use only essential cookies to keep you logged in. No tracking, no advertising, no third-party cookies. Our analytics are cookieless via Plausible.
+      </p>
+      <div style={{ display:"flex", gap:7, marginBottom:10 }}>
+        <button onClick={onAccept} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
+          Accept
+        </button>
+        <button onClick={onDecline} style={{ flex:1, background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>
+          Decline
+        </button>
+      </div>
+      <div style={{ display:"flex", justifyContent:"center" }}>
+        <button onClick={function(){ setPage("Cookies"); onAccept(); }} style={{ background:"none", border:"none", fontFamily:fMono, fontSize:9, color:L.faint, cursor:"pointer", letterSpacing:"0.05em" }}>
+          Cookie Policy
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── VIES VAT Validator ────────────────────────────────────────────────────────
+// Uses the EU VIES SOAP API proxied through a public JSON wrapper
+// Falls back gracefully if API is unavailable
+function useVIES(vatNumber) {
+  var [status, setStatus] = useState(null);
+  useEffect(function() {
+    if (!vatNumber || vatNumber.length < 8) { setStatus(null); return; }
+    var clean = vatNumber.replace(/\s/g, "").toUpperCase();
+    if (clean.length < 8) { setStatus(null); return; }
+    var countryCode = clean.slice(0, 2);
+    var number = clean.slice(2);
+    if (!/^[A-Z]{2}/.test(countryCode)) { setStatus(null); return; }
+    setStatus("checking");
+    fetch("https://ec.europa.eu/taxation_customs/vies/rest-api/ms/" + countryCode + "/vat/" + number)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.isValid === true) setStatus("valid");
+        else if (data.isValid === false) setStatus("invalid");
+        else setStatus(null);
+      })
+      .catch(function() { setStatus(null); });
+  }, [vatNumber]);
+  return status;
+}
+
+function VIESBadge(props) {
+  var status = props.status;
+  if (!status) return null;
+  if (status === "checking") return <span style={{ fontFamily:fMono, fontSize:8, color:L.gold, background:L.goldGlow, border:"1px solid "+L.gold+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>checking…</span>;
+  if (status === "valid")    return <span style={{ fontFamily:fMono, fontSize:8, color:L.green, background:L.greenGlow, border:"1px solid "+L.green+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>✓ VIES valid</span>;
+  if (status === "invalid")  return <span style={{ fontFamily:fMono, fontSize:8, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>⚠ not found in VIES</span>;
+  return null;
+}
+
+
 export default function App() {
   var [page, setPage] = useState("Home");
   var [modal, setModal] = useState(null);
   var [lang, setLang] = useState("de");
+  var [cookieDismissed, setCookieDismissed] = useState(false);
 
   function openModal(source) { setModal(source); }
   function closeModal() { setModal(null); }
+
+  useEffect(function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
   var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies"].indexOf(page) >= 0;
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F5F0E8; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
@@ -2453,6 +2555,13 @@ export default function App() {
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
       {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
+      {!cookieDismissed && page !== "ClientPortal" && (
+        <CookieBanner
+          onAccept={function(){ setCookieDismissed(true); }}
+          onDecline={function(){ setCookieDismissed(true); }}
+          setPage={setPage}
+        />
+      )}
     </>
   );
 }
