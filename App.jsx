@@ -28,6 +28,83 @@ var fSerif = "'Playfair Display',serif";
 
 var FONTS = "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');";
 
+// ── Translations ──────────────────────────────────────────────────────────────
+var TR = {
+  en: {
+    navStart:        "Start Free",
+    navStartArrow:   "Start Free →",
+    heroPill:        "Built for European Freelancers · 1,400+ professionals",
+    heroTitle1:      "Made for the way",
+    heroTitle2:      "freelancers work.",
+    heroSub:         "AI proposals, EU-compliant invoices, client dashboard — one tool built for designers, developers, consultants and agencies across Europe.",
+    heroCta:         "Get early access →",
+    heroSecondary:   "See pricing",
+    heroFine:        "No credit card · 14-day free trial · Cancel anytime",
+    heroCounter:     "invoiced this month by our users",
+    featTitle:       "Built around how you actually work",
+    featSub:         "Tools built for accountants. Ours is built for the people who do the work.",
+    euTitle:         "Built for how Europe invoices.",
+    euSub:           "Not retrofitted. Not an add-on. Every EU compliance requirement is built into the core.",
+    reviewsTitle:    "Trusted across Europe",
+    pricingTitle:    "Simple, honest pricing",
+    pricingSub:      "14-day free trial. No credit card.",
+    pricingCta:      "Start free trial →",
+    propTitle:       "Generate a Proposal",
+    propSub:         "Describe your project. AI writes a client-ready proposal in seconds.",
+    propGenerate:    "✦ Generate Proposal",
+    propWriting:     "✦ Writing your proposal…",
+    propReady:       "✓ Proposal ready",
+    modalTitle:      "Join the waitlist.",
+    modalSub:        "Founding members lock in Studio at €29/mo forever — 50% off the launch price.",
+    modalCta:        "Join the waitlist →",
+    modalJoining:    "Joining…",
+    modalDoneTitle:  "You're on the list.",
+    modalExploreCta: "Explore the demo →",
+    footerWaitlist:  "Join the waitlist — Studio €29/mo forever",
+    footerWaitlistSub: "Founding member rate. Locked in at signup. Ends at launch.",
+    footerCta:       "Get early access →",
+  },
+  de: {
+    navStart:        "Kostenlos starten",
+    navStartArrow:   "Kostenlos starten →",
+    heroPill:        "Für europäische Freelancer · 1.400+ Profis",
+    heroTitle1:      "Gemacht für die Art,",
+    heroTitle2:      "wie Freelancer arbeiten.",
+    heroSub:         "KI-Angebote, EU-konforme Rechnungen, Kunden-Dashboard — ein Tool für Designer, Entwickler, Berater und Agenturen in ganz Europa.",
+    heroCta:         "Frühen Zugang erhalten →",
+    heroSecondary:   "Preise ansehen",
+    heroFine:        "Keine Kreditkarte · 14 Tage kostenlos · Jederzeit kündbar",
+    heroCounter:     "diesen Monat von unseren Nutzern abgerechnet",
+    featTitle:       "Gebaut für die Art, wie du wirklich arbeitest",
+    featSub:         "Tools für Buchhalter. Unseres ist für die Menschen gebaut, die die Arbeit machen.",
+    euTitle:         "Gebaut für die europäische Rechnungsstellung.",
+    euSub:           "Nicht nachgerüstet. Kein Add-on. Jede EU-Compliance-Anforderung ist im Kern integriert.",
+    reviewsTitle:    "In ganz Europa vertraut",
+    pricingTitle:    "Einfache, ehrliche Preise",
+    pricingSub:      "14 Tage kostenlos. Keine Kreditkarte.",
+    pricingCta:      "Kostenlos testen →",
+    propTitle:       "Angebot erstellen",
+    propSub:         "Beschreibe dein Projekt. KI schreibt in Sekunden ein kundenfertiges Angebot.",
+    propGenerate:    "✦ Angebot erstellen",
+    propWriting:     "✦ Angebot wird geschrieben…",
+    propReady:       "✓ Angebot fertig",
+    modalTitle:      "Auf die Warteliste.",
+    modalSub:        "Gründungsmitglieder sichern sich Studio für immer zu €29/Monat — 50% unter dem Startpreis.",
+    modalCta:        "Auf die Warteliste →",
+    modalJoining:    "Wird eingetragen…",
+    modalDoneTitle:  "Du stehst auf der Liste.",
+    modalExploreCta: "Demo erkunden →",
+    footerWaitlist:  "Warteliste — Studio €29/Monat für immer",
+    footerWaitlistSub: "Gründerpreis. Beim Anmelden gesichert. Endet beim Start.",
+    footerCta:       "Frühen Zugang erhalten →",
+  },
+};
+
+function t(lang, key) {
+  return (TR[lang] || TR.en)[key] || TR.en[key] || key;
+}
+
+
 // ── EU Countries ──────────────────────────────────────────────────────────────
 var EU = [
   { code:"DE", name:"Germany",     vat:19, cur:"EUR", lang:"de", fmt:"DD.MM.YYYY" },
@@ -127,6 +204,8 @@ function Nav(props) {
   var page = props.page;
   var setPage = props.setPage;
   var openModal = props.openModal;
+  var lang = props.lang || "en";
+  var setLang = props.setLang;
   var [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav style={{ position:"sticky", top:0, zIndex:100, background:L.white, borderBottom:"1px solid "+L.border, flexShrink:0 }}>
@@ -151,8 +230,17 @@ function Nav(props) {
           })}
         </div>
         <button onClick={function(){ openModal("nav"); }} className="nav-cta" style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)", flexShrink:0 }}>
-          Start Free
+          {t(lang,"navStart")}
         </button>
+        <div style={{ display:"flex", gap:2, flexShrink:0, marginLeft:4 }}>
+          {["de","en"].map(function(l) {
+            return (
+              <button key={l} onClick={function(){ setLang(l); }} style={{ background:lang===l ? L.ink : "transparent", color:lang===l ? "#fff" : L.muted, border:"1px solid "+(lang===l ? L.ink : L.border), borderRadius:5, padding:"4px 8px", cursor:"pointer", fontFamily:fMono, fontSize:10, fontWeight:lang===l ? 600 : 400, letterSpacing:"0.04em" }}>
+                {l.toUpperCase()}
+              </button>
+            );
+          })}
+        </div>
         <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
           <div style={{ width:18, height:2, background:L.ink, marginBottom:4, borderRadius:1 }} />
           <div style={{ width:18, height:2, background:L.ink, marginBottom:4, borderRadius:1 }} />
@@ -169,7 +257,7 @@ function Nav(props) {
             );
           })}
           <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
-            Start Free →
+            {t(lang,"navStartArrow")}
           </button>
         </div>
       )}
@@ -181,13 +269,14 @@ function Nav(props) {
 function Landing(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
+  var lang = props.lang || "en";
   return (
     <div style={{ background:L.paper }}>
-      <HeroSection setPage={setPage} openModal={openModal} />
-      <FeaturesSection />
-      <EUComplianceSection />
-      <ReviewsSection />
-      <PricingSection setPage={setPage} embedded={true} />
+      <HeroSection setPage={setPage} openModal={openModal} lang={lang} />
+      <FeaturesSection lang={lang} />
+      <EUComplianceSection lang={lang} />
+      <ReviewsSection lang={lang} />
+      <PricingSection setPage={setPage} openModal={openModal} lang={lang} embedded={true} />
     </div>
   );
 }
@@ -195,6 +284,7 @@ function Landing(props) {
 function HeroSection(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
+  var lang = props.lang || "en";
   var [count, setCount] = useState(0);
   useEffect(function() {
     var target = 10247;
@@ -212,29 +302,29 @@ function HeroSection(props) {
       <div style={{ maxWidth:720, margin:"0 auto" }}>
         <Pill>Built for European Freelancers · 1,400+ professionals</Pill>
         <h1 style={{ fontFamily:fSerif, fontSize:"clamp(36px,6vw,68px)", fontWeight:900, color:L.ink, margin:"20px 0 16px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
-          Made for the way<br />
-          <span style={{ color:L.accent }}>freelancers work.</span>
+          {t(lang,"heroTitle1")}<br />
+          <span style={{ color:L.accent }}>{t(lang,"heroTitle2")}</span>
         </h1>
         <p style={{ fontFamily:fSans, fontSize:17, color:L.muted, lineHeight:1.65, maxWidth:500, margin:"0 auto 36px", fontWeight:300 }}>
-          AI proposals, EU-compliant invoices, client dashboard — one tool built for designers, developers, consultants and agencies across Europe.
+{t(lang,"heroSub")}
         </p>
         <div className="hero-btns" style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", marginBottom:24 }}>
           <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"14px 32px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 8px 28px rgba(200,80,42,0.3)" }}>
-            Get early access →
+{t(lang,"heroCta")}
           </button>
           <button onClick={function(){ setPage("Pricing"); }} style={{ background:"transparent", color:L.ink, border:"1.5px solid "+L.border, padding:"14px 24px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
-            See pricing
+{t(lang,"heroSecondary")}
           </button>
         </div>
         <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.06em" }}>
-          No credit card · 14-day free trial · Cancel anytime
+{t(lang,"heroFine")}
         </p>
         <div style={{ marginTop:32, display:"inline-block", background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"14px 28px" }}>
           <div style={{ fontFamily:fSerif, fontSize:28, color:L.gold, fontWeight:700 }}>
             {"€"+count.toLocaleString("de-DE")}
           </div>
           <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>
-            invoiced this month by our users
+{t(lang,"heroCounter")}
           </div>
         </div>
       </div>
@@ -251,17 +341,18 @@ var FEATURES = [
   { icon:"shield",   title:"GDPR Built-in",      desc:"Auto-GDPR notice on invoices, EU-hosted data, Data Processing Agreement available, cookieless analytics." },
 ];
 
-function FeaturesSection() {
+function FeaturesSection(props) {
+  var lang = props.lang || "en";
   return (
     <section style={{ padding:"72px 24px", background:L.paper }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:48 }}>
           <Pill color={L.gold}>Features</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-            Built around how you actually work
+{t(lang,"featTitle")}
           </h2>
           <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>
-            Tools built for accountants. Ours is built for the people who do the work.
+            {t(lang,"featSub")}
           </p>
         </div>
         <div className="grid3" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16 }}>
@@ -293,7 +384,8 @@ var EU_FEATURES = [
   { icon:"send",    title:"E-Invoice XML",               badge:"Coming Q4 2026",     desc:"XRechnung (DE), Factur-X (FR), XML/SDI (IT). Compliant with current and upcoming EU mandates." },
 ];
 
-function EUComplianceSection() {
+function EUComplianceSection(props) {
+  var lang = props.lang || "en";
   var [open, setOpen] = useState(-1);
   return (
     <section style={{ background:L.white, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"72px 24px" }}>
@@ -301,10 +393,10 @@ function EUComplianceSection() {
         <div style={{ textAlign:"center", marginBottom:40 }}>
           <Pill color={L.blue}>EU-Native Compliance</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-            Built for how Europe invoices.
+{t(lang,"euTitle")}
           </h2>
           <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, maxWidth:480, margin:"0 auto" }}>
-            Not retrofitted. Not an add-on. Every EU compliance requirement is built into the core.
+            {t(lang,"euSub")}
           </p>
         </div>
         <div className="grid4" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10 }}>
@@ -337,7 +429,8 @@ function EUComplianceSection() {
   );
 }
 
-function ReviewsSection() {
+function ReviewsSection(props) {
+  var lang = props.lang || "en";
   var [active, setActive] = useState(0);
   var featured = [REVIEWS[0], REVIEWS[1], REVIEWS[2]];
   var rest = [REVIEWS[3], REVIEWS[4], REVIEWS[5]];
@@ -346,7 +439,7 @@ function ReviewsSection() {
       <div style={{ textAlign:"center", marginBottom:32, padding:"0 24px" }}>
         <Pill color={L.gold}>Reviews</Pill>
         <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 8px", letterSpacing:"-0.025em" }}>
-          Trusted across Europe
+{t(lang,"reviewsTitle")}
         </h2>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginBottom:4 }}>
           <Stars n={5} size={14} />
@@ -393,15 +486,16 @@ function PricingSection(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
   var embedded = props.embedded;
+  var lang = props.lang || "en";
   return (
     <section style={{ background:embedded ? L.paper : L.white, padding:"72px 24px" }}>
       <div style={{ maxWidth:860, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:40 }}>
           <Pill color={L.gold}>Pricing</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-            Simple, honest pricing
+{t(lang,"pricingTitle")}
           </h2>
-          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>14-day free trial. No credit card.</p>
+          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
         </div>
         <div style={{ display:"flex", gap:12, overflowX:"auto", WebkitOverflowScrolling:"touch", paddingBottom:8 }}>
           {PLANS.map(function(plan) {
@@ -428,7 +522,7 @@ function PricingSection(props) {
                   })}
                 </div>
                 <button onClick={function(){ openModal("pricing-"+plan.name.toLowerCase()); }} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>
-                  Start free trial →
+{t(lang,"pricingCta")}
                 </button>
               </div>
             );
@@ -842,6 +936,7 @@ function InvoiceForm(props) {
 
 function ProposalForm(props) {
   var onFirstGenerate = props.onFirstGenerate;
+  var lang = props.lang || "en";
   var [clientName, setClientName] = useState("");
   var [clientCo, setClientCo] = useState("");
   var [projType, setProjType] = useState("");
@@ -882,7 +977,7 @@ function ProposalForm(props) {
       budget ? "Budget: " + budget : null,
       timeline ? "Timeline: " + timeline : null,
     ].filter(Boolean).join("\n");
-    fetch("https://api.anthropic.com/v1/messages", {
+    fetch("/api/claude", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system:rules, messages:[{ role:"user", content:msgs }] }),
@@ -901,7 +996,7 @@ function ProposalForm(props) {
     if (!result || loading) return;
     setLoading(true);
     var newHistory = history.concat([{ role:"user", content:instruction }]);
-    fetch("https://api.anthropic.com/v1/messages", {
+    fetch("/api/claude", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system:"You are refining a project proposal. Apply the requested change and return the full revised proposal only — no commentary.", messages:newHistory }),
@@ -937,8 +1032,8 @@ function ProposalForm(props) {
   return (
     <div className="prop-grid" style={{ maxWidth:860, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
-        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>Generate a Proposal</h2>
-        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>Describe your project. AI writes a client-ready proposal in seconds.</p>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
           <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
           <div style={{ padding:"13px 16px" }}>
@@ -1004,7 +1099,7 @@ function ProposalForm(props) {
                   <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.muted, marginLeft:5 }}>Writing…</span>
                 </div>
               ) : (
-                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.green, letterSpacing:"0.08em" }}>✓ Proposal ready</span>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
               )}
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
@@ -1045,6 +1140,7 @@ function ProposalForm(props) {
 function InvoiceGen(props) {
   var onFirstGenerate = props.onFirstGenerate;
   var setPage = props.setPage;
+  var lang = props.lang || "en";
   var [mode, setMode] = useState("proposal");
   var [view, setView] = useState("form");
 
@@ -1105,7 +1201,7 @@ function InvoiceGen(props) {
           </div>
         )}
       </div>
-      {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} />}
+      {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} />}
       {mode==="invoice" && view==="form" && (
         <InvoiceForm state={invState} update={updateInv} setView={setView} addLine={addLine} updLine={updLine} remLine={remLine} />
       )}
@@ -1458,6 +1554,7 @@ function PaymentStrip() {
 function Footer(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
+  var lang = props.lang || "en";
   var yr = new Date().getFullYear();
   var cols = [
     { title:"Product", links:[["Generator","Generator"],["Pricing","Pricing"],["Dashboard","Dashboard"]] },
@@ -1501,11 +1598,11 @@ function Footer(props) {
         </div>
         <div style={{ background:"rgba(200,80,42,0.1)", border:"1px solid rgba(200,80,42,0.2)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
           <div>
-            <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>Join the waitlist — Studio €29/mo forever</div>
-            <div style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>Founding member rate. Locked in at signup. Ends at launch.</div>
+            <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>{t(lang,"footerWaitlist")}</div>
+            <div style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
           </div>
           <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, flexShrink:0, boxShadow:"0 4px 14px rgba(200,80,42,0.3)" }}>
-            Get early access →
+            {t(lang,"footerCta")}
           </button>
         </div>
         <div style={{ borderTop:"1px solid rgba(255,255,255,0.07)", paddingTop:20, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
@@ -2141,7 +2238,7 @@ function SupportBot() {
     }
 
     var history = newMsgs.map(function(m) { return { role: m.role === "bot" ? "assistant" : "user", content: m.text }; });
-    fetch("https://api.anthropic.com/v1/messages", {
+    fetch("/api/claude", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body:JSON.stringify({
@@ -2240,6 +2337,7 @@ var EU_COUNTRIES_LIST = ["Germany","France","Italy","Netherlands","Spain","Belgi
 function SignupModal(props) {
   var onClose = props.onClose;
   var source = props.source || "nav";
+  var lang = props.lang || "en";
   var [name, setName] = useState("");
   var [email, setEmail] = useState("");
   var [country, setCountry] = useState("Germany");
@@ -2271,8 +2369,8 @@ function SignupModal(props) {
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
             <div>
               <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(255,255,255,0.65)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>Early Access · invoice-ai.de</div>
-              <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.1 }}>Join the waitlist.</h2>
-              <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.75)", marginTop:6, fontWeight:300, lineHeight:1.5 }}>Founding members lock in Studio at €29/mo forever — 50% off the launch price.</p>
+              <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.1 }}>{t(lang,"modalTitle")}</h2>
+              <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.75)", marginTop:6, fontWeight:300, lineHeight:1.5 }}>{t(lang,"modalSub")}</p>
             </div>
             <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginLeft:12 }}>×</button>
           </div>
@@ -2303,7 +2401,7 @@ function SignupModal(props) {
               </div>
               {error && <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:0 }}>{error}</p>}
               <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(200,80,42,0.3)" }}>
-                {loading ? "Joining…" : "Join the waitlist →"}
+{loading ? t(lang,"modalJoining") : t(lang,"modalCta")}
               </button>
             </div>
             <p style={{ fontFamily:fMono, fontSize:9, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>No spam. One email when we launch. Unsubscribe anytime.</p>
@@ -2311,14 +2409,14 @@ function SignupModal(props) {
         ) : (
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
             <div style={{ fontSize:40, marginBottom:14 }}>🎉</div>
-            <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>You're on the list.</h3>
+            <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
             <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
             <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
             <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
               <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
               <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
             </div>
-            <button onClick={onClose} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>Explore the demo →</button>
+            <button onClick={onClose} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>{t(lang,"modalExploreCta")}</button>
           </div>
         )}
       </div>
@@ -2329,6 +2427,7 @@ function SignupModal(props) {
 export default function App() {
   var [page, setPage] = useState("Home");
   var [modal, setModal] = useState(null);
+  var [lang, setLang] = useState("de");
 
   function openModal(source) { setModal(source); }
   function closeModal() { setModal(null); }
@@ -2338,10 +2437,10 @@ export default function App() {
     <>
       <style>{FONTS}</style>
       <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F5F0E8; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } }"}</style>
-      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} />}
-      {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} /><PaymentStrip /></>}
-      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} />}
-      {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} /><PaymentStrip /></>}
+      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} />}
+      {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
+      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
+      {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Dashboard"    && <Dashboard />}
       {page==="ClientPortal" && <ClientPortal setPage={setPage} />}
       {page==="About"        && <PageAbout setPage={setPage} openModal={openModal} />}
@@ -2351,9 +2450,9 @@ export default function App() {
       {page==="Terms"        && <PageTerms />}
       {page==="GDPR"         && <PageGDPR />}
       {page==="Cookies"      && <PageCookies />}
-      {showFooter && <Footer setPage={setPage} openModal={openModal} />}
+      {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
-      {modal && <SignupModal source={modal} onClose={closeModal} />}
+      {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
     </>
   );
 }
