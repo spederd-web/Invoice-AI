@@ -98,6 +98,108 @@ var TR = {
     footerWaitlistSub: "Gründerpreis. Beim Anmelden gesichert. Endet beim Start.",
     footerCta:       "Frühen Zugang erhalten →",
   },
+  fr: {
+    navStart:        "Commencer gratuitement",
+    navStartArrow:   "Commencer gratuitement →",
+    heroPill:        "Pour les freelances européens · 1 400+ professionnels",
+    heroTitle1:      "Conçu pour la façon dont",
+    heroTitle2:      "les freelances travaillent.",
+    heroSub:         "Propositions IA, factures conformes UE, tableau de bord client — un outil pour designers, développeurs, consultants et agences en Europe.",
+    heroCta:         "Accès anticipé →",
+    heroSecondary:   "Voir les tarifs",
+    heroFine:        "Sans carte bancaire · 14 jours gratuits · Résiliation à tout moment",
+    heroCounter:     "facturés ce mois par nos utilisateurs",
+    featTitle:       "Conçu pour la façon dont vous travaillez vraiment",
+    featSub:         "Les outils sont faits pour les comptables. Le nôtre est fait pour ceux qui font le travail.",
+    euTitle:         "Conçu pour la facturation européenne.",
+    euSub:           "Pas un module ajouté. Pas un add-on. Chaque exigence de conformité UE est intégrée au cœur.",
+    reviewsTitle:    "Approuvé dans toute l'Europe",
+    pricingTitle:    "Tarifs simples et honnêtes",
+    pricingSub:      "14 jours gratuits. Sans carte bancaire.",
+    pricingCta:      "Essai gratuit →",
+    propTitle:       "Créer une proposition",
+    propSub:         "Décrivez votre projet. L'IA rédige une proposition prête à envoyer en quelques secondes.",
+    propGenerate:    "✦ Générer la proposition",
+    propWriting:     "✦ Rédaction en cours…",
+    propReady:       "✓ Proposition prête",
+    modalTitle:      "Rejoindre la liste d'attente.",
+    modalSub:        "Les membres fondateurs obtiennent Studio à 29 €/mois pour toujours — 50% sous le prix de lancement.",
+    modalCta:        "Rejoindre la liste →",
+    modalJoining:    "Inscription en cours…",
+    modalDoneTitle:  "Vous êtes sur la liste.",
+    modalExploreCta: "Explorer la démo →",
+    footerWaitlist:  "Liste d'attente — Studio 29 €/mois à vie",
+    footerWaitlistSub: "Tarif fondateur. Bloqué à l'inscription. Fin au lancement.",
+    footerCta:       "Accès anticipé →",
+  },
+  es: {
+    navStart:        "Empezar gratis",
+    navStartArrow:   "Empezar gratis →",
+    heroPill:        "Para freelances europeos · 1.400+ profesionales",
+    heroTitle1:      "Hecho para la forma en que",
+    heroTitle2:      "trabajan los freelances.",
+    heroSub:         "Propuestas con IA, facturas conformes con la UE, panel de clientes — una herramienta para diseñadores, desarrolladores, consultores y agencias en Europa.",
+    heroCta:         "Acceso anticipado →",
+    heroSecondary:   "Ver precios",
+    heroFine:        "Sin tarjeta de crédito · 14 días gratis · Cancela cuando quieras",
+    heroCounter:     "facturados este mes por nuestros usuarios",
+    featTitle:       "Construido para la forma en que realmente trabajas",
+    featSub:         "Herramientas hechas para contables. La nuestra está hecha para quienes hacen el trabajo.",
+    euTitle:         "Construido para la facturación europea.",
+    euSub:           "No adaptado. No es un complemento. Cada requisito de cumplimiento de la UE está integrado en el núcleo.",
+    reviewsTitle:    "De confianza en toda Europa",
+    pricingTitle:    "Precios simples y honestos",
+    pricingSub:      "14 días gratis. Sin tarjeta de crédito.",
+    pricingCta:      "Prueba gratuita →",
+    propTitle:       "Crear una propuesta",
+    propSub:         "Describe tu proyecto. La IA redacta una propuesta lista para el cliente en segundos.",
+    propGenerate:    "✦ Generar propuesta",
+    propWriting:     "✦ Redactando tu propuesta…",
+    propReady:       "✓ Propuesta lista",
+    modalTitle:      "Únete a la lista de espera.",
+    modalSub:        "Los miembros fundadores obtienen Studio a 29 €/mes para siempre — 50% bajo el precio de lanzamiento.",
+    modalCta:        "Unirse a la lista →",
+    modalJoining:    "Registrando…",
+    modalDoneTitle:  "Estás en la lista.",
+    modalExploreCta: "Explorar la demo →",
+    footerWaitlist:  "Lista de espera — Studio 29 €/mes para siempre",
+    footerWaitlistSub: "Precio fundador. Bloqueado al registrarse. Termina en el lanzamiento.",
+    footerCta:       "Acceso anticipado →",
+  },
+  it: {
+    navStart:        "Inizia gratis",
+    navStartArrow:   "Inizia gratis →",
+    heroPill:        "Per i freelance europei · 1.400+ professionisti",
+    heroTitle1:      "Fatto per il modo in cui",
+    heroTitle2:      "lavorano i freelance.",
+    heroSub:         "Proposte con IA, fatture conformi UE, dashboard clienti — uno strumento per designer, sviluppatori, consulenti e agenzie in tutta Europa.",
+    heroCta:         "Accesso anticipato →",
+    heroSecondary:   "Vedi i prezzi",
+    heroFine:        "Senza carta di credito · 14 giorni gratis · Disdici quando vuoi",
+    heroCounter:     "fatturati questo mese dai nostri utenti",
+    featTitle:       "Costruito per come lavori davvero",
+    featSub:         "Strumenti fatti per i contabili. Il nostro è fatto per chi svolge il lavoro.",
+    euTitle:         "Costruito per la fatturazione europea.",
+    euSub:           "Non adattato. Non un add-on. Ogni requisito di conformità UE è integrato nel core.",
+    reviewsTitle:    "Fiducia in tutta Europa",
+    pricingTitle:    "Prezzi semplici e onesti",
+    pricingSub:      "14 giorni gratis. Senza carta di credito.",
+    pricingCta:      "Prova gratuita →",
+    propTitle:       "Crea una proposta",
+    propSub:         "Descrivi il tuo progetto. L'IA scrive una proposta pronta per il cliente in pochi secondi.",
+    propGenerate:    "✦ Genera proposta",
+    propWriting:     "✦ Scrittura in corso…",
+    propReady:       "✓ Proposta pronta",
+    modalTitle:      "Unisciti alla lista d'attesa.",
+    modalSub:        "I membri fondatori ottengono Studio a €29/mese per sempre — 50% sotto il prezzo di lancio.",
+    modalCta:        "Unisciti alla lista →",
+    modalJoining:    "Registrazione in corso…",
+    modalDoneTitle:  "Sei nella lista.",
+    modalExploreCta: "Esplora la demo →",
+    footerWaitlist:  "Lista d'attesa — Studio €29/mese per sempre",
+    footerWaitlistSub: "Prezzo fondatore. Bloccato all'iscrizione. Termina al lancio.",
+    footerCta:       "Accesso anticipato →",
+  },
 };
 
 function t(lang, key) {
@@ -127,16 +229,40 @@ function LogoMark(props) {
 
 // ── EU Countries ──────────────────────────────────────────────────────────────
 var EU = [
-  { code:"DE", name:"Germany",     vat:19, cur:"EUR", lang:"de", fmt:"DD.MM.YYYY" },
-  { code:"FR", name:"France",      vat:20, cur:"EUR", lang:"fr", fmt:"DD/MM/YYYY" },
-  { code:"IT", name:"Italy",       vat:22, cur:"EUR", lang:"it", fmt:"DD/MM/YYYY" },
-  { code:"ES", name:"Spain",       vat:21, cur:"EUR", lang:"es", fmt:"DD/MM/YYYY" },
-  { code:"NL", name:"Netherlands", vat:21, cur:"EUR", lang:"nl", fmt:"DD-MM-YYYY" },
-  { code:"BE", name:"Belgium",     vat:21, cur:"EUR", lang:"fr", fmt:"DD/MM/YYYY" },
-  { code:"SE", name:"Sweden",      vat:25, cur:"SEK", lang:"sv", fmt:"YYYY-MM-DD" },
-  { code:"AT", name:"Austria",     vat:20, cur:"EUR", lang:"de", fmt:"DD.MM.YYYY" },
-  { code:"PL", name:"Poland",      vat:23, cur:"PLN", lang:"pl", fmt:"DD.MM.YYYY" },
-  { code:"PT", name:"Portugal",    vat:23, cur:"EUR", lang:"pt", fmt:"DD/MM/YYYY" },
+  // ── EU Member States (all 27) ───────────────────────────────────────────
+  { code:"AT", name:"Austria",        vat:20, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"BE", name:"Belgium",        vat:21, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"BG", name:"Bulgaria",       vat:20, cur:"BGN", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"HR", name:"Croatia",        vat:25, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"CY", name:"Cyprus",         vat:19, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"CZ", name:"Czech Republic", vat:21, cur:"CZK", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"DK", name:"Denmark",        vat:25, cur:"DKK", fmt:"DD-MM-YYYY", eu:true  },
+  { code:"EE", name:"Estonia",        vat:22, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"FI", name:"Finland",        vat:25.5, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"FR", name:"France",         vat:20, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"DE", name:"Germany",        vat:19, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"GR", name:"Greece",         vat:24, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"HU", name:"Hungary",        vat:27, cur:"HUF", fmt:"YYYY.MM.DD", eu:true  },
+  { code:"IE", name:"Ireland",        vat:23, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"IT", name:"Italy",          vat:22, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"LV", name:"Latvia",         vat:21, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"LT", name:"Lithuania",      vat:21, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"LU", name:"Luxembourg",     vat:17, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"MT", name:"Malta",          vat:18, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"NL", name:"Netherlands",    vat:21, cur:"EUR", fmt:"DD-MM-YYYY", eu:true  },
+  { code:"PL", name:"Poland",         vat:23, cur:"PLN", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"PT", name:"Portugal",       vat:23, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"RO", name:"Romania",        vat:19, cur:"RON", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"SK", name:"Slovakia",       vat:20, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"SI", name:"Slovenia",       vat:22, cur:"EUR", fmt:"DD.MM.YYYY", eu:true  },
+  { code:"ES", name:"Spain",          vat:21, cur:"EUR", fmt:"DD/MM/YYYY", eu:true  },
+  { code:"SE", name:"Sweden",         vat:25, cur:"SEK", fmt:"YYYY-MM-DD", eu:true  },
+  // ── Non-EU (third countries — no reverse charge, export rules apply) ───
+  { code:"GB", name:"UK (post-Brexit)",  vat:0,  cur:"GBP", fmt:"DD/MM/YYYY", eu:false },
+  { code:"CH", name:"Switzerland",       vat:0,  cur:"CHF", fmt:"DD.MM.YYYY", eu:false },
+  { code:"NO", name:"Norway",            vat:0,  cur:"NOK", fmt:"DD.MM.YYYY", eu:false },
+  { code:"US", name:"United States",     vat:0,  cur:"USD", fmt:"MM/DD/YYYY", eu:false },
+  { code:"GB", name:"Other non-EU",      vat:0,  cur:"EUR", fmt:"DD/MM/YYYY", eu:false },
 ];
 
 var PLANS = [
@@ -268,14 +394,19 @@ function Nav(props) {
             </button>
           </div>
         )}
-        <div style={{ display:"flex", gap:2, flexShrink:0, marginLeft:4 }}>
-          {["de","en"].map(function(l) {
-            return (
-              <button key={l} onClick={function(){ setLang(l); }} style={{ background:lang===l ? L.ink : "transparent", color:lang===l ? "#fff" : L.muted, border:"1px solid "+(lang===l ? L.ink : L.border), borderRadius:5, padding:"4px 8px", cursor:"pointer", fontFamily:fMono, fontSize:10, fontWeight:lang===l ? 600 : 400, letterSpacing:"0.04em" }}>
-                {l.toUpperCase()}
-              </button>
-            );
-          })}
+        <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
+          <select
+            value={lang}
+            onChange={function(e){ setLang(e.target.value); }}
+            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 28px 5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:10, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
+          >
+            {[["de","DE — Deutsch"],["en","EN — English"],["fr","FR — Français"],["es","ES — Español"],["it","IT — Italiano"]].map(function(pair) {
+              return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
+            })}
+          </select>
+          <div style={{ position:"absolute", right:8, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.muted} strokeWidth="1.5" strokeLinecap="round"/></svg>
+          </div>
         </div>
         <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
           <div style={{ width:18, height:2, background:L.ink, marginBottom:4, borderRadius:1 }} />
@@ -295,6 +426,18 @@ function Nav(props) {
           <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
             {t(lang,"navStartArrow")}
           </button>
+          <div style={{ borderTop:"1px solid "+L.border, marginTop:8, paddingTop:12 }}>
+            <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8, paddingLeft:4 }}>Language</div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+              {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"]].map(function(pair) {
+                return (
+                  <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:lang===pair[0] ? L.ink : L.paper, color:lang===pair[0] ? "#fff" : L.muted, border:"1px solid "+(lang===pair[0] ? L.ink : L.border), borderRadius:6, padding:"6px 12px", cursor:"pointer", fontFamily:fMono, fontSize:11, fontWeight:lang===pair[0] ? 600 : 400 }}>
+                    {pair[1]}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
     </nav>
@@ -439,18 +582,23 @@ function EUComplianceSection(props) {
             {t(lang,"euSub")}
           </p>
         </div>
-        <div className="grid4" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
           {EU_FEATURES.map(function(f, i) {
             var isOpen = open === i;
             return (
               <div key={f.title} onClick={function(){ setOpen(isOpen ? -1 : i); }}
-                style={{ background:isOpen ? L.cream : L.paper, border:"1.5px solid "+(isOpen ? L.accent+"44" : L.border), borderRadius:12, padding:"16px 16px 14px", cursor:"pointer" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
-                  <Icon name={f.icon} size={16} color={L.ink} />
-                  <span style={{ fontFamily:fMono, fontSize:7, color:L.accent, background:L.accentGlow, borderRadius:4, padding:"2px 6px", letterSpacing:"0.06em" }}>{f.badge}</span>
+                style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"44" : L.border), borderRadius:10, padding:"12px 14px", cursor:"pointer", transition:"background 0.1s" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:isOpen ? 8 : 0 }}>
+                  <div style={{ width:28, height:28, borderRadius:7, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    <Icon name={f.icon} size={13} color={L.accent} />
+                  </div>
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
+                    <div style={{ fontFamily:fMono, fontSize:7, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
+                  </div>
+                  <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
                 </div>
-                <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink, marginBottom:4 }}>{f.title}</div>
-                {isOpen && <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.55, margin:0, fontWeight:300 }}>{f.desc}</p>}
+                {isOpen && <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.55, margin:0, fontWeight:300, paddingTop:4, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
               </div>
             );
           })}
@@ -507,7 +655,7 @@ function ReviewsSection(props) {
                 <p style={{ fontFamily:fSans, fontSize:12, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                 <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
                   <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
-                  <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>👍 {r.helpful}</span>
+                  <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
                 </div>
               </div>
             );
@@ -692,7 +840,14 @@ function InvoicePreviewPanel(props) {
         {s.rc && (
           <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
             <p style={{ fontFamily:fSans, fontSize:10, color:L.blue, margin:0 }}>
-              📋 <strong>Zusammenfassende Meldung:</strong> This RC transaction must be reported quarterly to your tax authority. Keep a record for your ZM/recapitulative statement filing.
+              <strong>ZM reminder:</strong> This RC transaction must be reported quarterly to your tax authority. Keep a record for your ZM/recapitulative statement filing.
+            </p>
+          </div>
+        )}
+        {s.country && s.country.eu === false && (
+          <div style={{ background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
+            <p style={{ fontFamily:fSans, fontSize:11, color:L.gold, margin:0 }}>
+              <strong>Export / Third country:</strong> Service not subject to VAT per §3a UStG. No VAT charged — exempt export. Include reference: "Leistungsort nicht im Inland."
             </p>
           </div>
         )}
@@ -862,8 +1017,8 @@ function InvoiceForm(props) {
             <div><label style={lblStyle}>VAT Number *</label><input value={s.sVAT} onChange={function(e){ u("sVAT",e.target.value); }} style={monoStyle} /></div>
             <div><label style={lblStyle}>IBAN *</label><input value={s.sIBAN} onChange={function(e){ u("sIBAN",e.target.value); }} style={monoStyle} /></div>
             <div><label style={lblStyle}>BIC/SWIFT</label><input value={s.sBIC} onChange={function(e){ u("sBIC",e.target.value); }} style={monoStyle} /></div>
-            <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="Unter den Linden 1" style={inpStyle} /></div>
-            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="10117 Berlin" style={inpStyle} /></div>
+            <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="Arndstr. 2" style={inpStyle} /></div>
+            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="80469 München" style={inpStyle} /></div>
           </div>
         ))}
         {cardWrap("Client", <Tag c={L.blue}>Bill To</Tag>, (
@@ -873,7 +1028,12 @@ function InvoiceForm(props) {
               <div>
                 <label style={lblStyle}>Country</label>
                 <select value={s.cCo} onChange={function(e){ u("cCo",e.target.value); }} style={{ ...inpStyle, cursor:"pointer" }}>
-                  {EU.map(function(c) { return <option key={c.code} value={c.code}>{c.name}</option>; })}
+                  <optgroup label="EU Member States">
+                    {EU.filter(function(c){ return c.eu; }).map(function(c) { return <option key={c.code} value={c.code}>{c.name}</option>; })}
+                  </optgroup>
+                  <optgroup label="Non-EU / Third Countries">
+                    {EU.filter(function(c){ return !c.eu; }).map(function(c) { return <option key={c.code+c.name} value={c.code+"-"+c.name}>{c.name}</option>; })}
+                  </optgroup>
                 </select>
               </div>
               <div><label style={lblStyle}>Street</label><input value={s.cStreet} onChange={function(e){ u("cStreet",e.target.value); }} placeholder="Rue de Rivoli 1" style={inpStyle} /></div>
@@ -950,7 +1110,12 @@ function InvoiceForm(props) {
             <div>
               <label style={lblStyle}>Your Country</label>
               <select value={s.country ? s.country.code : "DE"} onChange={function(e){ var c=EU.find(function(x){return x.code===e.target.value;}); u("country",c); }} style={{ ...inpStyle, cursor:"pointer" }}>
-                {EU.map(function(c) { return <option key={c.code} value={c.code}>{c.name+" ("+c.vat+"%)"}</option>; })}
+                <optgroup label="EU Member States">
+                {EU.filter(function(c){ return c.eu; }).map(function(c) { return <option key={c.code} value={c.code}>{c.name+" ("+c.vat+"%)"}</option>; })}
+              </optgroup>
+              <optgroup label="Non-EU">
+                {EU.filter(function(c){ return !c.eu; }).map(function(c) { return <option key={c.code+c.name} value={c.code}>{c.name+" (0% — export)"}</option>; })}
+              </optgroup>
               </select>
             </div>
             <div>
@@ -1223,7 +1388,7 @@ function InvoiceGen(props) {
 
   var defaultInvState = {
     country:EU[0], terms:"30", rc:false, gdpr:true, latePayment:false, creditNote:false, vatExempt:false, eInvoice:false, discount:"", projRef:"",
-    sName:"Acme Studio GmbH", sVAT:"DE123456789", sIBAN:"DE89 3704 0044 0532 0130 00", sBIC:"COBADEFFXXX", sStreet:"Unter den Linden 1", sCity:"10117 Berlin",
+    sName:"Daniel Speder", sVAT:"", sIBAN:"", sBIC:"", sStreet:"Arndstr. 2", sCity:"80469 München",
     cName:"Studio Verde GmbH", cVAT:"", cCo:"DE", cStreet:"", cCity:"",
     lines:[{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
   };
@@ -1564,7 +1729,7 @@ function DProposals() {
 
 function DBrandKits() {
   var kits = [
-    { name:"Acme Studio GmbH",  primary:"#C8502A", font:"Playfair Display",   logo:"A" },
+    { name:"Daniel Speder",  primary:"#C8502A", font:"Playfair Display",   logo:"A" },
     { name:"Nord Creative",     primary:"#2A5E9A", font:"DM Sans",             logo:"NC" },
     { name:"Bianchi Studio",    primary:"#2A7A54", font:"Cormorant Garamond",  logo:"B" },
   ];
@@ -1612,13 +1777,21 @@ function PaymentStrip() {
     <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"16px 24px" }}>
       <div style={{ maxWidth:960, margin:"0 auto", display:"flex", alignItems:"center", gap:14, flexWrap:"wrap", justifyContent:"center" }}>
         <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase" }}>Secure payments via</span>
-        <div style={{ display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
-          <div style={{ background:"#635BFF", borderRadius:6, padding:"4px 10px" }}><span style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:"#fff", letterSpacing:"-0.01em" }}>stripe</span></div>
-          <div style={{ background:L.ink, borderRadius:6, padding:"4px 10px", display:"flex", alignItems:"center", gap:3, opacity:0.75 }}><span style={{ fontSize:10 }}>🍎</span><span style={{ fontFamily:fSans, fontSize:10, fontWeight:500, color:"#fff" }}>Pay</span></div>
-          <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:6, padding:"4px 10px", display:"flex", alignItems:"center", gap:3, opacity:0.75 }}><span style={{ fontFamily:fSans, fontSize:11, fontWeight:700, color:"#4285F4" }}>G</span><span style={{ fontFamily:fSans, fontSize:10, fontWeight:500, color:L.ink }}>Pay</span></div>
-          <div style={{ background:"#003399", borderRadius:6, padding:"4px 10px" }}><span style={{ fontFamily:fMono, fontSize:9, color:"#fff", letterSpacing:"0.04em" }}>SEPA</span></div>
-          <div style={{ background:"#1A1F71", borderRadius:5, padding:"3px 8px" }}><span style={{ fontFamily:fMono, fontSize:8, color:"#fff", letterSpacing:"0.04em", fontWeight:700 }}>VISA</span></div>
-          <div style={{ background:"#EB001B", borderRadius:5, padding:"3px 8px" }}><span style={{ fontFamily:fMono, fontSize:8, color:"#fff", letterSpacing:"0.04em", fontWeight:700 }}>MC</span></div>
+        <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
+          {[
+            { bg:"#635BFF", label:"Stripe",    color:"#fff", font:fSans, weight:600 },
+            { bg:"#1C1C1E", label:"Apple Pay", color:"#fff", font:fSans, weight:500 },
+            { bg:L.white,   label:"G Pay",     color:"#4285F4", font:fSans, weight:700, border:L.border },
+            { bg:"#003087", label:"SEPA",      color:"#fff", font:fMono, weight:500 },
+            { bg:"#1A1F71", label:"VISA",      color:"#fff", font:fMono, weight:700 },
+            { bg:"#EB001B", label:"MC",        color:"#fff", font:fMono, weight:700 },
+          ].map(function(b) {
+            return (
+              <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:6, padding:"5px 11px", height:28, display:"flex", alignItems:"center", justifyContent:"center", minWidth:52 }}>
+                <span style={{ fontFamily:b.font, fontSize:11, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
+              </div>
+            );
+          })}
         </div>
         <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 8px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
         <span style={{ fontFamily:fSans, fontSize:11, color:L.muted, fontWeight:300, flex:"1 1 100%", textAlign:"center" }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</span>
@@ -1727,7 +1900,7 @@ function PageAbout(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
   var team = [
-    { name:"Alex Krause",  role:"CEO & Co-founder",  city:"Berlin DE",    av:"AK", bio:"Former Head of Product at a Berlin fintech. Built and sold two SaaS companies. Obsessed with making EU compliance simple." },
+    { name:"Daniel Speder", role:"Founder",           city:"Munich DE",    av:"DS", bio:"Freelancer turned founder. Built InvoiceAI after years of fighting with US-centric invoicing tools that didn't understand EU VAT." },
     { name:"Marta Conti",  role:"CTO & Co-founder",  city:"Milan IT",     av:"MC", bio:"Ex-engineer at Stripe Europe. Deep expertise in EU payment infrastructure, VAT systems and XRechnung/Factur-X." },
     { name:"Sophie Richter",role:"Head of Design",   city:"Munich DE",    av:"SR", bio:"Lead designer at a top Berlin agency for 8 years. Created brand identities for clients across DE, AT and CH." },
     { name:"Pierre Morel", role:"Head of Growth",    city:"Paris FR",     av:"PM", bio:"Grew two B2B SaaS products from 0 to €1M ARR. Specialist in European market entry and community-led growth." },
@@ -1867,7 +2040,7 @@ function PagePrivacy() {
   return (
     <SubLayout pill="Legal" title="Privacy Policy" sub="Last updated: 1 May 2026. We process your data fairly, transparently and in accordance with GDPR.">
       <SH>1. Who we are</SH>
-      <SP>InvoiceAI GmbH is registered in Berlin, Germany. We are the data controller for personal data collected through invoiceai.eu and our software services. Data Protection Officer: privacy@invoiceai.eu</SP>
+      <SP>Daniel Speder (Selbständiger) is the operator of invoice-ai.de and the data controller for personal data collected through this website and its services. Contact: privacy@invoice-ai.de · Arndstr. 2 · 80469 München · Germany</SP>
       <SH>2. Data we collect</SH>
       <SLI>Account data: name, email address, company name, country of residence</SLI>
       <SLI>Billing data: VAT number, payment method (processed by Stripe — we never store card numbers)</SLI>
@@ -1887,7 +2060,7 @@ function PagePrivacy() {
       <SH>5. Data retention</SH>
       <SP>Account data retained for the duration of your subscription plus 3 months. Invoice and financial records retained for 10 years per German tax law (§147 AO).</SP>
       <SH>6. Contact</SH>
-      <SP>InvoiceAI GmbH · Unter den Linden 1 · 10117 Berlin · privacy@invoiceai.eu</SP>
+      <SP>Daniel Speder · Arndstr. 2 · 80469 München · privacy@invoice-ai.de</SP>
     </SubLayout>
   );
 }
@@ -1909,9 +2082,9 @@ function PageTerms() {
       <SH>5. EU consumer rights</SH>
       <SP>EU consumers have a 14-day right of withdrawal. Our services are intended primarily for business use.</SP>
       <SH>6. Governing law</SH>
-      <SP>These terms are governed by German law. Disputes will be referred to the courts of Berlin, Germany, unless mandatory consumer law requires otherwise. EU ODR platform: ec.europa.eu/consumers/odr</SP>
+      <SP>These terms are governed by German law. Disputes will be referred to the courts of München, Germany, unless mandatory consumer law requires otherwise. EU ODR platform: ec.europa.eu/consumers/odr</SP>
       <SH>7. Contact</SH>
-      <SP>InvoiceAI GmbH · Unter den Linden 1 · 10117 Berlin · legal@invoiceai.eu</SP>
+      <SP>Daniel Speder · Arndstr. 2 · 80469 München · legal@invoice-ai.de</SP>
     </SubLayout>
   );
 }
@@ -1972,20 +2145,17 @@ function PageCookies() {
       <SH>Our approach</SH>
       <SP>We deliberately minimise cookie usage. No advertising cookies, no third-party tracking, no social media pixels. Our analytics are cookieless (Plausible) and our only strictly necessary cookies are for authentication.</SP>
       <SH>Cookies we use</SH>
-      <div style={{ background:L.cream, borderRadius:10, overflow:"hidden", border:"1px solid "+L.border, margin:"16px 0 28px" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1.5fr 1.2fr 0.8fr 2fr", padding:"10px 16px", borderBottom:"1px solid "+L.border, background:L.sand }}>
-          {["Cookie","Type","Duration","Purpose"].map(function(h) {
-            return <span key={h} style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.08em", textTransform:"uppercase", color:L.muted }}>{h}</span>;
-          })}
-        </div>
+      <div style={{ display:"flex", flexDirection:"column", gap:8, margin:"16px 0 28px" }}>
         {cookies.map(function(c, i) {
           var tc = typeColor[c.type] || L.muted;
           return (
-            <div key={c.name} style={{ display:"grid", gridTemplateColumns:"1.5fr 1.2fr 0.8fr 2fr", padding:"12px 16px", borderBottom:i<cookies.length-1?"1px solid "+L.border:"none", alignItems:"start" }}>
-              <span style={{ fontFamily:fMono, fontSize:10, color:L.ink }}>{c.name}</span>
-              <span style={{ fontFamily:fMono, fontSize:8, color:tc, background:tc+"15", border:"1px solid "+tc+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em", display:"inline-block" }}>{c.type}</span>
-              <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{c.dur}</span>
-              <span style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.5, fontWeight:300 }}>{c.desc}</span>
+            <div key={c.name} style={{ background:L.white, border:"1px solid "+L.border, borderRadius:10, padding:"14px 16px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
+                <span style={{ fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:500 }}>{c.name}</span>
+                <span style={{ fontFamily:fMono, fontSize:8, color:tc, background:tc+"15", border:"1px solid "+tc+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{c.type}</span>
+                <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, marginLeft:"auto" }}>{c.dur}</span>
+              </div>
+              <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.5, margin:0, fontWeight:300 }}>{c.desc}</p>
             </div>
           );
         })}
@@ -2002,13 +2172,13 @@ var PORTAL_INVOICE = {
   date:       "29 April 2026",
   due:        "29 May 2026",
   from: {
-    name:     "Acme Studio GmbH",
-    street:   "Unter den Linden 1",
-    city:     "10117 Berlin, Germany",
-    vat:      "DE123456789",
-    iban:     "DE89 3704 0044 0532 0130 00",
-    bic:      "COBADEFFXXX",
-    email:    "hello@acmestudio.de",
+    name:     "Daniel Speder",
+    street:   "Arndstr. 2",
+    city:     "80469 München, Germany",
+    vat:      "",
+    iban:     "",
+    bic:      "",
+    email:    "hello@invoice-ai.de",
   },
   to: {
     name:     "Studio Verde GmbH",
@@ -2211,7 +2381,7 @@ function ClientPortal(props) {
                   <p style={{ fontFamily:fSans, fontSize:13, color:L.green, fontWeight:500, marginBottom:14 }}>✓ Invoice approved on 30 Apr 2026</p>
                   <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:16, fontWeight:300 }}>Choose your payment method:</p>
                   <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
-                    {[["sepa","🏦 SEPA Transfer"],["card","💳 Card"],["apple","🍎 Apple Pay"]].map(function(pair) {
+                    {[["sepa","SEPA Transfer"],["card","Card"],["apple","Apple Pay"]].map(function(pair) {
                       return (
                         <button key={pair[0]} onClick={function(){ setPayMethod(pair[0]); }} style={{ background:payMethod===pair[0] ? L.ink : L.paper, color:payMethod===pair[0] ? "#fff" : L.ink, border:"1.5px solid "+(payMethod===pair[0] ? L.ink : L.border), borderRadius:8, padding:"9px 18px", cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:payMethod===pair[0] ? 500 : 400 }}>
                           {pair[1]}
@@ -2454,7 +2624,7 @@ function AuthModal(props) {
 
         {mode === "done" ? (
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
-            <div style={{ fontSize:40, marginBottom:14 }}>📬</div>
+            <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="send" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:800, color:L.ink, marginBottom:8 }}>Check your email</h3>
             <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, lineHeight:1.6 }}>We sent a magic link to <strong style={{ color:L.ink }}>{email}</strong>. Click it to sign in — no password needed.</p>
           </div>
@@ -2560,7 +2730,7 @@ function SignupModal(props) {
             <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginLeft:12 }}>×</button>
           </div>
           <div style={{ display:"flex", gap:16, marginTop:14 }}>
-            {["🎯 14-day free trial","🔒 No credit card","📍 EU-hosted data"].map(function(t) {
+            {["14-day free trial","No credit card","EU-hosted data"].map(function(t) {
               return <div key={t} style={{ fontFamily:fMono, fontSize:8, color:"rgba(255,255,255,0.65)", letterSpacing:"0.04em" }}>{t}</div>;
             })}
           </div>
@@ -2568,7 +2738,7 @@ function SignupModal(props) {
         {!done ? (
           <div style={{ padding:"24px 28px 28px" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="Alex Krause" style={inp} /></div>
+              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="Daniel Speder" style={inp} /></div>
               <div><label style={lbl}>Work email *</label><input type="email" value={email} onChange={function(e){ setEmail(e.target.value); }} placeholder="alex@studio.de" style={inp} /></div>
               <div>
                 <label style={lbl}>I am a *</label>
@@ -2593,7 +2763,7 @@ function SignupModal(props) {
           </div>
         ) : (
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
-            <div style={{ fontSize:40, marginBottom:14 }}>🎉</div>
+            <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="check" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
             <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
             <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
@@ -2618,7 +2788,7 @@ function CookieBanner(props) {
     <div style={{ position:"fixed", bottom:24, left:24, zIndex:998, maxWidth:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"18px 18px 14px", boxShadow:"0 8px 32px rgba(44,36,22,0.15)" }}>
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:10 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <span style={{ fontSize:18 }}>🍪</span>
+          <Icon name="shield" size={16} color={L.accent} />
           <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>Cookie settings</span>
         </div>
       </div>
