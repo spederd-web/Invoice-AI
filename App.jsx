@@ -22,11 +22,11 @@ var L = {
   blueGlow:   "rgba(59,91,219,0.08)",
 };
 
-var fSans  = "'DM Sans',sans-serif";
+var fSans  = "'Inter',sans-serif";
 var fMono  = "'DM Mono',monospace";
 var fSerif = "'Playfair Display',serif";
 
-var FONTS = "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');";
+var FONTS = "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');";
 
 // ── Translations ──────────────────────────────────────────────────────────────
 var TR = {
@@ -199,6 +199,40 @@ var TR = {
     footerWaitlist:  "Lista d'attesa — Studio €29/mese per sempre",
     footerWaitlistSub: "Prezzo fondatore. Bloccato all'iscrizione. Termina al lancio.",
     footerCta:       "Accesso anticipato →",
+  },
+  hu: {
+    navStart:        "Kezdd ingyen",
+    navStartArrow:   "Kezdd ingyen →",
+    heroPill:        "Európai szabadúszóknak · 1 400+ szakember",
+    heroTitle1:      "Arra tervezve, ahogy a",
+    heroTitle2:      "szabadúszók dolgoznak.",
+    heroSub:         "MI-alapú ajánlatok, EU-kompatibilis számlák, ügyfél-irányítópult — egy eszköz tervezőknek, fejlesztőknek, tanácsadóknak és ügynökségeknek egész Európában.",
+    heroCta:         "Korai hozzáférés →",
+    heroSecondary:   "Árak megtekintése",
+    heroFine:        "Bankkártya nélkül · 14 napos ingyenes próba · Bármikor lemondható",
+    heroCounter:     "számlázva ezen a hónapon felhasználóink által",
+    featTitle:       "Arra tervezve, ahogy valójában dolgozol",
+    featSub:         "Más eszközök könyvelőknek készültek. A miénk azoknak, akik a munkát végzik.",
+    euTitle:         "Az európai számlázásra tervezve.",
+    euSub:           "Nem utólag hozzáadva. Nem egy bővítmény. Minden EU-megfelelési követelmény beépítve az alapokba.",
+    reviewsTitle:    "Megbízható egész Európában",
+    pricingTitle:    "Egyszerű, tisztességes árak",
+    pricingSub:      "14 napos ingyenes próba. Bankkártya nélkül.",
+    pricingCta:      "Ingyenes próba →",
+    propTitle:       "Ajánlat készítése",
+    propSub:         "Írd le a projektedet. Az MI másodpercek alatt ügyfélkész ajánlatot ír.",
+    propGenerate:    "✦ Ajánlat generálása",
+    propWriting:     "✦ Ajánlat írása folyamatban…",
+    propReady:       "✓ Ajánlat kész",
+    modalTitle:      "Csatlakozz a várólistához.",
+    modalSub:        "Az alapító tagok örökre €29/hó áron kapják a Studiót — 50%-kal az indulási ár alatt.",
+    modalCta:        "Csatlakozás a listához →",
+    modalJoining:    "Csatlakozás folyamatban…",
+    modalDoneTitle:  "Felkerültél a listára.",
+    modalExploreCta: "Fedezd fel a demót →",
+    footerWaitlist:  "Várólista — Studio €29/hó örökre",
+    footerWaitlistSub: "Alapítói ár. Regisztrációkor rögzítve. Az induláskor véget ér.",
+    footerCta:       "Korai hozzáférés →",
   },
 };
 
@@ -400,7 +434,7 @@ function Nav(props) {
             onChange={function(e){ setLang(e.target.value); }}
             style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 28px 5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:10, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
           >
-            {[["de","DE — Deutsch"],["en","EN — English"],["fr","FR — Français"],["es","ES — Español"],["it","IT — Italiano"]].map(function(pair) {
+            {[["de","DE — Deutsch"],["en","EN — English"],["fr","FR — Français"],["es","ES — Español"],["it","IT — Italiano"],["hu","HU — Magyar"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
             })}
           </select>
@@ -429,7 +463,7 @@ function Nav(props) {
           <div style={{ borderTop:"1px solid "+L.border, marginTop:8, paddingTop:12 }}>
             <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8, paddingLeft:4 }}>Language</div>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-              {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"]].map(function(pair) {
+              {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
                 return (
                   <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:lang===pair[0] ? L.ink : L.paper, color:lang===pair[0] ? "#fff" : L.muted, border:"1px solid "+(lang===pair[0] ? L.ink : L.border), borderRadius:6, padding:"6px 12px", cursor:"pointer", fontFamily:fMono, fontSize:11, fontWeight:lang===pair[0] ? 600 : 400 }}>
                     {pair[1]}
@@ -750,6 +784,37 @@ var PROJ_TYPES = ["Brand Identity","Logo Design","UX/UI Design","Web Development
 var BUDGETS = ["Not specified","€1,500–3,000","€3,000–6,000","€6,000–12,000","€12,000–25,000","€25,000+"];
 var TIMELINES = ["Not specified","1–2 weeks","3–4 weeks","5–8 weeks","2–3 months","Ongoing retainer"];
 
+// Industry-specific proposal structures — what sections matter per project type
+var PROJ_TEMPLATES = {
+  "Brand Identity":      { sections:["Brand discovery & strategy","Visual identity system","Deliverables (logo, palette, typography, guidelines)","Revision rounds","File formats & handoff"], note:"Mention brand workshops and mood board phase. Emphasise longevity and consistency across touchpoints." },
+  "Logo Design":         { sections:["Discovery brief","Concept directions (x3)","Refinement rounds","Final files (SVG, PNG, dark/light variants)"], note:"Emphasise uniqueness and trademark readiness. Mention what is NOT included (full brand identity) unless scoped." },
+  "UX/UI Design":        { sections:["User research & personas","Information architecture","Wireframes","High-fidelity designs","Handoff to development (Figma)"], note:"Mention accessibility compliance (WCAG 2.1). Stress collaboration with dev team." },
+  "Web Development":     { sections:["Technical scoping","Design integration","Development sprints","Testing & QA","Launch & handover"], note:"Specify tech stack. Include maintenance terms. Mention GDPR compliance for EU clients." },
+  "App Design":          { sections:["Product discovery","User flows","Prototype","UI design system","Developer handoff"], note:"Mention platform (iOS/Android/cross-platform). Include number of screens in scope." },
+  "Software Consulting": { sections:["Current state assessment","Recommendations report","Implementation roadmap","Stakeholder workshops"], note:"Position as strategic advisor. Emphasise ROI and risk reduction. Formal tone recommended." },
+  "Motion Design":       { sections:["Concept & storyboard","Style frames","Animation production","Revisions","Final export formats"], note:"Specify frame rate, duration and delivery format (MP4, GIF, Lottie). Mention music/sound licensing." },
+  "Copywriting":         { sections:["Brand voice alignment","Research & interviews","Draft delivery","Revision rounds","Final copy files"], note:"Specify word count and number of pages/assets. Mention SEO if relevant." },
+  "Strategy":            { sections:["Stakeholder interviews","Market & competitor analysis","Strategic framework","Presentation & workshop","Written report"], note:"Position as executive-level work. Justify price with business impact framing." },
+  "Pitch Deck":          { sections:["Narrative structure","Slide design","Data visualisation","Investor-ready polish","Source files"], note:"Mention number of slides. Emphasise storytelling. Formal tone strongly recommended for investor audiences." },
+};
+
+// Country-aware communication norms
+var COUNTRY_TONE = {
+  "DE": "German business communication is direct and structured. Use Sie (formal address). Be precise and factual. Avoid enthusiasm or hyperbole. Credentials and process matter. Do not start with small talk.",
+  "AT": "Austrian business communication is similar to German but slightly warmer. Use Sie. Be formal but not cold. Quality and craft are valued over speed.",
+  "CH": "Swiss business communication values precision, neutrality and understatement. Use Sie. Be concise. Avoid overpromising. Multilingual context — keep language simple.",
+  "FR": "French business communication values sophistication and logic. A formal but elegant tone works well. Demonstrate cultural awareness. Avoid being too direct about price — frame investment value first.",
+  "IT": "Italian business culture values relationships and aesthetics. A warm but professional tone. Show appreciation for design quality. Personal connection before business.",
+  "ES": "Spanish business communication is warm and relationship-oriented. Show enthusiasm for the project. Be personable while remaining professional.",
+  "NL": "Dutch business communication is direct, practical and egalitarian. Get to the point. Avoid corporate filler. Honesty and transparency are valued over politeness.",
+  "BE": "Belgian business communication varies by region. Generally formal and process-oriented. Bilingual context (FR/NL) — keep language clear and neutral.",
+  "PL": "Polish business communication is formal and hierarchical. Use titles where known. Be thorough and detailed. Demonstrate reliability and experience.",
+  "HU": "Hungarian business communication is formal and structured. Respect hierarchy. Be precise about deliverables and timelines. Quality over speed.",
+  "SE": "Swedish business culture is egalitarian, informal and consensus-driven. First names are standard even in business. Be collaborative, not hierarchical.",
+  "DK": "Danish business communication is direct, informal and trust-based. Short sentences, no fluff. Sustainability and ethics resonate.",
+  "default": "Professional, clear and client-focused. Adapt to the client's apparent communication style."
+};
+
 // EU invoice logic helpers
 function fmtDate(country, daysOffset) {
   var d = new Date();
@@ -1017,8 +1082,8 @@ function InvoiceForm(props) {
             <div><label style={lblStyle}>VAT Number *</label><input value={s.sVAT} onChange={function(e){ u("sVAT",e.target.value); }} style={monoStyle} /></div>
             <div><label style={lblStyle}>IBAN *</label><input value={s.sIBAN} onChange={function(e){ u("sIBAN",e.target.value); }} style={monoStyle} /></div>
             <div><label style={lblStyle}>BIC/SWIFT</label><input value={s.sBIC} onChange={function(e){ u("sBIC",e.target.value); }} style={monoStyle} /></div>
-            <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="Arndstr. 2" style={inpStyle} /></div>
-            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="80469 München" style={inpStyle} /></div>
+            <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="e.g. Leopoldstr. 10" style={inpStyle} /></div>
+            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="e.g. 80802 München" style={inpStyle} /></div>
           </div>
         ))}
         {cardWrap("Client", <Tag c={L.blue}>Bill To</Tag>, (
@@ -1181,6 +1246,7 @@ function ProposalForm(props) {
   var lang = props.lang || "en";
   var [clientName, setClientName] = useState("");
   var [clientCo, setClientCo] = useState("");
+  var [clientCountry, setClientCountry] = useState("DE");
   var [projType, setProjType] = useState("");
   var [projDesc, setProjDesc] = useState("");
   var [budget, setBudget] = useState("");
@@ -1191,34 +1257,44 @@ function ProposalForm(props) {
   var [hasGen, setHasGen] = useState(false);
   var [history, setHistory] = useState([]);
 
-  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'DM Sans',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none" };
+  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'Inter',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none" };
   var lblStyle = { display:"block", marginBottom:4, fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
 
   function generate() {
     if (!projDesc.trim()) return;
     setLoading(true); setResult(""); setHistory([]);
+
     var toneGuide = tone === "direct" ? "Direct and confident. Short sentences. No corporate filler." : tone === "warm" ? "Warm and personal. Show genuine interest. Still professional." : "Formal and precise. Appropriate for larger organisations.";
+    var countryGuide = COUNTRY_TONE[clientCountry] || COUNTRY_TONE["default"];
+    var template = PROJ_TEMPLATES[projType];
+    var templateGuide = template
+      ? "This is a " + projType + " project. Structure your proposal around these sections: " + template.sections.join(", ") + ". Important: " + template.note
+      : "Structure with: opening, what we'll create, how it works, investment, close.";
+
     var rules = [
       "You are an expert creative professional writing a project proposal.",
-      "Write in English.",
-      "Tone: " + toneGuide,
-      "Start with the client first name only (no Dear, no Hello). Just their name followed by a comma.",
-      "One short opening paragraph (2-3 sentences). Reference something specific about their situation.",
-      "Section: What we will create — specific deliverables for the project type.",
-      "Section: How it works — simple week-by-week timeline.",
-      "Section: Investment — price and payment terms. Estimate if no budget given.",
-      "One confident closing line. No Best regards or Sincerely.",
+      "Tone style: " + toneGuide,
+      "Cultural context for this client: " + countryGuide,
+      "Proposal structure: " + templateGuide,
+      "Start with the client first name only if known, otherwise start directly with the opening line. No 'Dear', no 'Hello'.",
+      "One short opening paragraph (2-3 sentences). Reference something specific about their situation or project.",
+      "Keep sections tight. No padding. Each section should earn its place.",
+      "Investment section: be specific. If budget given, work within it. If not, estimate based on scope and market rate.",
+      "One confident closing line with a clear next step. No 'Best regards' or 'Sincerely'.",
       "Use --- before the closing line.",
-      "200-300 words max.",
+      "200-320 words total.",
     ].join(" ");
+
     var msgs = [
-      clientName ? "Client: " + clientName : null,
-      clientCo ? "Company: " + clientCo : null,
+      clientName ? "Client first name: " + clientName : null,
+      clientCo ? "Client company: " + clientCo : null,
+      "Client country: " + clientCountry,
       "Project type: " + (projType || "creative project"),
       "Brief: " + projDesc,
-      budget ? "Budget: " + budget : null,
-      timeline ? "Timeline: " + timeline : null,
+      budget && budget !== "Not specified" ? "Budget: " + budget : null,
+      timeline && timeline !== "Not specified" ? "Timeline: " + timeline : null,
     ].filter(Boolean).join("\n");
+
     fetch("/api/claude", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
@@ -1254,11 +1330,11 @@ function ProposalForm(props) {
 
   function renderProposal(text) {
     return (
-      <div style={{ fontFamily:"'DM Sans',sans-serif" }}>
+      <div style={{ fontFamily:"'Inter',sans-serif" }}>
         {text.split("\n").map(function(line, i) {
           if (line === "---") return <hr key={i} style={{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" }} />;
           if (line.startsWith("## ")) return <h3 key={i} style={{ fontFamily:"'Playfair Display',serif", fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
-          if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:"'DM Sans',sans-serif", fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
+          if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:"'Inter',sans-serif", fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
           if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:13, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>·</span><span>{line.slice(2)}</span></div>;
           if (line === "") return <div key={i} style={{ height:8 }} />;
           if (line.indexOf("**") >= 0) {
@@ -1275,13 +1351,29 @@ function ProposalForm(props) {
     <div className="prop-grid" style={{ maxWidth:860, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
-        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
+        <p style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
           <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
           <div style={{ padding:"13px 16px" }}>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9, marginBottom:9 }}>
               <div><label style={lblStyle}>First name</label><input value={clientName} onChange={function(e){ setClientName(e.target.value); }} placeholder="Sarah" style={inpStyle} /></div>
               <div><label style={lblStyle}>Company</label><input value={clientCo} onChange={function(e){ setClientCo(e.target.value); }} placeholder="TechFlow GmbH" style={inpStyle} /></div>
+            </div>
+            <div>
+              <label style={lblStyle}>Client country</label>
+              <select value={clientCountry} onChange={function(e){ setClientCountry(e.target.value); }} style={{ ...inpStyle, cursor:"pointer" }}>
+                <optgroup label="EU Member States">
+                  {EU.filter(function(c){ return c.eu; }).map(function(c){ return <option key={c.code} value={c.code}>{c.name}</option>; })}
+                </optgroup>
+                <optgroup label="Non-EU">
+                  {EU.filter(function(c){ return !c.eu; }).map(function(c){ return <option key={c.code+c.name} value={c.code}>{c.name}</option>; })}
+                </optgroup>
+              </select>
+              {COUNTRY_TONE[clientCountry] && (
+                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.accent, marginTop:5, lineHeight:1.5, letterSpacing:"0.02em" }}>
+                  {COUNTRY_TONE[clientCountry].split(".")[0] + "."}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -1290,11 +1382,19 @@ function ProposalForm(props) {
           <div style={{ padding:"13px 16px" }}>
             <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:10 }}>
               {PROJ_TYPES.slice(0,8).map(function(t) {
-                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:11 }}>{t}</button>;
+                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:11 }}>{t}</button>;
               })}
             </div>
+            {projType && PROJ_TEMPLATES[projType] && (
+              <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:7, padding:"8px 10px", marginBottom:10 }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
+                <div style={{ fontFamily:"'Inter',sans-serif", fontSize:11, color:L.muted, lineHeight:1.5 }}>
+                  {PROJ_TEMPLATES[projType].sections.join(" → ")}
+                </div>
+              </div>
+            )}
             <label style={lblStyle}>Brief *</label>
-            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:"'DM Sans',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none", resize:"vertical", lineHeight:1.55 }} />
+            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:"'Inter',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none", resize:"vertical", lineHeight:1.55 }} />
           </div>
         </div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
@@ -1322,12 +1422,12 @@ function ProposalForm(props) {
             <div style={{ display:"flex", gap:6 }}>
               {[["direct","Direct & confident"],["warm","Warm & personal"],["formal","Formal & precise"]].map(function(pair) {
                 var v = pair[0]; var lb = pair[1];
-                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:11, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
+                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:11, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
               })}
             </div>
           </div>
         </div>
-        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'DM Sans',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(200,80,42,0.25)" : "none" }}>
+        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(200,80,42,0.25)" : "none" }}>
           {loading ? "✦ Writing your proposal…" : "✦ Generate Proposal"}
         </button>
       </div>
@@ -1341,12 +1441,20 @@ function ProposalForm(props) {
                   <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.muted, marginLeft:5 }}>Writing…</span>
                 </div>
               ) : (
-                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
+                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
+                  {result && (
+                    <>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
+                    </>
+                  )}
+                </div>
               )}
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
-                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:10 }}>↺ Redo</button>
-                  <button style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'DM Sans',sans-serif", fontSize:10 }}>Export PDF ↓</button>
+                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>↺ Redo</button>
+                  <button style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>Export PDF ↓</button>
                 </div>
               )}
             </div>
@@ -1358,7 +1466,7 @@ function ProposalForm(props) {
                 <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.muted, alignSelf:"center" }}>Refine:</span>
                 {[["Make it shorter","Cut this proposal to under 180 words. Keep the structure but be ruthless."],["More formal","Rewrite in a more formal, corporate tone suitable for a large enterprise client."],["Add case studies","Add a brief 'Why us' section mentioning 2 relevant past projects with outcomes."],["Stronger close","Rewrite the closing paragraph to be more confident and create a clear next step."]].map(function(pair) {
                   return (
-                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:"'DM Sans',sans-serif", fontSize:10 }}>
+                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>
                       {pair[0]}
                     </button>
                   );
@@ -1383,12 +1491,12 @@ function InvoiceGen(props) {
   var onFirstGenerate = props.onFirstGenerate;
   var setPage = props.setPage;
   var lang = props.lang || "en";
-  var [mode, setMode] = useState("proposal");
+  var [mode, setMode] = useState("invoice");
   var [view, setView] = useState("form");
 
   var defaultInvState = {
     country:EU[0], terms:"30", rc:false, gdpr:true, latePayment:false, creditNote:false, vatExempt:false, eInvoice:false, discount:"", projRef:"",
-    sName:"Daniel Speder", sVAT:"", sIBAN:"", sBIC:"", sStreet:"Arndstr. 2", sCity:"80469 München",
+    sName:"Your Name / Studio", sVAT:"", sIBAN:"", sBIC:"", sStreet:"Your Street", sCity:"Your City",
     cName:"Studio Verde GmbH", cVAT:"", cCo:"DE", cStreet:"", cCity:"",
     lines:[{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
   };
@@ -1428,21 +1536,20 @@ function InvoiceGen(props) {
 
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
-      <div style={{ background:L.cream, borderBottom:"1px solid "+L.border, padding:"0 28px", display:"flex", alignItems:"center", gap:4, height:46 }}>
-        {[["proposal","AI Proposal"],["invoice","EU Invoice"]].map(function(pair) {
+      <div style={{ background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", height:46 }}>
+        {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
           var m = pair[0]; var lb = pair[1];
-          return <button key={m} onClick={function(){ setMode(m); setView("form"); }} style={{ background:mode===m ? L.accent : "transparent", color:mode===m ? "#fff" : L.muted, border:"none", padding:"5px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>{lb}</button>;
+          return <button key={m} onClick={function(){ setMode(m); setView("form"); }} style={{ flex:1, background:mode===m ? L.accent : "transparent", color:mode===m ? "#fff" : L.muted, border:"none", borderRight:m==="invoice" ? "1px solid "+L.border : "none", padding:"0 8px", cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, whiteSpace:"nowrap", height:46, display:"flex", alignItems:"center", justifyContent:"center" }}>{lb}</button>;
         })}
-        <div style={{ flex:1 }} />
-        {mode==="invoice" && (
-          <div style={{ display:"flex", gap:6 }}>
-            {[["form","Form"],["preview","Preview"]].map(function(pair) {
-              var v = pair[0]; var lb = pair[1];
-              return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? L.paper : L.muted, border:"none", padding:"5px 12px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:10 }}>{lb}</button>;
-            })}
-          </div>
-        )}
       </div>
+      {mode==="invoice" && (
+        <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 20px", display:"flex", gap:4, height:38, alignItems:"center" }}>
+          {[["form","Form"],["preview","Preview"]].map(function(pair) {
+            var v = pair[0]; var lb = pair[1];
+            return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"4px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:10, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
+          })}
+        </div>
+      )}
       {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} />}
       {mode==="invoice" && view==="form" && (
         <InvoiceForm state={invState} update={updateInv} setView={setView} addLine={addLine} updLine={updLine} remLine={remLine} />
@@ -2172,13 +2279,13 @@ var PORTAL_INVOICE = {
   date:       "29 April 2026",
   due:        "29 May 2026",
   from: {
-    name:     "Daniel Speder",
-    street:   "Arndstr. 2",
-    city:     "80469 München, Germany",
+    name:     "Studio Nordlicht GmbH",
+    street:   "Leopoldstr. 10",
+    city:     "80802 München, Germany",
     vat:      "",
     iban:     "",
     bic:      "",
-    email:    "hello@invoice-ai.de",
+    email:    "hello@nordlicht.de",
   },
   to: {
     name:     "Studio Verde GmbH",
@@ -2738,7 +2845,7 @@ function SignupModal(props) {
         {!done ? (
           <div style={{ padding:"24px 28px 28px" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="Daniel Speder" style={inp} /></div>
+              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="e.g. Anna Müller" style={inp} /></div>
               <div><label style={lbl}>Work email *</label><input type="email" value={email} onChange={function(e){ setEmail(e.target.value); }} placeholder="alex@studio.de" style={inp} /></div>
               <div>
                 <label style={lbl}>I am a *</label>
