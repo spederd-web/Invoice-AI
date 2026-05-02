@@ -40,6 +40,7 @@ var TR = {
     heroCta:         "Get early access →",
     heroSecondary:   "See pricing",
     heroFine:        "No credit card · 14-day free trial · Cancel anytime",
+    heroFeatures:    "AI proposal writer  ·  EU-compliant invoices  ·  Client portal",
     heroCounter:     "invoiced this month by our users",
     featTitle:       "Built around how you actually work",
     featSub:         "Tools built for accountants. Ours is built for the people who do the work.",
@@ -74,6 +75,7 @@ var TR = {
     heroCta:         "Frühen Zugang erhalten →",
     heroSecondary:   "Preise ansehen",
     heroFine:        "Keine Kreditkarte · 14 Tage kostenlos · Jederzeit kündbar",
+    heroFeatures:    "KI-Angebotsschreiber  ·  EU-konforme Rechnungen  ·  Kundenportal",
     heroCounter:     "diesen Monat von unseren Nutzern abgerechnet",
     featTitle:       "Gebaut für die Art, wie du wirklich arbeitest",
     featSub:         "Tools für Buchhalter. Unseres ist für die Menschen gebaut, die die Arbeit machen.",
@@ -108,6 +110,7 @@ var TR = {
     heroCta:         "Accès anticipé →",
     heroSecondary:   "Voir les tarifs",
     heroFine:        "Sans carte bancaire · 14 jours gratuits · Résiliation à tout moment",
+    heroFeatures:    "Propositions par IA  ·  Factures conformes UE  ·  Portail client",
     heroCounter:     "facturés ce mois par nos utilisateurs",
     featTitle:       "Conçu pour la façon dont vous travaillez vraiment",
     featSub:         "Les outils sont faits pour les comptables. Le nôtre est fait pour ceux qui font le travail.",
@@ -142,6 +145,7 @@ var TR = {
     heroCta:         "Acceso anticipado →",
     heroSecondary:   "Ver precios",
     heroFine:        "Sin tarjeta de crédito · 14 días gratis · Cancela cuando quieras",
+    heroFeatures:    "Propuestas con IA  ·  Facturas conformes UE  ·  Portal de clientes",
     heroCounter:     "facturados este mes por nuestros usuarios",
     featTitle:       "Construido para la forma en que realmente trabajas",
     featSub:         "Herramientas hechas para contables. La nuestra está hecha para quienes hacen el trabajo.",
@@ -176,6 +180,7 @@ var TR = {
     heroCta:         "Accesso anticipato →",
     heroSecondary:   "Vedi i prezzi",
     heroFine:        "Senza carta di credito · 14 giorni gratis · Disdici quando vuoi",
+    heroFeatures:    "Proposte con IA  ·  Fatture conformi UE  ·  Portale clienti",
     heroCounter:     "fatturati questo mese dai nostri utenti",
     featTitle:       "Costruito per come lavori davvero",
     featSub:         "Strumenti fatti per i contabili. Il nostro è fatto per chi svolge il lavoro.",
@@ -210,6 +215,7 @@ var TR = {
     heroCta:         "Korai hozzáférés →",
     heroSecondary:   "Árak megtekintése",
     heroFine:        "Bankkártya nélkül · 14 napos ingyenes próba · Bármikor lemondható",
+    heroFeatures:    "MI ajánlatíró  ·  EU-kompatibilis számlák  ·  Ügyfélportál",
     heroCounter:     "számlázva ezen a hónapon felhasználóink által",
     featTitle:       "Arra tervezve, ahogy valójában dolgozol",
     featSub:         "Más eszközök könyvelőknek készültek. A miénk azoknak, akik a munkát végzik.",
@@ -532,6 +538,16 @@ function HeroSection(props) {
         <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.06em" }}>
 {t(lang,"heroFine")}
         </p>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", flexWrap:"wrap", marginTop:16 }}>
+          {t(lang,"heroFeatures").split("  ·  ").map(function(feat, i, arr) {
+            return (
+              <div key={feat} style={{ display:"flex", alignItems:"center" }}>
+                <span style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:500, whiteSpace:"nowrap" }}>{feat}</span>
+                {i < arr.length - 1 && <span style={{ color:L.border, margin:"0 10px", fontSize:14 }}>·</span>}
+              </div>
+            );
+          })}
+        </div>
         <div style={{ marginTop:32, display:"inline-block", background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"14px 28px" }}>
           <div style={{ fontFamily:fSerif, fontSize:28, color:L.gold, fontWeight:700 }}>
             {"€"+count.toLocaleString("de-DE")}
@@ -840,21 +856,98 @@ function InvoicePreviewPanel(props) {
   var yr = new Date().getFullYear();
   var invNum = num + "-" + yr + "-437";
   var cnNum = "CN-" + yr + "-001";
+  var [xrLoading, setXrLoading] = useState(false);
+  var [xrError, setXrError] = useState("");
+
+  function exportXRechnung() {
+    setXrLoading(true); setXrError("");
+    var payload = {
+      sellerName:    s.sName   || "Your Name / Studio",
+      sellerStreet:  s.sStreet || "",
+      sellerCity:    s.sCity   || "",
+      sellerCountry: "DE",
+      sellerVAT:     s.sVAT    || "",
+      sellerIBAN:    s.sIBAN   || "",
+      sellerBIC:     s.sBIC    || "",
+      buyerName:     s.cName   || "",
+      buyerStreet:   s.cStreet || "",
+      buyerCity:     s.cCity   || "",
+      buyerCountry:  s.country ? s.country.code : "DE",
+      buyerVAT:      s.cVAT    || "",
+      buyerReference: s.orderRef || "",
+      invoiceNumber: invNum,
+      issueDate:     new Date().toISOString().slice(0, 10),
+      dueDate:       s.terms === "Net 14" ? new Date(Date.now() + 14*86400000).toISOString().slice(0,10)
+                   : s.terms === "Net 30" ? new Date(Date.now() + 30*86400000).toISOString().slice(0,10)
+                   : s.terms === "Net 60" ? new Date(Date.now() + 60*86400000).toISOString().slice(0,10)
+                   : new Date(Date.now() + 30*86400000).toISOString().slice(0,10),
+      currency:      s.country && s.country.cur ? s.country.cur : "EUR",
+      note:          s.note || "",
+      reverseCharge: !!s.rc,
+      kleinunternehmer: !!s.vatExempt,
+      lines: s.lines.filter(function(l){ return l.desc && l.qty && l.rate; }).map(function(l) {
+        var lineQty = parseFloat(l.qty) || 0;
+        var lineRate = parseFloat(l.rate) || 0;
+        return {
+          desc:      l.desc,
+          qty:       lineQty,
+          unit:      "C62",
+          unitPrice: lineRate,
+          vatRate:   (s.rc || s.vatExempt) ? 0 : vatRate,
+          lineTotal: lineQty * lineRate,
+        };
+      }),
+      subtotal:  subAfter,
+      vatAmount: vatAmt,
+      total:     total,
+    };
+
+    fetch("/api/xrechnung", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+    .then(function(r) {
+      if (!r.ok) return r.json().then(function(e) { throw new Error(e.error || "Export failed"); });
+      return r.text();
+    })
+    .then(function(xml) {
+      var blob = new Blob([xml], { type: "application/xml" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = invNum + "_XRechnung.xml";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setXrLoading(false);
+    })
+    .catch(function(err) {
+      setXrError(err.message);
+      setXrLoading(false);
+    });
+  }
   return (
     <div style={{ padding:"0 24px 48px" }}>
       <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:9, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
         ← Back to form
       </button>
-      <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" }}>
+      <div style={{ display:"flex", gap:8, marginBottom:8, flexWrap:"wrap" }}>
         <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
           <Icon name="download" size={13} color="#fff" />
           Export PDF
+        </button>
+        <button onClick={exportXRechnung} disabled={xrLoading} style={{ background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
+          <Icon name="document" size={13} color="#fff" />
+          {xrLoading ? "Generating…" : "XRechnung XML"}
         </button>
         <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
           <Icon name="send" size={13} color="#fff" />
           Share with client →
         </button>
       </div>
+      {xrError && <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, marginBottom:10 }}>XRechnung error: {xrError}</p>}
       <div id="print-invoice" style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
         {s.creditNote && (
           <div style={{ background:L.goldGlow, border:"1.5px solid "+L.gold+"55", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
@@ -1880,28 +1973,29 @@ function DBrandKits() {
 
 // ── Footer ────────────────────────────────────────────────────────────────────
 function PaymentStrip() {
+  var badges = [
+    { bg:"#635BFF", label:"Stripe",    color:"#fff", font:fSans, weight:600 },
+    { bg:"#1C1C1E", label:"Apple Pay", color:"#fff", font:fSans, weight:500 },
+    { bg:L.white,   label:"G Pay",     color:"#4285F4", font:fSans, weight:700, border:L.border },
+    { bg:"#003087", label:"SEPA",      color:"#fff", font:fMono, weight:500 },
+    { bg:"#1A1F71", label:"VISA",      color:"#fff", font:fMono, weight:700 },
+    { bg:"#EB001B", label:"MC",        color:"#fff", font:fMono, weight:700 },
+  ];
   return (
-    <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"16px 24px" }}>
-      <div style={{ maxWidth:960, margin:"0 auto", display:"flex", alignItems:"center", gap:14, flexWrap:"wrap", justifyContent:"center" }}>
-        <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase" }}>Secure payments via</span>
-        <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
-          {[
-            { bg:"#635BFF", label:"Stripe",    color:"#fff", font:fSans, weight:600 },
-            { bg:"#1C1C1E", label:"Apple Pay", color:"#fff", font:fSans, weight:500 },
-            { bg:L.white,   label:"G Pay",     color:"#4285F4", font:fSans, weight:700, border:L.border },
-            { bg:"#003087", label:"SEPA",      color:"#fff", font:fMono, weight:500 },
-            { bg:"#1A1F71", label:"VISA",      color:"#fff", font:fMono, weight:700 },
-            { bg:"#EB001B", label:"MC",        color:"#fff", font:fMono, weight:700 },
-          ].map(function(b) {
+    <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"20px 24px" }}>
+      <div style={{ maxWidth:480, margin:"0 auto", textAlign:"center" }}>
+        <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", display:"block", marginBottom:14 }}>Secure payments via</span>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8, marginBottom:12 }}>
+          {badges.map(function(b) {
             return (
-              <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:6, padding:"5px 11px", height:28, display:"flex", alignItems:"center", justifyContent:"center", minWidth:52 }}>
-                <span style={{ fontFamily:b.font, fontSize:11, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
+              <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:7, height:36, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ fontFamily:b.font, fontSize:12, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
               </div>
             );
           })}
         </div>
-        <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 8px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
-        <span style={{ fontFamily:fSans, fontSize:11, color:L.muted, fontWeight:300, flex:"1 1 100%", textAlign:"center" }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</span>
+        <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 10px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
+        <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, fontWeight:300, marginTop:10, lineHeight:1.6 }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</p>
       </div>
     </div>
   );
