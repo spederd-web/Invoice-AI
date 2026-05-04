@@ -41,6 +41,11 @@ var TR = {
     heroSecondary:   "See pricing",
     heroFine:        "No credit card · 14-day free trial · Cancel anytime",
     heroFeatures:    "Reverse charge auto-detect  ·  XRechnung XML export  ·  AI proposals in 6 languages",
+    navHome:"Home", navGenerator:"Generator", navPricing:"Pricing", navDashboard:"Dashboard",
+    footerProduct:"Product", footerCompany:"Company", footerLegal:"Legal",
+    pillFeatures:"Features", pillCompliance:"EU-Native Compliance", pillReviews:"Reviews", pillPricing:"Pricing",
+    heroSecondaryBtn:"See pricing", featSeeAll:"See all features",
+    authSignIn:"Sign in", authSignUp:"Sign up", authMagic:"Magic link",
     heroCounter:     "invoiced this month by our users",
     featTitle:       "Built around how you actually work",
     featSub:         "Tools built for accountants. Ours is built for the people who do the work.",
@@ -56,12 +61,12 @@ var TR = {
     propWriting:     "✦ Writing your proposal…",
     propReady:       "✓ Proposal ready",
     modalTitle:      "Join the waitlist.",
-    modalSub:        "Founding members lock in Studio at €19/mo forever — 35% off the launch price.",
+    modalSub:        "Founding members lock in Studio at €29/mo forever — 50% off the launch price.",
     modalCta:        "Join the waitlist →",
     modalJoining:    "Joining…",
     modalDoneTitle:  "You're on the list.",
     modalExploreCta: "Explore the demo →",
-    footerWaitlist:  "Join the waitlist — Studio €19/mo forever",
+    footerWaitlist:  "Join the waitlist — Studio €29/mo forever",
     footerWaitlistSub: "Founding member rate. Locked in at signup. Ends at launch.",
     footerCta:       "Get early access →",
   },
@@ -76,6 +81,11 @@ var TR = {
     heroSecondary:   "Preise ansehen",
     heroFine:        "Keine Kreditkarte · 14 Tage kostenlos · Jederzeit kündbar",
     heroFeatures:    "Reverse Charge automatisch  ·  XRechnung XML Export  ·  KI-Angebote in 6 Sprachen",
+    navHome:"Startseite", navGenerator:"Generator", navPricing:"Preise", navDashboard:"Dashboard",
+    footerProduct:"Produkt", footerCompany:"Unternehmen", footerLegal:"Rechtliches",
+    pillFeatures:"Funktionen", pillCompliance:"EU-Konformität", pillReviews:"Bewertungen", pillPricing:"Preise",
+    heroSecondaryBtn:"Preise ansehen", featSeeAll:"Alle Funktionen",
+    authSignIn:"Anmelden", authSignUp:"Registrieren", authMagic:"Magic Link",
     heroCounter:     "diesen Monat von unseren Nutzern abgerechnet",
     featTitle:       "Gebaut für die Art, wie du wirklich arbeitest",
     featSub:         "Tools für Buchhalter. Unseres ist für die Menschen gebaut, die die Arbeit machen.",
@@ -91,12 +101,12 @@ var TR = {
     propWriting:     "✦ Angebot wird geschrieben…",
     propReady:       "✓ Angebot fertig",
     modalTitle:      "Auf die Warteliste.",
-    modalSub:        "Gründungsmitglieder sichern sich Studio für immer zu €19/Monat — 35% unter dem Startpreis.",
+    modalSub:        "Gründungsmitglieder sichern sich Studio für immer zu €29/Monat — 50% unter dem Startpreis.",
     modalCta:        "Auf die Warteliste →",
     modalJoining:    "Wird eingetragen…",
     modalDoneTitle:  "Du stehst auf der Liste.",
     modalExploreCta: "Demo erkunden →",
-    footerWaitlist:  "Warteliste — Studio €19/Monat für immer",
+    footerWaitlist:  "Warteliste — Studio €29/Monat für immer",
     footerWaitlistSub: "Gründerpreis. Beim Anmelden gesichert. Endet beim Start.",
     footerCta:       "Frühen Zugang erhalten →",
   },
@@ -111,6 +121,11 @@ var TR = {
     heroSecondary:   "Voir les tarifs",
     heroFine:        "Sans carte bancaire · 14 jours gratuits · Résiliation à tout moment",
     heroFeatures:    "Autoliquidation automatique  ·  Export XML Factur-X  ·  Propositions IA en 6 langues",
+    navHome:"Accueil", navGenerator:"Générateur", navPricing:"Tarifs", navDashboard:"Tableau de bord",
+    footerProduct:"Produit", footerCompany:"Entreprise", footerLegal:"Mentions légales",
+    pillFeatures:"Fonctionnalités", pillCompliance:"Conformité UE", pillReviews:"Avis", pillPricing:"Tarifs",
+    heroSecondaryBtn:"Voir les tarifs", featSeeAll:"Toutes les fonctionnalités",
+    authSignIn:"Se connecter", authSignUp:"S'inscrire", authMagic:"Lien magique",
     heroCounter:     "facturés ce mois par nos utilisateurs",
     featTitle:       "Conçu pour la façon dont vous travaillez vraiment",
     featSub:         "Les outils sont faits pour les comptables. Le nôtre est fait pour ceux qui font le travail.",
@@ -126,12 +141,12 @@ var TR = {
     propWriting:     "✦ Rédaction en cours…",
     propReady:       "✓ Proposition prête",
     modalTitle:      "Rejoindre la liste d'attente.",
-    modalSub:        "Les membres fondateurs obtiennent Studio à 19 €/mois pour toujours — 35% sous le prix de lancement.",
+    modalSub:        "Les membres fondateurs obtiennent Studio à 29 €/mois pour toujours — 50% sous le prix de lancement.",
     modalCta:        "Rejoindre la liste →",
     modalJoining:    "Inscription en cours…",
     modalDoneTitle:  "Vous êtes sur la liste.",
     modalExploreCta: "Explorer la démo →",
-    footerWaitlist:  "Liste d'attente — Studio 19 €/mois à vie",
+    footerWaitlist:  "Liste d'attente — Studio 29 €/mois à vie",
     footerWaitlistSub: "Tarif fondateur. Bloqué à l'inscription. Fin au lancement.",
     footerCta:       "Accès anticipé →",
   },
@@ -146,6 +161,11 @@ var TR = {
     heroSecondary:   "Ver precios",
     heroFine:        "Sin tarjeta de crédito · 14 días gratis · Cancela cuando quieras",
     heroFeatures:    "Inversión del sujeto pasivo  ·  Export XML XRechnung  ·  Propuestas IA en 6 idiomas",
+    navHome:"Inicio", navGenerator:"Generador", navPricing:"Precios", navDashboard:"Panel",
+    footerProduct:"Producto", footerCompany:"Empresa", footerLegal:"Legal",
+    pillFeatures:"Funciones", pillCompliance:"Cumplimiento UE", pillReviews:"Reseñas", pillPricing:"Precios",
+    heroSecondaryBtn:"Ver precios", featSeeAll:"Ver todas las funciones",
+    authSignIn:"Iniciar sesión", authSignUp:"Registrarse", authMagic:"Enlace mágico",
     heroCounter:     "facturados este mes por nuestros usuarios",
     featTitle:       "Construido para la forma en que realmente trabajas",
     featSub:         "Herramientas hechas para contables. La nuestra está hecha para quienes hacen el trabajo.",
@@ -161,12 +181,12 @@ var TR = {
     propWriting:     "✦ Redactando tu propuesta…",
     propReady:       "✓ Propuesta lista",
     modalTitle:      "Únete a la lista de espera.",
-    modalSub:        "Los miembros fundadores obtienen Studio a 19 €/mes para siempre — 35% bajo el precio de lanzamiento.",
+    modalSub:        "Los miembros fundadores obtienen Studio a 29 €/mes para siempre — 50% bajo el precio de lanzamiento.",
     modalCta:        "Unirse a la lista →",
     modalJoining:    "Registrando…",
     modalDoneTitle:  "Estás en la lista.",
     modalExploreCta: "Explorar la demo →",
-    footerWaitlist:  "Lista de espera — Studio 19 €/mes para siempre",
+    footerWaitlist:  "Lista de espera — Studio 29 €/mes para siempre",
     footerWaitlistSub: "Precio fundador. Bloqueado al registrarse. Termina en el lanzamiento.",
     footerCta:       "Acceso anticipado →",
   },
@@ -181,6 +201,11 @@ var TR = {
     heroSecondary:   "Vedi i prezzi",
     heroFine:        "Senza carta di credito · 14 giorni gratis · Disdici quando vuoi",
     heroFeatures:    "Inversione contabile auto  ·  Export XML FatturaPA  ·  Proposte IA in 6 lingue",
+    navHome:"Home", navGenerator:"Generatore", navPricing:"Prezzi", navDashboard:"Dashboard",
+    footerProduct:"Prodotto", footerCompany:"Azienda", footerLegal:"Legale",
+    pillFeatures:"Funzionalità", pillCompliance:"Conformità UE", pillReviews:"Recensioni", pillPricing:"Prezzi",
+    heroSecondaryBtn:"Vedi i prezzi", featSeeAll:"Tutte le funzionalità",
+    authSignIn:"Accedi", authSignUp:"Registrati", authMagic:"Link magico",
     heroCounter:     "fatturati questo mese dai nostri utenti",
     featTitle:       "Costruito per come lavori davvero",
     featSub:         "Strumenti fatti per i contabili. Il nostro è fatto per chi svolge il lavoro.",
@@ -196,12 +221,12 @@ var TR = {
     propWriting:     "✦ Scrittura in corso…",
     propReady:       "✓ Proposta pronta",
     modalTitle:      "Unisciti alla lista d'attesa.",
-    modalSub:        "I membri fondatori ottengono Studio a €19/mese per sempre — 35% sotto il prezzo di lancio.",
+    modalSub:        "I membri fondatori ottengono Studio a €29/mese per sempre — 50% sotto il prezzo di lancio.",
     modalCta:        "Unisciti alla lista →",
     modalJoining:    "Registrazione in corso…",
     modalDoneTitle:  "Sei nella lista.",
     modalExploreCta: "Esplora la demo →",
-    footerWaitlist:  "Lista d'attesa — Studio €19/mese per sempre",
+    footerWaitlist:  "Lista d'attesa — Studio €29/mese per sempre",
     footerWaitlistSub: "Prezzo fondatore. Bloccato all'iscrizione. Termina al lancio.",
     footerCta:       "Accesso anticipato →",
   },
@@ -216,6 +241,11 @@ var TR = {
     heroSecondary:   "Árak megtekintése",
     heroFine:        "Bankkártya nélkül · 14 napos ingyenes próba · Bármikor lemondható",
     heroFeatures:    "Fordított adózás automatikusan  ·  NAV XML export  ·  MI ajánlatok 6 nyelven",
+    navHome:"Főoldal", navGenerator:"Generátor", navPricing:"Árak", navDashboard:"Irányítópult",
+    footerProduct:"Termék", footerCompany:"Cég", footerLegal:"Jogi",
+    pillFeatures:"Funkciók", pillCompliance:"EU-megfelelés", pillReviews:"Vélemények", pillPricing:"Árak",
+    heroSecondaryBtn:"Árak megtekintése", featSeeAll:"Összes funkció",
+    authSignIn:"Bejelentkezés", authSignUp:"Regisztráció", authMagic:"Varázslink",
     heroCounter:     "számlázva ezen a hónapon felhasználóink által",
     featTitle:       "Arra tervezve, ahogy valójában dolgozol",
     featSub:         "Más eszközök könyvelőknek készültek. A miénk azoknak, akik a munkát végzik.",
@@ -231,12 +261,12 @@ var TR = {
     propWriting:     "✦ Ajánlat írása folyamatban…",
     propReady:       "✓ Ajánlat kész",
     modalTitle:      "Csatlakozz a várólistához.",
-    modalSub:        "Az alapító tagok örökre €19/hó áron kapják a Studiót — 35%-kal az indulási ár alatt.",
+    modalSub:        "Az alapító tagok örökre €29/hó áron kapják a Studiót — 50%-kal az indulási ár alatt.",
     modalCta:        "Csatlakozás a listához →",
     modalJoining:    "Csatlakozás folyamatban…",
     modalDoneTitle:  "Felkerültél a listára.",
     modalExploreCta: "Fedezd fel a demót →",
-    footerWaitlist:  "Várólista — Studio €19/hó örökre",
+    footerWaitlist:  "Várólista — Studio €29/hó örökre",
     footerWaitlistSub: "Alapítói ár. Regisztrációkor rögzítve. Az induláskor véget ér.",
     footerCta:       "Korai hozzáférés →",
   },
@@ -306,9 +336,9 @@ var EU = [
 ];
 
 var PLANS = [
-  { name:"Solo",   price:9,   hi:false, features:["Up to 3 active clients","Unlimited invoices","AI proposal writer","PDF + XRechnung export","EU VAT auto-calc","SEPA payment block"] },
-  { name:"Studio", price:29,  hi:true,  badge:"Most Popular", features:["Unlimited clients","Unlimited invoices + proposals","AI writer + country tone","Client portal + approvals","Payment tracking + reminders","Brand kits","Reverse charge + VIES check"] },
-  { name:"Agency", price:79,  hi:false, features:["Everything in Studio","5 team seats","White-label client portal","API access","Priority support","DATEV export","XRechnung + ZUGFeRD XML"] },
+  { name:"Solo",   price:19,   hi:false, features:["Up to 3 active clients","Unlimited invoices","AI proposal writer","PDF + XRechnung export","EU VAT auto-calc","SEPA payment block"] },
+  { name:"Studio", price:59,  hi:true,  badge:"Most Popular", features:["Unlimited clients","Unlimited invoices + proposals","AI writer + country tone","Client portal + approvals","Payment tracking + reminders","Brand kits","Reverse charge + VIES check"] },
+  { name:"Agency", price:149,  hi:false, features:["Everything in Studio","5 team seats","White-label client portal","API access","Priority support","DATEV export","XRechnung + ZUGFeRD XML"] },
 ];
 
 var REVIEWS = [
@@ -408,9 +438,10 @@ function Nav(props) {
         <div style={{ flex:1 }} />
         <div className="nav-desktop" style={{ display:"flex", gap:2 }}>
           {PAGES.map(function(pg) {
+            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:page===pg ? 500 : 400 }}>
-                {pg}
+                {pgLabel}
               </button>
             );
           })}
@@ -438,14 +469,14 @@ function Nav(props) {
           <select
             value={lang}
             onChange={function(e){ setLang(e.target.value); }}
-            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 28px 5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:10, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
+            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
           >
-            {[["de","DE — Deutsch"],["en","EN — English"],["fr","FR — Français"],["es","ES — Español"],["it","IT — Italiano"],["hu","HU — Magyar"]].map(function(pair) {
+            {[["de","🇩🇪 DE"],["en","🇬🇧 EN"],["fr","🇫🇷 FR"],["es","🇪🇸 ES"],["it","🇮🇹 IT"],["hu","🇭🇺 HU"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
             })}
           </select>
-          <div style={{ position:"absolute", right:8, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.muted} strokeWidth="1.5" strokeLinecap="round"/></svg>
+          <div style={{ position:"absolute", right:6, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
+            <svg width="8" height="5" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.muted} strokeWidth="1.5" strokeLinecap="round"/></svg>
           </div>
         </div>
         <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
@@ -457,9 +488,10 @@ function Nav(props) {
       {menuOpen && (
         <div style={{ borderTop:"1px solid "+L.border, padding:"12px 16px 16px", display:"flex", flexDirection:"column", gap:4, background:L.white }}>
           {PAGES.map(function(pg) {
+            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.ink, border:"none", padding:"10px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
-                {pg}
+                {pgLabel}
               </button>
             );
           })}
@@ -532,7 +564,7 @@ function HeroSection(props) {
 {t(lang,"heroCta")}
           </button>
           <button onClick={function(){ setPage("Pricing"); }} style={{ background:"transparent", color:L.ink, border:"1.5px solid "+L.border, padding:"14px 24px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
-{t(lang,"heroSecondary")}
+{t(lang,"heroSecondaryBtn") || t(lang,"heroSecondary")}
           </button>
         </div>
         <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.06em" }}>
@@ -554,13 +586,10 @@ function HeroSection(props) {
             );
           })}
         </div>
-        <div style={{ marginTop:32, display:"inline-block", background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"14px 28px" }}>
-          <div style={{ fontFamily:fSerif, fontSize:28, color:L.gold, fontWeight:700 }}>
-            {"€"+count.toLocaleString("de-DE")}
-          </div>
-          <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>
-{t(lang,"heroCounter")}
-          </div>
+        <div style={{ marginTop:28, display:"inline-flex", alignItems:"center", gap:10, background:L.cream, border:"1px solid "+L.border, borderRadius:99, padding:"8px 20px 8px 16px" }}>
+          <div style={{ width:8, height:8, borderRadius:"50%", background:L.green, flexShrink:0 }} />
+          <span style={{ fontFamily:fSerif, fontSize:18, color:L.gold, fontWeight:700 }}>{"€"+count.toLocaleString("de-DE")}</span>
+          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t(lang,"heroCounter")}</span>
         </div>
       </div>
     </section>
@@ -577,12 +606,12 @@ var FEATURES = [
 ];
 
 function FeaturesSection(props) {
-  var lang = props.lang || "en";
+  var lang = props.lang || "en"; // lang already passed
   return (
     <section style={{ padding:"72px 24px", background:L.paper }}>
       <div className="desktop-section" style={{ maxWidth:960, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:48 }}>
-          <Pill color={L.gold}>Features</Pill>
+          <Pill color={L.gold}>{t(lang,"pillFeatures")||"Features"}</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
 {t(lang,"featTitle")}
           </h2>
@@ -630,7 +659,7 @@ function EUComplianceSection(props) {
     <section style={{ background:L.white, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"72px 24px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:40 }}>
-          <Pill color={L.blue}>EU-Native Compliance</Pill>
+          <Pill color={L.blue}>{t(lang,"pillCompliance")||"EU-Native Compliance"}</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
 {t(lang,"euTitle")}
           </h2>
@@ -638,23 +667,23 @@ function EUComplianceSection(props) {
             {t(lang,"euSub")}
           </p>
         </div>
-        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
           {EU_FEATURES.map(function(f, i) {
             var isOpen = open === i;
             return (
               <div key={f.title} onClick={function(){ setOpen(isOpen ? -1 : i); }}
-                style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"44" : L.border), borderRadius:10, padding:"12px 14px", cursor:"pointer", transition:"background 0.1s" }}>
+                style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"44" : L.border), borderRadius:10, padding:"14px 16px", cursor:"pointer", transition:"background 0.1s" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:isOpen ? 8 : 0 }}>
                   <div style={{ width:28, height:28, borderRadius:7, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
                     <Icon name={f.icon} size={13} color={L.accent} />
                   </div>
                   <div style={{ flex:1, minWidth:0 }}>
-                    <div style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
-                    <div style={{ fontFamily:fMono, fontSize:7, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
+                    <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
+                    <div style={{ fontFamily:fMono, fontSize:8, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
                 </div>
-                {isOpen && <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.55, margin:0, fontWeight:300, paddingTop:4, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
+                {isOpen && <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300, paddingTop:8, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
               </div>
             );
           })}
@@ -675,13 +704,13 @@ function EUComplianceSection(props) {
 
 function ReviewsSection(props) {
   var lang = props.lang || "en";
-  var [active, setActive] = useState(0);
-  var featured = [REVIEWS[0], REVIEWS[1], REVIEWS[2]];
-  var rest = [REVIEWS[3], REVIEWS[4], REVIEWS[5]];
+  var [showAll, setShowAll] = useState(false);
+  var featured = REVIEWS.slice(0, 3);
+  var extra = REVIEWS.slice(3);
   return (
     <section style={{ background:L.cream, borderBottom:"1px solid "+L.border, padding:"72px 0 56px" }}>
       <div style={{ textAlign:"center", marginBottom:32, padding:"0 24px" }}>
-        <Pill color={L.gold}>Reviews</Pill>
+        <Pill color={L.gold}>{t(lang,"pillReviews")||"Reviews"}</Pill>
         <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 8px", letterSpacing:"-0.025em" }}>
 {t(lang,"reviewsTitle")}
         </h2>
@@ -691,24 +720,25 @@ function ReviewsSection(props) {
           <span style={{ fontFamily:fMono, fontSize:10, color:L.muted }}>from 340+ reviews</span>
         </div>
       </div>
-      <div style={{ overflowX:"auto", paddingBottom:8, WebkitOverflowScrolling:"touch" }}>
-        <div style={{ display:"flex", gap:14, padding:"4px 24px 8px", width:"max-content" }}>
-          {REVIEWS.map(function(r, i) {
-            var isFeat = i < 3;
+
+      {/* Desktop: 3-col grid */}
+      <div className="reviews-desktop" style={{ display:"none", maxWidth:1100, margin:"0 auto", padding:"0 32px" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:16 }}>
+          {featured.map(function(r) {
             return (
-              <div key={r.id} style={{ background:L.white, border:"1.5px solid "+(isFeat ? L.accent+"33" : L.border), borderRadius:14, padding:"18px 18px 14px", width:280, flexShrink:0, display:"flex", flexDirection:"column", gap:10, boxShadow:isFeat ? "0 4px 16px rgba(200,80,42,0.07)" : "0 2px 8px rgba(44,36,22,0.04)" }}>
+              <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                    <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                    <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
                     <div>
-                      <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink }}>{r.name}</div>
+                      <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{r.name}</div>
                       <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
                     </div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
                 </div>
-                <Stars n={r.rating} size={11} />
-                <p style={{ fontFamily:fSans, fontSize:12, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                <Stars n={r.rating} size={12} />
+                <p style={{ fontFamily:fSans, fontSize:13, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                 <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
                   <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
                   <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
@@ -717,9 +747,71 @@ function ReviewsSection(props) {
             );
           })}
         </div>
+        {showAll && (
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:16 }}>
+            {extra.map(function(r) {
+              return (
+                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:9 }}>
+                      <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                      <div>
+                        <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{r.name}</div>
+                        <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
+                      </div>
+                    </div>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
+                  </div>
+                  <Stars n={r.rating} size={12} />
+                  <p style={{ fontFamily:fSans, fontSize:13, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        <div style={{ textAlign:"center" }}>
+          <button onClick={function(){ setShowAll(function(s){ return !s; }); }} style={{ background:"transparent", border:"1.5px solid "+L.border, borderRadius:8, padding:"9px 24px", cursor:"pointer", fontFamily:fSans, fontSize:13, color:L.muted }}>
+            {showAll ? "Show less ▲" : "Show all " + REVIEWS.length + " reviews ▼"}
+          </button>
+        </div>
       </div>
-      <div style={{ textAlign:"center", marginTop:16 }}>
-        <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>← scroll for more →</span>
+
+      {/* Mobile: horizontal scroll */}
+      <div className="reviews-mobile">
+        <div style={{ overflowX:"auto", paddingBottom:8, WebkitOverflowScrolling:"touch" }}>
+          <div style={{ display:"flex", gap:14, padding:"4px 24px 8px", width:"max-content" }}>
+            {REVIEWS.map(function(r, i) {
+              var isFeat = i < 3;
+              return (
+                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+(isFeat ? L.accent+"33" : L.border), borderRadius:14, padding:"18px 18px 14px", width:280, flexShrink:0, display:"flex", flexDirection:"column", gap:10 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:9 }}>
+                      <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                      <div>
+                        <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink }}>{r.name}</div>
+                        <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
+                      </div>
+                    </div>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
+                  </div>
+                  <Stars n={r.rating} size={11} />
+                  <p style={{ fontFamily:fSans, fontSize:12, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
+                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div style={{ textAlign:"center", marginTop:12 }}>
+          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>← scroll for more →</span>
+        </div>
       </div>
     </section>
   );
@@ -759,7 +851,7 @@ function PricingSection(props) {
     <section style={{ background:embedded ? L.paper : L.white, padding:"72px 24px" }}>
       <div style={{ maxWidth:860, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:40 }}>
-          <Pill color={L.gold}>Pricing</Pill>
+          <Pill color={L.gold}>{t(lang,"pillPricing")||"Pricing"}</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
 {t(lang,"pricingTitle")}
           </h2>
@@ -1243,7 +1335,7 @@ function InvoiceForm(props) {
   }
 
   return (
-    <div className="inv-grid desktop-inv" style={{ display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
+    <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
       <div>
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
@@ -1517,7 +1609,7 @@ function ProposalForm(props) {
   }
 
   return (
-    <div className="prop-grid desktop-prop" style={{ maxWidth:860, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
+    <div className="prop-grid desktop-prop" style={{ maxWidth:900, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
         <p style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
@@ -2061,10 +2153,10 @@ function PaymentStrip() {
     <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"20px 24px" }}>
       <div className="desktop-strip" style={{ maxWidth:480, margin:"0 auto", textAlign:"center" }}>
         <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", display:"block", marginBottom:14 }}>Secure payments via</span>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8, marginBottom:12 }}>
+        <div style={{ display:"flex", gap:8, marginBottom:12, justifyContent:"center", flexWrap:"nowrap" }}>
           {badges.map(function(b) {
             return (
-              <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:7, height:36, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:7, height:32, padding:"0 14px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
                 <span style={{ fontFamily:b.font, fontSize:12, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
               </div>
             );
@@ -2084,9 +2176,9 @@ function Footer(props) {
   var lang = props.lang || "en";
   var yr = new Date().getFullYear();
   var cols = [
-    { title:"Product", links:[["Generator","Generator"],["Pricing","Pricing"],["Dashboard","Dashboard"]] },
-    { title:"Company", links:[["About","About"],["Blog","Blog"],["Careers","Careers"]] },
-    { title:"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
+    { title:t(lang,"footerProduct")||"Product", links:[[t(lang,"navGenerator")||"Generator","Generator"],[t(lang,"navPricing")||"Pricing","Pricing"],[t(lang,"navDashboard")||"Dashboard","Dashboard"]] },
+    { title:t(lang,"footerCompany")||"Company", links:[["About","About"],["Blog","Blog"],["Careers","Careers"]] },
+    { title:t(lang,"footerLegal")||"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
   ];
   return (
     <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px" }}>
@@ -2471,11 +2563,11 @@ function PageFAQ(props) {
     {
       title: "Pricing & Plans",
       items: [
-        { q:"How much does InvoiceAI cost?", a:"Solo is €9/mo (up to 3 active clients), Studio is €29/mo (unlimited clients, our most popular plan), Agency is €79/mo (5 team seats, white-label portal). All plans include a 14-day free trial with no credit card required." },
+        { q:"How much does InvoiceAI cost?", a:"Solo is €19/mo (up to 3 active clients), Studio is €59/mo (unlimited clients, our most popular plan), Agency is €149/mo (5 team seats, white-label portal). All plans include a 14-day free trial with no credit card required." },
         { q:"What counts as an 'active client'?", a:"A client you've created an invoice or proposal for in the current billing month. Archived or inactive clients don't count. Most freelancers with 1–3 regular clients stay on the Solo plan indefinitely." },
         { q:"Can I change plans later?", a:"Yes — upgrade or downgrade at any time from your account settings. If you upgrade, you're charged the difference pro-rated for the remainder of the month. If you downgrade, the change takes effect at the next billing cycle." },
         { q:"Is there a free trial?", a:"Yes. 14 days free on any plan, no credit card needed. You get the full feature set during the trial, not a limited version." },
-        { q:"What is the founding member discount?", a:"The first users who join via the waitlist lock in Studio at €19/mo forever — 35% off the regular price. This offer ends when we officially launch. Once locked in, your price never increases." },
+        { q:"What is the founding member discount?", a:"The first users who join via the waitlist lock in Studio at €29/mo forever — 50% off the regular price. This offer ends when we officially launch. Once locked in, your price never increases." },
       ],
     },
     {
@@ -2648,14 +2740,19 @@ function ClientPortal(props) {
   return (
     <div style={{ background:"#F0EDE6", minHeight:"100vh" }}>
       <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 24px", height:52, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer" }} onClick={function(){ setPage("Home"); }}>
           <LogoMark size={26} />
           <span style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
           <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>· secure invoice portal</span>
         </div>
-        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:7, height:7, borderRadius:"50%", background:L.green }} />
-          <span style={{ fontFamily:fMono, fontSize:10, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
+        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <div style={{ width:7, height:7, borderRadius:"50%", background:L.green }} />
+            <span style={{ fontFamily:fMono, fontSize:10, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
+          </div>
+          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:12, color:L.muted }}>
+            ← Back
+          </button>
         </div>
       </div>
 
@@ -2863,7 +2960,7 @@ var BOT_QA = [
   { q:["sepa","iban","bank transfer","payment"],            a:"Every invoice includes a SEPA bank transfer block with your IBAN and BIC. Just enter them once in the invoice form and they appear on every invoice automatically." },
   { q:["gdpr","data","privacy","personal"],                 a:"InvoiceAI adds a GDPR-compliant notice to every invoice automatically. Your data is hosted on AWS Frankfurt (EU), never leaves the EU, and we never sell it to third parties." },
   { q:["proposal","ai","generate","write"],                 a:"Type a brief project description, choose a tone (direct, warm or formal), and the AI writes a full client-ready proposal in under 30 seconds. You can then refine it with one-click actions." },
-  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €9/mo (up to 3 clients), Studio is €29/mo (unlimited, most popular), Agency is €79/mo (5 team seats + white-label). All plans include a 14-day free trial — no credit card needed." },
+  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €19/mo (up to 3 clients), Studio is €59/mo (unlimited, most popular), Agency is €149/mo (5 team seats + white-label). All plans include a 14-day free trial — no credit card needed." },
   { q:["credit note","refund","correct","cancel"],          a:"Enable 'Credit Note' in the EU Compliance section. InvoiceAI automatically assigns a separate CN-YYYY-XXX number sequence as required by EU VAT law." },
   { q:["xml","xrechnung","factur-x","e-invoice"],           a:"E-invoice XML is coming Q4 2026. We're building XRechnung 3.0 for Germany, Factur-X for France, and XML/SDI for Italy. Toggle it on in the compliance section to mark invoices as compliant." },
   { q:["late payment","interest","overdue","directive"],    a:"EU Directive 2011/7/EU gives you the right to charge 8% above ECB base rate on overdue B2B invoices — no contract needed. Enable 'Late Payment Interest' in the compliance section." },
@@ -2916,7 +3013,7 @@ function SupportBot() {
       body:JSON.stringify({
         model:"claude-sonnet-4-20250514",
         max_tokens:300,
-        system:"You are a helpful support assistant for InvoiceAI, an EU-native invoicing and proposal tool for creative professionals. Answer in 1-3 sentences. Key facts: Solo €9/mo, Studio €29/mo, Agency €79/mo. 14-day free trial. Supports EU VAT, reverse charge, SEPA, GDPR, XRechnung, Factur-X. 7 EU languages.",
+        system:"You are a helpful support assistant for InvoiceAI, an EU-native invoicing and proposal tool for creative professionals. Answer in 1-3 sentences. Key facts: Solo €19/mo, Studio €59/mo, Agency €149/mo. 14-day free trial. Supports EU VAT, reverse charge, SEPA, GDPR, XRechnung, Factur-X. 7 EU languages.",
         messages:history,
       }),
     }).then(function(r) { return r.json(); })
@@ -2990,7 +3087,7 @@ function SupportBot() {
           </div>
         </div>
       )}
-      <button onClick={function(){ setOpen(function(o){ return !o; }); }} style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(200,80,42,0.35)", transition:"background 0.15s" }}>
+      <button onClick={function(){ setOpen(function(o){ return !o; }); }} className="bot-trigger" style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(200,80,42,0.35)", transition:"background 0.15s" }}>
         {open
           ? <Icon name="x" size={18} color="#fff" />
           : <Icon name="bolt" size={20} color="#fff" />
@@ -3060,7 +3157,7 @@ function AuthModal(props) {
         ) : (
           <div style={{ padding:"24px 28px 28px" }}>
             <div style={{ display:"flex", gap:6, marginBottom:20 }}>
-              {[["signin","Sign in"],["signup","Sign up"],["magic","Magic link"]].map(function(pair) {
+              {[["signin",t(lang,"authSignIn")||"Sign in"],["signup",t(lang,"authSignUp")||"Sign up"],["magic",t(lang,"authMagic")||"Magic link"]].map(function(pair) {
                 return (
                   <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:mode===pair[0] ? 500 : 400 }}>
                     {pair[1]}
@@ -3195,7 +3292,7 @@ function SignupModal(props) {
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="check" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
             <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €19/mo forever</strong> — locked in at signup.</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
             <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
               <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
               <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
@@ -3214,7 +3311,7 @@ function CookieBanner(props) {
   var onDecline = props.onDecline;
   var setPage = props.setPage;
   return (
-    <div style={{ position:"fixed", bottom:24, left:24, zIndex:998, maxWidth:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"18px 18px 14px", boxShadow:"0 8px 32px rgba(44,36,22,0.15)" }}>
+    <div className="cookie-banner" style={{ position:"fixed", bottom:24, left:24, zIndex:998, maxWidth:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"18px 18px 14px", boxShadow:"0 8px 32px rgba(44,36,22,0.15)" }}>
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:10 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <Icon name="shield" size={16} color={L.accent} />
@@ -3296,7 +3393,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 1200px !important; grid-template-columns: 1fr 1.1fr !important; gap: 40px !important; padding: 36px 48px 72px !important; } .desktop-inv { grid-template-columns: 1fr 340px !important; gap: 24px !important; padding: 32px 48px 72px !important; } .desktop-strip { max-width: 680px !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
