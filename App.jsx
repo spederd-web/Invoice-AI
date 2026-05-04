@@ -33,14 +33,14 @@ var TR = {
   en: {
     navStart:        "Start Free",
     navStartArrow:   "Start Free →",
-    heroPill:        "Built for European Freelancers · 1,400+ professionals",
-    heroTitle1:      "Made for the way",
-    heroTitle2:      "freelancers work.",
-    heroSub:         "AI proposals, EU-compliant invoices, client dashboard — one tool built for designers, developers, consultants and agencies across Europe.",
+    heroPill:        "For EU freelancers who invoice across borders",
+    heroTitle1:      "Your clients are across Europe.",
+    heroTitle2:      "Your invoices should be too.",
+    heroSub:         "InvoiceAI writes your proposals and builds your invoices — with every EU rule applied automatically. One tool for every client, in every country.",
     heroCta:         "Get early access →",
     heroSecondary:   "See pricing",
     heroFine:        "No credit card · 14-day free trial · Cancel anytime",
-    heroFeatures:    "AI proposal writer  ·  EU-compliant invoices  ·  Client portal",
+    heroFeatures:    "Reverse charge auto-detect  ·  XRechnung XML export  ·  AI proposals in 6 languages",
     heroCounter:     "invoiced this month by our users",
     featTitle:       "Built around how you actually work",
     featSub:         "Tools built for accountants. Ours is built for the people who do the work.",
@@ -56,26 +56,26 @@ var TR = {
     propWriting:     "✦ Writing your proposal…",
     propReady:       "✓ Proposal ready",
     modalTitle:      "Join the waitlist.",
-    modalSub:        "Founding members lock in Studio at €29/mo forever — 50% off the launch price.",
+    modalSub:        "Founding members lock in Studio at €19/mo forever — 35% off the launch price.",
     modalCta:        "Join the waitlist →",
     modalJoining:    "Joining…",
     modalDoneTitle:  "You're on the list.",
     modalExploreCta: "Explore the demo →",
-    footerWaitlist:  "Join the waitlist — Studio €29/mo forever",
+    footerWaitlist:  "Join the waitlist — Studio €19/mo forever",
     footerWaitlistSub: "Founding member rate. Locked in at signup. Ends at launch.",
     footerCta:       "Get early access →",
   },
   de: {
     navStart:        "Kostenlos starten",
     navStartArrow:   "Kostenlos starten →",
-    heroPill:        "Für europäische Freelancer · 1.400+ Profis",
-    heroTitle1:      "Gemacht für die Art,",
-    heroTitle2:      "wie Freelancer arbeiten.",
-    heroSub:         "KI-Angebote, EU-konforme Rechnungen, Kunden-Dashboard — ein Tool für Designer, Entwickler, Berater und Agenturen in ganz Europa.",
+    heroPill:        "Für Freelancer, die grenzüberschreitend abrechnen",
+    heroTitle1:      "Deine Kunden sind in ganz Europa.",
+    heroTitle2:      "Deine Rechnungen auch.",
+    heroSub:         "InvoiceAI schreibt deine Angebote und erstellt deine Rechnungen — mit jeder EU-Regel automatisch angewendet. Ein Tool für jeden Kunden, in jedem Land.",
     heroCta:         "Frühen Zugang erhalten →",
     heroSecondary:   "Preise ansehen",
     heroFine:        "Keine Kreditkarte · 14 Tage kostenlos · Jederzeit kündbar",
-    heroFeatures:    "KI-Angebotsschreiber  ·  EU-konforme Rechnungen  ·  Kundenportal",
+    heroFeatures:    "Reverse Charge automatisch  ·  XRechnung XML Export  ·  KI-Angebote in 6 Sprachen",
     heroCounter:     "diesen Monat von unseren Nutzern abgerechnet",
     featTitle:       "Gebaut für die Art, wie du wirklich arbeitest",
     featSub:         "Tools für Buchhalter. Unseres ist für die Menschen gebaut, die die Arbeit machen.",
@@ -91,26 +91,26 @@ var TR = {
     propWriting:     "✦ Angebot wird geschrieben…",
     propReady:       "✓ Angebot fertig",
     modalTitle:      "Auf die Warteliste.",
-    modalSub:        "Gründungsmitglieder sichern sich Studio für immer zu €29/Monat — 50% unter dem Startpreis.",
+    modalSub:        "Gründungsmitglieder sichern sich Studio für immer zu €19/Monat — 35% unter dem Startpreis.",
     modalCta:        "Auf die Warteliste →",
     modalJoining:    "Wird eingetragen…",
     modalDoneTitle:  "Du stehst auf der Liste.",
     modalExploreCta: "Demo erkunden →",
-    footerWaitlist:  "Warteliste — Studio €29/Monat für immer",
+    footerWaitlist:  "Warteliste — Studio €19/Monat für immer",
     footerWaitlistSub: "Gründerpreis. Beim Anmelden gesichert. Endet beim Start.",
     footerCta:       "Frühen Zugang erhalten →",
   },
   fr: {
     navStart:        "Commencer gratuitement",
     navStartArrow:   "Commencer gratuitement →",
-    heroPill:        "Pour les freelances européens · 1 400+ professionnels",
-    heroTitle1:      "Conçu pour la façon dont",
-    heroTitle2:      "les freelances travaillent.",
-    heroSub:         "Propositions IA, factures conformes UE, tableau de bord client — un outil pour designers, développeurs, consultants et agences en Europe.",
+    heroPill:        "Pour les freelances qui facturent en Europe",
+    heroTitle1:      "Vos clients sont partout en Europe.",
+    heroTitle2:      "Vos factures aussi.",
+    heroSub:         "InvoiceAI rédige vos propositions et génère vos factures — avec chaque règle UE appliquée automatiquement. Un outil pour chaque client, dans chaque pays.",
     heroCta:         "Accès anticipé →",
     heroSecondary:   "Voir les tarifs",
     heroFine:        "Sans carte bancaire · 14 jours gratuits · Résiliation à tout moment",
-    heroFeatures:    "Propositions par IA  ·  Factures conformes UE  ·  Portail client",
+    heroFeatures:    "Autoliquidation automatique  ·  Export XML Factur-X  ·  Propositions IA en 6 langues",
     heroCounter:     "facturés ce mois par nos utilisateurs",
     featTitle:       "Conçu pour la façon dont vous travaillez vraiment",
     featSub:         "Les outils sont faits pour les comptables. Le nôtre est fait pour ceux qui font le travail.",
@@ -126,26 +126,26 @@ var TR = {
     propWriting:     "✦ Rédaction en cours…",
     propReady:       "✓ Proposition prête",
     modalTitle:      "Rejoindre la liste d'attente.",
-    modalSub:        "Les membres fondateurs obtiennent Studio à 29 €/mois pour toujours — 50% sous le prix de lancement.",
+    modalSub:        "Les membres fondateurs obtiennent Studio à 19 €/mois pour toujours — 35% sous le prix de lancement.",
     modalCta:        "Rejoindre la liste →",
     modalJoining:    "Inscription en cours…",
     modalDoneTitle:  "Vous êtes sur la liste.",
     modalExploreCta: "Explorer la démo →",
-    footerWaitlist:  "Liste d'attente — Studio 29 €/mois à vie",
+    footerWaitlist:  "Liste d'attente — Studio 19 €/mois à vie",
     footerWaitlistSub: "Tarif fondateur. Bloqué à l'inscription. Fin au lancement.",
     footerCta:       "Accès anticipé →",
   },
   es: {
     navStart:        "Empezar gratis",
     navStartArrow:   "Empezar gratis →",
-    heroPill:        "Para freelances europeos · 1.400+ profesionales",
-    heroTitle1:      "Hecho para la forma en que",
-    heroTitle2:      "trabajan los freelances.",
-    heroSub:         "Propuestas con IA, facturas conformes con la UE, panel de clientes — una herramienta para diseñadores, desarrolladores, consultores y agencias en Europa.",
+    heroPill:        "Para freelances que facturan en toda Europa",
+    heroTitle1:      "Tus clientes están en toda Europa.",
+    heroTitle2:      "Tus facturas también.",
+    heroSub:         "InvoiceAI redacta tus propuestas y genera tus facturas — con cada regla de la UE aplicada automáticamente. Una herramienta para cada cliente, en cada país.",
     heroCta:         "Acceso anticipado →",
     heroSecondary:   "Ver precios",
     heroFine:        "Sin tarjeta de crédito · 14 días gratis · Cancela cuando quieras",
-    heroFeatures:    "Propuestas con IA  ·  Facturas conformes UE  ·  Portal de clientes",
+    heroFeatures:    "Inversión del sujeto pasivo  ·  Export XML XRechnung  ·  Propuestas IA en 6 idiomas",
     heroCounter:     "facturados este mes por nuestros usuarios",
     featTitle:       "Construido para la forma en que realmente trabajas",
     featSub:         "Herramientas hechas para contables. La nuestra está hecha para quienes hacen el trabajo.",
@@ -161,26 +161,26 @@ var TR = {
     propWriting:     "✦ Redactando tu propuesta…",
     propReady:       "✓ Propuesta lista",
     modalTitle:      "Únete a la lista de espera.",
-    modalSub:        "Los miembros fundadores obtienen Studio a 29 €/mes para siempre — 50% bajo el precio de lanzamiento.",
+    modalSub:        "Los miembros fundadores obtienen Studio a 19 €/mes para siempre — 35% bajo el precio de lanzamiento.",
     modalCta:        "Unirse a la lista →",
     modalJoining:    "Registrando…",
     modalDoneTitle:  "Estás en la lista.",
     modalExploreCta: "Explorar la demo →",
-    footerWaitlist:  "Lista de espera — Studio 29 €/mes para siempre",
+    footerWaitlist:  "Lista de espera — Studio 19 €/mes para siempre",
     footerWaitlistSub: "Precio fundador. Bloqueado al registrarse. Termina en el lanzamiento.",
     footerCta:       "Acceso anticipado →",
   },
   it: {
     navStart:        "Inizia gratis",
     navStartArrow:   "Inizia gratis →",
-    heroPill:        "Per i freelance europei · 1.400+ professionisti",
-    heroTitle1:      "Fatto per il modo in cui",
-    heroTitle2:      "lavorano i freelance.",
-    heroSub:         "Proposte con IA, fatture conformi UE, dashboard clienti — uno strumento per designer, sviluppatori, consulenti e agenzie in tutta Europa.",
+    heroPill:        "Per i freelance che fatturano in tutta Europa",
+    heroTitle1:      "I tuoi clienti sono in tutta Europa.",
+    heroTitle2:      "Le tue fatture anche.",
+    heroSub:         "InvoiceAI scrive le tue proposte e genera le tue fatture — con ogni regola UE applicata automaticamente. Uno strumento per ogni cliente, in ogni paese.",
     heroCta:         "Accesso anticipato →",
     heroSecondary:   "Vedi i prezzi",
     heroFine:        "Senza carta di credito · 14 giorni gratis · Disdici quando vuoi",
-    heroFeatures:    "Proposte con IA  ·  Fatture conformi UE  ·  Portale clienti",
+    heroFeatures:    "Inversione contabile auto  ·  Export XML FatturaPA  ·  Proposte IA in 6 lingue",
     heroCounter:     "fatturati questo mese dai nostri utenti",
     featTitle:       "Costruito per come lavori davvero",
     featSub:         "Strumenti fatti per i contabili. Il nostro è fatto per chi svolge il lavoro.",
@@ -196,26 +196,26 @@ var TR = {
     propWriting:     "✦ Scrittura in corso…",
     propReady:       "✓ Proposta pronta",
     modalTitle:      "Unisciti alla lista d'attesa.",
-    modalSub:        "I membri fondatori ottengono Studio a €29/mese per sempre — 50% sotto il prezzo di lancio.",
+    modalSub:        "I membri fondatori ottengono Studio a €19/mese per sempre — 35% sotto il prezzo di lancio.",
     modalCta:        "Unisciti alla lista →",
     modalJoining:    "Registrazione in corso…",
     modalDoneTitle:  "Sei nella lista.",
     modalExploreCta: "Esplora la demo →",
-    footerWaitlist:  "Lista d'attesa — Studio €29/mese per sempre",
+    footerWaitlist:  "Lista d'attesa — Studio €19/mese per sempre",
     footerWaitlistSub: "Prezzo fondatore. Bloccato all'iscrizione. Termina al lancio.",
     footerCta:       "Accesso anticipato →",
   },
   hu: {
     navStart:        "Kezdd ingyen",
     navStartArrow:   "Kezdd ingyen →",
-    heroPill:        "Európai szabadúszóknak · 1 400+ szakember",
-    heroTitle1:      "Arra tervezve, ahogy a",
-    heroTitle2:      "szabadúszók dolgoznak.",
-    heroSub:         "MI-alapú ajánlatok, EU-kompatibilis számlák, ügyfél-irányítópult — egy eszköz tervezőknek, fejlesztőknek, tanácsadóknak és ügynökségeknek egész Európában.",
+    heroPill:        "Határon átnyúló számlázáshoz Európában",
+    heroTitle1:      "Az ügyfeleid egész Európában vannak.",
+    heroTitle2:      "A számláid is legyenek.",
+    heroSub:         "Az InvoiceAI megírja az ajánlataidat és elkészíti a számláidat — minden EU-szabályt automatikusan alkalmazva. Egy eszköz minden ügyfélhez, minden országban.",
     heroCta:         "Korai hozzáférés →",
     heroSecondary:   "Árak megtekintése",
     heroFine:        "Bankkártya nélkül · 14 napos ingyenes próba · Bármikor lemondható",
-    heroFeatures:    "MI ajánlatíró  ·  EU-kompatibilis számlák  ·  Ügyfélportál",
+    heroFeatures:    "Fordított adózás automatikusan  ·  NAV XML export  ·  MI ajánlatok 6 nyelven",
     heroCounter:     "számlázva ezen a hónapon felhasználóink által",
     featTitle:       "Arra tervezve, ahogy valójában dolgozol",
     featSub:         "Más eszközök könyvelőknek készültek. A miénk azoknak, akik a munkát végzik.",
@@ -231,12 +231,12 @@ var TR = {
     propWriting:     "✦ Ajánlat írása folyamatban…",
     propReady:       "✓ Ajánlat kész",
     modalTitle:      "Csatlakozz a várólistához.",
-    modalSub:        "Az alapító tagok örökre €29/hó áron kapják a Studiót — 50%-kal az indulási ár alatt.",
+    modalSub:        "Az alapító tagok örökre €19/hó áron kapják a Studiót — 35%-kal az indulási ár alatt.",
     modalCta:        "Csatlakozás a listához →",
     modalJoining:    "Csatlakozás folyamatban…",
     modalDoneTitle:  "Felkerültél a listára.",
     modalExploreCta: "Fedezd fel a demót →",
-    footerWaitlist:  "Várólista — Studio €29/hó örökre",
+    footerWaitlist:  "Várólista — Studio €19/hó örökre",
     footerWaitlistSub: "Alapítói ár. Regisztrációkor rögzítve. Az induláskor véget ér.",
     footerCta:       "Korai hozzáférés →",
   },
@@ -306,9 +306,9 @@ var EU = [
 ];
 
 var PLANS = [
-  { name:"Solo",   price:19,  hi:false, features:["50 invoices / month","20 proposals","AI writer","PDF export","SEPA payment block","EU VAT auto-calc"] },
-  { name:"Studio", price:59,  hi:true,  badge:"Most Popular", features:["Unlimited invoices","Unlimited proposals","AI writer + tone","Client dashboard","Payment tracking","Brand kits","E-signatures","Reverse charge"] },
-  { name:"Agency", price:149, hi:false, features:["Everything in Studio","5 team seats","White-label","API access","Priority support","DATEV export","XRechnung XML"] },
+  { name:"Solo",   price:9,   hi:false, features:["Up to 3 active clients","Unlimited invoices","AI proposal writer","PDF + XRechnung export","EU VAT auto-calc","SEPA payment block"] },
+  { name:"Studio", price:29,  hi:true,  badge:"Most Popular", features:["Unlimited clients","Unlimited invoices + proposals","AI writer + country tone","Client portal + approvals","Payment tracking + reminders","Brand kits","Reverse charge + VIES check"] },
+  { name:"Agency", price:79,  hi:false, features:["Everything in Studio","5 team seats","White-label client portal","API access","Priority support","DATEV export","XRechnung + ZUGFeRD XML"] },
 ];
 
 var REVIEWS = [
@@ -518,7 +518,7 @@ function HeroSection(props) {
   }, []);
   return (
     <section style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"72px 24px 64px", textAlign:"center" }}>
-      <div style={{ maxWidth:720, margin:"0 auto" }}>
+      <div className="desktop-hero" style={{ maxWidth:720, margin:"0 auto" }}>
         <Pill>Built for European Freelancers · 1,400+ professionals</Pill>
         <h1 style={{ fontFamily:fSerif, fontSize:"clamp(36px,6vw,68px)", fontWeight:900, color:L.ink, margin:"20px 0 16px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
           {t(lang,"heroTitle1")}<br />
@@ -538,12 +538,18 @@ function HeroSection(props) {
         <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.06em" }}>
 {t(lang,"heroFine")}
         </p>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", flexWrap:"wrap", marginTop:16 }}>
-          {t(lang,"heroFeatures").split("  ·  ").map(function(feat, i, arr) {
+        <div className="desktop-feat-cards" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10, marginTop:28, maxWidth:520, margin:"28px auto 0" }}>
+          {[
+            { icon:"reverse", label: lang==="de" ? "Reverse Charge automatisch" : lang==="fr" ? "Autoliquidation auto" : lang==="it" ? "Inversione contabile" : lang==="es" ? "IVA invertido auto" : lang==="hu" ? "Fordított adózás" : "Reverse charge auto" },
+            { icon:"document", label: lang==="de" ? "XRechnung XML" : lang==="fr" ? "Factur-X XML" : lang==="it" ? "FatturaPA XML" : lang==="hu" ? "NAV XML export" : "XRechnung XML" },
+            { icon:"send", label: lang==="de" ? "KI-Angebote, 6 Sprachen" : lang==="fr" ? "Propositions IA × 6" : lang==="it" ? "Proposte IA × 6" : lang==="es" ? "Propuestas IA × 6" : lang==="hu" ? "AI ajánlatok × 6" : "AI proposals × 6 langs" },
+          ].map(function(f) {
             return (
-              <div key={feat} style={{ display:"flex", alignItems:"center" }}>
-                <span style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:500, whiteSpace:"nowrap" }}>{feat}</span>
-                {i < arr.length - 1 && <span style={{ color:L.border, margin:"0 10px", fontSize:14 }}>·</span>}
+              <div key={f.label} style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"12px 10px", display:"flex", flexDirection:"column", alignItems:"center", gap:7 }}>
+                <div style={{ width:32, height:32, borderRadius:8, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <Icon name={f.icon} size={15} color={L.accent} />
+                </div>
+                <span style={{ fontFamily:fSans, fontSize:10, fontWeight:500, color:L.ink, textAlign:"center", lineHeight:1.35 }}>{f.label}</span>
               </div>
             );
           })}
@@ -574,7 +580,7 @@ function FeaturesSection(props) {
   var lang = props.lang || "en";
   return (
     <section style={{ padding:"72px 24px", background:L.paper }}>
-      <div style={{ maxWidth:960, margin:"0 auto" }}>
+      <div className="desktop-section" style={{ maxWidth:960, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:48 }}>
           <Pill color={L.gold}>Features</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
@@ -611,7 +617,7 @@ var EU_FEATURES = [
   { icon:"clock",   title:"Late Payment Interest",       badge:"EU Dir. 2011/7/EU",  desc:"Statutory interest at 8% above ECB base rate. Your legal right on overdue B2B invoices — added automatically." },
   { icon:"document","title":"Credit Notes",              badge:"Separate numbering", desc:"Legally distinct from invoices in the EU. InvoiceAI manages CN-YYYY-XXX sequences separately." },
   { icon:"send",    title:"E-Invoice XML",               badge:"Coming Q4 2026",     desc:"XRechnung (DE), Factur-X (FR, Sept 2026), KSeF (PL, April 2026), Peppol (BE, live now). Compliant with all current EU mandates." },
-  { icon:"eu",      title:"OSS — One Stop Shop",         badge:"B2C digital €10k+",  desc:"Selling digital services to EU consumers? Once you exceed €10,000 cross-border B2C revenue, InvoiceAI flags when OSS registration is required." },
+  { icon:"eu",      title:"OSS — One Stop Shop",         badge:"B2C digital €10k+",  desc:"Applies to B2C digital services only (not B2B). Once your cross-border B2C revenue exceeds €10,000/year across all EU countries, you must register for OSS instead of charging your home VAT rate. B2B cross-border invoicing uses reverse charge instead." },
   { icon:"hash",    title:"VAT Thresholds by Country",   badge:"10 countries",       desc:"DE €22k, FR €37.5k, NL €20k, PL ~€46k — InvoiceAI shows the small-business threshold for each country so you know when to register." },
   { icon:"reverse", title:"Non-EU Invoicing",            badge:"UK · CH · US",       desc:"Post-Brexit UK and Switzerland are third countries. InvoiceAI adds the correct exemption notice ('service not taxable') for non-EU clients automatically." },
   { icon:"archive", title:"10-Year Archive",             badge:"GoBD · LPF · CAF",   desc:"German GoBD (§147 AO), French LPF, Italian CAF all require 10-year invoice retention. InvoiceAI archives every invoice automatically." },
@@ -632,7 +638,7 @@ function EUComplianceSection(props) {
             {t(lang,"euSub")}
           </p>
         </div>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
           {EU_FEATURES.map(function(f, i) {
             var isOpen = open === i;
             return (
@@ -759,7 +765,7 @@ function PricingSection(props) {
           </h2>
           <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
         </div>
-        <div className="pricing-scroll" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
+        <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
           {PLANS.map(function(plan) {
             return (
               <div key={plan.name} style={{ background:plan.hi ? L.accent : L.white, border:plan.hi ? "2px solid "+L.accent : "1.5px solid "+L.border, borderRadius:16, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 12px 36px rgba(200,80,42,0.25)" : "none" }}>
@@ -858,6 +864,8 @@ function InvoicePreviewPanel(props) {
   var cnNum = "CN-" + yr + "-001";
   var [xrLoading, setXrLoading] = useState(false);
   var [xrError, setXrError] = useState("");
+  var [navLoading, setNavLoading] = useState(false);
+  var [navError, setNavError] = useState("");
 
   function exportXRechnung() {
     setXrLoading(true); setXrError("");
@@ -928,25 +936,92 @@ function InvoicePreviewPanel(props) {
       setXrLoading(false);
     });
   }
+
+  function exportNAV() {
+    setNavLoading(true); setNavError("");
+    var isEU = s.country && s.country.eu;
+    var payload = {
+      sellerName:          s.sName || "Your Name / Studio",
+      sellerTaxNumber:     s.sVAT || "",
+      sellerStreet:        s.sStreet || "",
+      sellerCity:          s.sCity || "",
+      sellerBankAccount:   s.sIBAN || "",
+      buyerName:           s.cName || "",
+      buyerTaxNumber:      s.cVAT || "",
+      buyerStreet:         s.cStreet || "",
+      buyerCity:           s.cCity || "",
+      buyerCountry:        s.country ? s.country.code : "HU",
+      buyerIsEU:           isEU && s.country && s.country.code !== "HU",
+      invoiceNumber:       invNum,
+      issueDate:           new Date().toISOString().slice(0, 10),
+      deliveryDate:        new Date().toISOString().slice(0, 10),
+      dueDate:             new Date(Date.now() + 30*86400000).toISOString().slice(0, 10),
+      currency:            s.country && s.country.cur ? s.country.cur : "HUF",
+      reverseCharge:       !!s.rc,
+      vatExempt:           !!s.vatExempt,
+      note:                s.note || "",
+      lines: s.lines.filter(function(l){ return l.desc && l.qty && l.rate; }).map(function(l) {
+        var qty = parseFloat(l.qty) || 0;
+        var rate = parseFloat(l.rate) || 0;
+        var net = qty * rate;
+        var vat = (s.rc || s.vatExempt) ? 0 : net * (vatRate / 100);
+        return { desc:l.desc, qty:qty, unit:"db", unitPrice:rate, vatCode:s.rc?"EUT":s.vatExempt?"AAM":"27", vatRate:vatRate, lineNet:net, lineVat:vat, lineGross:net+vat };
+      }),
+      invoiceNetAmount:   subAfter,
+      invoiceVatAmount:   vatAmt,
+      invoiceGrossAmount: total,
+    };
+    fetch("/api/nav", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(payload),
+    })
+    .then(function(r) {
+      if (!r.ok) return r.json().then(function(e){ throw new Error(e.error || "Export failed"); });
+      return r.text();
+    })
+    .then(function(xml) {
+      var blob = new Blob([xml], { type:"application/xml" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = invNum + "_NAV.xml";
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+      setNavLoading(false);
+    })
+    .catch(function(err){ setNavError(err.message); setNavLoading(false); });
+  }
   return (
     <div style={{ padding:"0 24px 48px" }}>
       <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:9, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
         ← Back to form
       </button>
-      <div style={{ display:"flex", gap:8, marginBottom:8, flexWrap:"wrap" }}>
-        <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
-          <Icon name="download" size={13} color="#fff" />
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:8 }}>
+        <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"10px 8px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:500, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4, textAlign:"center", lineHeight:1.3 }}>
+          <Icon name="download" size={14} color="#fff" />
           Export PDF
         </button>
-        <button onClick={exportXRechnung} disabled={xrLoading} style={{ background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
-          <Icon name="document" size={13} color="#fff" />
-          {xrLoading ? "Generating…" : "XRechnung XML"}
+        <button onClick={exportXRechnung} disabled={xrLoading} style={{ background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"10px 8px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:11, fontWeight:500, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4, textAlign:"center", lineHeight:1.3 }}>
+          <Icon name="document" size={14} color="#fff" />
+          {xrLoading ? "…" : "XRechnung XML"}
         </button>
-        <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 16px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", gap:6 }}>
-          <Icon name="send" size={13} color="#fff" />
-          Share with client →
+        <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"10px 8px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:500, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:4, textAlign:"center", lineHeight:1.3 }}>
+          <Icon name="send" size={14} color="#fff" />
+          Share with client
         </button>
       </div>
+      {s.country && s.country.code === "HU" && (
+        <div style={{ marginBottom:8 }}>
+          <button onClick={exportNAV} disabled={navLoading} style={{ width:"100%", background:navLoading ? L.border : "#2A5E3A", color:"#fff", border:"none", padding:"10px 12px", borderRadius:7, cursor:navLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:11, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+            <Icon name="document" size={13} color="#fff" />
+            {navLoading ? "Generating…" : "NAV XML — Hungarian tax reporting"}
+          </button>
+          {navError && <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, marginTop:4 }}>{navError}</p>}
+          <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, marginTop:5, letterSpacing:"0.04em" }}>
+            Upload to onlineszamla.nav.gov.hu after issuing. Required for domestic HU invoices.
+          </p>
+        </div>
+      )}
       {xrError && <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, marginBottom:10 }}>XRechnung error: {xrError}</p>}
       <div id="print-invoice" style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
         {s.creditNote && (
@@ -1143,6 +1218,7 @@ function InvoiceForm(props) {
   var [activeInfo, setActiveInfo] = useState(null);
 
   var sameCountry = s.cCo === (s.country ? s.country.code : "DE");
+  var viesStatus = useVIES(s.cVAT);
   var sub = s.lines.reduce(function(acc, l) { return acc + (parseFloat(l.qty)||0) * (parseFloat(l.rate)||0); }, 0);
   var discAmt = s.discount ? sub * (parseFloat(s.discount)/100) : 0;
   var vatRate = (s.rc || s.vatExempt) ? 0 : (s.country ? s.country.vat : 19);
@@ -1167,7 +1243,7 @@ function InvoiceForm(props) {
   }
 
   return (
-    <div className="inv-grid" style={{ display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
+    <div className="inv-grid desktop-inv" style={{ display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
       <div>
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
@@ -1200,9 +1276,9 @@ function InvoiceForm(props) {
             <label style={lblStyle}>Client VAT (triggers reverse charge if cross-border)</label>
             <div style={{ position:"relative" }}>
               <input value={s.cVAT} onChange={function(e){ u("cVAT",e.target.value); }} placeholder="e.g. FR12345678901" style={monoStyle} />
-              <VIESBadge status={useVIES(s.cVAT)} />
+              <VIESBadge status={viesStatus} />
             </div>
-            {useVIES(s.cVAT) === "invalid" && (
+            {viesStatus === "invalid" && (
               <p style={{ fontFamily:fSans, fontSize:10, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
             )}
             {s.rc && (
@@ -1292,7 +1368,7 @@ function InvoiceForm(props) {
             <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>EU Compliance</span>
           </div>
           <div style={{ padding:"13px 16px", display:"flex", flexDirection:"column", gap:4 }}>
-            <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={sameCountry && !s.cVAT} blockedReason="Same country — RC only applies cross-border EU B2B" warn={null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
+            <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={(sameCountry && !s.cVAT) || s.vatExempt} blockedReason={s.vatExempt ? "Kleinunternehmer cannot apply reverse charge — no VAT number issued under §19 UStG" : "Same country — RC only applies cross-border EU B2B"} warn={viesStatus === "invalid" ? "VIES could not verify this VAT number — confirm B2B status before applying reverse charge" : null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
             <CheckRow checked={s.gdpr} onChange={function(v){ u("gdpr",v); }} label="GDPR Notice" badge="GDPR" badgeColor={L.green} blocked={false} blockedReason="" warn={null} infoOpen={activeInfo==="gdpr"} onInfo={function(){ setActiveInfo(activeInfo==="gdpr"?null:"gdpr"); }} infoWhat="A short legal notice that you process your client's personal data for invoicing purposes." infoWhen="Recommended for all EU B2B invoices — it shows you take data protection seriously." infoEffect="Adds one sentence to the bottom of your invoice referencing GDPR Art. 6(1)(b)." infoLaw="GDPR Art. 6(1)(b) — EU Regulation 2016/679" />
             <CheckRow checked={s.latePayment} onChange={function(v){ u("latePayment",v); }} label="Late Payment Interest" badge="EU 2011/7" badgeColor={L.accent} blocked={s.creditNote} blockedReason="Cannot charge interest on a credit note" warn={null} infoOpen={activeInfo==="lp"} onInfo={function(){ setActiveInfo(activeInfo==="lp"?null:"lp"); }} infoWhat="EU law gives you the right to charge statutory interest if a B2B client pays late." infoWhen="Tick for B2B invoices where you want to signal late payment will incur interest." infoEffect="Adds a notice: 8% above ECB base rate applies on overdue amounts from due date." infoLaw="EU Directive 2011/7/EU on combating late payment" />
             <CheckRow checked={s.creditNote} onChange={function(v){ u("creditNote",v); }} label="Credit Note" badge={"CN-"+new Date().getFullYear()+"-001"} badgeColor={L.gold} blocked={s.latePayment} blockedReason="Disable late payment interest first" warn={null} infoOpen={activeInfo==="cn"} onInfo={function(){ setActiveInfo(activeInfo==="cn"?null:"cn"); }} infoWhat="A credit note cancels or corrects a previous invoice, or issues a credit/refund." infoWhen="Use when correcting a sent invoice, issuing a refund, or applying a retroactive discount." infoEffect="Changes document type to CREDIT NOTE with a separate sequential number (CN-YYYY-XXX)." infoLaw="Art. 226 EU VAT Directive — separate number sequence required" />
@@ -1441,7 +1517,7 @@ function ProposalForm(props) {
   }
 
   return (
-    <div className="prop-grid" style={{ maxWidth:860, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
+    <div className="prop-grid desktop-prop" style={{ maxWidth:860, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
         <p style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
@@ -1983,7 +2059,7 @@ function PaymentStrip() {
   ];
   return (
     <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"20px 24px" }}>
-      <div style={{ maxWidth:480, margin:"0 auto", textAlign:"center" }}>
+      <div className="desktop-strip" style={{ maxWidth:480, margin:"0 auto", textAlign:"center" }}>
         <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", display:"block", marginBottom:14 }}>Secure payments via</span>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8, marginBottom:12 }}>
           {badges.map(function(b) {
@@ -2010,7 +2086,7 @@ function Footer(props) {
   var cols = [
     { title:"Product", links:[["Generator","Generator"],["Pricing","Pricing"],["Dashboard","Dashboard"]] },
     { title:"Company", links:[["About","About"],["Blog","Blog"],["Careers","Careers"]] },
-    { title:"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"]] },
+    { title:"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
   ];
   return (
     <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px" }}>
@@ -2024,7 +2100,7 @@ function Footer(props) {
                 <div style={{ fontFamily:fMono, fontSize:7, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
               </div>
             </div>
-            <p style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:220, fontWeight:300, marginBottom:14 }}>Built for European creatives and digital professionals.</p>
+            <p style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:220, fontWeight:300, marginBottom:14 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
               {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
                 return <span key={b} style={{ fontFamily:fMono, fontSize:8, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"2px 7px", letterSpacing:"0.07em" }}>{b}</span>;
@@ -2073,13 +2149,13 @@ function SubLayout(props) {
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
       <div style={{ background:accent ? L.accent : L.white, borderBottom:"1px solid "+(accent ? "rgba(255,255,255,0.15)" : L.border), padding:"56px 24px 44px", textAlign:"center" }}>
-        <div style={{ maxWidth:700, margin:"0 auto" }}>
+        <div className="desktop-sub-header" style={{ maxWidth:700, margin:"0 auto" }}>
           <Pill color={accent ? "rgba(255,255,255,0.85)" : L.gold}>{pill}</Pill>
           <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,5vw,52px)", fontWeight:900, color:accent ? "#fff" : L.ink, margin:"16px 0 12px", letterSpacing:"-0.025em", lineHeight:1.1 }}>{title}</h1>
           <p style={{ fontFamily:fSans, fontSize:15, color:accent ? "rgba(255,255,255,0.75)" : L.muted, fontWeight:300, lineHeight:1.65, maxWidth:520, margin:"0 auto" }}>{sub}</p>
         </div>
       </div>
-      <div style={{ maxWidth:720, margin:"0 auto", padding:"48px 24px 80px", fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
+      <div className="desktop-prose" style={{ maxWidth:720, margin:"0 auto", padding:"48px 24px 80px", fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
         {props.children}
       </div>
     </div>
@@ -2117,8 +2193,8 @@ function PageAbout(props) {
   return (
     <SubLayout pill="About" title="Built by Europeans, for Europeans." sub="We started InvoiceAI because we were freelancers who spent too much time invoicing and not enough time on the work we loved." accent>
       <SH>Our story</SH>
-      <SP>InvoiceAI was born in 2024 out of genuine frustration. Our founders had been running creative studios in Berlin and Milan and were spending hours every week fighting with US-centric invoicing tools that had no idea what reverse charge was, couldn't format a German Rechnung correctly, and generated GDPR notices that were legally questionable at best.</SP>
-      <SP>We looked at the market and found the same thing every time: tools built for American businesses, bolted onto European markets as an afterthought. We decided to build what we actually wanted to use.</SP>
+      <SP>InvoiceAI was born out of a specific frustration: being a European freelancer with clients in multiple countries and having absolutely no tool that handled it correctly. German clients needed XRechnung. French clients had different VAT rules. Dutch clients expected SEPA with a specific reference format. And none of the US-built tools — HoneyBook, Bonsai, FreshBooks — had any idea what reverse charge was.</SP>
+      <SP>Every cross-border invoice was a manual research exercise. We spent more time checking EU VAT rules than doing the work clients were paying us for. So we built the tool we needed.</SP>
       <SH>What we believe</SH>
       <SLI>Creative professionals should spend their time creating, not accounting.</SLI>
       <SLI>EU compliance shouldn't require a consultant or a law degree.</SLI>
@@ -2268,24 +2344,78 @@ function PagePrivacy() {
 
 function PageTerms() {
   return (
-    <SubLayout pill="Legal" title="Terms of Service" sub="Last updated: 1 May 2026. These terms govern your use of InvoiceAI.">
-      <SH>1. Acceptance</SH>
-      <SP>By creating an account or using InvoiceAI, you agree to these Terms of Service and our Privacy Policy.</SP>
-      <SH>2. Subscription and billing</SH>
-      <SLI>Subscription fees are charged monthly or annually in advance.</SLI>
-      <SLI>All prices are exclusive of VAT. Applicable VAT will be added based on your billing country.</SLI>
-      <SLI>You may cancel at any time; access continues until the end of the billing period.</SLI>
-      <SLI>Refunds are available within 14 days of initial purchase per EU consumer rights law.</SLI>
-      <SH>3. Acceptable use</SH>
-      <SP>You agree not to use InvoiceAI to create fraudulent invoices, misrepresent your identity, violate any applicable law, or attempt to gain unauthorised access to our systems.</SP>
-      <SH>4. Your data</SH>
-      <SP>You retain all rights to the content you create using InvoiceAI. We do not sell your data or use it to train AI models without your explicit consent.</SP>
-      <SH>5. EU consumer rights</SH>
-      <SP>EU consumers have a 14-day right of withdrawal. Our services are intended primarily for business use.</SP>
-      <SH>6. Governing law</SH>
-      <SP>These terms are governed by German law. Disputes will be referred to the courts of München, Germany, unless mandatory consumer law requires otherwise. EU ODR platform: ec.europa.eu/consumers/odr</SP>
-      <SH>7. Contact</SH>
-      <SP>Daniel Speder · Arndstr. 2 · 80469 München · legal@invoice-ai.de</SP>
+    <SubLayout pill="Legal" title="Terms of Service" sub="Last updated: 1 May 2026. Please read these terms carefully before using InvoiceAI. By using the service you agree to be bound by them.">
+
+      <SH>1. Who we are and what InvoiceAI is</SH>
+      <SP>InvoiceAI is operated by Daniel Speder (Selbständiger), Arndstr. 2, 80469 München, Germany ("InvoiceAI", "we", "us"). InvoiceAI is a software tool that helps freelancers and small businesses create invoices, proposals and related business documents. It is not a tax advisory service, accounting service, legal service or financial service of any kind.</SP>
+      <SP>By creating an account or using any part of InvoiceAI, you accept these Terms of Service in full. If you do not agree, do not use the service.</SP>
+
+      <SH>2. Nature of the service — important</SH>
+      <SP>InvoiceAI provides document creation tools and AI-assisted writing features. The following applies at all times:</SP>
+      <SLI>InvoiceAI is not a tax advisor, accountant, auditor or legal advisor. Nothing in the service constitutes tax advice, legal advice or financial advice.</SLI>
+      <SLI>You are solely responsible for ensuring that all invoices, proposals and documents you create comply with applicable laws, tax regulations and accounting requirements in your jurisdiction and in the jurisdictions of your clients.</SLI>
+      <SLI>VAT rates, compliance rules and legal requirements displayed in InvoiceAI are provided for reference only and may not reflect the most current regulations. Always verify with a qualified tax advisor before sending invoices.</SLI>
+      <SLI>AI-generated proposals and text are provided as drafts for your review and editing. You are responsible for the accuracy and appropriateness of all content you send to clients.</SLI>
+      <SLI>XRechnung, NAV XML and other structured e-invoice exports are provided as a convenience tool. You are responsible for validating them before submission to any tax authority or client system.</SLI>
+
+      <SH>3. Subscription and billing</SH>
+      <SLI>Subscription fees are charged monthly or annually in advance. Fees are shown excluding VAT. Applicable VAT will be added based on your billing country.</SLI>
+      <SLI>You may cancel at any time from account settings. Access continues until the end of the current billing period. No partial refunds are issued for unused periods except where required by law.</SLI>
+      <SLI>EU consumers have a 14-day right of withdrawal from the date of initial purchase. To exercise this right, email legal@invoice-ai.de within 14 days of signing up.</SLI>
+      <SLI>We reserve the right to change pricing with 30 days' written notice. Price changes take effect at your next renewal cycle. If you do not accept the new price, you may cancel before the renewal date.</SLI>
+      <SLI>If payment fails, we will notify you and provide a 7-day grace period. After this period we may suspend access until payment is received.</SLI>
+      <SLI>Pursuant to the EU Data Act, you may switch to another provider with two months' notice. You can export all your data in JSON or CSV format at any time from account settings, free of charge.</SLI>
+
+      <SH>4. Limitation of liability</SH>
+      <SP>To the fullest extent permitted by applicable law:</SP>
+      <SLI>InvoiceAI's total aggregate liability to you for any claim arising from or related to these terms or the service — whether in contract, tort (including negligence), breach of statutory duty or otherwise — shall not exceed the total fees paid by you to InvoiceAI in the 12 months immediately preceding the event giving rise to the claim.</SLI>
+      <SLI>InvoiceAI is not liable for any indirect, consequential, special, incidental or punitive damages, including but not limited to: loss of profit, loss of revenue, loss of contracts, loss of anticipated savings, loss of data, fines or penalties imposed by any tax authority, or damage to goodwill or reputation.</SLI>
+      <SLI>InvoiceAI is not liable for any loss or damage arising from: your reliance on VAT calculations, compliance suggestions or tax information provided by the service; errors in AI-generated content; failure of third-party services (including Stripe, Anthropic, Supabase or AWS); or interruptions to service availability.</SLI>
+      <SLI>Nothing in these terms excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot be excluded or limited under applicable law.</SLI>
+
+      <SH>5. Service availability</SH>
+      <SP>We aim to maintain high availability but do not guarantee uninterrupted access. Planned maintenance will be notified in advance where reasonably possible. We are not liable for any losses arising from service unavailability, including missed tax filing deadlines or rejected invoices. Critical submissions to tax authorities should not be left to the last moment and should not depend solely on the availability of InvoiceAI.</SP>
+
+      <SH>6. Acceptable use</SH>
+      <SP>You agree not to use InvoiceAI to:</SP>
+      <SLI>Create fraudulent, misleading or fictitious invoices or documents.</SLI>
+      <SLI>Misrepresent your identity, business registration, VAT status or legal entity.</SLI>
+      <SLI>Violate any applicable law, tax regulation or professional standard.</SLI>
+      <SLI>Attempt to gain unauthorised access to the service or another user's data.</SLI>
+      <SLI>Reverse engineer, copy, redistribute or resell the service or its underlying technology.</SLI>
+      <SLI>Use the service in any way that could expose InvoiceAI or other users to legal liability.</SLI>
+      <SP>We reserve the right to suspend or terminate accounts that breach these provisions without notice and without refund.</SP>
+
+      <SH>7. Your content and data</SH>
+      <SLI>You retain all intellectual property rights to the content you create using InvoiceAI — invoices, proposals, client data and business information remain yours.</SLI>
+      <SLI>You grant InvoiceAI a limited licence to process and store your content solely to provide the service to you.</SLI>
+      <SLI>We do not sell your data, share it with third parties for commercial purposes, or use it to train AI models without your explicit consent.</SLI>
+      <SLI>You are responsible for maintaining appropriate backups of your data. While we implement robust backup procedures, we cannot guarantee against data loss in all circumstances.</SLI>
+
+      <SH>8. AI features — specific terms</SH>
+      <SP>InvoiceAI uses Claude (Anthropic PBC) to power the proposal writer and support assistant. By using these features:</SP>
+      <SLI>Your input (project descriptions, client names, brief content) is transmitted to Anthropic's API for processing. See Anthropic's privacy policy at anthropic.com for details of how they handle this data.</SLI>
+      <SLI>AI-generated outputs are probabilistic and may contain errors, inaccuracies or inappropriate content. Always review AI-generated proposals before sending them to clients.</SLI>
+      <SLI>Do not enter sensitive personal data, confidential client information, trade secrets or privileged information into AI input fields.</SLI>
+      <SLI>We are not liable for any loss or damage arising from reliance on AI-generated content.</SLI>
+
+      <SH>9. Third-party services</SH>
+      <SP>InvoiceAI integrates with third-party services including Stripe (payments), Supabase (authentication), AWS (hosting), Anthropic (AI), Plausible (analytics) and Loops (email). Your use of these services is subject to their respective terms and privacy policies. We are not responsible for the actions, availability or data practices of these third parties.</SP>
+
+      <SH>10. Intellectual property</SH>
+      <SP>All software, design, trademarks and content of InvoiceAI (excluding user-generated content) are the exclusive property of Daniel Speder / InvoiceAI. You may not copy, reproduce, distribute or create derivative works without prior written permission.</SP>
+
+      <SH>11. Termination</SH>
+      <SP>Either party may terminate the service relationship at any time. Upon termination you may export your data for 90 days. After 90 days, your data will be permanently deleted, except where retention is required by law (invoices are retained for 10 years per GoBD §147 AO). We reserve the right to terminate access immediately if you breach these terms.</SP>
+
+      <SH>12. Changes to these terms</SH>
+      <SP>We may update these terms from time to time. Material changes will be notified by email at least 14 days before they take effect. Continued use after the effective date constitutes acceptance. If you do not accept changes, you may terminate your subscription before the effective date.</SP>
+
+      <SH>13. Governing law and dispute resolution</SH>
+      <SP>These terms are governed by the laws of the Federal Republic of Germany. The UN Convention on Contracts for the International Sale of Goods (CISG) is excluded. Disputes will be referred to the competent courts of München, Germany, unless mandatory consumer protection law in your country of residence requires otherwise. EU consumers may also use the EU Online Dispute Resolution platform at ec.europa.eu/consumers/odr. We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.</SP>
+
+      <SH>14. Contact</SH>
+      <SP>Daniel Speder · Arndstr. 2 · 80469 München · Germany · legal@invoice-ai.de</SP>
     </SubLayout>
   );
 }
@@ -2327,6 +2457,104 @@ function PageGDPR() {
             </div>
           );
         })}
+      </div>
+    </SubLayout>
+  );
+}
+
+function PageFAQ(props) {
+  var setPage = props.setPage;
+  var openModal = props.openModal;
+  var [open, setOpen] = useState(null);
+
+  var categories = [
+    {
+      title: "Pricing & Plans",
+      items: [
+        { q:"How much does InvoiceAI cost?", a:"Solo is €9/mo (up to 3 active clients), Studio is €29/mo (unlimited clients, our most popular plan), Agency is €79/mo (5 team seats, white-label portal). All plans include a 14-day free trial with no credit card required." },
+        { q:"What counts as an 'active client'?", a:"A client you've created an invoice or proposal for in the current billing month. Archived or inactive clients don't count. Most freelancers with 1–3 regular clients stay on the Solo plan indefinitely." },
+        { q:"Can I change plans later?", a:"Yes — upgrade or downgrade at any time from your account settings. If you upgrade, you're charged the difference pro-rated for the remainder of the month. If you downgrade, the change takes effect at the next billing cycle." },
+        { q:"Is there a free trial?", a:"Yes. 14 days free on any plan, no credit card needed. You get the full feature set during the trial, not a limited version." },
+        { q:"What is the founding member discount?", a:"The first users who join via the waitlist lock in Studio at €19/mo forever — 35% off the regular price. This offer ends when we officially launch. Once locked in, your price never increases." },
+      ],
+    },
+    {
+      title: "EU Compliance & VAT",
+      items: [
+        { q:"What is reverse charge and when does it apply?", a:"Reverse charge means your client pays the VAT to their own tax authority instead of you collecting it. It applies when you invoice a VAT-registered business in a different EU country (B2B cross-border). InvoiceAI detects this automatically when you enter a valid client VAT number." },
+        { q:"I'm a Kleinunternehmer (§19 UStG) — can I use reverse charge?", a:"No. Kleinunternehmer status means you have no VAT number, so reverse charge cannot apply. InvoiceAI blocks this combination automatically. Your invoices should carry the §19 UStG exemption notice instead." },
+        { q:"What is the Zusammenfassende Meldung (ZM)?", a:"The ZM is a quarterly report you must file with the German Finanzamt listing all cross-border B2B invoices where reverse charge applied. InvoiceAI reminds you of this on every reverse charge invoice and keeps a record you can use for filing." },
+        { q:"What is XRechnung and do I need it?", a:"XRechnung is Germany's mandatory structured e-invoice format. For invoices to German government bodies (B2G), it has been required since 2020. For B2B, the mandate phases in from 2025–2028. InvoiceAI generates fully compliant XRechnung 3.0 XML from your invoice form with one click." },
+        { q:"What is OSS and do I need to register?", a:"OSS (One Stop Shop) applies only to B2C digital services. If you sell digital services directly to consumers (not businesses) across multiple EU countries and your total B2C cross-border revenue exceeds €10,000/year, you should register for OSS. Most InvoiceAI users invoice B2B and are not affected." },
+        { q:"Does InvoiceAI validate VAT numbers?", a:"Yes — InvoiceAI calls the EU VIES register in real time as you type the client's VAT number. A green badge confirms the number is valid. If VIES returns invalid, reverse charge is blocked and you're asked to verify manually before proceeding." },
+      ],
+    },
+    {
+      title: "Proposals",
+      items: [
+        { q:"How does the AI proposal writer work?", a:"You fill in the client name, company, country, project type and a short brief. InvoiceAI uses this to generate a structured proposal adapted to the project type and your client's country communication norms. German clients get precise, formal proposals. Dutch clients get direct, no-filler ones. French clients get proposals that lead with value before price." },
+        { q:"Can I edit the proposal after it's generated?", a:"Yes — the generated text is fully editable. You can also use the refine chips (Make it shorter, More formal, Add case studies, Stronger close) to iterate with one tap. Each refinement builds on the previous version." },
+        { q:"Is the proposal output private?", a:"Yes. Your proposal content is sent to the AI for generation and then returned to you. We do not store, share or use it to train any model." },
+      ],
+    },
+    {
+      title: "Invoicing",
+      items: [
+        { q:"What invoice formats can I export?", a:"PDF (print-quality, via browser) and XRechnung 3.0 XML (machine-readable, EN 16931 compliant). ZUGFeRD (hybrid PDF+XML) and Factur-X (France) are coming Q4 2026." },
+        { q:"Can I invoice in currencies other than EUR?", a:"Yes — the invoice form uses the correct currency automatically based on the client's country. Hungarian clients get HUF, Swedish clients get SEK, Polish clients get PLN, UK clients get GBP." },
+        { q:"How do I handle invoices to UK clients after Brexit?", a:"UK clients are treated as third-country (non-EU) customers. InvoiceAI adds the correct exemption notice ('service not taxable in Germany / §3a UStG') and sets VAT to 0%. No reverse charge — that only applies within the EU." },
+        { q:"Can I issue a credit note?", a:"Yes — enable the Credit Note option in the EU compliance section. InvoiceAI assigns a separate CN-YYYY-XXX number sequence as required by EU VAT law and adds the reference to the original invoice." },
+      ],
+    },
+    {
+      title: "Data & Privacy",
+      items: [
+        { q:"Where is my data stored?", a:"All data is stored on AWS Frankfurt (eu-central-1). It never leaves the EU. We comply fully with GDPR and the German GoBD requirements for 10-year invoice archiving." },
+        { q:"Do you sell my data?", a:"Never. We do not sell, rent or share your data with any third party for any purpose. Our analytics are cookieless (Plausible). See our Privacy Policy for the full picture." },
+        { q:"Can I export all my data?", a:"Yes — export all clients, invoices and proposals as JSON or CSV at any time from your account settings. You own your data completely." },
+        { q:"What happens if I cancel?", a:"You keep access until the end of your billing period. After that you can still log in and export your data for 90 days before the account is archived. Invoice records are retained for 10 years per GoBD." },
+      ],
+    },
+  ];
+
+  return (
+    <SubLayout pill="Help" title="Frequently asked questions." sub="Everything you need to know about InvoiceAI. Can't find your answer? The chat widget bottom-right connects you directly.">
+      <div style={{ display:"flex", flexDirection:"column", gap:28 }}>
+        {categories.map(function(cat) {
+          return (
+            <div key={cat.title}>
+              <h3 style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:12 }}>{cat.title}</h3>
+              <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+                {cat.items.map(function(item, i) {
+                  var key = cat.title + i;
+                  var isOpen = open === key;
+                  return (
+                    <div key={key} style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"33" : L.border), borderRadius:10, overflow:"hidden" }}>
+                      <button onClick={function(){ setOpen(isOpen ? null : key); }} style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"14px 16px", background:"transparent", border:"none", cursor:"pointer", textAlign:"left", gap:12 }}>
+                        <span style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:L.ink, flex:1 }}>{item.q}</span>
+                        <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
+                      </button>
+                      {isOpen && (
+                        <div style={{ padding:"0 16px 14px", borderTop:"1px solid "+L.borderLt }}>
+                          <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300, paddingTop:12 }}>{item.a}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ background:L.accent, borderRadius:14, padding:"24px 28px", marginTop:36, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
+        <div>
+          <div style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:"#fff", marginBottom:4 }}>Still have a question?</div>
+          <div style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>Chat with us or email hello@invoice-ai.de</div>
+        </div>
+        <button onClick={function(){ openModal("faq"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>
+          Get early access →
+        </button>
       </div>
     </SubLayout>
   );
@@ -2635,7 +2863,7 @@ var BOT_QA = [
   { q:["sepa","iban","bank transfer","payment"],            a:"Every invoice includes a SEPA bank transfer block with your IBAN and BIC. Just enter them once in the invoice form and they appear on every invoice automatically." },
   { q:["gdpr","data","privacy","personal"],                 a:"InvoiceAI adds a GDPR-compliant notice to every invoice automatically. Your data is hosted on AWS Frankfurt (EU), never leaves the EU, and we never sell it to third parties." },
   { q:["proposal","ai","generate","write"],                 a:"Type a brief project description, choose a tone (direct, warm or formal), and the AI writes a full client-ready proposal in under 30 seconds. You can then refine it with one-click actions." },
-  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €19/mo (50 invoices), Studio is €59/mo (unlimited, most popular), Agency is €149/mo (5 team seats + white-label). All plans include a 14-day free trial — no credit card needed." },
+  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €9/mo (up to 3 clients), Studio is €29/mo (unlimited, most popular), Agency is €79/mo (5 team seats + white-label). All plans include a 14-day free trial — no credit card needed." },
   { q:["credit note","refund","correct","cancel"],          a:"Enable 'Credit Note' in the EU Compliance section. InvoiceAI automatically assigns a separate CN-YYYY-XXX number sequence as required by EU VAT law." },
   { q:["xml","xrechnung","factur-x","e-invoice"],           a:"E-invoice XML is coming Q4 2026. We're building XRechnung 3.0 for Germany, Factur-X for France, and XML/SDI for Italy. Toggle it on in the compliance section to mark invoices as compliant." },
   { q:["late payment","interest","overdue","directive"],    a:"EU Directive 2011/7/EU gives you the right to charge 8% above ECB base rate on overdue B2B invoices — no contract needed. Enable 'Late Payment Interest' in the compliance section." },
@@ -2688,7 +2916,7 @@ function SupportBot() {
       body:JSON.stringify({
         model:"claude-sonnet-4-20250514",
         max_tokens:300,
-        system:"You are a helpful support assistant for InvoiceAI, an EU-native invoicing and proposal tool for creative professionals. Answer in 1-3 sentences. Key facts: Solo €19/mo, Studio €59/mo, Agency €149/mo. 14-day free trial. Supports EU VAT, reverse charge, SEPA, GDPR, XRechnung, Factur-X. 7 EU languages.",
+        system:"You are a helpful support assistant for InvoiceAI, an EU-native invoicing and proposal tool for creative professionals. Answer in 1-3 sentences. Key facts: Solo €9/mo, Studio €29/mo, Agency €79/mo. 14-day free trial. Supports EU VAT, reverse charge, SEPA, GDPR, XRechnung, Factur-X. 7 EU languages.",
         messages:history,
       }),
     }).then(function(r) { return r.json(); })
@@ -2967,7 +3195,7 @@ function SignupModal(props) {
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="check" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
             <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €19/mo forever</strong> — locked in at signup.</p>
             <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
               <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
               <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
@@ -3064,11 +3292,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
-  var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies"].indexOf(page) >= 0;
+  var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ"].indexOf(page) >= 0;
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 1200px !important; grid-template-columns: 1fr 1.1fr !important; gap: 40px !important; padding: 36px 48px 72px !important; } .desktop-inv { grid-template-columns: 1fr 340px !important; gap: 24px !important; padding: 32px 48px 72px !important; } .desktop-strip { max-width: 680px !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
@@ -3081,7 +3309,7 @@ export default function App() {
       {page==="Privacy"      && <PagePrivacy />}
       {page==="Terms"        && <PageTerms />}
       {page==="GDPR"         && <PageGDPR />}
-      {page==="Cookies"      && <PageCookies />}
+      {page==="FAQ"          && <PageFAQ setPage={setPage} openModal={openModal} />}
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
       {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
