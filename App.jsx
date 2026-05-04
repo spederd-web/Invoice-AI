@@ -386,7 +386,7 @@ function Icon(props) {
 function Pill(props) {
   var color = props.color || L.accent;
   return (
-    <span style={{ display:"inline-block", padding:"3px 12px", borderRadius:999, border:"1.5px solid "+color, color:color, fontSize:11, fontFamily:fMono, letterSpacing:"0.08em", textTransform:"uppercase" }}>
+    <span style={{ display:"inline-block", padding:"3px 12px", borderRadius:999, border:"1.5px solid "+color, color:color, fontSize:13, fontFamily:fMono, letterSpacing:"0.08em", textTransform:"uppercase" }}>
       {props.children}
     </span>
   );
@@ -395,7 +395,7 @@ function Pill(props) {
 function Tag(props) {
   var c = props.c || L.green;
   return (
-    <span style={{ padding:"2px 8px", borderRadius:4, background:c+"22", color:c, fontSize:10, fontFamily:fMono, letterSpacing:"0.06em" }}>
+    <span style={{ padding:"2px 8px", borderRadius:4, background:c+"22", color:c, fontSize:12, fontFamily:fMono, letterSpacing:"0.06em" }}>
       {props.children}
     </span>
   );
@@ -432,7 +432,7 @@ function Nav(props) {
           <LogoMark size={32} />
           <div>
             <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:17, color:L.ink, lineHeight:1.1, letterSpacing:"-0.02em" }}>InvoiceAI</div>
-            <div style={{ fontFamily:fMono, fontSize:7, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
+            <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
           </div>
         </div>
         <div style={{ flex:1 }} />
@@ -440,7 +440,7 @@ function Nav(props) {
           {PAGES.map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
             return (
-              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:page===pg ? 500 : 400 }}>
+              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400 }}>
                 {pgLabel}
               </button>
             );
@@ -448,19 +448,19 @@ function Nav(props) {
         </div>
         {user ? (
           <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
-            <div style={{ width:30, height:30, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:"#fff", fontWeight:600 }}>
+            <div style={{ width:30, height:30, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:"#fff", fontWeight:600 }}>
               {user.email ? user.email[0].toUpperCase() : "U"}
             </div>
-            <button onClick={function(){ setPage("Dashboard"); }} style={{ background:L.accentGlow, color:L.accent, border:"1px solid "+L.accent+"44", padding:"7px 14px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
+            <button onClick={function(){ setPage("Dashboard"); }} style={{ background:L.accentGlow, color:L.accent, border:"1px solid "+L.accent+"44", padding:"7px 14px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
               Dashboard
             </button>
           </div>
         ) : (
           <div className="nav-cta" style={{ display:"flex", gap:7, flexShrink:0 }}>
-            <button onClick={openAuth} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13 }}>
+            <button onClick={openAuth} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
               Log in
             </button>
-            <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
+            <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
               {t(lang,"navStart")}
             </button>
           </div>
@@ -469,7 +469,7 @@ function Nav(props) {
           <select
             value={lang}
             onChange={function(e){ setLang(e.target.value); }}
-            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
+            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
           >
             {[["de","🇩🇪 DE"],["en","🇬🇧 EN"],["fr","🇫🇷 FR"],["es","🇪🇸 ES"],["it","🇮🇹 IT"],["hu","🇭🇺 HU"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
@@ -499,11 +499,11 @@ function Nav(props) {
             {t(lang,"navStartArrow")}
           </button>
           <div style={{ borderTop:"1px solid "+L.border, marginTop:8, paddingTop:12 }}>
-            <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8, paddingLeft:4 }}>Language</div>
+            <div style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8, paddingLeft:4 }}>Language</div>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
               {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
                 return (
-                  <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:lang===pair[0] ? L.ink : L.paper, color:lang===pair[0] ? "#fff" : L.muted, border:"1px solid "+(lang===pair[0] ? L.ink : L.border), borderRadius:6, padding:"6px 12px", cursor:"pointer", fontFamily:fMono, fontSize:11, fontWeight:lang===pair[0] ? 600 : 400 }}>
+                  <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:lang===pair[0] ? L.ink : L.paper, color:lang===pair[0] ? "#fff" : L.muted, border:"1px solid "+(lang===pair[0] ? L.ink : L.border), borderRadius:6, padding:"6px 12px", cursor:"pointer", fontFamily:fMono, fontSize:13, fontWeight:lang===pair[0] ? 600 : 400 }}>
                     {pair[1]}
                   </button>
                 );
@@ -549,7 +549,7 @@ function HeroSection(props) {
     return function() { clearInterval(t); };
   }, []);
   return (
-    <section style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"72px 24px 64px", textAlign:"center" }}>
+    <section style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"96px 24px 80px", textAlign:"center" }}>
       <div className="desktop-hero" style={{ maxWidth:720, margin:"0 auto" }}>
         <Pill>Built for European Freelancers · 1,400+ professionals</Pill>
         <h1 style={{ fontFamily:fSerif, fontSize:"clamp(36px,6vw,68px)", fontWeight:900, color:L.ink, margin:"20px 0 16px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
@@ -567,7 +567,7 @@ function HeroSection(props) {
 {t(lang,"heroSecondaryBtn") || t(lang,"heroSecondary")}
           </button>
         </div>
-        <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.06em" }}>
+        <p style={{ fontFamily:fMono, fontSize:13, color:L.faint, letterSpacing:"0.06em" }}>
 {t(lang,"heroFine")}
         </p>
         <div className="desktop-feat-cards" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10, marginTop:28, maxWidth:520, margin:"28px auto 0" }}>
@@ -581,7 +581,7 @@ function HeroSection(props) {
                 <div style={{ width:32, height:32, borderRadius:8, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <Icon name={f.icon} size={15} color={L.accent} />
                 </div>
-                <span style={{ fontFamily:fSans, fontSize:10, fontWeight:500, color:L.ink, textAlign:"center", lineHeight:1.35 }}>{f.label}</span>
+                <span style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink, textAlign:"center", lineHeight:1.35 }}>{f.label}</span>
               </div>
             );
           })}
@@ -589,7 +589,7 @@ function HeroSection(props) {
         <div style={{ marginTop:28, display:"inline-flex", alignItems:"center", gap:10, background:L.cream, border:"1px solid "+L.border, borderRadius:99, padding:"8px 20px 8px 16px" }}>
           <div style={{ width:8, height:8, borderRadius:"50%", background:L.green, flexShrink:0 }} />
           <span style={{ fontFamily:fSerif, fontSize:18, color:L.gold, fontWeight:700 }}>{"€"+count.toLocaleString("de-DE")}</span>
-          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t(lang,"heroCounter")}</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t(lang,"heroCounter")}</span>
         </div>
       </div>
     </section>
@@ -627,7 +627,7 @@ function FeaturesSection(props) {
                   <Icon name={f.icon} size={18} color={L.accent} />
                 </div>
                 <h3 style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, marginBottom:8 }}>{f.title}</h3>
-                <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
+                <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
               </div>
             );
           })}
@@ -678,12 +678,12 @@ function EUComplianceSection(props) {
                     <Icon name={f.icon} size={13} color={L.accent} />
                   </div>
                   <div style={{ flex:1, minWidth:0 }}>
-                    <div className="eu-title" style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
-                    <div className="eu-badge" style={{ fontFamily:fMono, fontSize:8, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
+                    <div className="eu-title" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
+                    <div className="eu-badge" style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
                   </div>
-                  <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
+                  <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
                 </div>
-                {isOpen && <p className="eu-desc" style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300, paddingTop:8, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
+                {isOpen && <p className="eu-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300, paddingTop:8, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
               </div>
             );
           })}
@@ -692,7 +692,7 @@ function EUComplianceSection(props) {
           <Icon name="archive" size={24} color={L.accentLt} />
           <div style={{ flex:1 }}>
             <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>10-Year Invoice Archive</div>
-            <div style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>
+            <div style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>
               German GoBD (§147 AO), French LPF, Italian CAF — EU tax law requires 10-year retention. InvoiceAI archives every invoice automatically.
             </div>
           </div>
@@ -708,7 +708,7 @@ function ReviewsSection(props) {
   var featured = REVIEWS.slice(0, 3);
   var extra = REVIEWS.slice(3);
   return (
-    <section style={{ background:L.cream, borderBottom:"1px solid "+L.border, padding:"72px 0 56px" }}>
+    <section style={{ background:L.cream, borderBottom:"1px solid "+L.border, padding:"88px 0 72px" }}>
       <div style={{ textAlign:"center", marginBottom:32, padding:"0 24px" }}>
         <Pill color={L.gold}>{t(lang,"pillReviews")||"Reviews"}</Pill>
         <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 8px", letterSpacing:"-0.025em" }}>
@@ -717,7 +717,7 @@ function ReviewsSection(props) {
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginBottom:4 }}>
           <Stars n={5} size={14} />
           <span style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>4.9</span>
-          <span style={{ fontFamily:fMono, fontSize:10, color:L.muted }}>from 340+ reviews</span>
+          <span style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>from 340+ reviews</span>
         </div>
       </div>
 
@@ -729,19 +729,19 @@ function ReviewsSection(props) {
               <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                    <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                    <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
                     <div>
-                      <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{r.name}</div>
-                      <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
+                      <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{r.name}</div>
+                      <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
                     </div>
                   </div>
-                  <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
+                  <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                 </div>
                 <Stars n={r.rating} size={12} />
-                <p style={{ fontFamily:fSans, fontSize:13, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                <p style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                 <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                  <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
-                  <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
+                  <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
+                  <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
                 </div>
               </div>
             );
@@ -754,19 +754,19 @@ function ReviewsSection(props) {
                 <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
                     <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                      <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                      <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
                       <div>
-                        <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{r.name}</div>
-                        <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
+                        <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{r.name}</div>
+                        <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
                       </div>
                     </div>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                   </div>
                   <Stars n={r.rating} size={12} />
-                  <p style={{ fontFamily:fSans, fontSize:13, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                   <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
                   </div>
                 </div>
               );
@@ -774,35 +774,35 @@ function ReviewsSection(props) {
           </div>
         )}
         <div style={{ textAlign:"center" }}>
-          <button onClick={function(){ setShowAll(function(s){ return !s; }); }} style={{ background:"transparent", border:"1.5px solid "+L.border, borderRadius:8, padding:"9px 24px", cursor:"pointer", fontFamily:fSans, fontSize:13, color:L.muted }}>
+          <button onClick={function(){ setShowAll(function(s){ return !s; }); }} style={{ background:"transparent", border:"1.5px solid "+L.border, borderRadius:8, padding:"9px 24px", cursor:"pointer", fontFamily:fSans, fontSize:15, color:L.muted }}>
             {showAll ? "Show less ▲" : "Show all " + REVIEWS.length + " reviews ▼"}
           </button>
         </div>
       </div>
 
       {/* Mobile: horizontal scroll */}
-      <div className="reviews-mobile">
-        <div style={{ overflowX:"auto", paddingBottom:8, WebkitOverflowScrolling:"touch" }}>
-          <div style={{ display:"flex", gap:14, padding:"4px 24px 8px", width:"max-content" }}>
+      <div className="reviews-mobile" style={{ overflowX:"hidden" }}>
+        <div style={{ overflowX:"auto", paddingBottom:8, WebkitOverflowScrolling:"touch", marginRight:"-1px" }}>
+          <div style={{ display:"flex", gap:12, padding:"4px 16px 8px", width:"max-content" }}>
             {REVIEWS.map(function(r, i) {
               var isFeat = i < 3;
               return (
-                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+(isFeat ? L.accent+"33" : L.border), borderRadius:14, padding:"18px 18px 14px", width:280, flexShrink:0, display:"flex", flexDirection:"column", gap:10 }}>
+                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+(isFeat ? L.accent+"33" : L.border), borderRadius:14, padding:"18px 18px 14px", width:260, flexShrink:0, display:"flex", flexDirection:"column", gap:10 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
                     <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                      <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                      <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
                       <div>
-                        <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:L.ink }}>{r.name}</div>
-                        <div style={{ fontFamily:fMono, fontSize:9, color:L.muted }}>{r.role} · {r.city}</div>
+                        <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{r.name}</div>
+                        <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
                       </div>
                     </div>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.platform}</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                   </div>
                   <Stars n={r.rating} size={11} />
-                  <p style={{ fontFamily:fSans, fontSize:12, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <p style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                   <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.green }}>✓ Verified</span>
-                    <span style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{r.helpful} helpful</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
                   </div>
                 </div>
               );
@@ -810,7 +810,7 @@ function ReviewsSection(props) {
           </div>
         </div>
         <div style={{ textAlign:"center", marginTop:12 }}>
-          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>← scroll for more →</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>← scroll for more →</span>
         </div>
       </div>
     </section>
@@ -862,26 +862,26 @@ function PricingSection(props) {
             return (
               <div key={plan.name} style={{ background:plan.hi ? L.accent : L.white, border:plan.hi ? "2px solid "+L.accent : "1.5px solid "+L.border, borderRadius:16, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 12px 36px rgba(200,80,42,0.25)" : "none" }}>
                 {plan.badge && (
-                  <div style={{ position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)", background:L.gold, color:"#fff", padding:"4px 16px", borderRadius:99, fontFamily:fMono, fontSize:9, letterSpacing:"0.08em", whiteSpace:"nowrap", boxShadow:"0 2px 8px rgba(154,120,32,0.3)" }}>
+                  <div style={{ position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)", background:L.gold, color:"#fff", padding:"4px 16px", borderRadius:99, fontFamily:fMono, fontSize:11, letterSpacing:"0.08em", whiteSpace:"nowrap", boxShadow:"0 2px 8px rgba(154,120,32,0.3)" }}>
                     {plan.badge}
                   </div>
                 )}
-                <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:plan.hi ? "rgba(255,255,255,0.7)" : L.muted, marginBottom:12 }}>{plan.name}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase", color:plan.hi ? "rgba(255,255,255,0.7)" : L.muted, marginBottom:12 }}>{plan.name}</div>
                 <div style={{ display:"flex", alignItems:"baseline", gap:3, marginBottom:22 }}>
                   <span style={{ fontFamily:fSerif, fontSize:40, fontWeight:900, color:plan.hi ? "#fff" : L.ink, lineHeight:1 }}>{"€"+plan.price}</span>
-                  <span style={{ fontFamily:fSans, fontSize:13, color:plan.hi ? "rgba(255,255,255,0.55)" : L.muted }}>/mo</span>
+                  <span style={{ fontFamily:fSans, fontSize:15, color:plan.hi ? "rgba(255,255,255,0.55)" : L.muted }}>/mo</span>
                 </div>
                 <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:24 }}>
                   {plan.features.map(function(f) {
                     return (
-                      <div key={f} style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:12, color:plan.hi ? "rgba(255,255,255,0.8)" : L.ink, lineHeight:1.4 }}>
+                      <div key={f} style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(255,255,255,0.8)" : L.ink, lineHeight:1.4 }}>
                         <Icon name="check" size={13} color={plan.hi ? "rgba(255,255,255,0.7)" : L.green} />
                         {f}
                       </div>
                     );
                   })}
                 </div>
-                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:13, fontWeight:500, opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
+                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:15, fontWeight:500, opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
                   {checkoutLoading === plan.name.toLowerCase() ? "Loading…" : t(lang,"pricingCta")}
                 </button>
               </div>
@@ -1085,47 +1085,47 @@ function InvoicePreviewPanel(props) {
   }
   return (
     <div style={{ padding:"0 24px 48px", maxWidth:960, margin:"0 auto" }}>
-      <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:9, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
+      <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:11, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
         ← Back to form
       </button>
       <div style={{ display:"flex", gap:8, marginBottom:8, maxWidth:580 }}>
-        <button onClick={function(){ window.print(); }} style={{ flex:1, background:L.ink, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+        <button onClick={function(){ window.print(); }} style={{ flex:1, background:L.ink, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <Icon name="download" size={13} color="#fff" />
           Export PDF
         </button>
-        <button onClick={exportXRechnung} disabled={xrLoading} style={{ flex:1, background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+        <button onClick={exportXRechnung} disabled={xrLoading} style={{ flex:1, background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <Icon name="document" size={13} color="#fff" />
           {xrLoading ? "…" : "XRechnung XML"}
         </button>
-        <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+        <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <Icon name="send" size={13} color="#fff" />
           Share
         </button>
       </div>
       {s.country && s.country.code === "HU" && (
         <div style={{ marginBottom:8 }}>
-          <button onClick={exportNAV} disabled={navLoading} style={{ width:"100%", background:navLoading ? L.border : "#2A5E3A", color:"#fff", border:"none", padding:"10px 12px", borderRadius:7, cursor:navLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:11, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+          <button onClick={exportNAV} disabled={navLoading} style={{ width:"100%", background:navLoading ? L.border : "#2A5E3A", color:"#fff", border:"none", padding:"10px 12px", borderRadius:7, cursor:navLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:13, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
             <Icon name="document" size={13} color="#fff" />
             {navLoading ? "Generating…" : "NAV XML — Hungarian tax reporting"}
           </button>
-          {navError && <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, marginTop:4 }}>{navError}</p>}
-          <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, marginTop:5, letterSpacing:"0.04em" }}>
+          {navError && <p style={{ fontFamily:fSans, fontSize:13, color:L.accent, marginTop:4 }}>{navError}</p>}
+          <p style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginTop:5, letterSpacing:"0.04em" }}>
             Upload to onlineszamla.nav.gov.hu after issuing. Required for domestic HU invoices.
           </p>
         </div>
       )}
-      {xrError && <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, marginBottom:10 }}>XRechnung error: {xrError}</p>}
+      {xrError && <p style={{ fontFamily:fSans, fontSize:13, color:L.accent, marginBottom:10 }}>XRechnung error: {xrError}</p>}
       <div id="print-invoice" style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
         {s.creditNote && (
           <div style={{ background:L.goldGlow, border:"1.5px solid "+L.gold+"55", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
             <Icon name="document" size={14} color={L.gold} />
-            <span style={{ fontFamily:fMono, fontSize:9, color:L.gold, letterSpacing:"0.08em", textTransform:"uppercase" }}>Credit Note · {cnNum} · Ref: {invNum}</span>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.gold, letterSpacing:"0.08em", textTransform:"uppercase" }}>Credit Note · {cnNum} · Ref: {invNum}</span>
           </div>
         )}
         {s.eInvoice && (
           <div style={{ background:L.blueGlow, border:"1.5px solid "+L.blue+"44", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
             <Icon name="send" size={14} color={L.blue} />
-            <span style={{ fontFamily:fMono, fontSize:9, color:L.blue, letterSpacing:"0.07em" }}>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.blue, letterSpacing:"0.07em" }}>
               {s.country && s.country.code === "DE" ? "XRechnung 3.0" : s.country && s.country.code === "FR" ? "Factur-X 1.0" : s.country && s.country.code === "IT" ? "XML/SDI" : "EN16931"} · EU e-invoice
             </span>
           </div>
@@ -1133,16 +1133,16 @@ function InvoicePreviewPanel(props) {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22 }}>
           <div>
             <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:900, color:s.creditNote ? L.gold : L.ink, letterSpacing:"-0.02em" }}>{s.creditNote ? "CREDIT NOTE" : "INVOICE"}</div>
-            <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, marginTop:2 }}>No. {s.creditNote ? cnNum : invNum}</div>
-            {s.projRef && <div style={{ fontFamily:fSans, fontSize:10, color:L.muted, marginTop:3, fontStyle:"italic" }}>Re: {s.projRef}</div>}
+            <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, marginTop:2 }}>No. {s.creditNote ? cnNum : invNum}</div>
+            {s.projRef && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:3, fontStyle:"italic" }}>Re: {s.projRef}</div>}
           </div>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink }}>{s.sName}</div>
-            {s.sStreet && <div style={{ fontFamily:fSans, fontSize:10, color:L.muted }}>{s.sStreet}</div>}
-            {s.sCity && <div style={{ fontFamily:fSans, fontSize:10, color:L.muted }}>{s.sCity}</div>}
+            {s.sStreet && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted }}>{s.sStreet}</div>}
+            {s.sCity && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted }}>{s.sCity}</div>}
             {s.vatExempt
-              ? <div style={{ fontFamily:fMono, fontSize:9, color:L.gold }}>VAT-exempt · §19 UStG</div>
-              : <div style={{ fontFamily:fMono, fontSize:10, color:L.muted }}>VAT No: {s.sVAT}</div>
+              ? <div style={{ fontFamily:fMono, fontSize:11, color:L.gold }}>VAT-exempt · §19 UStG</div>
+              : <div style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>VAT No: {s.sVAT}</div>
             }
           </div>
         </div>
@@ -1150,8 +1150,8 @@ function InvoicePreviewPanel(props) {
           {[{l:"Date",v:fmtDate(s.country)},{l:"Due",v:fmtDate(s.country,parseInt(s.terms||30))},{l:"Terms",v:"Net "+s.terms+" days"}].map(function(x,i) {
             return (
               <div key={x.l} style={{ padding:"10px 12px", borderRight:i<2 ? "1px solid "+L.border : "none" }}>
-                <div style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.08em", textTransform:"uppercase", color:L.muted, marginBottom:2 }}>{x.l}</div>
-                <div style={{ fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:500 }}>{x.v}</div>
+                <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", textTransform:"uppercase", color:L.muted, marginBottom:2 }}>{x.l}</div>
+                <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:500 }}>{x.v}</div>
               </div>
             );
           })}
@@ -1159,40 +1159,40 @@ function InvoicePreviewPanel(props) {
         {s.rc && (
           <div style={{ background:"rgba(42,94,154,0.06)", border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
             <Icon name="reverse" size={11} color={L.blue} />
-            <p style={{ fontFamily:fSans, fontSize:11, color:L.blue, margin:0 }}>Reverse charge — VAT liability transfers to the recipient (Art. 44 EU VAT Dir. 2006/112/EC)</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge — VAT liability transfers to the recipient (Art. 44 EU VAT Dir. 2006/112/EC)</p>
           </div>
         )}
         {s.rc && (
           <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
-            <p style={{ fontFamily:fSans, fontSize:10, color:L.blue, margin:0 }}>
+            <p style={{ fontFamily:fSans, fontSize:12, color:L.blue, margin:0 }}>
               <strong>ZM reminder:</strong> This RC transaction must be reported quarterly to your tax authority. Keep a record for your ZM/recapitulative statement filing.
             </p>
           </div>
         )}
         {s.country && s.country.eu === false && (
           <div style={{ background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
-            <p style={{ fontFamily:fSans, fontSize:11, color:L.gold, margin:0 }}>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.gold, margin:0 }}>
               <strong>Export / Third country:</strong> Service not subject to VAT per §3a UStG. No VAT charged — exempt export. Include reference: "Leistungsort nicht im Inland."
             </p>
           </div>
         )}
         {s.vatExempt && (
           <div style={{ background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
-            <p style={{ fontFamily:fSans, fontSize:11, color:L.gold, margin:0 }}>Kein Umsatzsteuerausweis gemäß §19 UStG (Kleinunternehmerregelung)</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.gold, margin:0 }}>Kein Umsatzsteuerausweis gemäß §19 UStG (Kleinunternehmerregelung)</p>
           </div>
         )}
         <div style={{ marginBottom:14 }}>
-          <div style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:4 }}>Bill To</div>
+          <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:4 }}>Bill To</div>
           <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{s.cName}</div>
-          {s.cStreet && <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{s.cStreet}</div>}
-          {s.cCity && <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{s.cCity}</div>}
-          {s.cVAT && <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, marginTop:2 }}>VAT No: {s.cVAT}</div>}
+          {s.cStreet && <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{s.cStreet}</div>}
+          {s.cCity && <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{s.cCity}</div>}
+          {s.cVAT && <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, marginTop:2 }}>VAT No: {s.cVAT}</div>}
         </div>
         <table style={{ width:"100%", borderCollapse:"collapse", marginBottom:16 }}>
           <thead>
             <tr>
               {["Description","Qty","Rate","Total"].map(function(h) {
-                return <th key={h} style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, padding:"5px 0", textAlign:h==="Description"?"left":"right", borderBottom:"2px solid "+L.ink }}>{h}</th>;
+                return <th key={h} style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, padding:"5px 0", textAlign:h==="Description"?"left":"right", borderBottom:"2px solid "+L.ink }}>{h}</th>;
               })}
             </tr>
           </thead>
@@ -1201,10 +1201,10 @@ function InvoicePreviewPanel(props) {
               var lt = (parseFloat(l.qty)||0) * (parseFloat(l.rate)||0);
               return (
                 <tr key={i} style={{ borderBottom:"1px solid "+L.border }}>
-                  <td style={{ fontFamily:fSans, fontSize:12, color:L.ink, padding:"8px 0" }}>{l.desc}</td>
-                  <td style={{ fontFamily:fMono, fontSize:11, color:L.muted, textAlign:"right", padding:"8px 0" }}>{l.qty}</td>
-                  <td style={{ fontFamily:fMono, fontSize:11, color:L.muted, textAlign:"right", padding:"8px 0" }}>{sym+parseFloat(l.rate||0).toFixed(2)}</td>
-                  <td style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500, textAlign:"right", padding:"8px 0" }}>{sym+lt.toFixed(2)}</td>
+                  <td style={{ fontFamily:fSans, fontSize:14, color:L.ink, padding:"8px 0" }}>{l.desc}</td>
+                  <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"8px 0" }}>{l.qty}</td>
+                  <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"8px 0" }}>{sym+parseFloat(l.rate||0).toFixed(2)}</td>
+                  <td style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500, textAlign:"right", padding:"8px 0" }}>{sym+lt.toFixed(2)}</td>
                 </tr>
               );
             })}
@@ -1212,15 +1212,15 @@ function InvoicePreviewPanel(props) {
         </table>
         <div style={{ display:"flex", justifyContent:"flex-end" }}>
           <div style={{ minWidth:220 }}>
-            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:11, color:L.muted, padding:"2px 0" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.muted, padding:"2px 0" }}>
               <span>Subtotal</span><span style={{ fontFamily:fMono }}>{sym+sub.toFixed(2)}</span>
             </div>
             {discAmt > 0 && (
-              <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:11, color:L.green, padding:"2px 0" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.green, padding:"2px 0" }}>
                 <span>Discount {s.discount}%</span><span style={{ fontFamily:fMono }}>{"−"+sym+discAmt.toFixed(2)}</span>
               </div>
             )}
-            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:11, color:L.muted, padding:"2px 0" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.muted, padding:"2px 0" }}>
               <span>{s.vatExempt ? "VAT (exempt)" : "VAT "+vatRate+"%"+(s.rc?" (RC)":"")}</span>
               <span style={{ fontFamily:fMono }}>{s.vatExempt ? "—" : sym+vatAmt.toFixed(2)}</span>
             </div>
@@ -1230,17 +1230,17 @@ function InvoicePreviewPanel(props) {
           </div>
         </div>
         <div style={{ background:L.cream, borderRadius:7, padding:"10px 13px", marginTop:16, border:"1px solid "+L.border }}>
-          <div style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:6 }}>SEPA Bank Transfer</div>
+          <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:6 }}>SEPA Bank Transfer</div>
           <div style={{ display:"flex", gap:24, flexWrap:"wrap" }}>
-            <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{s.sIBAN}</div></div>
-            <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{s.sBIC}</div></div>
-            <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>Payment Ref</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{s.creditNote ? cnNum : invNum}</div></div>
+            <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{s.sIBAN}</div></div>
+            <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{s.sBIC}</div></div>
+            <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>Payment Ref</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{s.creditNote ? cnNum : invNum}</div></div>
           </div>
         </div>
-        {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:9, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) — EU Regulation 2016/679.</p>}
+        {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:11, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) — EU Regulation 2016/679.</p>}
         {s.latePayment && (
           <div style={{ background:"rgba(200,80,42,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
-            <p style={{ fontFamily:fSans, fontSize:9, color:L.accent, margin:0, lineHeight:1.55 }}>
+            <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, margin:0, lineHeight:1.55 }}>
               Late payment: statutory interest at 8% above ECB base rate applies on overdue amounts per EU Directive 2011/7/EU.
             </p>
           </div>
@@ -1269,12 +1269,12 @@ function CheckRow(props) {
     <div style={{ borderRadius:8, border:infoOpen ? "1.5px solid "+L.border : "1.5px solid transparent", background:infoOpen ? L.cream : "transparent", padding:infoOpen ? "8px 10px 4px" : "2px 4px" }}>
       <div style={{ display:"flex", alignItems:"center", gap:7, opacity:blocked ? 0.4 : 1 }}>
         <input type="checkbox" checked={checked} disabled={blocked} onChange={function(e){ if(!blocked) onChange(e.target.checked); }} style={{ cursor:blocked ? "not-allowed" : "pointer", flexShrink:0 }} />
-        <label onClick={function(){ if(!blocked) onChange(!checked); }} style={{ fontFamily:fSans, fontSize:12, color:L.ink, cursor:blocked ? "not-allowed" : "pointer", flex:1 }}>{label}</label>
-        <span style={{ fontFamily:fMono, fontSize:8, color:badgeColor, background:badgeColor+"15", border:"1px solid "+badgeColor+"33", borderRadius:4, padding:"1px 6px", letterSpacing:"0.05em", flexShrink:0 }}>{badge}</span>
-        <button onClick={onInfo} style={{ width:16, height:16, borderRadius:"50%", background:infoOpen ? L.accent : L.sand, border:"1px solid "+(infoOpen ? L.accent : L.border), color:infoOpen ? "#fff" : L.muted, fontFamily:fMono, fontSize:9, fontWeight:700, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>?</button>
+        <label onClick={function(){ if(!blocked) onChange(!checked); }} style={{ fontFamily:fSans, fontSize:14, color:L.ink, cursor:blocked ? "not-allowed" : "pointer", flex:1 }}>{label}</label>
+        <span style={{ fontFamily:fMono, fontSize:10, color:badgeColor, background:badgeColor+"15", border:"1px solid "+badgeColor+"33", borderRadius:4, padding:"1px 6px", letterSpacing:"0.05em", flexShrink:0 }}>{badge}</span>
+        <button onClick={onInfo} style={{ width:16, height:16, borderRadius:"50%", background:infoOpen ? L.accent : L.sand, border:"1px solid "+(infoOpen ? L.accent : L.border), color:infoOpen ? "#fff" : L.muted, fontFamily:fMono, fontSize:11, fontWeight:700, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>?</button>
       </div>
-      {blocked && <p style={{ fontFamily:fSans, fontSize:10, color:L.faint, margin:"2px 0 4px 22px" }}>{blockedReason}</p>}
-      {warn && checked && <p style={{ fontFamily:fSans, fontSize:10, color:L.gold, margin:"2px 0 4px 22px" }}>⚠ {warn}</p>}
+      {blocked && <p style={{ fontFamily:fSans, fontSize:12, color:L.faint, margin:"2px 0 4px 22px" }}>{blockedReason}</p>}
+      {warn && checked && <p style={{ fontFamily:fSans, fontSize:12, color:L.gold, margin:"2px 0 4px 22px" }}>⚠ {warn}</p>}
       {infoOpen && (
         <div style={{ margin:"6px 0 6px", padding:"12px 14px", background:L.white, borderRadius:8, border:"1px solid "+L.borderLt }}>
           {[["What it is",infoWhat],["When to tick it",infoWhen],["What it adds",infoEffect]].map(function(row) {
@@ -1284,15 +1284,15 @@ function CheckRow(props) {
                   <Icon name="info" size={11} color={L.accent} />
                 </div>
                 <div>
-                  <div style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.08em", textTransform:"uppercase", color:L.accent, marginBottom:2 }}>{row[0]}</div>
-                  <div style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.55, fontWeight:300 }}>{row[1]}</div>
+                  <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", textTransform:"uppercase", color:L.accent, marginBottom:2 }}>{row[0]}</div>
+                  <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.55, fontWeight:300 }}>{row[1]}</div>
                 </div>
               </div>
             );
           })}
           <div style={{ paddingTop:8, borderTop:"1px solid "+L.borderLt, display:"flex", alignItems:"center", gap:6 }}>
             <Icon name="eu" size={10} color={L.faint} />
-            <span style={{ fontFamily:fMono, fontSize:8, color:L.faint, letterSpacing:"0.06em" }}>{infoLaw}</span>
+            <span style={{ fontFamily:fMono, fontSize:10, color:L.faint, letterSpacing:"0.06em" }}>{infoLaw}</span>
           </div>
         </div>
       )}
@@ -1318,18 +1318,18 @@ function InvoiceForm(props) {
   var total = (sub - discAmt) + vatAmt;
   var sym = s.country && s.country.cur === "SEK" ? "kr" : "€";
 
-  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fSans, fontSize:12, color:L.ink, background:L.white, outline:"none" };
-  var monoStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fMono, fontSize:11, color:L.ink, background:L.white, outline:"none" };
-  var lblStyle = { display:"block", marginBottom:3, fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
+  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.white, outline:"none" };
+  var monoStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none" };
+  var lblStyle = { display:"block", marginBottom:3, fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
 
   function cardWrap(title, badge, content) {
     return (
       <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:12, overflow:"hidden" }}>
-        <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>{title}</span>
+        <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <span style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>{title}</span>
           {badge}
         </div>
-        <div style={{ padding:"13px 16px" }}>{content}</div>
+        <div style={{ padding:"16px 16px" }}>{content}</div>
       </div>
     );
   }
@@ -1371,12 +1371,12 @@ function InvoiceForm(props) {
               <VIESBadge status={viesStatus} />
             </div>
             {viesStatus === "invalid" && (
-              <p style={{ fontFamily:fSans, fontSize:10, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
+              <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
             )}
             {s.rc && (
               <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginTop:6, display:"flex", alignItems:"center", gap:6 }}>
                 <Icon name="reverse" size={12} color={L.blue} />
-                <p style={{ fontFamily:fSans, fontSize:11, color:L.blue, margin:0 }}>Reverse charge auto-detected — VAT 0%</p>
+                <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge auto-detected — VAT 0%</p>
               </div>
             )}
           </div>
@@ -1389,39 +1389,39 @@ function InvoiceForm(props) {
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 50px 80px 70px 22px", gap:4, marginBottom:4 }}>
               {["Description","Qty","Rate","Total",""].map(function(h,i) {
-                return <span key={i} style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.08em", textTransform:"uppercase", color:L.muted, textAlign:i>1?"right":"left" }}>{h}</span>;
+                return <span key={i} style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", textTransform:"uppercase", color:L.muted, textAlign:i>1?"right":"left" }}>{h}</span>;
               })}
             </div>
             {s.lines.map(function(line) {
               var lt = (parseFloat(line.qty)||0) * (parseFloat(line.rate)||0);
               return (
                 <div key={line.id} style={{ display:"grid", gridTemplateColumns:"1fr 50px 80px 70px 22px", gap:4, marginBottom:4, alignItems:"center" }}>
-                  <input value={line.desc} onChange={function(e){ updLine(line.id,"desc",e.target.value); }} placeholder="Service" style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 7px", fontFamily:fSans, fontSize:11, color:L.ink, background:L.white, outline:"none", width:"100%" }} />
-                  <input type="number" value={line.qty} onChange={function(e){ updLine(line.id,"qty",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:11, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
-                  <input type="number" value={line.rate} onChange={function(e){ updLine(line.id,"rate",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:11, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
-                  <div style={{ fontFamily:fMono, fontSize:11, color:L.ink, textAlign:"right", fontWeight:500 }}>{sym+lt.toFixed(2)}</div>
+                  <input value={line.desc} onChange={function(e){ updLine(line.id,"desc",e.target.value); }} placeholder="Service" style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 7px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none", width:"100%" }} />
+                  <input type="number" value={line.qty} onChange={function(e){ updLine(line.id,"qty",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
+                  <input type="number" value={line.rate} onChange={function(e){ updLine(line.id,"rate",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
+                  <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, textAlign:"right", fontWeight:500 }}>{sym+lt.toFixed(2)}</div>
                   <button onClick={function(){ remLine(line.id); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontSize:14, padding:0 }}>×</button>
                 </div>
               );
             })}
-            <button onClick={addLine} style={{ background:"none", border:"1.5px dashed "+L.border, borderRadius:6, padding:"5px 0", width:"100%", cursor:"pointer", color:L.muted, fontFamily:fSans, fontSize:11, marginTop:2 }}>+ Add line</button>
+            <button onClick={addLine} style={{ background:"none", border:"1.5px dashed "+L.border, borderRadius:6, padding:"5px 0", width:"100%", cursor:"pointer", color:L.muted, fontFamily:fSans, fontSize:13, marginTop:2 }}>+ Add line</button>
             <div style={{ marginTop:9, borderTop:"1px solid "+L.border, paddingTop:7, display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
-              <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSans, fontSize:11, color:L.muted }}>
+              <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSans, fontSize:13, color:L.muted }}>
                 <span>Subtotal</span><span style={{ fontFamily:fMono }}>{sym+sub.toFixed(2)}</span>
               </div>
               {discAmt > 0 && (
                 <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", width:220 }}>
-                  <span style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>Discount {s.discount}%</span>
-                  <span style={{ fontFamily:fMono, fontSize:11, color:L.green }}>{"−"+sym+discAmt.toFixed(2)}</span>
+                  <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>Discount {s.discount}%</span>
+                  <span style={{ fontFamily:fMono, fontSize:13, color:L.green }}>{"−"+sym+discAmt.toFixed(2)}</span>
                 </div>
               )}
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", width:220, gap:6 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-                  <span style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>Discount %</span>
-                  <input type="number" value={s.discount} onChange={function(e){ u("discount",e.target.value); }} placeholder="0" min="0" max="100" style={{ width:36, border:"1px solid "+L.border, borderRadius:4, padding:"2px 5px", fontFamily:fMono, fontSize:10, color:L.ink, background:L.white, outline:"none", textAlign:"right" }} />
+                  <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>Discount %</span>
+                  <input type="number" value={s.discount} onChange={function(e){ u("discount",e.target.value); }} placeholder="0" min="0" max="100" style={{ width:36, border:"1px solid "+L.border, borderRadius:4, padding:"2px 5px", fontFamily:fMono, fontSize:12, color:L.ink, background:L.white, outline:"none", textAlign:"right" }} />
                 </div>
               </div>
-              <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSans, fontSize:11, color:L.muted }}>
+              <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSans, fontSize:13, color:L.muted }}>
                 <span>{s.vatExempt ? "VAT Exempt" : s.rc ? "VAT 0% (RC)" : "VAT "+vatRate+"%"}</span>
                 <span style={{ fontFamily:fMono }}>{s.vatExempt ? "—" : sym+vatAmt.toFixed(2)}</span>
               </div>
@@ -1456,10 +1456,10 @@ function InvoiceForm(props) {
           </div>
         ))}
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:12, overflow:"hidden" }}>
-          <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}>
-            <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>EU Compliance</span>
+          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}>
+            <span style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>EU Compliance</span>
           </div>
-          <div style={{ padding:"13px 16px", display:"flex", flexDirection:"column", gap:4 }}>
+          <div style={{ padding:"16px 16px", display:"flex", flexDirection:"column", gap:4 }}>
             <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={(sameCountry && !s.cVAT) || s.vatExempt} blockedReason={s.vatExempt ? "Kleinunternehmer cannot apply reverse charge — no VAT number issued under §19 UStG" : "Same country — RC only applies cross-border EU B2B"} warn={viesStatus === "invalid" ? "VIES could not verify this VAT number — confirm B2B status before applying reverse charge" : null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
             <CheckRow checked={s.gdpr} onChange={function(v){ u("gdpr",v); }} label="GDPR Notice" badge="GDPR" badgeColor={L.green} blocked={false} blockedReason="" warn={null} infoOpen={activeInfo==="gdpr"} onInfo={function(){ setActiveInfo(activeInfo==="gdpr"?null:"gdpr"); }} infoWhat="A short legal notice that you process your client's personal data for invoicing purposes." infoWhen="Recommended for all EU B2B invoices — it shows you take data protection seriously." infoEffect="Adds one sentence to the bottom of your invoice referencing GDPR Art. 6(1)(b)." infoLaw="GDPR Art. 6(1)(b) — EU Regulation 2016/679" />
             <CheckRow checked={s.latePayment} onChange={function(v){ u("latePayment",v); }} label="Late Payment Interest" badge="EU 2011/7" badgeColor={L.accent} blocked={s.creditNote} blockedReason="Cannot charge interest on a credit note" warn={null} infoOpen={activeInfo==="lp"} onInfo={function(){ setActiveInfo(activeInfo==="lp"?null:"lp"); }} infoWhat="EU law gives you the right to charge statutory interest if a B2B client pays late." infoWhen="Tick for B2B invoices where you want to signal late payment will incur interest." infoEffect="Adds a notice: 8% above ECB base rate applies on overdue amounts from due date." infoLaw="EU Directive 2011/7/EU on combating late payment" />
@@ -1474,7 +1474,7 @@ function InvoiceForm(props) {
       </div>
       <div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, padding:"12px 14px" }}>
-          <p style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
+          <p style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
           {[
             { i:"eu",       l:"Country",        sub:(s.country?s.country.name:"Germany")+" · VAT "+(s.country?s.country.vat:19)+"%", ok:true },
             { i:"bank",     l:"SEPA",           sub:s.sIBAN ? "IBAN provided" : "⚠ Missing",      ok:!!s.sIBAN },
@@ -1489,10 +1489,10 @@ function InvoiceForm(props) {
               <div key={r.l} style={{ display:"flex", alignItems:"center", gap:7, marginBottom:7 }}>
                 <Icon name={r.i} size={13} color={L.muted} />
                 <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:fSans, fontSize:11, color:L.ink, fontWeight:500 }}>{r.l}</div>
-                  <div style={{ fontFamily:fMono, fontSize:8, color:r.ok ? L.green : L.muted }}>{r.sub}</div>
+                  <div style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:500 }}>{r.l}</div>
+                  <div style={{ fontFamily:fMono, fontSize:10, color:r.ok ? L.green : L.muted }}>{r.sub}</div>
                 </div>
-                <span style={{ color:r.ok ? L.green : L.faint, fontSize:10 }}>{r.ok ? "✓" : "—"}</span>
+                <span style={{ color:r.ok ? L.green : L.faint, fontSize:12 }}>{r.ok ? "✓" : "—"}</span>
               </div>
             );
           })}
@@ -1518,8 +1518,8 @@ function ProposalForm(props) {
   var [hasGen, setHasGen] = useState(false);
   var [history, setHistory] = useState([]);
 
-  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'Inter',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none" };
-  var lblStyle = { display:"block", marginBottom:4, fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
+  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'Inter',sans-serif", fontSize:15, color:L.ink, background:L.white, outline:"none" };
+  var lblStyle = { display:"block", marginBottom:4, fontFamily:"'DM Mono',monospace", fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
 
   function generate() {
     if (!projDesc.trim()) return;
@@ -1596,13 +1596,13 @@ function ProposalForm(props) {
           if (line === "---") return <hr key={i} style={{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" }} />;
           if (line.startsWith("## ")) return <h3 key={i} style={{ fontFamily:"'Playfair Display',serif", fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
           if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:"'Inter',sans-serif", fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
-          if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:13, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>·</span><span>{line.slice(2)}</span></div>;
+          if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:15, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>·</span><span>{line.slice(2)}</span></div>;
           if (line === "") return <div key={i} style={{ height:8 }} />;
           if (line.indexOf("**") >= 0) {
             var parts = line.split("**");
-            return <p key={i} style={{ color:L.ink, fontSize:13, lineHeight:1.7, margin:"2px 0" }}>{parts.map(function(p,j){ return j%2===1 ? <strong key={j}>{p}</strong> : p; })}</p>;
+            return <p key={i} style={{ color:L.ink, fontSize:15, lineHeight:1.7, margin:"2px 0" }}>{parts.map(function(p,j){ return j%2===1 ? <strong key={j}>{p}</strong> : p; })}</p>;
           }
-          return <p key={i} style={{ color:L.ink, fontSize:13, lineHeight:1.7, margin:"2px 0" }}>{line}</p>;
+          return <p key={i} style={{ color:L.ink, fontSize:15, lineHeight:1.7, margin:"2px 0" }}>{line}</p>;
         })}
       </div>
     );
@@ -1612,10 +1612,10 @@ function ProposalForm(props) {
     <div className="prop-grid desktop-prop" style={{ maxWidth:900, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
-        <p style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
+        <p style={{ fontFamily:"'Inter',sans-serif", fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
-          <div style={{ padding:"13px 16px" }}>
+          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
+          <div style={{ padding:"16px 16px" }}>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9, marginBottom:9 }}>
               <div><label style={lblStyle}>First name</label><input value={clientName} onChange={function(e){ setClientName(e.target.value); }} placeholder="Sarah" style={inpStyle} /></div>
               <div><label style={lblStyle}>Company</label><input value={clientCo} onChange={function(e){ setClientCo(e.target.value); }} placeholder="TechFlow GmbH" style={inpStyle} /></div>
@@ -1631,7 +1631,7 @@ function ProposalForm(props) {
                 </optgroup>
               </select>
               {COUNTRY_TONE[clientCountry] && (
-                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.accent, marginTop:5, lineHeight:1.5, letterSpacing:"0.02em" }}>
+                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.accent, marginTop:5, lineHeight:1.5, letterSpacing:"0.02em" }}>
                   {COUNTRY_TONE[clientCountry].split(".")[0] + "."}
                 </p>
               )}
@@ -1639,28 +1639,28 @@ function ProposalForm(props) {
           </div>
         </div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Project</span></div>
-          <div style={{ padding:"13px 16px" }}>
+          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Project</span></div>
+          <div style={{ padding:"16px 16px" }}>
             <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:10 }}>
               {PROJ_TYPES.slice(0,8).map(function(t) {
-                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:11 }}>{t}</button>;
+                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:13 }}>{t}</button>;
               })}
             </div>
             {projType && PROJ_TEMPLATES[projType] && (
               <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:7, padding:"8px 10px", marginBottom:10 }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
-                <div style={{ fontFamily:"'Inter',sans-serif", fontSize:11, color:L.muted, lineHeight:1.5 }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
+                <div style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, lineHeight:1.5 }}>
                   {PROJ_TEMPLATES[projType].sections.join(" → ")}
                 </div>
               </div>
             )}
             <label style={lblStyle}>Brief *</label>
-            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:"'Inter',sans-serif", fontSize:13, color:L.ink, background:L.white, outline:"none", resize:"vertical", lineHeight:1.55 }} />
+            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:"'Inter',sans-serif", fontSize:15, color:L.ink, background:L.white, outline:"none", resize:"vertical", lineHeight:1.55 }} />
           </div>
         </div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Scope</span></div>
-          <div style={{ padding:"13px 16px" }}>
+          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Scope</span></div>
+          <div style={{ padding:"16px 16px" }}>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9 }}>
               <div>
                 <label style={lblStyle}>Budget range</label>
@@ -1678,12 +1678,12 @@ function ProposalForm(props) {
           </div>
         </div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:14, overflow:"hidden" }}>
-          <div style={{ padding:"9px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Tone</span></div>
-          <div style={{ padding:"13px 16px" }}>
+          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Tone</span></div>
+          <div style={{ padding:"16px 16px" }}>
             <div style={{ display:"flex", gap:6 }}>
               {[["direct","Direct & confident"],["warm","Warm & personal"],["formal","Formal & precise"]].map(function(pair) {
                 var v = pair[0]; var lb = pair[1];
-                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:11, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
+                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:13, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
               })}
             </div>
           </div>
@@ -1699,23 +1699,23 @@ function ProposalForm(props) {
               {loading ? (
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                   {[0,1,2].map(function(i){ return <div key={i} style={{ width:5, height:5, borderRadius:"50%", background:L.accent, animation:"pulse 1s "+i*0.2+"s infinite" }} />; })}
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.muted, marginLeft:5 }}>Writing…</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.muted, marginLeft:5 }}>Writing…</span>
                 </div>
               ) : (
                 <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
                   {result && (
                     <>
-                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
-                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
                     </>
                   )}
                 </div>
               )}
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
-                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>↺ Redo</button>
-                  <button style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>Export PDF ↓</button>
+                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>↺ Redo</button>
+                  <button style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
                 </div>
               )}
             </div>
@@ -1724,10 +1724,10 @@ function ProposalForm(props) {
             </div>
             {result && !loading && (
               <div style={{ padding:"12px 16px", borderTop:"1px solid "+L.border, display:"flex", gap:6, flexWrap:"wrap", background:L.cream }}>
-                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:L.muted, alignSelf:"center" }}>Refine:</span>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.muted, alignSelf:"center" }}>Refine:</span>
                 {[["Make it shorter","Cut this proposal to under 180 words. Keep the structure but be ruthless."],["More formal","Rewrite in a more formal, corporate tone suitable for a large enterprise client."],["Add case studies","Add a brief 'Why us' section mentioning 2 relevant past projects with outcomes."],["Stronger close","Rewrite the closing paragraph to be more confident and create a clear next step."]].map(function(pair) {
                   return (
-                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:"'Inter',sans-serif", fontSize:10 }}>
+                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>
                       {pair[0]}
                     </button>
                   );
@@ -1737,7 +1737,7 @@ function ProposalForm(props) {
           </div>
         ) : (
           <div>
-            <p style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:10 }}>Example proposal</p>
+            <p style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:10 }}>Example proposal</p>
             <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:12, padding:"22px 24px", opacity:0.7 }}>
               {renderProposal("Sarah,\n\nWe've looked at TechFlow carefully — the fintech space in Berlin is crowded, and what you need isn't just a logo. You need a visual identity that signals credibility to investors while still feeling approachable.\n\n## What we'll create\n\n**Brand strategy foundation**\nA half-day positioning session to nail the brand DNA.\n\n**Visual identity system**\nPrimary logo + 2 variants · Colour palette · Typography · Iconography\n\n**Application files**\nFigma system · SVG/AI source files · Brand guidelines PDF\n\n## How it works\n\nWeeks 1–2 · Strategy and concepting\nWeeks 3–4 · Design development (2 review rounds)\nWeek 5 · Refinement and delivery\n\n## Investment\n\n**€8,400 total**\n€4,200 on kickoff · €4,200 on final delivery\n\n---\nReady when you are.")}
             </div>
@@ -1797,19 +1797,23 @@ function InvoiceGen(props) {
 
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
-      <div style={{ background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", height:46, justifyContent:"center" }}>
-        <div style={{ display:"flex", maxWidth:960, width:"100%" }}>
-        {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
-          var m = pair[0]; var lb = pair[1];
-          return <button key={m} onClick={function(){ setMode(m); setView("form"); }} style={{ flex:1, background:mode===m ? L.accent : "transparent", color:mode===m ? "#fff" : L.muted, border:"none", borderRight:m==="invoice" ? "1px solid "+L.border : "none", padding:"0 8px", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, whiteSpace:"nowrap", height:46, display:"flex", alignItems:"center", justifyContent:"center" }}>{lb}</button>;
-        })}
+      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+        <div style={{ display:"inline-flex", gap:4, background:L.cream, borderRadius:10, padding:"4px", border:"1px solid "+L.border }}>
+          {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
+            var m = pair[0]; var lb = pair[1];
+            return (
+              <button key={m} onClick={function(){ setMode(m); setView("form"); }} style={{ background:mode===m ? L.white : "transparent", color:mode===m ? L.ink : L.muted, border:"none", borderRadius:7, padding:"8px 22px", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:mode===m ? 500 : 400, whiteSpace:"nowrap", boxShadow:mode===m ? "0 1px 4px rgba(26,31,46,0.1)" : "none", transition:"all 0.12s" }}>
+                {lb}
+              </button>
+            );
+          })}
         </div>
       </div>
       {mode==="invoice" && (
         <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 20px", display:"flex", gap:4, height:38, alignItems:"center" }}>
           {[["form","Form"],["preview","Preview"]].map(function(pair) {
             var v = pair[0]; var lb = pair[1];
-            return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"4px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:10, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
+            return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"4px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
           })}
         </div>
       )}
@@ -1847,13 +1851,13 @@ function Dashboard(props) {
       <div className="dash-aside" style={{ width:220, background:"#1A1F2E", padding:"20px 0", flexShrink:0 }}>
         <div style={{ padding:"0 16px 20px", borderBottom:"1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:"#FAF7F2", marginBottom:2 }}>InvoiceAI</div>
-          <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(250,247,242,0.3)", letterSpacing:"0.08em" }}>for Europe</div>
+          <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(250,247,242,0.3)", letterSpacing:"0.08em" }}>for Europe</div>
         </div>
         <div style={{ padding:"16px 8px 0" }}>
           {nav.map(function(item) {
             var active = section === item.id;
             return (
-              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(200,80,42,0.15)" : "transparent", color:active ? "#E8896A" : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:active?500:400, marginBottom:2 }}>
+              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(200,80,42,0.15)" : "transparent", color:active ? "#E8896A" : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:active?500:400, marginBottom:2 }}>
                 <Icon name={item.icon} size={14} color={active ? "#E8896A" : "rgba(250,247,242,0.4)"} />
                 {item.label}
               </button>
@@ -1876,9 +1880,9 @@ function Dashboard(props) {
 function StatCard(props) {
   return (
     <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"16px 18px" }}>
-      <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:6 }}>{props.label}</div>
+      <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:6 }}>{props.label}</div>
       <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:700, color:props.color||L.ink, letterSpacing:"-0.02em" }}>{props.value}</div>
-      {props.sub && <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, marginTop:3 }}>{props.sub}</div>}
+      {props.sub && <div style={{ fontFamily:fMono, fontSize:11, color:L.faint, marginTop:3 }}>{props.sub}</div>}
     </div>
   );
 }
@@ -1887,7 +1891,7 @@ function DOverview() {
   return (
     <div>
       <h1 style={{ fontFamily:fSerif, fontSize:26, fontWeight:800, color:L.ink, marginBottom:4, letterSpacing:"-0.025em" }}>Good morning, Alex.</h1>
-      <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:24 }}>Wednesday, 29 April 2026 · 4 clients · 1 overdue</p>
+      <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:24 }}>Wednesday, 29 April 2026 · 4 clients · 1 overdue</p>
       <div className="stat-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:24 }}>
         <StatCard label="Total Billed" value="€84,200" sub="↑ +23% vs last month" color={L.ink} />
         <StatCard label="Collected" value="€71,400" sub="84.8% collection rate" color={L.green} />
@@ -1895,7 +1899,7 @@ function DOverview() {
         <StatCard label="Win Rate" value="68%" sub="↑ +5pp this quarter" color={L.blue} />
       </div>
       <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"18px 20px" }}>
-        <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:14 }}>Recent Activity</div>
+        <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:14 }}>Recent Activity</div>
         {[
           { type:"invoice",  client:"Studio Verde GmbH", desc:"Invoice DE-2026-0437 sent · €4,200",       time:"2h ago",   status:"sent" },
           { type:"proposal", client:"Maison Fontaine",   desc:"Proposal accepted · Brand Identity €8,400", time:"Yesterday",status:"won" },
@@ -1909,12 +1913,12 @@ function DOverview() {
                 <Icon name={h.type==="invoice"?"document":"proposal"} size={14} color={L.accent} />
               </div>
               <div style={{ flex:1 }}>
-                <div style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink }}>{h.client}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{h.desc}</div>
+                <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink }}>{h.client}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{h.desc}</div>
               </div>
               <div style={{ textAlign:"right" }}>
-                <div style={{ fontFamily:fMono, fontSize:8, color:stColor, background:stColor+"15", borderRadius:4, padding:"2px 7px", letterSpacing:"0.06em", marginBottom:2 }}>{h.status}</div>
-                <div style={{ fontFamily:fMono, fontSize:9, color:L.faint }}>{h.time}</div>
+                <div style={{ fontFamily:fMono, fontSize:10, color:stColor, background:stColor+"15", borderRadius:4, padding:"2px 7px", letterSpacing:"0.06em", marginBottom:2 }}>{h.status}</div>
+                <div style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>{h.time}</div>
               </div>
             </div>
           );
@@ -1930,23 +1934,23 @@ function DClients(props) {
     <div>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
         <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>Clients</h2>
-        <button style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>+ New Invoice</button>
+        <button style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>+ New Invoice</button>
       </div>
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
         {CLIENTS.map(function(c) {
           var stColor = c.status==="active" ? L.green : c.status==="overdue" ? L.accent : L.gold;
           return (
             <div key={c.id} onClick={function(){ setClient(c); }} style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"16px 20px", cursor:"pointer", display:"flex", alignItems:"center", gap:14 }}>
-              <div style={{ width:40, height:40, borderRadius:"50%", background:c.col+"22", border:"1.5px solid "+c.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:c.col, fontWeight:500, flexShrink:0 }}>{c.av}</div>
+              <div style={{ width:40, height:40, borderRadius:"50%", background:c.col+"22", border:"1.5px solid "+c.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:15, color:c.col, fontWeight:500, flexShrink:0 }}>{c.av}</div>
               <div style={{ flex:1 }}>
                 <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{c.name}</div>
-                <div style={{ fontFamily:fMono, fontSize:10, color:L.muted }}>{c.flag} · {c.city} · {c.invoices} invoices</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>{c.flag} · {c.city} · {c.invoices} invoices</div>
               </div>
               <div style={{ textAlign:"right" }}>
-                {c.balance > 0 && <div style={{ fontFamily:fMono, fontSize:13, color:L.accent, fontWeight:500 }}>{"€"+c.balance.toLocaleString()+" outstanding"}</div>}
-                <div style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{"€"+c.paid.toLocaleString()+" total paid"}</div>
+                {c.balance > 0 && <div style={{ fontFamily:fMono, fontSize:15, color:L.accent, fontWeight:500 }}>{"€"+c.balance.toLocaleString()+" outstanding"}</div>}
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint }}>{"€"+c.paid.toLocaleString()+" total paid"}</div>
               </div>
-              <div style={{ fontFamily:fMono, fontSize:9, color:stColor, background:stColor+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{c.status}</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:stColor, background:stColor+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{c.status}</div>
             </div>
           );
         })}
@@ -1960,12 +1964,12 @@ function DClientDetail(props) {
   var setClient = props.setClient;
   return (
     <div>
-      <button onClick={function(){ setClient(null); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:10, letterSpacing:"0.06em", marginBottom:16, padding:0 }}>← All clients</button>
+      <button onClick={function(){ setClient(null); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.06em", marginBottom:16, padding:0 }}>← All clients</button>
       <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:24 }}>
         <div style={{ width:52, height:52, borderRadius:"50%", background:c.col+"22", border:"1.5px solid "+c.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.col, fontWeight:500 }}>{c.av}</div>
         <div>
           <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>{c.name}</h2>
-          <p style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{c.flag} · {c.city}</p>
+          <p style={{ fontFamily:fMono, fontSize:13, color:L.muted }}>{c.flag} · {c.city}</p>
         </div>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:20 }}>
@@ -1974,8 +1978,8 @@ function DClientDetail(props) {
         <StatCard label="Invoices" value={c.invoices} />
       </div>
       <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"18px 20px" }}>
-        <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:12 }}>Full History</div>
-        <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300 }}>Invoice and proposal history will appear here once connected to your account.</p>
+        <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:12 }}>Full History</div>
+        <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>Invoice and proposal history will appear here once connected to your account.</p>
       </div>
     </div>
   );
@@ -2005,7 +2009,7 @@ function DPayments() {
         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
           <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"7px 12px", display:"flex", alignItems:"center", gap:7 }}>
             <Icon name="clock" size={13} color={L.accent} />
-            <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, letterSpacing:"0.06em" }}>1 overdue · €3,200</span>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.06em" }}>1 overdue · €3,200</span>
           </div>
         </div>
       </div>
@@ -2017,36 +2021,36 @@ function DPayments() {
           return (
             <div key={r.inv} style={{ borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
               <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(200,80,42,0.03)" : "transparent" }}>
-                <div style={{ fontFamily:fMono, fontSize:11, color:L.ink, width:130, flexShrink:0 }}>{r.inv}</div>
+                <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, width:130, flexShrink:0 }}>{r.inv}</div>
                 <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:fSans, fontSize:13, color:L.ink }}>{r.client}</div>
-                  {isOverdue && <div style={{ fontFamily:fMono, fontSize:9, color:L.accent, marginTop:2 }}>{"Overdue "+r.daysOver+" days"}</div>}
+                  <div style={{ fontFamily:fSans, fontSize:15, color:L.ink }}>{r.client}</div>
+                  {isOverdue && <div style={{ fontFamily:fMono, fontSize:11, color:L.accent, marginTop:2 }}>{"Overdue "+r.daysOver+" days"}</div>}
                 </div>
-                <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:500, flexShrink:0 }}>{"€"+r.amount.toLocaleString()}</div>
-                <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, width:90, textAlign:"right", flexShrink:0 }}>{r.due}</div>
-                <div style={{ fontFamily:fMono, fontSize:9, color:stColor[r.status]||L.muted, background:(stColor[r.status]||L.muted)+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em", flexShrink:0 }}>{r.status}</div>
+                <div style={{ fontFamily:fMono, fontSize:15, color:L.ink, fontWeight:500, flexShrink:0 }}>{"€"+r.amount.toLocaleString()}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, width:90, textAlign:"right", flexShrink:0 }}>{r.due}</div>
+                <div style={{ fontFamily:fMono, fontSize:11, color:stColor[r.status]||L.muted, background:(stColor[r.status]||L.muted)+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em", flexShrink:0 }}>{r.status}</div>
                 {isOverdue && (
-                  <button onClick={function(){ handleAction(r.inv, "reminder"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>
+                  <button onClick={function(){ handleAction(r.inv, "reminder"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>
                     Send Reminder
                   </button>
                 )}
                 {isSent && (
-                  <button onClick={function(){ handleAction(r.inv, "followup"); }} style={{ background:"transparent", color:L.blue, border:"1px solid "+L.blue+"44", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:11, flexShrink:0, whiteSpace:"nowrap" }}>
+                  <button onClick={function(){ handleAction(r.inv, "followup"); }} style={{ background:"transparent", color:L.blue, border:"1px solid "+L.blue+"44", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13, flexShrink:0, whiteSpace:"nowrap" }}>
                     Follow Up
                   </button>
                 )}
                 {r.status === "paid" && (
-                  <span style={{ fontFamily:fMono, fontSize:9, color:L.green, flexShrink:0 }}>✓ All clear</span>
+                  <span style={{ fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0 }}>✓ All clear</span>
                 )}
               </div>
               {toast && (
                 <div style={{ margin:"0 20px 12px", padding:"10px 14px", background:toast==="reminder" ? L.accentGlow : L.blueGlow, border:"1px solid "+(toast==="reminder" ? L.accent : L.blue)+"33", borderRadius:8, display:"flex", alignItems:"center", gap:10 }}>
                   <Icon name="send" size={13} color={toast==="reminder" ? L.accent : L.blue} />
                   <div>
-                    <div style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink }}>
+                    <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink }}>
                       {toast==="reminder" ? "Reminder sent to "+r.client : "Follow-up sent to "+r.client}
                     </div>
-                    <div style={{ fontFamily:fMono, fontSize:9, color:L.muted, marginTop:1 }}>
+                    <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginTop:1 }}>
                       {toast==="reminder"
                         ? "Late payment notice with statutory interest reference — EU Dir. 2011/7/EU"
                         : "Friendly payment reminder for invoice "+r.inv}
@@ -2084,11 +2088,11 @@ function DProposals() {
           return (
             <div key={r.title} style={{ display:"flex", alignItems:"center", gap:14, padding:"14px 20px", borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
               <div style={{ flex:1 }}>
-                <div style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:L.ink }}>{r.title}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{r.client} · {r.views} views · sent {r.sent}</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.ink }}>{r.title}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{r.client} · {r.views} views · sent {r.sent}</div>
               </div>
-              <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:500 }}>{"€"+r.value.toLocaleString()}</div>
-              <div style={{ fontFamily:fMono, fontSize:9, color:stColor[r.status]||L.muted, background:(stColor[r.status]||L.muted)+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{r.status}</div>
+              <div style={{ fontFamily:fMono, fontSize:15, color:L.ink, fontWeight:500 }}>{"€"+r.value.toLocaleString()}</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:stColor[r.status]||L.muted, background:(stColor[r.status]||L.muted)+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{r.status}</div>
             </div>
           );
         })}
@@ -2107,7 +2111,7 @@ function DBrandKits() {
   return (
     <div>
       <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink, marginBottom:4 }}>Brand Kits</h2>
-      <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:20, fontWeight:300 }}>Create a kit per client. Applied automatically to invoices and proposals.</p>
+      <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Create a kit per client. Applied automatically to invoices and proposals.</p>
       <div style={{ display:"grid", gridTemplateColumns:"200px 1fr", gap:16 }}>
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
           {kits.map(function(kit) {
@@ -2115,24 +2119,24 @@ function DBrandKits() {
             return (
               <div key={kit.name} onClick={function(){ setSel(kit); }} style={{ background:active?"#FAF7F2":"transparent", border:"1.5px solid "+(active?L.accent:L.border), borderRadius:10, padding:"10px 12px", cursor:"pointer" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  <div style={{ width:28, height:28, borderRadius:6, background:kit.primary, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:10, color:"#fff", fontWeight:700 }}>{kit.logo}</div>
-                  <div style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink }}>{kit.name}</div>
+                  <div style={{ width:28, height:28, borderRadius:6, background:kit.primary, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#fff", fontWeight:700 }}>{kit.logo}</div>
+                  <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink }}>{kit.name}</div>
                 </div>
               </div>
             );
           })}
-          <button style={{ background:"none", border:"1.5px dashed "+L.border, borderRadius:10, padding:"10px 12px", cursor:"pointer", color:L.muted, fontFamily:fSans, fontSize:12 }}>+ New Kit</button>
+          <button style={{ background:"none", border:"1.5px dashed "+L.border, borderRadius:10, padding:"10px 12px", cursor:"pointer", color:L.muted, fontFamily:fSans, fontSize:14 }}>+ New Kit</button>
         </div>
         {sel && (
           <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"20px 24px" }}>
-            <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:14 }}>Editing: {sel.name}</div>
+            <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:14 }}>Editing: {sel.name}</div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:16 }}>
-              <div><label style={{ display:"block", marginBottom:4, fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Brand Name</label><input defaultValue={sel.name} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none" }} /></div>
-              <div><label style={{ display:"block", marginBottom:4, fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Primary Color</label><input type="color" defaultValue={sel.primary} style={{ width:"100%", height:34, border:"1.5px solid "+L.border, borderRadius:6, cursor:"pointer" }} /></div>
+              <div><label style={{ display:"block", marginBottom:4, fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Brand Name</label><input defaultValue={sel.name} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:fSans, fontSize:15, color:L.ink, background:L.white, outline:"none" }} /></div>
+              <div><label style={{ display:"block", marginBottom:4, fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Primary Color</label><input type="color" defaultValue={sel.primary} style={{ width:"100%", height:34, border:"1.5px solid "+L.border, borderRadius:6, cursor:"pointer" }} /></div>
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button style={{ background:L.accent, color:"#fff", border:"none", padding:"9px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>Save Kit</button>
-              <button style={{ background:"transparent", color:L.ink, border:"1.5px solid "+L.border, padding:"9px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>Apply to All Invoices</button>
+              <button style={{ background:L.accent, color:"#fff", border:"none", padding:"9px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>Save Kit</button>
+              <button style={{ background:"transparent", color:L.ink, border:"1.5px solid "+L.border, padding:"9px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>Apply to All Invoices</button>
             </div>
           </div>
         )}
@@ -2154,18 +2158,18 @@ function PaymentStrip() {
   return (
     <div style={{ background:L.cream, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"20px 24px" }}>
       <div className="desktop-strip" style={{ maxWidth:480, margin:"0 auto", textAlign:"center" }}>
-        <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", display:"block", marginBottom:14 }}>Secure payments via</span>
+        <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", display:"block", marginBottom:14 }}>Secure payments via</span>
         <div className="payment-badges" style={{ display:"flex", gap:8, marginBottom:12, justifyContent:"center", flexWrap:"wrap" }}>
           {badges.map(function(b) {
             return (
               <div key={b.label} style={{ background:b.bg, border:b.border ? "1px solid "+b.border : "none", borderRadius:7, height:32, padding:"0 14px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                <span style={{ fontFamily:b.font, fontSize:12, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
+                <span style={{ fontFamily:b.font, fontSize:14, fontWeight:b.weight, color:b.color, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>{b.label}</span>
               </div>
             );
           })}
         </div>
-        <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 10px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
-        <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, fontWeight:300, marginTop:10, lineHeight:1.6 }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</p>
+        <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 10px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
+        <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, marginTop:10, lineHeight:1.6 }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</p>
       </div>
     </div>
   );
@@ -2183,32 +2187,32 @@ function Footer(props) {
     { title:t(lang,"footerLegal")||"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
   ];
   return (
-    <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px" }}>
+    <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px", overflowX:"hidden" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:32, marginBottom:40 }}>
+        <div className="footer-grid" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:32, marginBottom:40 }}>
           <div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
               <LogoMark size={28} />
               <div>
                 <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:15, color:L.paper, lineHeight:1.1 }}>InvoiceAI</div>
-                <div style={{ fontFamily:fMono, fontSize:7, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
+                <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
               </div>
             </div>
-            <p style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:220, fontWeight:300, marginBottom:14 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
+            <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:220, fontWeight:300, marginBottom:14 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
               {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
-                return <span key={b} style={{ fontFamily:fMono, fontSize:8, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"2px 7px", letterSpacing:"0.07em" }}>{b}</span>;
+                return <span key={b} style={{ fontFamily:fMono, fontSize:10, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"2px 7px", letterSpacing:"0.07em" }}>{b}</span>;
               })}
             </div>
           </div>
           {cols.map(function(col) {
             return (
               <div key={col.title}>
-                <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(245,240,232,0.25)", marginBottom:12 }}>{col.title}</div>
+                <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(245,240,232,0.25)", marginBottom:12 }}>{col.title}</div>
                 {col.links.map(function(pair) {
                   var lb = pair[0]; var pg = pair[1];
                   return (
-                    <div key={lb} onClick={pg ? function(){ setPage(pg); } : null} style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.45)", marginBottom:8, cursor:pg?"pointer":"default" }}>{lb}</div>
+                    <div key={lb} onClick={pg ? function(){ setPage(pg); } : null} style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.45)", marginBottom:8, cursor:pg?"pointer":"default" }}>{lb}</div>
                   );
                 })}
               </div>
@@ -2218,17 +2222,17 @@ function Footer(props) {
         <div style={{ background:"rgba(200,80,42,0.1)", border:"1px solid rgba(200,80,42,0.2)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
           <div>
             <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>{t(lang,"footerWaitlist")}</div>
-            <div style={{ fontFamily:fSans, fontSize:12, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
+            <div style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
           </div>
-          <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, flexShrink:0, boxShadow:"0 4px 14px rgba(200,80,42,0.3)" }}>
+          <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.3)" }}>
             {t(lang,"footerCta")}
           </button>
         </div>
         <div style={{ borderTop:"1px solid rgba(255,255,255,0.07)", paddingTop:20, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
-          <span style={{ fontFamily:fMono, fontSize:10, color:"rgba(245,240,232,0.25)" }}>© {yr} InvoiceAI. All rights reserved.</span>
+          <span style={{ fontFamily:fMono, fontSize:12, color:"rgba(245,240,232,0.25)" }}>© {yr} InvoiceAI. All rights reserved.</span>
           <div style={{ display:"flex", gap:14 }}>
             {[["eu","EU VAT"],["shield","GDPR"],["bank","SEPA"]].map(function(pair) {
-              return <span key={pair[1]} style={{ display:"flex", alignItems:"center", gap:4, fontFamily:fMono, fontSize:9, color:"rgba(245,240,232,0.2)" }}><Icon name={pair[0]} size={10} color="rgba(245,240,232,0.25)" />{pair[1]}</span>;
+              return <span key={pair[1]} style={{ display:"flex", alignItems:"center", gap:4, fontFamily:fMono, fontSize:11, color:"rgba(245,240,232,0.2)" }}><Icon name={pair[0]} size={10} color="rgba(245,240,232,0.25)" />{pair[1]}</span>;
             })}
           </div>
         </div>
@@ -2300,13 +2304,13 @@ function PageAbout(props) {
           return (
             <div key={m.name} style={{ background:L.white, border:"1px solid "+L.border, borderRadius:12, padding:"18px 18px 14px" }}>
               <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
-                <div style={{ width:38, height:38, borderRadius:"50%", background:"#8A7A6A22", border:"1.5px solid #8A7A6A30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#8A7A6A", fontWeight:500, flexShrink:0 }}>{m.av}</div>
+                <div style={{ width:38, height:38, borderRadius:"50%", background:"#8A7A6A22", border:"1.5px solid #8A7A6A30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:14, color:"#8A7A6A", fontWeight:500, flexShrink:0 }}>{m.av}</div>
                 <div>
-                  <div style={{ fontFamily:fSans, fontWeight:600, fontSize:13, color:L.ink }}>{m.name}</div>
-                  <div style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.05em" }}>{m.role} · {m.city}</div>
+                  <div style={{ fontFamily:fSans, fontWeight:600, fontSize:15, color:L.ink }}>{m.name}</div>
+                  <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.05em" }}>{m.role} · {m.city}</div>
                 </div>
               </div>
-              <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300 }}>{m.bio}</p>
+              <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300 }}>{m.bio}</p>
             </div>
           );
         })}
@@ -2317,16 +2321,16 @@ function PageAbout(props) {
           return (
             <div key={t.year} style={{ position:"relative", marginBottom:16 }}>
               <div style={{ position:"absolute", left:-25, top:5, width:8, height:8, borderRadius:"50%", background:L.accent }} />
-              <div style={{ fontFamily:fMono, fontSize:9, color:L.accent, letterSpacing:"0.08em", marginBottom:2 }}>{t.year}</div>
-              <div style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:300 }}>{t.event}</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.08em", marginBottom:2 }}>{t.year}</div>
+              <div style={{ fontFamily:fSans, fontSize:15, color:L.ink, fontWeight:300 }}>{t.event}</div>
             </div>
           );
         })}
       </div>
       <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"24px 28px", textAlign:"center" }}>
         <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:700, color:L.ink, marginBottom:8 }}>Try InvoiceAI free for 14 days</h3>
-        <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:16, fontWeight:300 }}>No credit card. No setup wizards.</p>
-        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)" }}>Get early access →</button>
+        <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>No credit card. No setup wizards.</p>
+        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)" }}>Get early access →</button>
       </div>
     </SubLayout>
   );
@@ -2346,8 +2350,8 @@ function PageBlog(props) {
       <div style={{ background:L.accent, borderRadius:16, padding:"32px 32px 28px", marginBottom:28, cursor:"pointer" }}>
         <Pill color="rgba(255,255,255,0.85)">{posts[0].tag}</Pill>
         <h2 style={{ fontFamily:fSerif, fontSize:"clamp(18px,3vw,26px)", fontWeight:800, color:"#fff", margin:"10px 0 10px", letterSpacing:"-0.02em", lineHeight:1.2 }}>{posts[0].title}</h2>
-        <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.7)", lineHeight:1.6, marginBottom:14, fontWeight:300 }}>{posts[0].excerpt}</p>
-        <span style={{ fontFamily:fMono, fontSize:9, color:"rgba(255,255,255,0.5)", letterSpacing:"0.06em" }}>{posts[0].date} · {posts[0].read} read</span>
+        <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.7)", lineHeight:1.6, marginBottom:14, fontWeight:300 }}>{posts[0].excerpt}</p>
+        <span style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.5)", letterSpacing:"0.06em" }}>{posts[0].date} · {posts[0].read} read</span>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
         {posts.slice(1).map(function(p) {
@@ -2356,8 +2360,8 @@ function PageBlog(props) {
             <div key={p.title} style={{ background:L.white, border:"1px solid "+L.border, borderRadius:13, padding:"18px 18px 14px", cursor:"pointer" }}>
               <Pill color={tc}>{p.tag}</Pill>
               <h3 style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, margin:"10px 0 8px", lineHeight:1.35 }}>{p.title}</h3>
-              <p style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.55, marginBottom:12, fontWeight:300 }}>{p.excerpt}</p>
-              <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.04em" }}>{p.date} · {p.read} read</span>
+              <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.55, marginBottom:12, fontWeight:300 }}>{p.excerpt}</p>
+              <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.04em" }}>{p.date} · {p.read} read</span>
             </div>
           );
         })}
@@ -2385,14 +2389,14 @@ function PageCareers(props) {
             <div key={j.title} style={{ background:L.white, border:"1px solid "+L.border, borderRadius:13, padding:"20px 22px" }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:6, flexWrap:"wrap", gap:6 }}>
                 <h3 style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink }}>{j.title}</h3>
-                <span style={{ fontFamily:fMono, fontSize:9, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"3px 9px", letterSpacing:"0.06em" }}>Full-time</span>
+                <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"3px 9px", letterSpacing:"0.06em" }}>Full-time</span>
               </div>
-              <div style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.06em", marginBottom:8 }}>{j.team} · {j.loc}</div>
-              <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.6, marginBottom:12, fontWeight:300 }}>{j.desc}</p>
+              <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.06em", marginBottom:8 }}>{j.team} · {j.loc}</div>
+              <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:12, fontWeight:300 }}>{j.desc}</p>
               <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:14 }}>
-                {j.tags.map(function(t) { return <span key={t} style={{ fontFamily:fMono, fontSize:8, color:L.blue, background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{t}</span>; })}
+                {j.tags.map(function(t) { return <span key={t} style={{ fontFamily:fMono, fontSize:10, color:L.blue, background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{t}</span>; })}
               </div>
-              <button style={{ background:L.accent, color:"#fff", border:"none", padding:"7px 18px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>Apply →</button>
+              <button style={{ background:L.accent, color:"#fff", border:"none", padding:"7px 18px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>Apply →</button>
             </div>
           );
         })}
@@ -2400,7 +2404,7 @@ function PageCareers(props) {
       <SH>Perks</SH>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, margin:"16px 0" }}>
         {perks.map(function(p) {
-          return <div key={p} style={{ background:L.cream, borderRadius:8, padding:"10px 14px", fontFamily:fSans, fontSize:12, color:L.ink, display:"flex", alignItems:"center", gap:8 }}><Icon name="check" size={12} color={L.green} />{p}</div>;
+          return <div key={p} style={{ background:L.cream, borderRadius:8, padding:"10px 14px", fontFamily:fSans, fontSize:14, color:L.ink, display:"flex", alignItems:"center", gap:8 }}><Icon name="check" size={12} color={L.green} />{p}</div>;
         })}
       </div>
     </SubLayout>
@@ -2530,8 +2534,8 @@ function PageGDPR() {
           return (
             <div key={c.title} style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"16px 16px 14px" }}>
               <div style={{ marginBottom:8 }}><Icon name={c.icon} size={18} color={L.accent} /></div>
-              <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink, marginBottom:4 }}>{c.title}</div>
-              <div style={{ fontFamily:fSans, fontSize:11, color:L.muted, lineHeight:1.5, fontWeight:300 }}>{c.desc}</div>
+              <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink, marginBottom:4 }}>{c.title}</div>
+              <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.5, fontWeight:300 }}>{c.desc}</div>
             </div>
           );
         })}
@@ -2545,9 +2549,9 @@ function PageGDPR() {
         {[["Stripe Inc.","Payment processing","USA (SCCs)"],["Amazon Web Services","Cloud hosting (Frankfurt)","EU"],["Anthropic PBC","AI features","USA (SCCs)"],["Plausible Analytics","Cookieless analytics","EU"]].map(function(row, i) {
           return (
             <div key={row[0]} style={{ display:"grid", gridTemplateColumns:"1.5fr 1.5fr 1fr", padding:"10px 16px", borderBottom:i<3?"1px solid "+L.border:"none" }}>
-              <span style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink }}>{row[0]}</span>
-              <span style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{row[1]}</span>
-              <span style={{ fontFamily:fMono, fontSize:9, color:L.faint }}>{row[2]}</span>
+              <span style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink }}>{row[0]}</span>
+              <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{row[1]}</span>
+              <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>{row[2]}</span>
             </div>
           );
         })}
@@ -2617,7 +2621,7 @@ function PageFAQ(props) {
         {categories.map(function(cat) {
           return (
             <div key={cat.title}>
-              <h3 style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:12 }}>{cat.title}</h3>
+              <h3 style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:12 }}>{cat.title}</h3>
               <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
                 {cat.items.map(function(item, i) {
                   var key = cat.title + i;
@@ -2625,12 +2629,12 @@ function PageFAQ(props) {
                   return (
                     <div key={key} style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"33" : L.border), borderRadius:10, overflow:"hidden" }}>
                       <button onClick={function(){ setOpen(isOpen ? null : key); }} style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"14px 16px", background:"transparent", border:"none", cursor:"pointer", textAlign:"left", gap:12 }}>
-                        <span style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:L.ink, flex:1 }}>{item.q}</span>
-                        <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
+                        <span style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.ink, flex:1 }}>{item.q}</span>
+                        <span style={{ fontFamily:fMono, fontSize:13, color:L.muted, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
                       </button>
                       {isOpen && (
                         <div style={{ padding:"0 16px 14px", borderTop:"1px solid "+L.borderLt }}>
-                          <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300, paddingTop:12 }}>{item.a}</p>
+                          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300, paddingTop:12 }}>{item.a}</p>
                         </div>
                       )}
                     </div>
@@ -2644,9 +2648,9 @@ function PageFAQ(props) {
       <div style={{ background:L.accent, borderRadius:14, padding:"24px 28px", marginTop:36, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
         <div>
           <div style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:"#fff", marginBottom:4 }}>Still have a question?</div>
-          <div style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>Chat with us or email hello@invoice-ai.de</div>
+          <div style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>Chat with us or email hello@invoice-ai.de</div>
         </div>
-        <button onClick={function(){ openModal("faq"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>
+        <button onClick={function(){ openModal("faq"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500 }}>
           Get early access →
         </button>
       </div>
@@ -2674,11 +2678,11 @@ function PageCookies() {
           return (
             <div key={c.name} style={{ background:L.white, border:"1px solid "+L.border, borderRadius:10, padding:"14px 16px" }}>
               <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
-                <span style={{ fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:500 }}>{c.name}</span>
-                <span style={{ fontFamily:fMono, fontSize:8, color:tc, background:tc+"15", border:"1px solid "+tc+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{c.type}</span>
-                <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, marginLeft:"auto" }}>{c.dur}</span>
+                <span style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:500 }}>{c.name}</span>
+                <span style={{ fontFamily:fMono, fontSize:10, color:tc, background:tc+"15", border:"1px solid "+tc+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{c.type}</span>
+                <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, marginLeft:"auto" }}>{c.dur}</span>
               </div>
-              <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.5, margin:0, fontWeight:300 }}>{c.desc}</p>
+              <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.5, margin:0, fontWeight:300 }}>{c.desc}</p>
             </div>
           );
         })}
@@ -2745,14 +2749,14 @@ function ClientPortal(props) {
         <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer" }} onClick={function(){ setPage("Home"); }}>
           <LogoMark size={26} />
           <span style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
-          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>· secure invoice portal</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>· secure invoice portal</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <div style={{ width:7, height:7, borderRadius:"50%", background:L.green }} />
-            <span style={{ fontFamily:fMono, fontSize:10, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
+            <span style={{ fontFamily:fMono, fontSize:12, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
           </div>
-          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:12, color:L.muted }}>
+          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:14, color:L.muted }}>
             ← Back
           </button>
         </div>
@@ -2762,13 +2766,13 @@ function ClientPortal(props) {
 
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, padding:"20px 24px", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
           <div>
-            <div style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Invoice from</div>
+            <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Invoice from</div>
             <div style={{ fontFamily:fSerif, fontSize:19, fontWeight:800, color:L.ink, letterSpacing:"-0.02em" }}>{inv.from.name}</div>
-            <div style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:2 }}>Invoice {inv.num} · Due {inv.due}</div>
+            <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginTop:2 }}>Invoice {inv.num} · Due {inv.due}</div>
           </div>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontFamily:fSerif, fontSize:30, fontWeight:900, color:L.accent, letterSpacing:"-0.02em" }}>{"€"+inv.total.toLocaleString()}</div>
-            <div style={{ fontFamily:fMono, fontSize:9, color:status==="paid"?L.green:status==="approved"?L.blue:L.gold, background:(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"18", border:"1px solid "+(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"44", borderRadius:4, padding:"3px 10px", letterSpacing:"0.07em", display:"inline-block", marginTop:4 }}>
+            <div style={{ fontFamily:fMono, fontSize:11, color:status==="paid"?L.green:status==="approved"?L.blue:L.gold, background:(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"18", border:"1px solid "+(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"44", borderRadius:4, padding:"3px 10px", letterSpacing:"0.07em", display:"inline-block", marginTop:4 }}>
               {status==="paid" ? "✓ PAID" : status==="approved" ? "APPROVED" : "AWAITING APPROVAL"}
             </div>
           </div>
@@ -2776,7 +2780,7 @@ function ClientPortal(props) {
 
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, marginBottom:16, overflow:"hidden" }}>
           <div style={{ padding:"14px 24px", background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase" }}>Status timeline</span>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase" }}>Status timeline</span>
           </div>
           <div style={{ padding:"20px 24px", display:"flex", alignItems:"center", gap:0 }}>
             {timeline.map(function(t, i) {
@@ -2790,8 +2794,8 @@ function ClientPortal(props) {
                       }
                     </div>
                     <div style={{ textAlign:"center" }}>
-                      <div style={{ fontFamily:fSans, fontSize:11, fontWeight:600, color:t.done ? L.ink : L.muted, whiteSpace:"nowrap" }}>{t.label}</div>
-                      {t.date && <div style={{ fontFamily:fMono, fontSize:8, color:L.faint }}>{t.date}</div>}
+                      <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:t.done ? L.ink : L.muted, whiteSpace:"nowrap" }}>{t.label}</div>
+                      {t.date && <div style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{t.date}</div>}
                     </div>
                   </div>
                   {i < timeline.length-1 && (
@@ -2805,41 +2809,41 @@ function ClientPortal(props) {
 
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, marginBottom:16, overflow:"hidden" }}>
           <div style={{ padding:"14px 24px", background:L.cream, borderBottom:"1px solid "+L.border }}>
-            <span style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase" }}>Invoice details</span>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase" }}>Invoice details</span>
           </div>
           <div style={{ padding:"22px 28px" }}>
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:20, flexWrap:"wrap", gap:16 }}>
               <div>
-                <div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>From</div>
-                <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{inv.from.name}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{inv.from.street}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{inv.from.city}</div>
-                <div style={{ fontFamily:fMono, fontSize:10, color:L.faint, marginTop:3 }}>VAT: {inv.from.vat}</div>
+                <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>From</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.from.name}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from.street}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from.city}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.from.vat}</div>
               </div>
               <div style={{ textAlign:"right" }}>
-                <div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>Billed to</div>
-                <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>{inv.to.name}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{inv.to.contact}</div>
-                <div style={{ fontFamily:fSans, fontSize:11, color:L.muted }}>{inv.to.city}</div>
-                <div style={{ fontFamily:fMono, fontSize:10, color:L.faint, marginTop:3 }}>VAT: {inv.to.vat}</div>
+                <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>Billed to</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.to.name}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to.contact}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to.city}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.to.vat}</div>
               </div>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, marginBottom:16 }}>
               {[{l:"Invoice No.",v:inv.num},{l:"Issue Date",v:inv.date},{l:"Due Date",v:inv.due}].map(function(x, i) {
                 return (
                   <div key={x.l} style={{ padding:"10px 12px", borderRight:i<2?"1px solid "+L.border:"none" }}>
-                    <div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:2 }}>{x.l}</div>
-                    <div style={{ fontFamily:fMono, fontSize:11, color:L.ink, fontWeight:500 }}>{x.v}</div>
+                    <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:2 }}>{x.l}</div>
+                    <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:500 }}>{x.v}</div>
                   </div>
                 );
               })}
             </div>
-            {inv.ref && <div style={{ fontFamily:fSans, fontSize:11, color:L.muted, fontStyle:"italic", marginBottom:14 }}>Re: {inv.ref}</div>}
+            {inv.ref && <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontStyle:"italic", marginBottom:14 }}>Re: {inv.ref}</div>}
             <table style={{ width:"100%", borderCollapse:"collapse", marginBottom:14 }}>
               <thead>
                 <tr>
                   {["Description","Qty","Rate","Total"].map(function(h) {
-                    return <th key={h} style={{ fontFamily:fMono, fontSize:8, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, padding:"5px 0", textAlign:h==="Description"?"left":"right", borderBottom:"2px solid "+L.ink }}>{h}</th>;
+                    return <th key={h} style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, padding:"5px 0", textAlign:h==="Description"?"left":"right", borderBottom:"2px solid "+L.ink }}>{h}</th>;
                   })}
                 </tr>
               </thead>
@@ -2847,10 +2851,10 @@ function ClientPortal(props) {
                 {inv.lines.map(function(line, i) {
                   return (
                     <tr key={i} style={{ borderBottom:"1px solid "+L.border }}>
-                      <td style={{ fontFamily:fSans, fontSize:12, color:L.ink, padding:"9px 0" }}>{line.desc}</td>
-                      <td style={{ fontFamily:fMono, fontSize:11, color:L.muted, textAlign:"right", padding:"9px 0" }}>{line.qty}</td>
-                      <td style={{ fontFamily:fMono, fontSize:11, color:L.muted, textAlign:"right", padding:"9px 0" }}>{"€"+line.rate.toLocaleString()}</td>
-                      <td style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500, textAlign:"right", padding:"9px 0" }}>{"€"+line.total.toLocaleString()}</td>
+                      <td style={{ fontFamily:fSans, fontSize:14, color:L.ink, padding:"9px 0" }}>{line.desc}</td>
+                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{line.qty}</td>
+                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{"€"+line.rate.toLocaleString()}</td>
+                      <td style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500, textAlign:"right", padding:"9px 0" }}>{"€"+line.total.toLocaleString()}</td>
                     </tr>
                   );
                 })}
@@ -2858,10 +2862,10 @@ function ClientPortal(props) {
             </table>
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
               <div style={{ minWidth:240 }}>
-                <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:11, color:L.muted, padding:"2px 0" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.muted, padding:"2px 0" }}>
                   <span>Subtotal</span><span style={{ fontFamily:fMono }}>{"€"+inv.sub.toLocaleString()}</span>
                 </div>
-                <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:11, color:L.blue, padding:"3px 0 6px", borderBottom:"1.5px solid "+L.ink }}>
+                <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.blue, padding:"3px 0 6px", borderBottom:"1.5px solid "+L.ink }}>
                   <span>{inv.vatLabel}</span><span style={{ fontFamily:fMono }}>€0.00</span>
                 </div>
                 <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, paddingTop:6 }}>
@@ -2870,15 +2874,15 @@ function ClientPortal(props) {
               </div>
             </div>
             <div style={{ background:L.cream, borderRadius:8, padding:"12px 14px", marginTop:16 }}>
-              <div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:6 }}>SEPA Bank Transfer</div>
+              <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:6 }}>SEPA Bank Transfer</div>
               <div style={{ display:"flex", gap:28, flexWrap:"wrap" }}>
-                <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{inv.from.iban}</div></div>
-                <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{inv.from.bic}</div></div>
-                <div><div style={{ fontFamily:fMono, fontSize:8, color:L.muted, textTransform:"uppercase" }}>Reference</div><div style={{ fontFamily:fMono, fontSize:12, color:L.ink, fontWeight:500 }}>{inv.num}</div></div>
+                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from.iban}</div></div>
+                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from.bic}</div></div>
+                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>Reference</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.num}</div></div>
               </div>
             </div>
-            {inv.note && <p style={{ fontFamily:fSans, fontSize:10, color:L.muted, marginTop:10, paddingTop:10, borderTop:"1px solid "+L.borderLt }}>{inv.note}</p>}
-            <p style={{ fontFamily:fSans, fontSize:10, color:L.faint, marginTop:6 }}>{inv.gdpr}</p>
+            {inv.note && <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:10, paddingTop:10, borderTop:"1px solid "+L.borderLt }}>{inv.note}</p>}
+            <p style={{ fontFamily:fSans, fontSize:12, color:L.faint, marginTop:6 }}>{inv.gdpr}</p>
           </div>
         </div>
 
@@ -2886,32 +2890,32 @@ function ClientPortal(props) {
           <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, overflow:"hidden", marginBottom:16 }}>
             <div style={{ padding:"14px 24px", background:status==="approved" ? L.greenGlow : L.accentGlow, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", gap:8 }}>
               <Icon name={status==="approved" ? "check" : "card"} size={15} color={status==="approved" ? L.green : L.accent} />
-              <span style={{ fontFamily:fMono, fontSize:9, color:status==="approved" ? L.green : L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+              <span style={{ fontFamily:fMono, fontSize:11, color:status==="approved" ? L.green : L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 {status==="approved" ? "Approved — ready to pay" : "Action required"}
               </span>
             </div>
             <div style={{ padding:"20px 24px" }}>
               {status === "pending" && (
                 <div>
-                  <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:16, fontWeight:300 }}>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
                     Please review the invoice above and approve it. Once approved, you can pay via SEPA transfer or card.
                   </p>
                   <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)", marginRight:10 }}>
                     ✓ Approve Invoice
                   </button>
-                  <button style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"13px 20px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:13 }}>
+                  <button style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"13px 20px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
                     Request changes
                   </button>
                 </div>
               )}
               {status === "approved" && !showPay && (
                 <div>
-                  <p style={{ fontFamily:fSans, fontSize:13, color:L.green, fontWeight:500, marginBottom:14 }}>✓ Invoice approved on 30 Apr 2026</p>
-                  <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:16, fontWeight:300 }}>Choose your payment method:</p>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:500, marginBottom:14 }}>✓ Invoice approved on 30 Apr 2026</p>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>Choose your payment method:</p>
                   <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
                     {[["sepa","SEPA Transfer"],["card","Card"],["apple","Apple Pay"]].map(function(pair) {
                       return (
-                        <button key={pair[0]} onClick={function(){ setPayMethod(pair[0]); }} style={{ background:payMethod===pair[0] ? L.ink : L.paper, color:payMethod===pair[0] ? "#fff" : L.ink, border:"1.5px solid "+(payMethod===pair[0] ? L.ink : L.border), borderRadius:8, padding:"9px 18px", cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:payMethod===pair[0] ? 500 : 400 }}>
+                        <button key={pair[0]} onClick={function(){ setPayMethod(pair[0]); }} style={{ background:payMethod===pair[0] ? L.ink : L.paper, color:payMethod===pair[0] ? "#fff" : L.ink, border:"1.5px solid "+(payMethod===pair[0] ? L.ink : L.border), borderRadius:8, padding:"9px 18px", cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:payMethod===pair[0] ? 500 : 400 }}>
                           {pair[1]}
                         </button>
                       );
@@ -2924,7 +2928,7 @@ function ClientPortal(props) {
               )}
               {status === "approved" && showPay && (
                 <div>
-                  <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, marginBottom:16, fontWeight:300 }}>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
                     {payMethod === "sepa" && "Transfer €5,400 to the IBAN above with reference DE-2026-0437. Payment typically clears in 1 business day."}
                     {payMethod === "card" && "Card payments launching Q3 2026 via Stripe. Use SEPA transfer for now."}
                     {payMethod === "apple" && "Apple Pay launching Q3 2026. Use SEPA transfer for now."}
@@ -2941,14 +2945,14 @@ function ClientPortal(props) {
         {status === "paid" && (
           <div style={{ background:L.greenGlow, border:"1.5px solid "+L.green+"44", borderRadius:16, padding:"24px 28px", marginBottom:16, textAlign:"center" }}>
             <div style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.green, marginBottom:6 }}>✓ Payment confirmed</div>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.green, fontWeight:300 }}>Thank you. A receipt has been sent to {inv.to.contact} at Studio Verde GmbH.</p>
+            <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:300 }}>Thank you. A receipt has been sent to {inv.to.contact} at Studio Verde GmbH.</p>
           </div>
         )}
 
         <div style={{ textAlign:"center", padding:"20px 0 4px" }}>
-          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}>Secured &amp; delivered by </span>
-          <span onClick={function(){ setPage("Home"); }} style={{ fontFamily:fSerif, fontSize:11, fontWeight:700, color:L.accent, cursor:"pointer", letterSpacing:"-0.01em" }}>InvoiceAI</span>
-          <span style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.08em" }}> · EU-native invoicing</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>Secured &amp; delivered by </span>
+          <span onClick={function(){ setPage("Home"); }} style={{ fontFamily:fSerif, fontSize:13, fontWeight:700, color:L.accent, cursor:"pointer", letterSpacing:"-0.01em" }}>InvoiceAI</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}> · EU-native invoicing</span>
         </div>
       </div>
     </div>
@@ -3036,12 +3040,12 @@ function SupportBot() {
     <div style={{ position:"fixed", bottom:24, right:24, zIndex:999 }}>
       {open && (
         <div className="bot-panel" style={{ position:"absolute", bottom:60, right:0, width:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:16, boxShadow:"0 16px 48px rgba(44,36,22,0.18)", overflow:"hidden", display:"flex", flexDirection:"column" }}>
-          <div style={{ background:L.accent, padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <div style={{ background:L.accent, padding:"16px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
             <div style={{ display:"flex", alignItems:"center", gap:9 }}>
               <LogoMark size={28} bg="rgba(255,255,255,0.2)" />
               <div>
-                <div style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:"#fff" }}>InvoiceAI Support</div>
-                <div style={{ fontFamily:fMono, fontSize:8, color:"rgba(255,255,255,0.65)", letterSpacing:"0.06em" }}>Usually replies instantly</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:"#fff" }}>InvoiceAI Support</div>
+                <div style={{ fontFamily:fMono, fontSize:10, color:"rgba(255,255,255,0.65)", letterSpacing:"0.06em" }}>Usually replies instantly</div>
               </div>
             </div>
             <button onClick={function(){ setOpen(false); }} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.7)", cursor:"pointer", fontSize:18, lineHeight:1, padding:"2px 4px" }}>×</button>
@@ -3051,7 +3055,7 @@ function SupportBot() {
               var isBot = m.role === "bot";
               return (
                 <div key={i} style={{ display:"flex", justifyContent:isBot ? "flex-start" : "flex-end" }}>
-                  <div style={{ maxWidth:"82%", background:isBot ? L.cream : L.accent, color:isBot ? L.ink : "#fff", borderRadius:isBot ? "4px 12px 12px 12px" : "12px 4px 12px 12px", padding:"9px 12px", fontFamily:fSans, fontSize:12, lineHeight:1.55, fontWeight:300 }}>
+                  <div style={{ maxWidth:"82%", background:isBot ? L.cream : L.accent, color:isBot ? L.ink : "#fff", borderRadius:isBot ? "4px 12px 12px 12px" : "12px 4px 12px 12px", padding:"9px 12px", fontFamily:fSans, fontSize:14, lineHeight:1.55, fontWeight:300 }}>
                     {m.text}
                   </div>
                 </div>
@@ -3068,7 +3072,7 @@ function SupportBot() {
             <div style={{ padding:"0 14px 8px", display:"flex", flexDirection:"column", gap:5 }}>
               {SUGGESTIONS.map(function(s) {
                 return (
-                  <button key={s} onClick={function(){ setInput(s); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:8, padding:"6px 10px", cursor:"pointer", fontFamily:fSans, fontSize:11, color:L.muted, textAlign:"left" }}>
+                  <button key={s} onClick={function(){ setInput(s); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:8, padding:"6px 10px", cursor:"pointer", fontFamily:fSans, fontSize:13, color:L.muted, textAlign:"left" }}>
                     {s}
                   </button>
                 );
@@ -3081,7 +3085,7 @@ function SupportBot() {
               onChange={function(e){ setInput(e.target.value); }}
               onKeyDown={function(e){ if(e.key==="Enter") send(); }}
               placeholder="Ask anything…"
-              style={{ flex:1, border:"1.5px solid "+L.border, borderRadius:8, padding:"7px 10px", fontFamily:fSans, fontSize:12, color:L.ink, background:L.paper, outline:"none" }}
+              style={{ flex:1, border:"1.5px solid "+L.border, borderRadius:8, padding:"7px 10px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" }}
             />
             <button onClick={send} disabled={!input.trim() || loading} style={{ background:input.trim() && !loading ? L.accent : L.border, color:"#fff", border:"none", borderRadius:8, padding:"7px 12px", cursor:input.trim() && !loading ? "pointer" : "not-allowed" }}>
               <Icon name="send" size={13} color="#fff" />
@@ -3110,7 +3114,7 @@ function AuthModal(props) {
   var [loading, setLoading] = useState(false);
   var [error, setError] = useState("");
 
-  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none", marginBottom:10 };
+  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:15, color:L.ink, background:L.white, outline:"none", marginBottom:10 };
 
   function submit() {
     if (!email.trim()) { setError("Email required."); return; }
@@ -3152,7 +3156,7 @@ function AuthModal(props) {
       <div style={{ background:L.white, borderRadius:20, width:"100%", maxWidth:400, overflow:"hidden", boxShadow:"0 24px 64px rgba(26,31,46,0.2)" }}>
         <div style={{ background:L.accent, padding:"22px 28px 18px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
-            <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(255,255,255,0.6)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>invoice-ai.de</div>
+            <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.6)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>invoice-ai.de</div>
             <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>
               {mode==="signup" ? "Create account" : mode==="magic" ? "Magic link" : "Welcome back"}
             </h2>
@@ -3164,14 +3168,14 @@ function AuthModal(props) {
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="send" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:800, color:L.ink, marginBottom:8 }}>Check your email</h3>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, lineHeight:1.6 }}>We sent a magic link to <strong style={{ color:L.ink }}>{email}</strong>. Click it to sign in — no password needed.</p>
+            <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.6 }}>We sent a magic link to <strong style={{ color:L.ink }}>{email}</strong>. Click it to sign in — no password needed.</p>
           </div>
         ) : (
           <div style={{ padding:"24px 28px 28px" }}>
             <div style={{ display:"flex", gap:6, marginBottom:20 }}>
               {[["signin",t(lang,"authSignIn")||"Sign in"],["signup",t(lang,"authSignUp")||"Sign up"],["magic",t(lang,"authMagic")||"Magic link"]].map(function(pair) {
                 return (
-                  <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:mode===pair[0] ? 500 : 400 }}>
+                  <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:mode===pair[0] ? 500 : 400 }}>
                     {pair[1]}
                   </button>
                 );
@@ -3195,13 +3199,13 @@ function AuthModal(props) {
               />
             )}
 
-            {error && <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, marginBottom:10 }}>{error}</p>}
+            {error && <p style={{ fontFamily:fSans, fontSize:14, color:L.accent, marginBottom:10 }}>{error}</p>}
 
             <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(59,91,219,0.3)" }}>
               {loading ? "Loading…" : mode==="signup" ? "Create account →" : mode==="magic" ? "Send magic link →" : "Sign in →"}
             </button>
 
-            <p style={{ fontFamily:fMono, fontSize:9, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>
+            <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>
               {mode==="signup" ? "By signing up you agree to our Terms of Service." : "Forgot your password? Use the Magic link tab."}
             </p>
           </div>
@@ -3252,8 +3256,8 @@ function SignupModal(props) {
     });
   }
 
-  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:13, color:L.ink, background:L.white, outline:"none" };
-  var lbl = { display:"block", marginBottom:4, fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
+  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:15, color:L.ink, background:L.white, outline:"none" };
+  var lbl = { display:"block", marginBottom:4, fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
 
   return (
     <div style={{ position:"fixed", inset:0, background:"rgba(44,36,22,0.55)", zIndex:1000, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }} onClick={function(e){ if(e.target===e.currentTarget) onClose(); }}>
@@ -3261,15 +3265,15 @@ function SignupModal(props) {
         <div style={{ background:L.accent, padding:"24px 28px 20px" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
             <div>
-              <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(255,255,255,0.65)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>Early Access · invoice-ai.de</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.65)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>Early Access · invoice-ai.de</div>
               <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.1 }}>{t(lang,"modalTitle")}</h2>
-              <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(255,255,255,0.75)", marginTop:6, fontWeight:300, lineHeight:1.5 }}>{t(lang,"modalSub")}</p>
+              <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.75)", marginTop:6, fontWeight:300, lineHeight:1.5 }}>{t(lang,"modalSub")}</p>
             </div>
             <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginLeft:12 }}>×</button>
           </div>
           <div style={{ display:"flex", gap:16, marginTop:14 }}>
             {["14-day free trial","No credit card","EU-hosted data"].map(function(t) {
-              return <div key={t} style={{ fontFamily:fMono, fontSize:8, color:"rgba(255,255,255,0.65)", letterSpacing:"0.04em" }}>{t}</div>;
+              return <div key={t} style={{ fontFamily:fMono, fontSize:10, color:"rgba(255,255,255,0.65)", letterSpacing:"0.04em" }}>{t}</div>;
             })}
           </div>
         </div>
@@ -3282,7 +3286,7 @@ function SignupModal(props) {
                 <label style={lbl}>I am a *</label>
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                   {ROLES.map(function(r) {
-                    return <button key={r} onClick={function(){ setRole(r); }} style={{ background:role===r?L.ink:L.paper, color:role===r?"#fff":L.muted, border:"1.5px solid "+(role===r?L.ink:L.border), borderRadius:99, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:11, fontWeight:role===r?500:400 }}>{r}</button>;
+                    return <button key={r} onClick={function(){ setRole(r); }} style={{ background:role===r?L.ink:L.paper, color:role===r?"#fff":L.muted, border:"1.5px solid "+(role===r?L.ink:L.border), borderRadius:99, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:role===r?500:400 }}>{r}</button>;
                   })}
                 </div>
               </div>
@@ -3292,24 +3296,24 @@ function SignupModal(props) {
                   {EU_COUNTRIES_LIST.map(function(c){ return <option key={c} value={c}>{c}</option>; })}
                 </select>
               </div>
-              {error && <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:0 }}>{error}</p>}
+              {error && <p style={{ fontFamily:fSans, fontSize:14, color:L.accent, margin:0 }}>{error}</p>}
               <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(200,80,42,0.3)" }}>
 {loading ? t(lang,"modalJoining") : t(lang,"modalCta")}
               </button>
             </div>
-            <p style={{ fontFamily:fMono, fontSize:9, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>No spam. One email when we launch. Unsubscribe anytime.</p>
+            <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>No spam. One email when we launch. Unsubscribe anytime.</p>
           </div>
         ) : (
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="check" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
             <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
+            <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
             <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
-              <p style={{ fontFamily:fMono, fontSize:9, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
-              <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
+              <p style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
+              <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
             </div>
-            <button onClick={onClose} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500 }}>{t(lang,"modalExploreCta")}</button>
+            <button onClick={onClose} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500 }}>{t(lang,"modalExploreCta")}</button>
           </div>
         )}
       </div>
@@ -3327,22 +3331,22 @@ function CookieBanner(props) {
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:10 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <Icon name="shield" size={16} color={L.accent} />
-          <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>Cookie settings</span>
+          <span style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>Cookie settings</span>
         </div>
       </div>
-      <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, lineHeight:1.55, marginBottom:14, fontWeight:300 }}>
+      <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.55, marginBottom:14, fontWeight:300 }}>
         We use only essential cookies to keep you logged in. No tracking, no advertising, no third-party cookies. Our analytics are cookieless via Plausible.
       </p>
       <div style={{ display:"flex", gap:7, marginBottom:10 }}>
-        <button onClick={onAccept} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
+        <button onClick={onAccept} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
           Accept
         </button>
-        <button onClick={onDecline} style={{ flex:1, background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>
+        <button onClick={onDecline} style={{ flex:1, background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"9px 0", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
           Decline
         </button>
       </div>
       <div style={{ display:"flex", justifyContent:"center" }}>
-        <button onClick={function(){ setPage("Cookies"); onAccept(); }} style={{ background:"none", border:"none", fontFamily:fMono, fontSize:9, color:L.faint, cursor:"pointer", letterSpacing:"0.05em" }}>
+        <button onClick={function(){ setPage("Cookies"); onAccept(); }} style={{ background:"none", border:"none", fontFamily:fMono, fontSize:11, color:L.faint, cursor:"pointer", letterSpacing:"0.05em" }}>
           Cookie Policy
         </button>
       </div>
@@ -3378,9 +3382,9 @@ function useVIES(vatNumber) {
 function VIESBadge(props) {
   var status = props.status;
   if (!status) return null;
-  if (status === "checking") return <span style={{ fontFamily:fMono, fontSize:8, color:L.gold, background:L.goldGlow, border:"1px solid "+L.gold+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>checking…</span>;
-  if (status === "valid")    return <span style={{ fontFamily:fMono, fontSize:8, color:L.green, background:L.greenGlow, border:"1px solid "+L.green+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>✓ VIES valid</span>;
-  if (status === "invalid")  return <span style={{ fontFamily:fMono, fontSize:8, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>⚠ not found in VIES</span>;
+  if (status === "checking") return <span style={{ fontFamily:fMono, fontSize:10, color:L.gold, background:L.goldGlow, border:"1px solid "+L.gold+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>checking…</span>;
+  if (status === "valid")    return <span style={{ fontFamily:fMono, fontSize:10, color:L.green, background:L.greenGlow, border:"1px solid "+L.green+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>✓ VIES valid</span>;
+  if (status === "invalid")  return <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"44", borderRadius:4, padding:"2px 7px", marginLeft:6, letterSpacing:"0.05em" }}>⚠ not found in VIES</span>;
   return null;
 }
 
@@ -3405,7 +3409,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
