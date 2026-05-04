@@ -498,18 +498,6 @@ function Nav(props) {
           <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
             {t(lang,"navStartArrow")}
           </button>
-          <div style={{ borderTop:"1px solid "+L.border, marginTop:8, paddingTop:12 }}>
-            <div style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8, paddingLeft:4 }}>Language</div>
-            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-              {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
-                return (
-                  <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:lang===pair[0] ? L.ink : L.paper, color:lang===pair[0] ? "#fff" : L.muted, border:"1px solid "+(lang===pair[0] ? L.ink : L.border), borderRadius:6, padding:"6px 12px", cursor:"pointer", fontFamily:fMono, fontSize:13, fontWeight:lang===pair[0] ? 600 : 400 }}>
-                    {pair[1]}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
         </div>
       )}
     </nav>
@@ -634,6 +622,73 @@ function FeaturesSection(props) {
         </div>
       </div>
     </section>
+  );
+}
+
+// ── Field validators ──────────────────────────────────────────────────────────
+function validateIBAN(raw) {
+  if (!raw || !raw.trim()) return null; // empty = not validated
+  var iban = raw.replace(/\s/g, "").toUpperCase();
+  if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]+$/.test(iban)) return "Invalid IBAN format — should start with 2 letter country code";
+  if (iban.length < 15 || iban.length > 34) return "IBAN length incorrect (" + iban.length + " chars)";
+  // Mod-97 check
+  var rearranged = iban.slice(4) + iban.slice(0, 4);
+  var numeric = rearranged.split("").map(function(c) {
+    var code = c.charCodeAt(0);
+    return code >= 65 ? String(code - 55) : c;
+  }).join("");
+  var remainder = 0;
+  for (var i = 0; i < numeric.length; i++) {
+    remainder = (remainder * 10 + parseInt(numeric[i])) % 97;
+  }
+  if (remainder !== 1) return "IBAN checksum invalid — please double-check";
+  return "valid";
+}
+
+function validateBIC(raw) {
+  if (!raw || !raw.trim()) return null;
+  var bic = raw.replace(/\s/g, "").toUpperCase();
+  // BIC is 8 or 11 chars: 4 bank + 2 country + 2 location + optional 3 branch
+  if (!/^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(bic)) {
+    return "Invalid BIC/SWIFT — format: BANKDEFFXXX (4+2+2+optional 3)";
+  }
+  return "valid";
+}
+
+function validateEUVAT(raw) {
+  if (!raw || !raw.trim()) return null;
+  var vat = raw.replace(/\s/g, "").toUpperCase();
+  // Must start with 2-letter country code
+  if (!/^[A-Z]{2}/.test(vat) || vat.length < 6) return "VAT number must start with EU country code (e.g. DE, FR)";
+  // Length checks per country
+  var countryLengths = { DE:11, FR:13, IT:13, ES:11, NL:14, BE:12, PL:12, PT:11, AT:11, SE:14, DK:10, FI:10, IE:11, HU:10, CZ:12, SK:12, SI:10, HR:13, CY:11, LU:10, MT:10, EE:11, LV:13, LT:14, BG:11, RO:12 };
+  var cc = vat.slice(0, 2);
+  var expected = countryLengths[cc];
+  if (expected && vat.length !== expected) return cc + " VAT number should be " + expected + " characters";
+  return "valid";
+}
+
+function validateGermanTax(raw) {
+  // Steuernummer: 10-13 digits, various formats per Bundesland
+  if (!raw || !raw.trim()) return null;
+  var clean = raw.replace(/[\s\/]/g, "");
+  if (!/^\d{10,13}$/.test(clean)) return "Steuernummer should be 10-13 digits";
+  return "valid";
+}
+
+function FieldError(props) {
+  var result = props.result;
+  var value = props.value;
+  if (!value || !value.trim() || result === null) return null;
+  if (result === "valid") return (
+    <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:3 }}>
+      <span style={{ fontFamily:fMono, fontSize:11, color:L.green }}>✓ Valid</span>
+    </div>
+  );
+  return (
+    <div style={{ display:"flex", alignItems:"flex-start", gap:5, marginTop:3 }}>
+      <span style={{ fontFamily:fSans, fontSize:11, color:"#C0392B", lineHeight:1.4 }}>⚠ {result}</span>
+    </div>
   );
 }
 
@@ -1340,9 +1395,21 @@ function InvoiceForm(props) {
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
             <div style={{ gridColumn:"1/-1" }}><label style={lblStyle}>Business Name *</label><input value={s.sName} onChange={function(e){ u("sName",e.target.value); }} style={inpStyle} /></div>
-            <div><label style={lblStyle}>VAT Number *</label><input value={s.sVAT} onChange={function(e){ u("sVAT",e.target.value); }} style={monoStyle} /></div>
-            <div><label style={lblStyle}>IBAN *</label><input value={s.sIBAN} onChange={function(e){ u("sIBAN",e.target.value); }} style={monoStyle} /></div>
-            <div><label style={lblStyle}>BIC/SWIFT</label><input value={s.sBIC} onChange={function(e){ u("sBIC",e.target.value); }} style={monoStyle} /></div>
+            <div>
+              <label style={lblStyle}>VAT Number *</label>
+              <input value={s.sVAT} onChange={function(e){ u("sVAT",e.target.value); }} style={Object.assign({}, monoStyle, validateEUVAT(s.sVAT) === "valid" ? {borderColor:L.green} : validateEUVAT(s.sVAT) ? {borderColor:"#C0392B"} : {})} />
+              <FieldError result={validateEUVAT(s.sVAT)} value={s.sVAT} />
+            </div>
+            <div>
+              <label style={lblStyle}>IBAN *</label>
+              <input value={s.sIBAN} onChange={function(e){ u("sIBAN",e.target.value.toUpperCase()); }} style={Object.assign({}, monoStyle, validateIBAN(s.sIBAN) === "valid" ? {borderColor:L.green} : validateIBAN(s.sIBAN) ? {borderColor:"#C0392B"} : {})} />
+              <FieldError result={validateIBAN(s.sIBAN)} value={s.sIBAN} />
+            </div>
+            <div>
+              <label style={lblStyle}>BIC/SWIFT</label>
+              <input value={s.sBIC} onChange={function(e){ u("sBIC",e.target.value.toUpperCase()); }} style={Object.assign({}, monoStyle, validateBIC(s.sBIC) === "valid" ? {borderColor:L.green} : validateBIC(s.sBIC) ? {borderColor:"#C0392B"} : {})} />
+              <FieldError result={validateBIC(s.sBIC)} value={s.sBIC} />
+            </div>
             <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="e.g. Leopoldstr. 10" style={inpStyle} /></div>
             <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="e.g. 80802 München" style={inpStyle} /></div>
           </div>
@@ -1367,9 +1434,10 @@ function InvoiceForm(props) {
             </div>
             <label style={lblStyle}>Client VAT (triggers reverse charge if cross-border)</label>
             <div style={{ position:"relative" }}>
-              <input value={s.cVAT} onChange={function(e){ u("cVAT",e.target.value); }} placeholder="e.g. FR12345678901" style={monoStyle} />
+              <input value={s.cVAT} onChange={function(e){ u("cVAT",e.target.value.toUpperCase()); }} placeholder="e.g. FR12345678901" style={Object.assign({}, monoStyle, validateEUVAT(s.cVAT) === "valid" ? {borderColor:L.green} : validateEUVAT(s.cVAT) ? {borderColor:"#C0392B"} : {})} />
               <VIESBadge status={viesStatus} />
             </div>
+            <FieldError result={validateEUVAT(s.cVAT)} value={s.cVAT} />
             {viesStatus === "invalid" && (
               <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
             )}
@@ -1468,11 +1536,29 @@ function InvoiceForm(props) {
             <CheckRow checked={s.eInvoice} onChange={function(v){ u("eInvoice",v); }} label="E-Invoice XML" badge={s.country && s.country.code==="DE" ? "XRechnung" : s.country && s.country.code==="FR" ? "Factur-X" : s.country && s.country.code==="IT" ? "XML/SDI" : "EN16931"} badgeColor={L.blue} blocked={false} blockedReason="" warn={s.creditNote ? "Credit notes use a different XML schema (type 381 vs 380)" : null} infoOpen={activeInfo==="ei"} onInfo={function(){ setActiveInfo(activeInfo==="ei"?null:"ei"); }} infoWhat="Structured XML invoices readable by accounting software. Mandatory in Italy, upcoming in Germany and France." infoWhen="Use if your client is a public authority (required) or their accounting software supports XML import." infoEffect="Marks your invoice as e-invoice compliant. Full XML export coming Q4 2026." infoLaw="EU Directive 2014/55/EU · EN16931 · XRechnung 3.0" />
           </div>
         </div>
+        <div style={{ marginBottom:8 }}>
+          {(function() {
+            var errs = [];
+            if (!s.sName || !s.sName.trim()) errs.push("Business name required");
+            if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push("IBAN invalid");
+            if (s.sBIC && validateBIC(s.sBIC) !== "valid") errs.push("BIC/SWIFT invalid");
+            if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") errs.push("Your VAT number format invalid");
+            if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") errs.push("Client VAT format invalid");
+            if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push("At least one invoice line required");
+            if (errs.length > 0) return (
+              <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
+                <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:"#C0392B", marginBottom:4 }}>Please fix before previewing:</div>
+                {errs.map(function(e) { return <div key={e} style={{ fontFamily:fSans, fontSize:12, color:"#C0392B" }}>· {e}</div>; })}
+              </div>
+            );
+            return null;
+          })()}
+        </div>
         <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(200,80,42,0.25)" }}>
           Preview Invoice →
         </button>
       </div>
-      <div>
+      <div style={{ position:"sticky", top:72, alignSelf:"start" }}>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, padding:"12px 14px" }}>
           <p style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
           {[
@@ -2189,22 +2275,25 @@ function Footer(props) {
   return (
     <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px", overflowX:"hidden" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
-        <div className="footer-grid" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:32, marginBottom:40 }}>
-          <div>
-            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-              <LogoMark size={28} />
-              <div>
-                <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:15, color:L.paper, lineHeight:1.1 }}>InvoiceAI</div>
-                <div style={{ fontFamily:fMono, fontSize:9, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
-              </div>
-            </div>
-            <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:220, fontWeight:300, marginBottom:14 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
-            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-              {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
-                return <span key={b} style={{ fontFamily:fMono, fontSize:10, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"2px 7px", letterSpacing:"0.07em" }}>{b}</span>;
-              })}
+        <div className="footer-inner">
+        {/* Logo + tagline — full width on mobile, first col on desktop */}
+        <div className="footer-brand" style={{ marginBottom:28 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
+            <LogoMark size={28} />
+            <div>
+              <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:15, color:L.paper, lineHeight:1.1 }}>InvoiceAI</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
             </div>
           </div>
+          <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:280, fontWeight:300, marginBottom:12 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
+          <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+            {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
+              return <span key={b} style={{ fontFamily:fMono, fontSize:11, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"3px 8px", letterSpacing:"0.07em" }}>{b}</span>;
+            })}
+          </div>
+        </div>
+        {/* 3 link columns — always in one row */}
+        <div className="footer-cols" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:40 }}>
           {cols.map(function(col) {
             return (
               <div key={col.title}>
@@ -2218,6 +2307,7 @@ function Footer(props) {
               </div>
             );
           })}
+        </div>
         </div>
         <div style={{ background:"rgba(200,80,42,0.1)", border:"1px solid rgba(200,80,42,0.2)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
           <div>
@@ -3409,7 +3499,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
