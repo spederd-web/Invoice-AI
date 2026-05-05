@@ -1005,8 +1005,9 @@ function InvoicePreviewPanel(props) {
   var vatAmt = subAfter * vatRate / 100;
   var total = subAfter + vatAmt;
   var sym = s.country && s.country.cur === "SEK" ? "kr" : "€";
+  var num = s.country ? s.country.code : "DE";
   var yr = new Date().getFullYear();
-  var invNum = s.invNum || ((s.country ? s.country.code : "DE") + "-" + yr + "-001");
+  var invNum = num + "-" + yr + "-437";
   var cnNum = "CN-" + yr + "-001";
   var [xrLoading, setXrLoading] = useState(false);
   var [xrError, setXrError] = useState("");
@@ -1137,60 +1138,6 @@ function InvoicePreviewPanel(props) {
     })
     .catch(function(err){ setNavError(err.message); setNavLoading(false); });
   }
-  var [shareLoading, setShareLoading] = useState(false);
-  var [shareUrl, setShareUrl] = useState("");
-  var [shareCopied, setShareCopied] = useState(false);
-
-  function shareInvoice() {
-    setShareLoading(true); setShareUrl(""); setShareCopied(false);
-    var payload = {
-      inv_number:    invNum,
-      seller_name:   s.sName || "Your Name / Studio",
-      seller_street: s.sStreet || "",
-      seller_city:   s.sCity || "",
-      seller_vat:    s.sVAT || "",
-      seller_iban:   s.sIBAN || "",
-      seller_bic:    s.sBIC || "",
-      seller_email:  s.sEmail || "",
-      buyer_name:    s.cName || "",
-      buyer_street:  s.cStreet || "",
-      buyer_city:    s.cCity || "",
-      buyer_vat:     s.cVAT || "",
-      issue_date:    new Date().toISOString().slice(0, 10),
-      due_date:      new Date(Date.now() + (parseInt(s.terms||30))*86400000).toISOString().slice(0,10),
-      currency:      s.country && s.country.cur ? s.country.cur : "EUR",
-      terms:         s.terms || "30",
-      subtotal:      subAfter,
-      vat_amount:    vatAmt,
-      total:         total,
-      vat_rate:      vatRate,
-      reverse_charge: !!s.rc,
-      vat_exempt:    !!s.vatExempt,
-      late_payment:  !!s.latePayment,
-      gdpr:          !!s.gdpr,
-      credit_note:   !!s.creditNote,
-      proj_ref:      s.projRef || "",
-      lines:         s.lines.filter(function(l){ return l.desc || l.rate; }),
-    };
-    fetch("/api/share", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.id) {
-        var url = "https://invoice-ai.de/portal?id=" + data.id;
-        setShareUrl(url);
-        navigator.clipboard.writeText(url).then(function(){ setShareCopied(true); }).catch(function(){});
-      } else {
-        setShareUrl("error");
-      }
-      setShareLoading(false);
-    })
-    .catch(function() { setShareUrl("error"); setShareLoading(false); });
-  }
-
   return (
     <div style={{ padding:"0 24px 48px", maxWidth:960, margin:"0 auto" }}>
       <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:11, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
@@ -1205,28 +1152,11 @@ function InvoicePreviewPanel(props) {
           <Icon name="document" size={13} color="#fff" />
           {xrLoading ? "…" : "XRechnung XML"}
         </button>
-        <button onClick={shareInvoice} disabled={shareLoading} style={{ flex:1, background:shareLoading ? L.border : L.accent, color:shareLoading ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:shareLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-          <Icon name="send" size={13} color={shareLoading ? L.muted : "#fff"} />
-          {shareLoading ? "…" : "Share"}
+        <button onClick={function(){ if(props.setPage) props.setPage("ClientPortal"); }} style={{ flex:1, background:L.accent, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+          <Icon name="send" size={13} color="#fff" />
+          Share
         </button>
       </div>
-      {shareUrl && shareUrl !== "error" && (
-        <div style={{ background:L.greenGlow, border:"1px solid "+L.green+"44", borderRadius:8, padding:"10px 14px", marginBottom:8, maxWidth:580, display:"flex", alignItems:"center", gap:10 }}>
-          <Icon name="check" size={13} color={L.green} />
-          <div style={{ flex:1 }}>
-            <div style={{ fontFamily:fMono, fontSize:11, color:L.green, letterSpacing:"0.06em", marginBottom:2 }}>{shareCopied ? "✓ Link copied to clipboard" : "Link ready"}</div>
-            <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, wordBreak:"break-all" }}>{shareUrl}</div>
-          </div>
-          <button onClick={function(){ navigator.clipboard.writeText(shareUrl).then(function(){ setShareCopied(true); }); }} style={{ background:"transparent", border:"1px solid "+L.green+"55", borderRadius:5, padding:"4px 9px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0 }}>
-            Copy
-          </button>
-        </div>
-      )}
-      {shareUrl === "error" && (
-        <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"9px 14px", marginBottom:8, maxWidth:580, fontFamily:fSans, fontSize:13, color:"#C0392B" }}>
-          Share failed — check that Supabase is configured in Vercel env vars.
-        </div>
-      )}
       {s.country && s.country.code === "HU" && (
         <div style={{ marginBottom:8 }}>
           <button onClick={exportNAV} disabled={navLoading} style={{ width:"100%", background:navLoading ? L.border : "#2A5E3A", color:"#fff", border:"none", padding:"10px 12px", borderRadius:7, cursor:navLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:13, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
@@ -1571,10 +1501,6 @@ function InvoiceForm(props) {
         ))}
         {cardWrap("Invoice Settings", null, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
-            <div style={{ gridColumn:"1/-1" }}>
-              <label style={lblStyle}>Invoice Number *</label>
-              <input value={s.invNum} onChange={function(e){ u("invNum",e.target.value); }} placeholder="DE-2026-001" style={Object.assign({}, monoStyle, { fontWeight:500 })} />
-            </div>
             <div>
               <label style={lblStyle}>Your Country</label>
               <select value={s.country ? s.country.code : "DE"} onChange={function(e){ var c=EU.find(function(x){return x.code===e.target.value;}); u("country",c); }} style={{ ...inpStyle, cursor:"pointer" }}>
@@ -1640,7 +1566,7 @@ function InvoiceForm(props) {
             { i:"bank",     l:"SEPA",           sub:s.sIBAN ? "IBAN provided" : "⚠ Missing",      ok:!!s.sIBAN },
             { i:"reverse",  l:"Reverse Charge", sub:s.rc ? "Active (0%)" : sameCountry ? "N/A same country" : "Standard", ok:s.rc },
             { i:"shield",   l:"GDPR Notice",    sub:s.gdpr ? "Included" : "Off",                   ok:s.gdpr },
-            { i:"hash",     l:"Invoice No.",    sub:s.creditNote ? "CN-"+new Date().getFullYear()+"-001" : (s.invNum || (s.country?s.country.code:"DE")+"-"+new Date().getFullYear()+"-001"), ok:true },
+            { i:"hash",     l:"Invoice No.",    sub:s.creditNote ? "CN-"+new Date().getFullYear()+"-001" : (s.country?s.country.code:"DE")+"-"+new Date().getFullYear()+"-437", ok:true },
             { i:"clock",    l:"Late Payment",   sub:s.latePayment ? "8% ECB+rate" : "Off",         ok:s.latePayment },
             { i:"document", l:"Document Type",  sub:s.creditNote ? "Credit Note" : s.vatExempt ? "VAT-Exempt" : "Standard Invoice", ok:true },
             { i:"send",     l:"E-Invoice",      sub:s.eInvoice ? "Active" : "PDF only",            ok:s.eInvoice },
@@ -1875,11 +1801,11 @@ function ProposalForm(props) {
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
                   <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>↺ Redo</button>
-                  <button onClick={function(){ window.print(); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
+                  <button style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
                 </div>
               )}
             </div>
-            <div id="print-proposal" style={{ padding:"22px 24px", maxHeight:"60vh", overflowY:"auto" }}>
+            <div style={{ padding:"22px 24px", maxHeight:"60vh", overflowY:"auto" }}>
               {result && !loading && renderProposal(result)}
             </div>
             {result && !loading && (
@@ -1917,7 +1843,6 @@ function InvoiceGen(props) {
 
   var defaultInvState = {
     country:EU[0], terms:"30", rc:false, gdpr:true, latePayment:false, creditNote:false, vatExempt:false, eInvoice:false, discount:"", projRef:"",
-    invNum:"DE-" + new Date().getFullYear() + "-001",
     sName:"Your Name / Studio", sVAT:"", sIBAN:"", sBIC:"", sStreet:"Your Street", sCity:"Your City",
     cName:"Studio Verde GmbH", cVAT:"", cCo:"DE", cStreet:"", cCity:"",
     lines:[{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
@@ -2896,66 +2821,16 @@ var PORTAL_INVOICE = {
 
 function ClientPortal(props) {
   var setPage = props.setPage;
-  var [inv, setInv] = useState(null);
-  var [loadError, setLoadError] = useState("");
+  var inv = PORTAL_INVOICE;
   var [status, setStatus] = useState("pending");
   var [showPay, setShowPay] = useState(false);
   var [payMethod, setPayMethod] = useState("sepa");
 
-  useEffect(function() {
-    var params = new URLSearchParams(window.location.search);
-    var id = params.get("id");
-    if (id) {
-      fetch("/api/share?id=" + encodeURIComponent(id))
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (data && data.inv_number) {
-            setInv({
-              num:   data.inv_number,
-              date:  data.issue_date || "",
-              due:   data.due_date || "",
-              from: {
-                name:   data.seller_name || "",
-                street: data.seller_street || "",
-                city:   data.seller_city || "",
-                vat:    data.seller_vat || "",
-                iban:   data.seller_iban || "",
-                bic:    data.seller_bic || "",
-                email:  data.seller_email || "",
-              },
-              to: {
-                name:    data.buyer_name || "",
-                street:  data.buyer_street || "",
-                city:    data.buyer_city || "",
-                vat:     data.buyer_vat || "",
-                contact: data.buyer_name || "",
-              },
-              lines:    data.lines || [],
-              sub:      data.subtotal || 0,
-              vat:      data.vat_amount || 0,
-              vatLabel: data.reverse_charge ? "VAT 0% — Reverse Charge (Art. 44 EU VAT Directive)" : data.vat_exempt ? "VAT Exempt — §19 UStG" : "VAT " + (data.vat_rate || 0) + "%",
-              total:    data.total || 0,
-              ref:      data.proj_ref || "",
-              terms:    "Net " + (data.terms || "30") + " days",
-              note:     data.late_payment ? "Statutory interest at 8% above ECB base rate applies on overdue amounts per EU Dir. 2011/7/EU." : "",
-              gdpr:     data.gdpr ? "Personal data processed for invoicing purposes under GDPR Art. 6(1)(b)." : "",
-              currency: data.currency || "EUR",
-            });
-          } else {
-            setLoadError("Invoice not found.");
-          }
-        })
-        .catch(function() { setLoadError("Could not load invoice."); });
-    } else {
-      setInv(PORTAL_INVOICE);
-    }
-  }, []);
-
   var timeline = [
-    { label:"Sent",     date:inv ? inv.date : "", done:true },
-    { label:"Viewed",   date:inv ? inv.date : "", done:true },
-    { label:"Approved", date:status==="approved"||status==="paid" ? "" : null, done:status==="approved"||status==="paid" },
-    { label:"Paid",     date:status==="paid" ? "" : null, done:status==="paid" },
+    { label:"Sent",     date:"29 Apr 2026", done:true },
+    { label:"Viewed",   date:"29 Apr 2026", done:true },
+    { label:"Approved", date:status==="approved"||status==="paid" ? "30 Apr 2026" : null, done:status==="approved"||status==="paid" },
+    { label:"Paid",     date:status==="paid" ? "02 May 2026" : null, done:status==="paid" },
   ];
 
   return (
@@ -2976,17 +2851,7 @@ function ClientPortal(props) {
           </button>
         </div>
       </div>
-      {(!inv && !loadError) && (
-        <div style={{ maxWidth:720, margin:"60px auto", padding:"0 20px", textAlign:"center" }}>
-          <div style={{ fontFamily:fMono, fontSize:13, color:L.muted, letterSpacing:"0.08em" }}>Loading invoice…</div>
-        </div>
-      )}
-      {loadError && (
-        <div style={{ maxWidth:720, margin:"60px auto", padding:"0 20px", textAlign:"center" }}>
-          <div style={{ fontFamily:fSans, fontSize:15, color:L.accent }}>{loadError}</div>
-        </div>
-      )}
-      {inv && (
+
       <div style={{ maxWidth:720, margin:"0 auto", padding:"32px 20px 64px" }}>
 
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, padding:"20px 24px", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
@@ -3154,7 +3019,7 @@ function ClientPortal(props) {
               {status === "approved" && showPay && (
                 <div>
                   <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
-                    {payMethod === "sepa" && "Transfer " + (inv.currency === "EUR" ? "€" : inv.currency + " ") + inv.total.toLocaleString() + " to the IBAN above with reference " + inv.num + ". Payment typically clears in 1 business day."}
+                    {payMethod === "sepa" && "Transfer €5,400 to the IBAN above with reference DE-2026-0437. Payment typically clears in 1 business day."}
                     {payMethod === "card" && "Card payments launching Q3 2026 via Stripe. Use SEPA transfer for now."}
                     {payMethod === "apple" && "Apple Pay launching Q3 2026. Use SEPA transfer for now."}
                   </p>
@@ -3170,7 +3035,7 @@ function ClientPortal(props) {
         {status === "paid" && (
           <div style={{ background:L.greenGlow, border:"1.5px solid "+L.green+"44", borderRadius:16, padding:"24px 28px", marginBottom:16, textAlign:"center" }}>
             <div style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.green, marginBottom:6 }}>✓ Payment confirmed</div>
-            <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:300 }}>Thank you. A receipt has been sent to {inv.to.contact} at {inv.to.name}.</p>
+            <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:300 }}>Thank you. A receipt has been sent to {inv.to.contact} at Studio Verde GmbH.</p>
           </div>
         )}
 
@@ -3180,7 +3045,6 @@ function ClientPortal(props) {
           <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}> · EU-native invoicing</span>
         </div>
       </div>
-      )}
     </div>
   );
 }
@@ -3635,7 +3499,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
