@@ -1180,7 +1180,7 @@ function InvoicePreviewPanel(props) {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.id) {
-        var url = "https://invoice-ai.de/portal?id=" + data.id;
+        var url = "https://invoice-ai.de/?portal=" + data.id;
         setShareUrl(url);
         navigator.clipboard.writeText(url).then(function(){ setShareCopied(true); }).catch(function(){});
       } else {
@@ -2904,7 +2904,7 @@ function ClientPortal(props) {
 
   useEffect(function() {
     var params = new URLSearchParams(window.location.search);
-    var id = params.get("id");
+    var id = params.get("portal");
     if (id) {
       fetch("/api/share?id=" + encodeURIComponent(id))
         .then(function(r) { return r.json(); })
@@ -3334,6 +3334,7 @@ function SupportBot() {
 function AuthModal(props) {
   var onClose = props.onClose;
   var onAuth  = props.onAuth;
+  var lang = props.lang || "en";
   var [mode, setMode] = useState("signin"); // signin | signup | magic | done
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
@@ -3616,7 +3617,10 @@ function VIESBadge(props) {
 
 
 export default function App() {
-  var [page, setPage] = useState("Home");
+  var [page, setPage] = useState(function() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get("portal") ? "ClientPortal" : "Home";
+  });
   var [modal, setModal] = useState(null);
   var [lang, setLang] = useState("de");
   var [cookieDismissed, setCookieDismissed] = useState(false);
@@ -3652,7 +3656,7 @@ export default function App() {
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
       {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
-      {authOpen && <AuthModal onClose={function(){ setAuthOpen(false); }} onAuth={handleAuth} />}
+      {authOpen && <AuthModal onClose={function(){ setAuthOpen(false); }} onAuth={handleAuth} lang={lang} />}
       {!cookieDismissed && page !== "ClientPortal" && (
         <CookieBanner
           onAccept={function(){ setCookieDismissed(true); }}
