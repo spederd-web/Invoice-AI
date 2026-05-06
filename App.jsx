@@ -527,8 +527,8 @@ function Landing(props) {
   return (
     <div style={{ background:L.white }}>
       <HeroSection setPage={setPage} openModal={openModal} lang={lang} />
-      <FeaturesSection lang={lang} />
-      <HowItWorksSection lang={lang} setPage={setPage} openModal={openModal} />
+      <FlowSection lang={lang} setPage={setPage} />
+      <WhyItWorksSection lang={lang} openModal={openModal} />
       <EUComplianceSection lang={lang} setPage={setPage} />
       <ReviewsSection lang={lang} />
       <PricingSection setPage={setPage} openModal={openModal} lang={lang} embedded={true} />
@@ -540,76 +540,91 @@ function HeroSection(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
   var lang = props.lang || "en";
-  var [cardVisible, setCardVisible] = useState([false,false,false,false]);
+  var [step, setStep] = useState(0);
   useEffect(function() {
-    var delays = [200, 500, 900, 1300];
-    var timers = delays.map(function(d, i) {
-      return setTimeout(function(){ setCardVisible(function(v){ var n = v.slice(); n[i] = true; return n; }); }, d);
-    });
-    return function(){ timers.forEach(clearTimeout); };
+    var t = setInterval(function(){ setStep(function(s){ return (s + 1) % 4; }); }, 2200);
+    return function(){ clearInterval(t); };
   }, []);
 
-  var cards = [
-    { icon:"proposal", label:"Proposal sent", sub:"Brand Identity · Studio Verde", color:L.accent, dot:"#22D4C7" },
-    { icon:"overview", label:"Viewed 7 times", sub:"2 hours ago · still open", color:L.gold,  dot:"#F5C542" },
-    { icon:"document", label:"Invoice created", sub:"€8,400 · DE-2026-0021", color:L.accentBlue, dot:"#4B7BFF" },
-    { icon:"card",     label:"Payment received", sub:"€8,400 · Maison Fontaine", color:L.green, dot:"#1A9E6B" },
+  var flowSteps = [
+    { icon:"proposal", label:"Proposal sent",      sub:"Brand Identity · Studio Verde", amt:null,    color:L.accent },
+    { icon:"overview", label:"Viewed 7 times",     sub:"Client still active · 3h ago",  amt:null,    color:L.gold },
+    { icon:"document", label:"Invoice created",    sub:"One click · EU-compliant",       amt:"€8,400", color:L.accentBlue },
+    { icon:"card",     label:"Payment received",   sub:"SEPA transfer confirmed",        amt:"€8,400", color:L.green },
   ];
 
   return (
-    <section style={{ background:L.navy, padding:"88px 24px 80px", overflow:"hidden", position:"relative" }}>
-      <div style={{ position:"absolute", top:0, left:0, right:0, bottom:0, overflow:"hidden", pointerEvents:"none" }}>
-        <div style={{ position:"absolute", top:"20%", left:"10%", width:400, height:400, borderRadius:"50%", background:"rgba(34,212,199,0.04)", filter:"blur(80px)" }} />
-        <div style={{ position:"absolute", bottom:"10%", right:"5%", width:300, height:300, borderRadius:"50%", background:"rgba(75,123,255,0.05)", filter:"blur(60px)" }} />
+    <section style={{ background:L.navy, minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 24px 72px", overflow:"hidden", position:"relative" }}>
+      <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+        <div style={{ position:"absolute", top:"30%", left:"5%",  width:500, height:500, borderRadius:"50%", background:"rgba(34,212,199,0.03)", filter:"blur(100px)" }} />
+        <div style={{ position:"absolute", bottom:"15%", right:"8%", width:400, height:400, borderRadius:"50%", background:"rgba(75,123,255,0.04)", filter:"blur(80px)" }} />
       </div>
-      <div className="desktop-hero hero-layout" style={{ maxWidth:1100, margin:"0 auto", position:"relative", zIndex:1 }}>
-        <div style={{ textAlign:"center" }}>
-          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:20 }}>
-            <span style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(34,212,199,0.1)", border:"1px solid rgba(34,212,199,0.2)", borderRadius:999, padding:"5px 14px 5px 10px" }}>
-              <span style={{ width:6, height:6, borderRadius:"50%", background:L.accent, display:"inline-block" }} />
+
+      <div className="desktop-hero hero-layout" style={{ maxWidth:1100, margin:"0 auto", width:"100%", position:"relative", zIndex:1 }}>
+
+        {/* Left — headline + CTA */}
+        <div>
+          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:28 }}>
+            <span style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(34,212,199,0.08)", border:"1px solid rgba(34,212,199,0.18)", borderRadius:999, padding:"6px 16px 6px 12px" }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:L.accent, display:"inline-block", flexShrink:0 }} />
               <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>Built for European freelancers</span>
             </span>
           </div>
-          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(40px,6vw,72px)", fontWeight:400, color:"#F0F4F8", margin:"0 0 20px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
-            {t(lang,"heroTitle1")}<br />
-            <span style={{ color:L.accent, fontStyle:"italic" }}>{t(lang,"heroTitle2")}</span>
+          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(44px,7vw,84px)", fontWeight:400, color:"#EEF2F7", margin:"0 0 24px", letterSpacing:"-0.03em", lineHeight:1.0, textAlign:"center" }}>
+            {lang==="de" ? <>Von Angebot<br/>zu Zahlung.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Erledigt.</span></> :
+             lang==="fr" ? <>De la proposition<br/>au paiement.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Géré.</span></> :
+             lang==="es" ? <>De la propuesta<br/>al cobro.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Listo.</span></> :
+             lang==="it" ? <>Dalla proposta<br/>al pagamento.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Fatto.</span></> :
+             lang==="hu" ? <>Az ajánlattól<br/>a kifizetésig.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Kész.</span></> :
+             <>From proposal<br/>to payment.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Handled.</span></>}
           </h1>
-          <p className="d-body-lg" style={{ fontFamily:fSans, fontSize:16, color:"rgba(240,244,248,0.6)", lineHeight:1.7, maxWidth:440, margin:"0 auto 36px", fontWeight:300 }}>
-            {t(lang,"heroSub")}
+          <p className="d-body-lg hero-fine" style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.5)", lineHeight:1.7, maxWidth:380, margin:"0 auto 40px", fontWeight:300, textAlign:"center" }}>
+            {lang==="de" ? "Angebote, Rechnungen, Zahlungen und EU-Compliance in einem ruhigen Workflow." :
+             lang==="fr" ? "Propositions, factures, paiements et conformité UE dans un flux simple." :
+             "Proposals, invoices, payments and EU compliance in one seamless workflow."}
           </p>
-          <div className="hero-btns" style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", marginBottom:20 }}>
-            <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em" }}>
-              {t(lang,"heroCta")}
+          <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:24 }}>
+            <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"14px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>
+              {lang==="de" ? "Kostenlos starten" : lang==="fr" ? "Commencer gratuitement" : "Start free"}
             </button>
-            <button onClick={function(){ setPage("Generator"); }} style={{ background:"rgba(255,255,255,0.07)", color:"rgba(240,244,248,0.8)", border:"1px solid rgba(255,255,255,0.12)", padding:"13px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
-              View demo
+            <button onClick={function(){ setPage("Generator"); }} style={{ background:"rgba(255,255,255,0.06)", color:"rgba(238,242,247,0.7)", border:"1px solid rgba(255,255,255,0.1)", padding:"14px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, whiteSpace:"nowrap" }}>
+              {lang==="de" ? "Demo ansehen" : lang==="fr" ? "Voir la démo" : "View demo"}
             </button>
           </div>
-          <p className="hero-fine" style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.3)", letterSpacing:"0.08em", textAlign:"center" }}>
+          <p style={{ fontFamily:fMono, fontSize:11, color:"rgba(238,242,247,0.22)", letterSpacing:"0.08em", textAlign:"center" }}>
             {t(lang,"heroFine")}
           </p>
         </div>
-        <div className="hero-cards" style={{ display:"none", flexDirection:"column", gap:10, position:"relative" }}>
-          {cards.map(function(c, i) {
+
+        {/* Right — connected flow composition */}
+        <div className="hero-cards" style={{ display:"none", flexDirection:"column", gap:0, position:"relative" }}>
+          {/* Vertical connector line */}
+          <div style={{ position:"absolute", left:27, top:40, bottom:40, width:1, background:"linear-gradient(to bottom, rgba(34,212,199,0.3), rgba(75,123,255,0.2), rgba(26,158,107,0.3))", zIndex:0 }} />
+          {flowSteps.map(function(fs, i) {
+            var active = step === i;
+            var past = step > i;
             return (
-              <div key={i} style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.09)", borderRadius:12, padding:"14px 18px", display:"flex", alignItems:"center", gap:14, backdropFilter:"blur(8px)", opacity:cardVisible[i] ? 1 : 0, transform:cardVisible[i] ? "translateY(0)" : "translateY(10px)", transition:"opacity 0.5s ease, transform 0.5s ease" }}>
-                <div style={{ width:36, height:36, borderRadius:9, background:c.color+"18", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <Icon name={c.icon} size={16} color={c.color} />
+              <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:16, padding:"16px 0", position:"relative", zIndex:1, opacity: past ? 0.45 : 1, transition:"opacity 0.6s ease" }}>
+                {/* Icon node on the line */}
+                <div style={{ width:54, height:54, borderRadius:14, background: active ? fs.color+"22" : "rgba(255,255,255,0.04)", border:"1px solid "+(active ? fs.color+"44" : "rgba(255,255,255,0.07)"), display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all 0.5s ease" }}>
+                  <Icon name={fs.icon} size={20} color={active ? fs.color : "rgba(238,242,247,0.25)"} />
                 </div>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:2 }}>{c.label}</div>
-                  <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.35)", letterSpacing:"0.02em" }}>{c.sub}</div>
+                {/* Content */}
+                <div style={{ flex:1, paddingTop:8 }}>
+                  <div style={{ fontFamily:fSans, fontSize:15, fontWeight:active ? 500 : 400, color:active ? "rgba(238,242,247,0.95)" : "rgba(238,242,247,0.35)", marginBottom:3, transition:"all 0.5s ease" }}>{fs.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(238,242,247,0.22)", letterSpacing:"0.02em" }}>{fs.sub}</div>
                 </div>
-                <div style={{ width:7, height:7, borderRadius:"50%", background:c.dot, flexShrink:0 }} />
+                {/* Amount badge */}
+                {fs.amt && active && (
+                  <div style={{ background:L.green+"22", border:"1px solid "+L.green+"33", borderRadius:7, padding:"4px 10px", flexShrink:0, marginTop:8 }}>
+                    <span style={{ fontFamily:fMono, fontSize:13, color:L.green, fontWeight:500 }}>{fs.amt}</span>
+                  </div>
+                )}
               </div>
             );
           })}
-          <div style={{ display:"flex", alignItems:"center", gap:8, padding:"10px 18px" }}>
-            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
-            <span style={{ fontFamily:fMono, fontSize:10, color:"rgba(240,244,248,0.25)", letterSpacing:"0.08em" }}>EU · SEPA · GDPR · XRechnung</span>
-            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
-          </div>
         </div>
+
       </div>
     </section>
   );
@@ -710,6 +725,98 @@ function HowItWorksSection(props) {
         <div style={{ textAlign:"center", marginTop:44 }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 30px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : lang==="es" ? "Probarlo ahora →" : lang==="it" ? "Provalo adesso →" : lang==="hu" ? "Próbáld ki most →" : "Try it now →"}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FlowSection(props) {
+  var lang = props.lang || "en";
+  var setPage = props.setPage;
+  var steps = [
+    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",   detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
+    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",          detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
+    { num:"03", label: lang==="de" ? "In Rechnung umwandeln" : lang==="fr" ? "Convertir en facture" : "Convert to invoice", detail: lang==="de" ? "Ein Klick, EU-konform" : lang==="fr" ? "Un clic, conforme UE" : "One click, EU-compliant" },
+    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                           detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
+  ];
+  return (
+    <section style={{ background:L.paper, padding:"100px 24px" }}>
+      <div style={{ maxWidth:960, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:72 }}>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(28px,4.5vw,52px)", fontWeight:400, color:L.ink, letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:16, fontStyle:"italic" }}>
+            {lang==="de" ? "Wie es fließt." : lang==="fr" ? "Comment ça s'enchaîne." : "How it flows."}
+          </h2>
+          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:360, margin:"0 auto" }}>
+            {lang==="de" ? "Vier Schritte. Ein Tool." : lang==="fr" ? "Quatre étapes. Un outil." : "Four steps. One tool. Nothing duplicated."}
+          </p>
+        </div>
+        <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
+          {steps.map(function(s, i) {
+            var last = i === steps.length - 1;
+            return (
+              <div key={i} style={{ display:"flex", gap:28, alignItems:"flex-start", paddingBottom: last ? 0 : 52, position:"relative" }}>
+                {/* Left — number + line */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:40 }}>
+                  <div style={{ width:40, height:40, borderRadius:10, background: i === 3 ? L.accent : L.navy, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    <span style={{ fontFamily:fMono, fontSize:11, fontWeight:600, color: i === 3 ? L.navy : "rgba(240,244,248,0.6)", letterSpacing:"0.04em" }}>{s.num}</span>
+                  </div>
+                  {!last && <div style={{ width:1, flex:1, marginTop:10, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
+                </div>
+                {/* Right — content */}
+                <div style={{ paddingTop:8 }}>
+                  <div style={{ fontFamily:fSerif, fontSize:"clamp(20px,3vw,28px)", fontWeight:400, color:L.ink, marginBottom:6, letterSpacing:"-0.02em" }}>{s.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>{s.detail}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ marginTop:64, textAlign:"center" }}>
+          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.navy, color:"#EEF2F7", border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, letterSpacing:"-0.01em" }}>
+            {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : "Try it now →"}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyItWorksSection(props) {
+  var lang = props.lang || "en";
+  var openModal = props.openModal;
+  var statements = lang==="de" ? [
+    { headline:"Weniger Zeit mit Nachverfolgen verbringen.", sub:"Sieh sofort, wenn ein Angebot geöffnet wird. Sende Follow-ups im richtigen Moment." },
+    { headline:"Für ganz Europa gebaut.", sub:"VAT, Reverse Charge, XRechnung und SEPA werden automatisch richtig gemacht." },
+    { headline:"Wisse immer, was als nächstes kommt.", sub:"Dein Dashboard zeigt dir genau, was Aufmerksamkeit braucht — nichts mehr, nichts weniger." },
+  ] : lang==="fr" ? [
+    { headline:"Passez moins de temps à relancer.", sub:"Voyez quand une proposition est ouverte. Relancez au bon moment, sans effort." },
+    { headline:"Conçu pour toute l'Europe.", sub:"TVA, autoliquidation, Factur-X et SEPA — tout géré automatiquement et correctement." },
+    { headline:"Sachez toujours ce qui vient ensuite.", sub:"Votre tableau de bord vous montre exactement ce qui demande attention." },
+  ] : [
+    { headline:"Spend less time chasing.", sub:"See the moment a proposal is opened. Follow up at exactly the right time." },
+    { headline:"Built for working across Europe.", sub:"VAT, reverse charge, XRechnung and SEPA handled correctly, automatically." },
+    { headline:"Know what needs attention.", sub:"Your dashboard shows exactly what matters right now — nothing more, nothing less." },
+  ];
+  return (
+    <section style={{ background:L.white, borderTop:"1px solid "+L.border, padding:"100px 24px" }}>
+      <div style={{ maxWidth:760, margin:"0 auto" }}>
+        {statements.map(function(s, i) {
+          return (
+            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 72 : 0 }}>
+              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(22px,3.5vw,38px)", fontWeight:400, color:L.ink, letterSpacing:"-0.025em", lineHeight:1.15, marginBottom:14 }}>
+                {s.headline}
+              </h3>
+              <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.7, maxWidth:520 }}>
+                {s.sub}
+              </p>
+            </div>
+          );
+        })}
+        <div style={{ marginTop:64, paddingTop:48, borderTop:"1px solid "+L.border }}>
+          <button onClick={function(){ openModal("why"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
+            {lang==="de" ? "Frühen Zugang erhalten →" : lang==="fr" ? "Accès anticipé →" : "Get early access →"}
           </button>
         </div>
       </div>
@@ -896,111 +1003,31 @@ function EUComplianceSection(props) {
 
 function ReviewsSection(props) {
   var lang = props.lang || "en";
-  var [showAll, setShowAll] = useState(false);
-  var featured = REVIEWS.slice(0, 3);
-  var extra = REVIEWS.slice(3);
+  var picks = [REVIEWS[0], REVIEWS[2]]; // Jonas (reverse charge) + Marco (closed €12k)
   return (
-    <section style={{ background:L.white, borderTop:"1px solid "+L.border, padding:"88px 0 72px" }}>
-      <div style={{ textAlign:"center", marginBottom:40, padding:"0 24px" }}>
-        <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
-          <Stars n={5} size={12} />
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.08em" }}>4.9 from 340+ reviews</span>
+    <section style={{ background:L.paper, borderTop:"1px solid "+L.border, padding:"100px 24px" }}>
+      <div style={{ maxWidth:860, margin:"0 auto" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:64 }}>
+          <Stars n={5} size={13} />
+          <span style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.06em" }}>4.9 · 340+ reviews</span>
         </div>
-        <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:400, color:L.ink, margin:"0 0 0", letterSpacing:"-0.025em", fontStyle:"italic" }}>
-          {t(lang,"reviewsTitle")}
-        </h2>
-      </div>
-
-      {/* Desktop: 3-col grid */}
-      <div className="reviews-desktop" style={{ display:"none", maxWidth:1100, margin:"0 auto", padding:"0 32px" }}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:16 }}>
-          {featured.map(function(r) {
+        <div style={{ display:"flex", flexDirection:"column", gap:64 }}>
+          {picks.map(function(r) {
             return (
-              <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
-                  <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                    <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
-                    <div>
-                      <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{r.name}</div>
-                      <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
-                    </div>
+              <div key={r.id}>
+                <p style={{ fontFamily:fSerif, fontSize:"clamp(18px,2.8vw,28px)", fontWeight:400, color:L.ink, lineHeight:1.4, letterSpacing:"-0.02em", marginBottom:20, fontStyle:"italic" }}>
+                  "{r.text}"
+                </p>
+                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <div style={{ width:32, height:32, borderRadius:"50%", background:r.col+"22", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
+                  <div>
+                    <span style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink }}>{r.name}</span>
+                    <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}> · {r.role}, {r.city}</span>
                   </div>
-                  <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
-                </div>
-                <Stars n={r.rating} size={12} />
-                <p className="d-review-text" style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
-                <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                  <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
-                  <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
                 </div>
               </div>
             );
           })}
-        </div>
-        {showAll && (
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:16 }}>
-            {extra.map(function(r) {
-              return (
-                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"20px 20px 16px", display:"flex", flexDirection:"column", gap:10 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                      <div style={{ width:36, height:36, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
-                      <div>
-                        <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{r.name}</div>
-                        <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
-                      </div>
-                    </div>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
-                  </div>
-                  <Stars n={r.rating} size={12} />
-                  <p className="d-review-text" style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
-                  <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        <div style={{ textAlign:"center" }}>
-          <button onClick={function(){ setShowAll(function(s){ return !s; }); }} style={{ background:"transparent", border:"1.5px solid "+L.border, borderRadius:8, padding:"9px 24px", cursor:"pointer", fontFamily:fSans, fontSize:15, color:L.muted }}>
-            {showAll ? "Show less ▲" : "Show all " + REVIEWS.length + " reviews ▼"}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile: horizontal scroll */}
-      <div className="reviews-mobile" style={{ overflowX:"hidden" }}>
-        <div style={{ overflowX:"auto", paddingBottom:8, WebkitOverflowScrolling:"touch", marginRight:"-1px" }}>
-          <div style={{ display:"flex", gap:12, padding:"4px 16px 8px", width:"max-content" }}>
-            {REVIEWS.map(function(r, i) {
-              var isFeat = i < 3;
-              return (
-                <div key={r.id} style={{ background:L.white, border:"1.5px solid "+(isFeat ? L.accent+"33" : L.border), borderRadius:14, padding:"18px 18px 14px", width:260, flexShrink:0, display:"flex", flexDirection:"column", gap:10 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:9 }}>
-                      <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
-                      <div>
-                        <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{r.name}</div>
-                        <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
-                      </div>
-                    </div>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
-                  </div>
-                  <Stars n={r.rating} size={11} />
-                  <p className="d-review-text" style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
-                  <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div style={{ textAlign:"center", marginTop:12 }}>
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>← scroll for more →</span>
         </div>
       </div>
     </section>
