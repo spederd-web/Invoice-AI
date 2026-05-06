@@ -437,7 +437,7 @@ function Nav(props) {
         </div>
         <div style={{ flex:1 }} />
         <div className="nav-desktop" style={{ display:"flex", gap:2 }}>
-          {PAGES.map(function(pg) {
+          {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400 }}>
@@ -448,21 +448,26 @@ function Nav(props) {
         </div>
         {user ? (
           <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
-            <div style={{ width:30, height:30, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:"#fff", fontWeight:600 }}>
-              {user.email ? user.email[0].toUpperCase() : "U"}
-            </div>
-            <button onClick={function(){ setPage("Dashboard"); }} style={{ background:L.accentGlow, color:L.accent, border:"1px solid "+L.accent+"44", padding:"7px 14px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
-              Dashboard
+            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"5px 12px 5px 6px", cursor:"pointer" }}>
+              <div style={{ width:24, height:24, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#fff", fontWeight:600, flexShrink:0 }}>
+                {user.email ? user.email[0].toUpperCase() : "U"}
+              </div>
+              <span style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.accent }}>Dashboard</span>
+            </button>
+            <button onClick={function(){ props.onSignOut(); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
+              Sign out
             </button>
           </div>
         ) : (
-          <div className="nav-cta" style={{ display:"flex", gap:7, flexShrink:0 }}>
+          <div style={{ display:"flex", gap:7, flexShrink:0, alignItems:"center" }}>
             <button onClick={openAuth} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
               Log in
             </button>
-            <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
-              {t(lang,"navStart")}
-            </button>
+            <div className="nav-cta" style={{ display:"flex" }}>
+              <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
+                {t(lang,"navStart")}
+              </button>
+            </div>
           </div>
         )}
         <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
@@ -487,7 +492,7 @@ function Nav(props) {
       </div>
       {menuOpen && (
         <div style={{ borderTop:"1px solid "+L.border, padding:"12px 16px 16px", display:"flex", flexDirection:"column", gap:4, background:L.white }}>
-          {PAGES.map(function(pg) {
+          {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.ink, border:"none", padding:"10px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
@@ -495,9 +500,20 @@ function Nav(props) {
               </button>
             );
           })}
-          <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
-            {t(lang,"navStartArrow")}
-          </button>
+          {user ? (
+            <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, marginTop:4 }}>
+              Sign out
+            </button>
+          ) : (
+            <>
+              <button onClick={function(){ openAuth(); setMenuOpen(false); }} style={{ background:"transparent", color:L.ink, border:"1px solid "+L.border, padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, marginTop:4 }}>
+                Log in
+              </button>
+              <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
+                {t(lang,"navStartArrow")}
+              </button>
+            </>
+          )}
         </div>
       )}
     </nav>
@@ -3338,14 +3354,20 @@ function AuthModal(props) {
   var [mode, setMode] = useState("signin"); // signin | signup | magic | done
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
+  var [confirm, setConfirm] = useState("");
+  var [showPw, setShowPw] = useState(false);
+  var [showConfirm, setShowConfirm] = useState(false);
   var [loading, setLoading] = useState(false);
   var [error, setError] = useState("");
 
   var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:15, color:L.ink, background:L.white, outline:"none", marginBottom:10 };
+  var eyeBtn = { background:"none", border:"none", cursor:"pointer", color:L.muted, padding:"0 4px", fontSize:16, lineHeight:1, flexShrink:0 };
 
   function submit() {
     if (!email.trim()) { setError("Email required."); return; }
     if (mode !== "magic" && !password.trim()) { setError("Password required."); return; }
+    if (mode === "signup" && password !== confirm) { setError("Passwords don't match."); return; }
+    if (mode === "signup" && password.length < 8) { setError("Password must be at least 8 characters."); return; }
     setError(""); setLoading(true);
 
     var action = mode === "signup" ? "signup" : mode === "magic" ? "magic" : "signin";
@@ -3359,11 +3381,8 @@ function AuthModal(props) {
     .then(function(data) {
       setLoading(false);
       if (data.error) {
-        // If Supabase not configured yet, allow demo access
         if (data.error.includes("not configured") || data.error.includes("API key")) {
-          onAuth({ email: email.trim() }, null);
-          onClose();
-          return;
+          onAuth({ email: email.trim() }, null); onClose(); return;
         }
         setError(data.error); return;
       }
@@ -3372,10 +3391,30 @@ function AuthModal(props) {
     })
     .catch(function() {
       setLoading(false);
-      // Network error or API not deployed — allow demo access
-      onAuth({ email: email.trim() }, null);
-      onClose();
+      onAuth({ email: email.trim() }, null); onClose();
     });
+  }
+
+  function PwField(fieldProps) {
+    var val = fieldProps.value;
+    var onChange = fieldProps.onChange;
+    var placeholder = fieldProps.placeholder;
+    var show = fieldProps.show;
+    var toggleShow = fieldProps.toggleShow;
+    return (
+      <div style={{ position:"relative", marginBottom:10 }}>
+        <input
+          type={show ? "text" : "password"}
+          value={val}
+          onChange={onChange}
+          placeholder={placeholder}
+          style={Object.assign({}, inp, { marginBottom:0, paddingRight:44 })}
+        />
+        <button onClick={toggleShow} style={{ position:"absolute", right:10, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:L.muted, padding:4, fontSize:15, lineHeight:1 }}>
+          {show ? "🙈" : "👁"}
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -3402,31 +3441,36 @@ function AuthModal(props) {
             <div style={{ display:"flex", gap:6, marginBottom:20 }}>
               {[["signin",t(lang,"authSignIn")||"Sign in"],["signup",t(lang,"authSignUp")||"Sign up"],["magic",t(lang,"authMagic")||"Magic link"]].map(function(pair) {
                 return (
-                  <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:mode===pair[0] ? 500 : 400 }}>
+                  <button key={pair[0]} onClick={function(){ setMode(pair[0]); setError(""); setPassword(""); setConfirm(""); }} style={{ flex:1, background:mode===pair[0] ? L.ink : L.paper, color:mode===pair[0] ? "#fff" : L.muted, border:"1.5px solid "+(mode===pair[0] ? L.ink : L.border), borderRadius:7, padding:"7px 0", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:mode===pair[0] ? 500 : 400 }}>
                     {pair[1]}
                   </button>
                 );
               })}
             </div>
 
-            <input
-              type="email"
-              value={email}
-              onChange={function(e){ setEmail(e.target.value); }}
-              placeholder="you@studio.de"
-              style={inp}
-            />
+            <input type="email" value={email} onChange={function(e){ setEmail(e.target.value); }} placeholder="you@studio.de" style={inp} />
+
             {mode !== "magic" && (
-              <input
-                type="password"
+              <PwField
                 value={password}
                 onChange={function(e){ setPassword(e.target.value); }}
-                placeholder={mode==="signup" ? "Create a password" : "Password"}
-                style={inp}
+                placeholder={mode==="signup" ? "Create a password (min. 8 chars)" : "Password"}
+                show={showPw}
+                toggleShow={function(){ setShowPw(function(v){ return !v; }); }}
               />
             )}
 
-            {error && <p style={{ fontFamily:fSans, fontSize:14, color:L.accent, marginBottom:10 }}>{error}</p>}
+            {mode === "signup" && (
+              <PwField
+                value={confirm}
+                onChange={function(e){ setConfirm(e.target.value); }}
+                placeholder="Confirm password"
+                show={showConfirm}
+                toggleShow={function(){ setShowConfirm(function(v){ return !v; }); }}
+              />
+            )}
+
+            {error && <p style={{ fontFamily:fSans, fontSize:14, color:"#C0392B", marginBottom:10 }}>{error}</p>}
 
             <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(59,91,219,0.3)" }}>
               {loading ? "Loading…" : mode==="signup" ? "Create account →" : mode==="magic" ? "Send magic link →" : "Sign in →"}
@@ -3625,11 +3669,25 @@ export default function App() {
   var [lang, setLang] = useState("de");
   var [cookieDismissed, setCookieDismissed] = useState(false);
   var [authOpen, setAuthOpen] = useState(false);
-  var [user, setUser] = useState(null);
+  var [user, setUser] = useState(function() {
+    try {
+      var stored = localStorage.getItem("invoiceai_user");
+      return stored ? JSON.parse(stored) : null;
+    } catch(e) { return null; }
+  });
 
   function openModal(source) { setModal(source); }
   function closeModal() { setModal(null); }
-  function handleAuth(u, session) { setUser(u); setPage("Dashboard"); }
+  function handleAuth(u, session) {
+    setUser(u);
+    try { localStorage.setItem("invoiceai_user", JSON.stringify(u)); } catch(e) {}
+    setPage("Dashboard");
+  }
+  function handleSignOut() {
+    setUser(null);
+    try { localStorage.removeItem("invoiceai_user"); } catch(e) {}
+    setPage("Home");
+  }
 
   useEffect(function() {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -3640,7 +3698,7 @@ export default function App() {
     <>
       <style>{FONTS}</style>
       <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
-      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} />}
+      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
       {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
