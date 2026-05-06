@@ -429,15 +429,23 @@ function Nav(props) {
   var lang = props.lang || "en";
   var setLang = props.setLang;
   var [menuOpen, setMenuOpen] = useState(false);
+  var [scrolled, setScrolled] = useState(false);
+  useEffect(function() {
+    function onScroll() { setScrolled(window.scrollY > 20); }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    return function(){ window.removeEventListener("scroll", onScroll); };
+  }, []);
+
   return (
-    <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(247,248,250,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", borderBottom:"1px solid "+L.border, flexShrink:0 }}>
-      <div style={{ height:58, display:"flex", alignItems:"center", padding:"0 24px", gap:8, maxWidth:1200, margin:"0 auto", width:"100%" }}>
+    <nav style={{ position:"sticky", top:0, zIndex:100, background:scrolled ? "rgba(247,248,250,0.75)" : L.white, backdropFilter:scrolled ? "blur(20px)" : "none", WebkitBackdropFilter:scrolled ? "blur(20px)" : "none", borderBottom:"1px solid "+L.border, flexShrink:0, transition:"background 0.3s ease" }}>
+      <div style={{ height:58, display:"flex", alignItems:"center", padding:"0 24px", maxWidth:1200, margin:"0 auto", width:"100%" }}>
+        {/* Left — logo */}
         <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer", flexShrink:0 }} onClick={function(){ setPage("Home"); setMenuOpen(false); }}>
           <LogoMark size={30} />
           <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:18, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
         </div>
-        <div style={{ flex:1 }} />
-        <div className="nav-desktop" style={{ display:"flex", gap:1, alignItems:"center" }}>
+        {/* Center — nav links (desktop only) */}
+        <div className="nav-desktop" style={{ display:"flex", flex:1, justifyContent:"center", gap:1, alignItems:"center" }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
             var active = page === pg;
@@ -448,45 +456,61 @@ function Nav(props) {
             );
           })}
         </div>
-        {user ? (
-          <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
-            <button onClick={function(){ props.onSignOut(); }} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13, flexShrink:0 }}>
-              Sign out
-            </button>
-            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.navy, border:"none", borderRadius:8, padding:"6px 14px 6px 8px", cursor:"pointer", flexShrink:0, whiteSpace:"nowrap" }}>
-              <div style={{ width:22, height:22, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:L.navy, fontWeight:700, flexShrink:0 }}>
-                {user.email ? user.email[0].toUpperCase() : "U"}
-              </div>
-              <span style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:"#fff" }}>Dashboard</span>
-            </button>
+        {/* Mobile spacer — pushes right items to far right */}
+        <div className="nav-burger" style={{ display:"none", flex:1 }} />
+        {/* Right — auth + language (desktop) + Log in + burger (mobile) */}
+        <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0 }}>
+          <div className="nav-desktop" style={{ display:"flex", alignItems:"center", gap:6 }}>
+            {user ? (
+              <>
+                <button onClick={function(){ props.onSignOut(); }} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"none", padding:"7px 10px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13 }}>
+                  Sign out
+                </button>
+                <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.navy, border:"none", borderRadius:8, padding:"6px 14px 6px 8px", cursor:"pointer", whiteSpace:"nowrap" }}>
+                  <div style={{ width:22, height:22, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:L.navy, fontWeight:700, flexShrink:0 }}>
+                    {user.email ? user.email[0].toUpperCase() : "U"}
+                  </div>
+                  <span style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:"#fff" }}>Dashboard</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={openAuth} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"none", padding:"7px 10px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
+                  Log in
+                </button>
+                <button onClick={function(){ openModal("nav"); }} style={{ background:L.navy, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap", letterSpacing:"-0.01em" }}>
+                  Start free
+                </button>
+              </>
+            )}
           </div>
-        ) : (
-          <div style={{ display:"flex", gap:8, flexShrink:0, alignItems:"center" }}>
-            <button onClick={openAuth} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"none", padding:"7px 10px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
-              Log in
-            </button>
-            <div className="nav-cta" style={{ display:"flex" }}>
-              <button onClick={function(){ openModal("nav"); }} style={{ background:L.navy, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap", letterSpacing:"-0.01em" }}>
-                Start free
-              </button>
+          <div style={{ position:"relative", flexShrink:0 }} className="nav-desktop">
+            <select value={lang} onChange={function(e){ setLang(e.target.value); }} style={{ background:"transparent", border:"1px solid "+L.border, borderRadius:6, padding:"5px 22px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:12, color:L.muted, outline:"none", appearance:"none", WebkitAppearance:"none" }}>
+              {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
+                return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
+              })}
+            </select>
+            <div style={{ position:"absolute", right:5, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
+              <svg width="7" height="4" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.faint} strokeWidth="1.5" strokeLinecap="round"/></svg>
             </div>
           </div>
-        )}
-        <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
-          <select value={lang} onChange={function(e){ setLang(e.target.value); }} style={{ background:"transparent", border:"1px solid "+L.border, borderRadius:6, padding:"5px 22px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:12, color:L.muted, outline:"none", appearance:"none", WebkitAppearance:"none" }}>
-            {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
-              return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
-            })}
-          </select>
-          <div style={{ position:"absolute", right:5, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
-            <svg width="7" height="4" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.faint} strokeWidth="1.5" strokeLinecap="round"/></svg>
-          </div>
+          {/* Mobile Log in — only visible on mobile */}
+          {!user && (
+            <button onClick={openAuth} className="nav-burger" style={{ display:"none", background:"transparent", color:L.muted, border:"none", padding:"6px 8px", cursor:"pointer", fontFamily:fSans, fontSize:13, whiteSpace:"nowrap", flexShrink:0 }}>
+              Log in
+            </button>
+          )}
+          {!user && (
+            <button onClick={function(){ openModal("nav"); }} className="nav-burger" style={{ display:"none", background:L.navy, color:"#fff", border:"none", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, whiteSpace:"nowrap", flexShrink:0 }}>
+              Start free
+            </button>
+          )}
+          <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
+            <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
+            <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
+            <div style={{ width:16, height:1.5, background:L.ink, borderRadius:1 }} />
+          </button>
         </div>
-        <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
-          <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
-          <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
-          <div style={{ width:16, height:1.5, background:L.ink, borderRadius:1 }} />
-        </button>
       </div>
       {menuOpen && (
         <div style={{ borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white }}>
@@ -498,21 +522,25 @@ function Nav(props) {
               </button>
             );
           })}
-          <div style={{ height:1, background:L.border, margin:"8px 0" }} />
-          {user ? (
-            <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"11px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
-              Sign out
-            </button>
-          ) : (
+          {user && (
             <>
-              <button onClick={function(){ openAuth(); setMenuOpen(false); }} style={{ background:"transparent", color:L.ink, border:"1px solid "+L.border, padding:"11px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
-                Log in
-              </button>
-              <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.navy, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
-                Start free →
+              <div style={{ height:1, background:L.border, margin:"8px 0" }} />
+              <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, textAlign:"left" }}>
+                Sign out
               </button>
             </>
           )}
+          <div style={{ height:1, background:L.border, margin:"8px 0" }} />
+          <div style={{ display:"flex", gap:6, flexWrap:"wrap", padding:"4px 8px" }}>
+            {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
+              var active = lang === pair[0];
+              return (
+                <button key={pair[0]} onClick={function(){ setLang(pair[0]); setMenuOpen(false); }} style={{ background:active ? L.navy : "transparent", color:active ? "#fff" : L.muted, border:"1px solid "+(active ? L.navy : L.border), borderRadius:6, padding:"5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:active ? 600 : 400 }}>
+                  {pair[1]}
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
     </nav>
@@ -844,13 +872,11 @@ function FlowSection(props) {
           {steps.map(function(s, i) {
             var last = i === steps.length - 1;
             return (
-              <div key={i} style={{ display:"flex", gap:28, alignItems:"flex-start", paddingBottom: last ? 0 : 52, position:"relative" }}>
-                {/* Left — number + line */}
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:40 }}>
-                  <div style={{ width:40, height:40, borderRadius:10, background: i === 3 ? L.accent : L.navy, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    <span style={{ fontFamily:fMono, fontSize:11, fontWeight:600, color: i === 3 ? L.navy : "rgba(240,244,248,0.6)", letterSpacing:"0.04em" }}>{s.num}</span>
-                  </div>
-                  {!last && <div style={{ width:1, flex:1, marginTop:10, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
+              <div key={i} style={{ display:"flex", gap:24, alignItems:"flex-start", paddingBottom: last ? 0 : 56, position:"relative" }}>
+                {/* Left — large floating number + line */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:52 }}>
+                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, color: i === 3 ? L.accent : L.border, lineHeight:1, letterSpacing:"-0.04em", userSelect:"none" }}>{i + 1}</span>
+                  {!last && <div style={{ width:1, flex:1, marginTop:8, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
                 </div>
                 {/* Right — content */}
                 <div style={{ paddingTop:8 }}>
@@ -1059,14 +1085,16 @@ function EUComplianceSection(props) {
             VAT, reverse charge, XRechnung and SEPA handled quietly in the background — so you just invoice.
           </p>
         </div>
-        <div style={{ display:"flex", flexWrap:"wrap", gap:10, marginBottom:36 }}>
-          {chips.map(function(c) {
+        <div className="compliance-chips" style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:36 }}>
+          {chips.map(function(c, i) {
             return (
-              <div key={c.label} style={{ display:"flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"7px 14px 7px 10px" }}>
-                <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <Icon name={c.icon} size={11} color={L.navyMid} />
+              <div key={c.label} style={{ display:"flex", justifyContent: i % 2 === 0 ? "flex-start" : "flex-end" }}>
+                <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"9px 16px 9px 12px" }}>
+                  <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    <Icon name={c.icon} size={11} color={L.navyMid} />
+                  </div>
+                  <span style={{ fontFamily:fSans, fontSize:14, color:L.ink, fontWeight:400, whiteSpace:"nowrap" }}>{c.label}</span>
                 </div>
-                <span style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:400, whiteSpace:"nowrap" }}>{c.label}</span>
               </div>
             );
           })}
@@ -4195,7 +4223,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 80px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; align-items: center !important; justify-content: center !important; } .hero-pill { justify-content: flex-start !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } .compliance-chips { display: flex !important; flex-direction: column !important; align-items: flex-start !important; } } @media (min-width: 1024px) { .compliance-chips { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; gap: 10px !important; } .compliance-svg { display: none !important; } .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 80px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; align-items: center !important; justify-content: center !important; } .hero-pill { justify-content: flex-start !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
