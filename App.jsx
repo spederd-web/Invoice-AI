@@ -7,9 +7,9 @@ var L = {
   cream:      "#EEF1F5",
   sand:       "#E3E8EF",
   white:      "#FFFFFF",
-  accent:     "#22D4C7",
-  accentDark: "#17A99E",
-  accentGlow: "rgba(34,212,199,0.10)",
+  accent:     "#17A99E",
+  accentDark: "#0F7A72",
+  accentGlow: "rgba(23,169,158,0.10)",
   accentBlue: "#4B7BFF",
   navy:       "#081120",
   navyMid:    "#0E1F33",
@@ -541,88 +541,176 @@ function HeroSection(props) {
   var openModal = props.openModal;
   var lang = props.lang || "en";
   var [step, setStep] = useState(0);
+  var [pathProgress, setPathProgress] = useState(0);
+
   useEffect(function() {
-    var t = setInterval(function(){ setStep(function(s){ return (s + 1) % 4; }); }, 2200);
+    var prog = 0;
+    var drawing = setInterval(function() {
+      prog += 2;
+      setPathProgress(Math.min(prog, 100));
+      if (prog >= 100) clearInterval(drawing);
+    }, 16);
+    return function(){ clearInterval(drawing); };
+  }, []);
+
+  useEffect(function() {
+    var t = setInterval(function(){ setStep(function(s){ return (s + 1) % 4; }); }, 2400);
     return function(){ clearInterval(t); };
   }, []);
 
   var flowSteps = [
-    { icon:"proposal", label:"Proposal sent",      sub:"Brand Identity · Studio Verde", amt:null,    color:L.accent },
-    { icon:"overview", label:"Viewed 7 times",     sub:"Client still active · 3h ago",  amt:null,    color:L.gold },
-    { icon:"document", label:"Invoice created",    sub:"One click · EU-compliant",       amt:"€8,400", color:L.accentBlue },
-    { icon:"card",     label:"Payment received",   sub:"SEPA transfer confirmed",        amt:"€8,400", color:L.green },
+    { icon:"proposal", label:"Proposal sent",     sub:"Brand Identity · Studio Verde",  color:"#17A99E", y:52  },
+    { icon:"overview", label:"Viewed 7 times",    sub:"3 hours ago · still open",       color:"#F5C542", y:178 },
+    { icon:"document", label:"Invoice created",   sub:"One click · EU-compliant",       color:"#4B7BFF", y:304 },
+    { icon:"card",     label:"Payment received",  sub:"€8,400 · SEPA confirmed",        color:"#1A9E6B", y:430 },
   ];
+
+  var totalH = 500;
+  var nodeX = 36;
 
   return (
     <section style={{ background:L.navy, minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 24px 72px", overflow:"hidden", position:"relative" }}>
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
-        <div style={{ position:"absolute", top:"30%", left:"5%",  width:500, height:500, borderRadius:"50%", background:"rgba(34,212,199,0.03)", filter:"blur(100px)" }} />
-        <div style={{ position:"absolute", bottom:"15%", right:"8%", width:400, height:400, borderRadius:"50%", background:"rgba(75,123,255,0.04)", filter:"blur(80px)" }} />
+        <div style={{ position:"absolute", top:"25%", left:"3%",  width:600, height:600, borderRadius:"50%", background:"rgba(23,169,158,0.025)", filter:"blur(120px)" }} />
+        <div style={{ position:"absolute", bottom:"10%", right:"5%", width:400, height:400, borderRadius:"50%", background:"rgba(75,123,255,0.03)", filter:"blur(80px)" }} />
       </div>
 
       <div className="desktop-hero hero-layout" style={{ maxWidth:1100, margin:"0 auto", width:"100%", position:"relative", zIndex:1 }}>
 
         {/* Left — headline + CTA */}
         <div>
-          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:28 }}>
-            <span style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(34,212,199,0.08)", border:"1px solid rgba(34,212,199,0.18)", borderRadius:999, padding:"6px 16px 6px 12px" }}>
-              <span style={{ width:6, height:6, borderRadius:"50%", background:L.accent, display:"inline-block", flexShrink:0 }} />
-              <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>Built for European freelancers</span>
+          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:32 }}>
+            <span style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(23,169,158,0.08)", border:"1px solid rgba(23,169,158,0.18)", borderRadius:999, padding:"6px 16px 6px 12px" }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:"#17A99E", display:"inline-block", flexShrink:0 }} />
+              <span style={{ fontFamily:fMono, fontSize:11, color:"#17A99E", letterSpacing:"0.1em", textTransform:"uppercase" }}>Built for European freelancers</span>
             </span>
           </div>
-          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(44px,7vw,84px)", fontWeight:400, color:"#EEF2F7", margin:"0 0 24px", letterSpacing:"-0.03em", lineHeight:1.0, textAlign:"center" }}>
-            {lang==="de" ? <>Von Angebot<br/>zu Zahlung.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Erledigt.</span></> :
-             lang==="fr" ? <>De la proposition<br/>au paiement.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Géré.</span></> :
-             lang==="es" ? <>De la propuesta<br/>al cobro.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Listo.</span></> :
-             lang==="it" ? <>Dalla proposta<br/>al pagamento.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Fatto.</span></> :
-             lang==="hu" ? <>Az ajánlattól<br/>a kifizetésig.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Kész.</span></> :
-             <>From proposal<br/>to payment.<br/><span style={{ color:L.accent, fontStyle:"italic" }}>Handled.</span></>}
+          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(44px,7vw,84px)", fontWeight:400, color:"#EEF2F7", margin:"0 0 28px", letterSpacing:"-0.035em", lineHeight:0.98, textAlign:"center" }}>
+            {lang==="de" ? <>Von Angebot<br/>zu Zahlung.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Erledigt.</span></> :
+             lang==="fr" ? <>De la proposition<br/>au paiement.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Géré.</span></> :
+             lang==="es" ? <>De la propuesta<br/>al cobro.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Listo.</span></> :
+             lang==="it" ? <>Dalla proposta<br/>al pagamento.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Fatto.</span></> :
+             lang==="hu" ? <>Az ajánlattól<br/>a kifizetésig.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Kész.</span></> :
+             <>From proposal<br/>to payment.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Handled.</span></>}
           </h1>
-          <p className="d-body-lg hero-fine" style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.5)", lineHeight:1.7, maxWidth:380, margin:"0 auto 40px", fontWeight:300, textAlign:"center" }}>
+          <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.42)", lineHeight:1.75, maxWidth:360, margin:"0 auto 44px", fontWeight:300, textAlign:"center", letterSpacing:"0.01em" }}>
             {lang==="de" ? "Angebote, Rechnungen, Zahlungen und EU-Compliance in einem ruhigen Workflow." :
              lang==="fr" ? "Propositions, factures, paiements et conformité UE dans un flux simple." :
-             "Proposals, invoices, payments and EU compliance in one seamless workflow."}
+             "Proposals, invoices, payments and EU compliance — one seamless workflow."}
           </p>
-          <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:24 }}>
-            <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"14px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>
+          <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:28 }}>
+            <button onClick={function(){ openModal("hero"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"14px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>
               {lang==="de" ? "Kostenlos starten" : lang==="fr" ? "Commencer gratuitement" : "Start free"}
             </button>
-            <button onClick={function(){ setPage("Generator"); }} style={{ background:"rgba(255,255,255,0.06)", color:"rgba(238,242,247,0.7)", border:"1px solid rgba(255,255,255,0.1)", padding:"14px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, whiteSpace:"nowrap" }}>
+            <button onClick={function(){ setPage("Generator"); }} style={{ background:"rgba(255,255,255,0.05)", color:"rgba(238,242,247,0.6)", border:"1px solid rgba(255,255,255,0.09)", padding:"14px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, whiteSpace:"nowrap" }}>
               {lang==="de" ? "Demo ansehen" : lang==="fr" ? "Voir la démo" : "View demo"}
             </button>
           </div>
-          <p style={{ fontFamily:fMono, fontSize:11, color:"rgba(238,242,247,0.22)", letterSpacing:"0.08em", textAlign:"center" }}>
+          <p style={{ fontFamily:fMono, fontSize:10, color:"rgba(238,242,247,0.18)", letterSpacing:"0.09em", textAlign:"center" }}>
             {t(lang,"heroFine")}
           </p>
         </div>
 
-        {/* Right — connected flow composition */}
-        <div className="hero-cards" style={{ display:"none", flexDirection:"column", gap:0, position:"relative" }}>
-          {/* Vertical connector line */}
-          <div style={{ position:"absolute", left:27, top:40, bottom:40, width:1, background:"linear-gradient(to bottom, rgba(34,212,199,0.3), rgba(75,123,255,0.2), rgba(26,158,107,0.3))", zIndex:0 }} />
-          {flowSteps.map(function(fs, i) {
-            var active = step === i;
-            var past = step > i;
-            return (
-              <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:16, padding:"16px 0", position:"relative", zIndex:1, opacity: past ? 0.45 : 1, transition:"opacity 0.6s ease" }}>
-                {/* Icon node on the line */}
-                <div style={{ width:54, height:54, borderRadius:14, background: active ? fs.color+"22" : "rgba(255,255,255,0.04)", border:"1px solid "+(active ? fs.color+"44" : "rgba(255,255,255,0.07)"), display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all 0.5s ease" }}>
-                  <Icon name={fs.icon} size={20} color={active ? fs.color : "rgba(238,242,247,0.25)"} />
-                </div>
-                {/* Content */}
-                <div style={{ flex:1, paddingTop:8 }}>
-                  <div style={{ fontFamily:fSans, fontSize:15, fontWeight:active ? 500 : 400, color:active ? "rgba(238,242,247,0.95)" : "rgba(238,242,247,0.35)", marginBottom:3, transition:"all 0.5s ease" }}>{fs.label}</div>
-                  <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(238,242,247,0.22)", letterSpacing:"0.02em" }}>{fs.sub}</div>
-                </div>
-                {/* Amount badge */}
-                {fs.amt && active && (
-                  <div style={{ background:L.green+"22", border:"1px solid "+L.green+"33", borderRadius:7, padding:"4px 10px", flexShrink:0, marginTop:8 }}>
-                    <span style={{ fontFamily:fMono, fontSize:13, color:L.green, fontWeight:500 }}>{fs.amt}</span>
+        {/* Right — SVG animated flow composition */}
+        <div className="hero-cards" style={{ display:"none", alignItems:"center", justifyContent:"center", position:"relative" }}>
+          <div style={{ position:"relative", width:320, height:totalH }}>
+
+            {/* SVG path layer — draws from top to bottom */}
+            <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", overflow:"visible" }} viewBox={"0 0 320 "+totalH}>
+              {/* Base dim line */}
+              <line x1={nodeX} y1={flowSteps[0].y} x2={nodeX} y2={flowSteps[3].y}
+                stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+              {/* Animated drawing line */}
+              <line x1={nodeX} y1={flowSteps[0].y}
+                x2={nodeX}
+                y2={flowSteps[0].y + (flowSteps[3].y - flowSteps[0].y) * pathProgress / 100}
+                stroke="url(#lineGrad)" strokeWidth="1.5"
+                style={{ transition:"y2 0.08s linear" }} />
+              <defs>
+                <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stopColor="#17A99E" stopOpacity="0.8" />
+                  <stop offset="50%"  stopColor="#4B7BFF" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#1A9E6B" stopOpacity="0.7" />
+                </linearGradient>
+              </defs>
+              {/* Step connector dots on the path */}
+              {flowSteps.map(function(fs, i) {
+                var revealed = pathProgress >= (i / 3) * 100;
+                var active = step === i;
+                return (
+                  <g key={i}>
+                    {/* Outer glow ring when active */}
+                    {active && revealed && (
+                      <circle cx={nodeX} cy={fs.y} r="22"
+                        fill={fs.color} fillOpacity="0.06"
+                        stroke={fs.color} strokeOpacity="0.15" strokeWidth="1" />
+                    )}
+                    {/* Node circle */}
+                    <circle cx={nodeX} cy={fs.y} r={active ? 10 : 7}
+                      fill={revealed ? (active ? fs.color : "rgba(255,255,255,0.08)") : "rgba(255,255,255,0.03)"}
+                      stroke={revealed ? (active ? fs.color : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.04)"}
+                      strokeWidth="1"
+                      style={{ transition:"all 0.4s ease" }} />
+                    {/* Inner dot */}
+                    {revealed && !active && (
+                      <circle cx={nodeX} cy={fs.y} r="3"
+                        fill={fs.color} fillOpacity="0.5" />
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Step labels — positioned absolutely beside the nodes */}
+            {flowSteps.map(function(fs, i) {
+              var revealed = pathProgress >= (i / 3) * 100;
+              var active = step === i;
+              var past = step > i;
+              return (
+                <div key={i} style={{
+                  position:"absolute",
+                  left:nodeX + 28,
+                  top:fs.y - 22,
+                  right:0,
+                  opacity: revealed ? (past ? 0.3 : 1) : 0,
+                  transition:"opacity 0.5s ease",
+                }}>
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:8 }}>
+                    <div>
+                      <div style={{
+                        fontFamily:fSans,
+                        fontSize:14,
+                        fontWeight: active ? 500 : 400,
+                        color: active ? "rgba(238,242,247,0.95)" : "rgba(238,242,247,0.45)",
+                        marginBottom:3,
+                        letterSpacing:"-0.01em",
+                        transition:"all 0.4s ease",
+                      }}>{fs.label}</div>
+                      <div style={{ fontFamily:fMono, fontSize:10, color:"rgba(238,242,247,0.2)", letterSpacing:"0.03em" }}>{fs.sub}</div>
+                    </div>
+                    {active && i >= 2 && (
+                      <div style={{
+                        background: fs.color+"18",
+                        border:"1px solid "+fs.color+"30",
+                        borderRadius:6,
+                        padding:"3px 9px",
+                        flexShrink:0,
+                      }}>
+                        <span style={{ fontFamily:fMono, fontSize:12, color:fs.color, fontWeight:500 }}>€8,400</span>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
+
+            {/* Bottom label */}
+            <div style={{ position:"absolute", bottom:-36, left:0, right:0, display:"flex", justifyContent:"center" }}>
+              <span style={{ fontFamily:fMono, fontSize:10, color:"rgba(238,242,247,0.18)", letterSpacing:"0.1em", textTransform:"uppercase" }}>
+                EU · SEPA · XRechnung · GDPR
+              </span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -804,11 +892,11 @@ function WhyItWorksSection(props) {
       <div style={{ maxWidth:760, margin:"0 auto" }}>
         {statements.map(function(s, i) {
           return (
-            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 72 : 0 }}>
-              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(22px,3.5vw,38px)", fontWeight:400, color:L.ink, letterSpacing:"-0.025em", lineHeight:1.15, marginBottom:14 }}>
+            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 88 : 0 }}>
+              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:400, color:L.ink, letterSpacing:"-0.028em", lineHeight:1.18, marginBottom:18 }}>
                 {s.headline}
               </h3>
-              <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.7, maxWidth:520 }}>
+              <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.85, maxWidth:480, letterSpacing:"0.005em" }}>
                 {s.sub}
               </p>
             </div>
@@ -1065,43 +1153,44 @@ function PricingSection(props) {
     });
   }
   return (
-    <section style={{ background:embedded ? L.white : L.paper, padding:"80px 24px" }}>
-      <div style={{ maxWidth:900, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:44 }}>
-          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
+    <section style={{ background:embedded ? L.paper : L.white, padding:"100px 24px" }}>
+      <div style={{ maxWidth:960, margin:"0 auto" }}>
+        <div style={{ marginBottom:60 }}>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:16 }}>
             <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
             <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillPricing")||"Pricing"}</span>
           </div>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,42px)", fontWeight:400, color:L.ink, margin:"0 0 10px", letterSpacing:"-0.025em" }}>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(28px,4vw,48px)", fontWeight:400, color:L.ink, margin:"0 0 12px", letterSpacing:"-0.03em", lineHeight:1.1 }}>
             {t(lang,"pricingTitle")}
           </h2>
-          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
+          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.7 }}>{t(lang,"pricingSub")}</p>
         </div>
-        <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
+        <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:16, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:16, paddingLeft:2, paddingRight:2 }}>
           {PLANS.map(function(plan) {
             return (
-              <div key={plan.name} style={{ background:plan.hi ? L.navy : L.paper, border:plan.hi ? "1.5px solid rgba(34,212,199,0.25)" : "1px solid "+L.border, borderRadius:14, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 16px 48px rgba(8,17,32,0.25)" : "none" }}>
+              <div key={plan.name} style={{ background:plan.hi ? L.navy : "transparent", border:plan.hi ? "1px solid rgba(23,169,158,0.2)" : "1px solid "+L.border, borderRadius:16, padding:"32px 28px", flex:"0 0 300px", minWidth:300, position:"relative" }}>
                 {plan.badge && (
-                  <div style={{ position:"absolute", top:-12, left:"50%", transform:"translateX(-50%)", background:L.accent, color:L.navy, padding:"3px 14px", borderRadius:99, fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", whiteSpace:"nowrap", fontWeight:600 }}>
+                  <div style={{ position:"absolute", top:-11, left:28, background:L.accent, color:L.navy, padding:"3px 12px", borderRadius:99, fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", whiteSpace:"nowrap", fontWeight:600 }}>
                     {plan.badge}
                   </div>
                 )}
-                <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:plan.hi ? "rgba(240,244,248,0.4)" : L.muted, marginBottom:14 }}>{plan.name}</div>
-                <div style={{ display:"flex", alignItems:"baseline", gap:3, marginBottom:22 }}>
-                  <span style={{ fontFamily:fSerif, fontSize:42, fontWeight:400, color:plan.hi ? "#F0F4F8" : L.ink, lineHeight:1 }}>{"€"+plan.price}</span>
-                  <span style={{ fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(240,244,248,0.4)" : L.muted }}>/mo</span>
+                <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.12em", textTransform:"uppercase", color:plan.hi ? "rgba(240,244,248,0.35)" : L.faint, marginBottom:20 }}>{plan.name}</div>
+                <div style={{ display:"flex", alignItems:"baseline", gap:4, marginBottom:8 }}>
+                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, color:plan.hi ? "#F0F4F8" : L.ink, lineHeight:1, letterSpacing:"-0.03em" }}>{"€"+plan.price}</span>
+                  <span style={{ fontFamily:fSans, fontSize:13, color:plan.hi ? "rgba(240,244,248,0.3)" : L.faint }}>/mo</span>
                 </div>
-                <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:24 }}>
+                <div style={{ height:1, background:plan.hi ? "rgba(255,255,255,0.07)" : L.border, margin:"20px 0 20px" }} />
+                <div style={{ display:"flex", flexDirection:"column", gap:11, marginBottom:28 }}>
                   {plan.features.map(function(f) {
                     return (
-                      <div key={f} className="d-pricing-feat" style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:13, color:plan.hi ? "rgba(240,244,248,0.7)" : L.muted, lineHeight:1.4 }}>
-                        <Icon name="check" size={12} color={plan.hi ? L.accent : L.green} />
+                      <div key={f} style={{ display:"flex", gap:10, fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(240,244,248,0.6)" : L.muted, lineHeight:1.4, fontWeight:300 }}>
+                        <Icon name="check" size={13} color={plan.hi ? L.accent : L.green} style={{ flexShrink:0, marginTop:1 }} />
                         {f}
                       </div>
                     );
                   })}
                 </div>
-                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? L.accent : L.navy, color:plan.hi ? L.navy : "#fff", border:"none", padding:"12px 0", borderRadius:8, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em", opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
+                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? L.accent : L.navy, color:plan.hi ? L.navy : "#fff", border:"none", padding:"13px 0", borderRadius:9, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em", opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
                   {checkoutLoading === plan.name.toLowerCase() ? "Loading…" : t(lang,"pricingCta")}
                 </button>
               </div>
@@ -1549,7 +1638,7 @@ function InvoicePreviewPanel(props) {
         </div>
         {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:11, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) — EU Regulation 2016/679.</p>}
         {s.latePayment && (
-          <div style={{ background:"rgba(34,212,199,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
+          <div style={{ background:"rgba(23,169,158,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
             <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, margin:0, lineHeight:1.55 }}>
               Late payment: statutory interest at 8% above ECB base rate applies on overdue amounts per EU Directive 2011/7/EU.
             </p>
@@ -1815,7 +1904,7 @@ function InvoiceForm(props) {
             return null;
           })()}
         </div>
-        <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(34,212,199,0.25)" }}>
+        <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(23,169,158,0.25)" }}>
           Preview Invoice →
         </button>
       </div>
@@ -2044,7 +2133,7 @@ function ProposalForm(props) {
             </div>
           </div>
         </div>
-        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(34,212,199,0.25)" : "none" }}>
+        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(23,169,158,0.25)" : "none" }}>
           {loading ? "✦ Writing your proposal…" : "✦ Generate Proposal"}
         </button>
       </div>
@@ -2251,7 +2340,7 @@ function Dashboard(props) {
           {nav.map(function(item) {
             var active = section === item.id;
             return (
-              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(34,212,199,0.1)" : "transparent", color:active ? L.accent : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:active?500:400, marginBottom:2 }}>
+              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(23,169,158,0.1)" : "transparent", color:active ? L.accent : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:active?500:400, marginBottom:2 }}>
                 <Icon name={item.icon} size={14} color={active ? "#E8896A" : "rgba(250,247,242,0.4)"} />
                 {item.label}
               </button>
@@ -2469,7 +2558,7 @@ function DPayments() {
           var toast = sent[r.inv];
           return (
             <div key={r.inv} style={{ borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(34,212,199,0.04)" : "transparent" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(23,169,158,0.04)" : "transparent" }}>
                 <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, width:130, flexShrink:0 }}>{r.inv}</div>
                 <div style={{ flex:1 }}>
                   <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:15, color:L.ink }}>{r.client}</div>
@@ -2706,7 +2795,7 @@ function Footer(props) {
           })}
         </div>
         </div>
-        <div style={{ background:"rgba(34,212,199,0.07)", border:"1px solid rgba(34,212,199,0.15)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
+        <div style={{ background:"rgba(23,169,158,0.07)", border:"1px solid rgba(23,169,158,0.15)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
           <div>
             <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:3 }}>{t(lang,"footerWaitlist")}</div>
             <div style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.35)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
@@ -2820,7 +2909,7 @@ function PageAbout(props) {
       <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"24px 28px", textAlign:"center" }}>
         <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:700, color:L.ink, marginBottom:8 }}>Try InvoiceAI free for 14 days</h3>
         <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>No credit card. No setup wizards.</p>
-        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)" }}>Get early access →</button>
+        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)" }}>Get early access →</button>
       </div>
     </SubLayout>
   );
@@ -3549,7 +3638,7 @@ function ClientPortal(props) {
                   <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
                     Please review the invoice above and approve it. Once approved, you can pay via SEPA transfer or card.
                   </p>
-                  <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)", marginRight:10 }}>
+                  <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)", marginRight:10 }}>
                     ✓ Approve Invoice
                   </button>
                   <button style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"13px 20px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
@@ -3570,7 +3659,7 @@ function ClientPortal(props) {
                       );
                     })}
                   </div>
-                  <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)" }}>
+                  <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)" }}>
                     Pay €5,400 →
                   </button>
                 </div>
@@ -3743,7 +3832,7 @@ function SupportBot() {
           </div>
         </div>
       )}
-      <button onClick={function(){ setOpen(function(o){ return !o; }); }} className="bot-trigger" style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(34,212,199,0.2)", transition:"background 0.15s" }}>
+      <button onClick={function(){ setOpen(function(o){ return !o; }); }} className="bot-trigger" style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(23,169,158,0.2)", transition:"background 0.15s" }}>
         {open
           ? <Icon name="x" size={18} color="#fff" />
           : <Icon name="bolt" size={20} color="#fff" />
@@ -3880,7 +3969,7 @@ function AuthModal(props) {
 
             {error && <p style={{ fontFamily:fSans, fontSize:14, color:"#C0392B", marginBottom:10 }}>{error}</p>}
 
-            <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(34,212,199,0.2)" }}>
+            <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(23,169,158,0.2)" }}>
               {loading ? "Loading…" : mode==="signup" ? "Create account →" : mode==="magic" ? "Send magic link →" : "Sign in →"}
             </button>
 
@@ -3976,7 +4065,7 @@ function SignupModal(props) {
                 </select>
               </div>
               {error && <p style={{ fontFamily:fSans, fontSize:14, color:L.accent, margin:0 }}>{error}</p>}
-              <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(34,212,199,0.2)" }}>
+              <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(23,169,158,0.2)" }}>
 {loading ? t(lang,"modalJoining") : t(lang,"modalCta")}
               </button>
             </div>
@@ -4106,7 +4195,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 64px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; } .hero-pill { justify-content: flex-start !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 80px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; align-items: center !important; justify-content: center !important; } .hero-pill { justify-content: flex-start !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
