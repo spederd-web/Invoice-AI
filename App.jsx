@@ -2,31 +2,36 @@ import { useState, useEffect, useRef } from "react";
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 var L = {
-  ink:        "#1A1F2E",
-  paper:      "#F8F9FC",
-  cream:      "#EEF1F8",
-  sand:       "#E4E8F2",
+  ink:        "#0A1628",
+  paper:      "#F7F8FA",
+  cream:      "#EEF1F5",
+  sand:       "#E3E8EF",
   white:      "#FFFFFF",
-  accent:     "#3B5BDB",
-  accentLt:   "#748FFC",
-  accentGlow: "rgba(59,91,219,0.08)",
-  gold:       "#9A7820",
-  goldGlow:   "rgba(154,120,32,0.1)",
-  muted:      "#6B7280",
-  faint:      "#9CA3AF",
-  border:     "#E2E5EF",
-  borderLt:   "#EEF0F6",
-  green:      "#2A7A54",
-  greenGlow:  "rgba(42,122,84,0.08)",
-  blue:       "#3B5BDB",
-  blueGlow:   "rgba(59,91,219,0.08)",
+  accent:     "#22D4C7",
+  accentDark: "#17A99E",
+  accentGlow: "rgba(34,212,199,0.10)",
+  accentBlue: "#4B7BFF",
+  navy:       "#081120",
+  navyMid:    "#0E1F33",
+  navySlate:  "#182B3E",
+  gold:       "#F5C542",
+  goldGlow:   "rgba(245,197,66,0.12)",
+  muted:      "#5A6478",
+  faint:      "#8A95A8",
+  border:     "#DDE3EA",
+  borderLt:   "#EEF1F5",
+  green:      "#1A9E6B",
+  greenGlow:  "rgba(26,158,107,0.09)",
+  blue:       "#4B7BFF",
+  blueGlow:   "rgba(75,123,255,0.09)",
+  red:        "#E5534B",
 };
 
-var fSans  = "'Inter',sans-serif";
+var fSans  = "'DM Sans',sans-serif";
 var fMono  = "'DM Mono',monospace";
-var fSerif = "'Playfair Display',serif";
+var fSerif = "'DM Serif Display',serif";
 
-var FONTS = "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');";
+var FONTS = "@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');";
 
 // ── Translations ──────────────────────────────────────────────────────────────
 var TR = {
@@ -279,18 +284,17 @@ function t(lang, key) {
 // ── Logo Mark ─────────────────────────────────────────────────────────────────
 function LogoMark(props) {
   var size = props.size || 32;
-  var bg = props.bg || L.accent;
-  var fg = props.fg || "#fff";
+  var bg = props.bg || L.navy;
+  var fg = props.fg || L.accent;
   var r = Math.round(size * 0.22);
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink:0 }}>
       <rect width="48" height="48" rx={r} fill={bg} />
-      <rect x="11" y="10" width="20" height="26" rx="2.5" fill="none" stroke={fg} strokeWidth="2" opacity="0.9"/>
-      <line x1="15" y1="18" x2="27" y2="18" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
-      <line x1="15" y1="22" x2="27" y2="22" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
-      <line x1="15" y1="26" x2="22" y2="26" stroke={fg} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
-      <circle cx="34" cy="15" r="7" fill={fg} opacity="0.15"/>
-      <path d="M34 10 L35.3 13.7 L39 15 L35.3 16.3 L34 20 L32.7 16.3 L29 15 L32.7 13.7 Z" fill={fg}/>
+      <rect x="11" y="10" width="20" height="26" rx="2.5" fill="none" stroke={fg} strokeWidth="1.8" opacity="0.8"/>
+      <line x1="15" y1="18" x2="27" y2="18" stroke={fg} strokeWidth="1.4" strokeLinecap="round" opacity="0.5"/>
+      <line x1="15" y1="22" x2="27" y2="22" stroke={fg} strokeWidth="1.4" strokeLinecap="round" opacity="0.5"/>
+      <line x1="15" y1="26" x2="22" y2="26" stroke={fg} strokeWidth="1.4" strokeLinecap="round" opacity="0.5"/>
+      <path d="M34 10 L35.3 13.7 L39 15 L35.3 16.3 L34 20 L32.7 16.3 L29 15 L32.7 13.7 Z" fill={fg} opacity="0.9"/>
     </svg>
   );
 }
@@ -426,21 +430,19 @@ function Nav(props) {
   var setLang = props.setLang;
   var [menuOpen, setMenuOpen] = useState(false);
   return (
-    <nav style={{ position:"sticky", top:0, zIndex:100, background:L.white, borderBottom:"1px solid "+L.border, flexShrink:0 }}>
-      <div style={{ height:56, display:"flex", alignItems:"center", padding:"0 20px", gap:12 }}>
-        <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer", flexShrink:0 }} onClick={function(){ setPage("Home"); setMenuOpen(false); }}>
-          <LogoMark size={32} />
-          <div>
-            <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:17, color:L.ink, lineHeight:1.1, letterSpacing:"-0.02em" }}>InvoiceAI</div>
-            <div style={{ fontFamily:fMono, fontSize:9, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
-          </div>
+    <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(247,248,250,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", borderBottom:"1px solid "+L.border, flexShrink:0 }}>
+      <div style={{ height:58, display:"flex", alignItems:"center", padding:"0 24px", gap:8, maxWidth:1200, margin:"0 auto", width:"100%" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer", flexShrink:0 }} onClick={function(){ setPage("Home"); setMenuOpen(false); }}>
+          <LogoMark size={30} />
+          <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:18, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
         </div>
         <div style={{ flex:1 }} />
-        <div className="nav-desktop" style={{ display:"flex", gap:2 }}>
+        <div className="nav-desktop" style={{ display:"flex", gap:1, alignItems:"center" }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
+            var active = page === pg;
             return (
-              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400 }}>
+              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:"transparent", color:active ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:active ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
                 {pgLabel}
               </button>
             );
@@ -448,69 +450,66 @@ function Nav(props) {
         </div>
         {user ? (
           <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
-            <button onClick={function(){ props.onSignOut(); }} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
+            <button onClick={function(){ props.onSignOut(); }} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:13, flexShrink:0 }}>
               Sign out
             </button>
-            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"5px 12px 5px 6px", cursor:"pointer", flexShrink:0, whiteSpace:"nowrap" }}>
-              <div style={{ width:24, height:24, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#fff", fontWeight:600, flexShrink:0 }}>
+            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.navy, border:"none", borderRadius:8, padding:"6px 14px 6px 8px", cursor:"pointer", flexShrink:0, whiteSpace:"nowrap" }}>
+              <div style={{ width:22, height:22, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:11, color:L.navy, fontWeight:700, flexShrink:0 }}>
                 {user.email ? user.email[0].toUpperCase() : "U"}
               </div>
-              <span style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.accent }}>Dashboard</span>
+              <span style={{ fontFamily:fSans, fontSize:13, fontWeight:500, color:"#fff" }}>Dashboard</span>
             </button>
           </div>
         ) : (
-          <div style={{ display:"flex", gap:7, flexShrink:0, alignItems:"center" }}>
-            <button onClick={openAuth} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
+          <div style={{ display:"flex", gap:8, flexShrink:0, alignItems:"center" }}>
+            <button onClick={openAuth} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"none", padding:"7px 10px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
               Log in
             </button>
             <div className="nav-cta" style={{ display:"flex" }}>
-              <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)", whiteSpace:"nowrap" }}>
-                {t(lang,"navStart")}
+              <button onClick={function(){ openModal("nav"); }} style={{ background:L.navy, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap", letterSpacing:"-0.01em" }}>
+                Start free
               </button>
             </div>
           </div>
         )}
         <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
-          <select
-            value={lang}
-            onChange={function(e){ setLang(e.target.value); }}
-            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
-          >
+          <select value={lang} onChange={function(e){ setLang(e.target.value); }} style={{ background:"transparent", border:"1px solid "+L.border, borderRadius:6, padding:"5px 22px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:12, color:L.muted, outline:"none", appearance:"none", WebkitAppearance:"none" }}>
             {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
             })}
           </select>
-          <div style={{ position:"absolute", right:6, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
-            <svg width="8" height="5" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.muted} strokeWidth="1.5" strokeLinecap="round"/></svg>
+          <div style={{ position:"absolute", right:5, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>
+            <svg width="7" height="4" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={L.faint} strokeWidth="1.5" strokeLinecap="round"/></svg>
           </div>
         </div>
         <button onClick={function(){ setMenuOpen(function(o){ return !o; }); }} className="nav-burger" style={{ display:"none", background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"6px 8px", cursor:"pointer", flexShrink:0 }}>
-          <div style={{ width:18, height:2, background:L.ink, marginBottom:4, borderRadius:1 }} />
-          <div style={{ width:18, height:2, background:L.ink, marginBottom:4, borderRadius:1 }} />
-          <div style={{ width:18, height:2, background:L.ink, borderRadius:1 }} />
+          <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
+          <div style={{ width:16, height:1.5, background:L.ink, marginBottom:4, borderRadius:1 }} />
+          <div style={{ width:16, height:1.5, background:L.ink, borderRadius:1 }} />
         </button>
       </div>
       {menuOpen && (
-        <div style={{ borderTop:"1px solid "+L.border, padding:"12px 16px 16px", display:"flex", flexDirection:"column", gap:4, background:L.white }}>
+        <div style={{ borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
             return (
-              <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.ink, border:"none", padding:"10px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
+              <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:"transparent", color:page===pg ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
                 {pgLabel}
               </button>
             );
           })}
+          <div style={{ height:1, background:L.border, margin:"8px 0" }} />
           {user ? (
-            <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, marginTop:4 }}>
+            <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"11px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
               Sign out
             </button>
           ) : (
             <>
-              <button onClick={function(){ openAuth(); setMenuOpen(false); }} style={{ background:"transparent", color:L.ink, border:"1px solid "+L.border, padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, marginTop:4 }}>
+              <button onClick={function(){ openAuth(); setMenuOpen(false); }} style={{ background:"transparent", color:L.ink, border:"1px solid "+L.border, padding:"11px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
                 Log in
               </button>
-              <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
-                {t(lang,"navStartArrow")}
+              <button onClick={function(){ openModal("nav-mobile"); setMenuOpen(false); }} style={{ background:L.navy, color:"#fff", border:"none", padding:"12px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, marginTop:4 }}>
+                Start free →
               </button>
             </>
           )}
@@ -526,7 +525,7 @@ function Landing(props) {
   var openModal = props.openModal;
   var lang = props.lang || "en";
   return (
-    <div style={{ background:L.paper }}>
+    <div style={{ background:L.white }}>
       <HeroSection setPage={setPage} openModal={openModal} lang={lang} />
       <FeaturesSection lang={lang} />
       <HowItWorksSection lang={lang} setPage={setPage} openModal={openModal} />
@@ -541,60 +540,75 @@ function HeroSection(props) {
   var setPage = props.setPage;
   var openModal = props.openModal;
   var lang = props.lang || "en";
-  var [count, setCount] = useState(0);
+  var [cardVisible, setCardVisible] = useState([false,false,false,false]);
   useEffect(function() {
-    var target = 10247;
-    var step = Math.ceil(target / 60);
-    var t = setInterval(function() {
-      setCount(function(c) {
-        if (c + step >= target) { clearInterval(t); return target; }
-        return c + step;
-      });
-    }, 16);
-    return function() { clearInterval(t); };
+    var delays = [200, 500, 900, 1300];
+    var timers = delays.map(function(d, i) {
+      return setTimeout(function(){ setCardVisible(function(v){ var n = v.slice(); n[i] = true; return n; }); }, d);
+    });
+    return function(){ timers.forEach(clearTimeout); };
   }, []);
+
+  var cards = [
+    { icon:"proposal", label:"Proposal sent", sub:"Brand Identity · Studio Verde", color:L.accent, dot:"#22D4C7" },
+    { icon:"overview", label:"Viewed 7 times", sub:"2 hours ago · still open", color:L.gold,  dot:"#F5C542" },
+    { icon:"document", label:"Invoice created", sub:"€8,400 · DE-2026-0021", color:L.accentBlue, dot:"#4B7BFF" },
+    { icon:"card",     label:"Payment received", sub:"€8,400 · Maison Fontaine", color:L.green, dot:"#1A9E6B" },
+  ];
+
   return (
-    <section style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"96px 24px 80px", textAlign:"center" }}>
-      <div className="desktop-hero" style={{ maxWidth:720, margin:"0 auto" }}>
-        <Pill>Built for European Freelancers · 1,400+ professionals</Pill>
-        <h1 style={{ fontFamily:fSerif, fontSize:"clamp(36px,6vw,68px)", fontWeight:900, color:L.ink, margin:"20px 0 16px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
-          {t(lang,"heroTitle1")}<br />
-          <span style={{ color:L.accent }}>{t(lang,"heroTitle2")}</span>
-        </h1>
-        <p className="d-body-lg" style={{ fontFamily:fSans, fontSize:17, color:L.muted, lineHeight:1.65, maxWidth:500, margin:"0 auto 36px", fontWeight:300 }}>
-{t(lang,"heroSub")}
-        </p>
-        <div className="hero-btns" style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", marginBottom:24 }}>
-          <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"14px 32px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 8px 28px rgba(200,80,42,0.3)" }}>
-{t(lang,"heroCta")}
-          </button>
-          <button onClick={function(){ setPage("Pricing"); }} style={{ background:"transparent", color:L.ink, border:"1.5px solid "+L.border, padding:"14px 24px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
-{t(lang,"heroSecondaryBtn") || t(lang,"heroSecondary")}
-          </button>
+    <section style={{ background:L.navy, padding:"88px 24px 80px", overflow:"hidden", position:"relative" }}>
+      <div style={{ position:"absolute", top:0, left:0, right:0, bottom:0, overflow:"hidden", pointerEvents:"none" }}>
+        <div style={{ position:"absolute", top:"20%", left:"10%", width:400, height:400, borderRadius:"50%", background:"rgba(34,212,199,0.04)", filter:"blur(80px)" }} />
+        <div style={{ position:"absolute", bottom:"10%", right:"5%", width:300, height:300, borderRadius:"50%", background:"rgba(75,123,255,0.05)", filter:"blur(60px)" }} />
+      </div>
+      <div className="desktop-hero hero-layout" style={{ maxWidth:1100, margin:"0 auto", position:"relative", zIndex:1 }}>
+        <div style={{ textAlign:"center" }}>
+          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:20 }}>
+            <span style={{ display:"inline-flex", alignItems:"center", gap:7, background:"rgba(34,212,199,0.1)", border:"1px solid rgba(34,212,199,0.2)", borderRadius:999, padding:"5px 14px 5px 10px" }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:L.accent, display:"inline-block" }} />
+              <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>Built for European freelancers</span>
+            </span>
+          </div>
+          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(40px,6vw,72px)", fontWeight:400, color:"#F0F4F8", margin:"0 0 20px", letterSpacing:"-0.03em", lineHeight:1.05 }}>
+            {t(lang,"heroTitle1")}<br />
+            <span style={{ color:L.accent, fontStyle:"italic" }}>{t(lang,"heroTitle2")}</span>
+          </h1>
+          <p className="d-body-lg" style={{ fontFamily:fSans, fontSize:16, color:"rgba(240,244,248,0.6)", lineHeight:1.7, maxWidth:440, margin:"0 auto 36px", fontWeight:300 }}>
+            {t(lang,"heroSub")}
+          </p>
+          <div className="hero-btns" style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", marginBottom:20 }}>
+            <button onClick={function(){ openModal("hero"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em" }}>
+              {t(lang,"heroCta")}
+            </button>
+            <button onClick={function(){ setPage("Generator"); }} style={{ background:"rgba(255,255,255,0.07)", color:"rgba(240,244,248,0.8)", border:"1px solid rgba(255,255,255,0.12)", padding:"13px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
+              View demo
+            </button>
+          </div>
+          <p className="hero-fine" style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.3)", letterSpacing:"0.08em", textAlign:"center" }}>
+            {t(lang,"heroFine")}
+          </p>
         </div>
-        <p style={{ fontFamily:fMono, fontSize:13, color:L.faint, letterSpacing:"0.06em" }}>
-{t(lang,"heroFine")}
-        </p>
-        <div className="desktop-feat-cards" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10, marginTop:28, maxWidth:520, margin:"28px auto 0" }}>
-          {[
-            { icon:"proposal", label: lang==="de" ? "Angebot in Sekunden" : lang==="fr" ? "Proposition en secondes" : lang==="it" ? "Proposta in secondi" : lang==="es" ? "Propuesta en segundos" : lang==="hu" ? "Ajánlat másodpercek alatt" : "Proposal in seconds" },
-            { icon:"reverse",  label: lang==="de" ? "EU-Steuer automatisch" : lang==="fr" ? "TVA UE automatique" : lang==="it" ? "IVA UE automatica" : lang==="es" ? "IVA UE automático" : lang==="hu" ? "EU-ÁFA automatikusan" : "EU VAT automatic" },
-            { icon:"card",     label: lang==="de" ? "Schneller bezahlt werden" : lang==="fr" ? "Paiements plus rapides" : lang==="it" ? "Pagamenti più veloci" : lang==="es" ? "Cobra más rápido" : lang==="hu" ? "Gyorsabb kifizetés" : "Get paid faster" },
-          ].map(function(f) {
+        <div className="hero-cards" style={{ display:"none", flexDirection:"column", gap:10, position:"relative" }}>
+          {cards.map(function(c, i) {
             return (
-              <div key={f.label} style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"12px 10px", display:"flex", flexDirection:"column", alignItems:"center", gap:7 }}>
-                <div style={{ width:32, height:32, borderRadius:8, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <Icon name={f.icon} size={15} color={L.accent} />
+              <div key={i} style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.09)", borderRadius:12, padding:"14px 18px", display:"flex", alignItems:"center", gap:14, backdropFilter:"blur(8px)", opacity:cardVisible[i] ? 1 : 0, transform:cardVisible[i] ? "translateY(0)" : "translateY(10px)", transition:"opacity 0.5s ease, transform 0.5s ease" }}>
+                <div style={{ width:36, height:36, borderRadius:9, background:c.color+"18", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={c.icon} size={16} color={c.color} />
                 </div>
-                <span style={{ fontFamily:fSans, fontSize:12, fontWeight:500, color:L.ink, textAlign:"center", lineHeight:1.35 }}>{f.label}</span>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:2 }}>{c.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.35)", letterSpacing:"0.02em" }}>{c.sub}</div>
+                </div>
+                <div style={{ width:7, height:7, borderRadius:"50%", background:c.dot, flexShrink:0 }} />
               </div>
             );
           })}
-        </div>
-        <div style={{ marginTop:28, display:"inline-flex", alignItems:"center", gap:10, background:L.cream, border:"1px solid "+L.border, borderRadius:99, padding:"8px 20px 8px 16px" }}>
-          <div style={{ width:8, height:8, borderRadius:"50%", background:L.green, flexShrink:0 }} />
-          <span style={{ fontFamily:fSerif, fontSize:18, color:L.gold, fontWeight:700 }}>{"€"+count.toLocaleString("de-DE")}</span>
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em", textTransform:"uppercase" }}>{t(lang,"heroCounter")}</span>
+          <div style={{ display:"flex", alignItems:"center", gap:8, padding:"10px 18px" }}>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
+            <span style={{ fontFamily:fMono, fontSize:10, color:"rgba(240,244,248,0.25)", letterSpacing:"0.08em" }}>EU · SEPA · GDPR · XRechnung</span>
+            <div style={{ flex:1, height:1, background:"rgba(255,255,255,0.06)" }} />
+          </div>
         </div>
       </div>
     </section>
@@ -655,43 +669,46 @@ function HowItWorksSection(props) {
   var openModal = props.openModal;
   var steps = HOW_STEPS[lang] || HOW_STEPS.en;
   return (
-    <section style={{ background:L.paper, borderTop:"1px solid "+L.border, padding:"80px 24px" }}>
-      <div className="desktop-section" style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:56 }}>
-          <Pill color={L.accent}>How it works</Pill>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
+    <section style={{ background:L.navy, padding:"88px 24px" }}>
+      <div className="desktop-section" style={{ maxWidth:1060, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:60 }}>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:16 }}>
+            <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.12em", textTransform:"uppercase" }}>How it flows</span>
+          </div>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:400, color:"#F0F4F8", margin:"0 0 12px", letterSpacing:"-0.025em", lineHeight:1.1, fontStyle:"italic" }}>
             {lang==="de" ? "Von der Idee zur Zahlung" : lang==="fr" ? "De l'idée au paiement" : lang==="es" ? "De la idea al cobro" : lang==="it" ? "Dall'idea al pagamento" : lang==="hu" ? "Az ötlettől a kifizetésig" : "From idea to payment"}
           </h2>
-          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:440, margin:"0 auto" }}>
-            {lang==="de" ? "Vier Schritte. Ein Tool. Kein Wechsel zwischen Apps." : lang==="fr" ? "Quatre étapes. Un outil. Aucun changement d'application." : lang==="es" ? "Cuatro pasos. Una herramienta. Sin cambiar de app." : lang==="it" ? "Quattro passi. Un solo strumento. Nessun cambio di app." : lang==="hu" ? "Négy lépés. Egy eszköz. Nincs váltogatás az appok között." : "Four steps. One tool. No switching between apps."}
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:14, color:"rgba(240,244,248,0.45)", fontWeight:300, maxWidth:400, margin:"0 auto" }}>
+            {lang==="de" ? "Vier Schritte. Ein Tool. Kein Wechsel zwischen Apps." : lang==="fr" ? "Quatre étapes. Un outil." : lang==="es" ? "Cuatro pasos. Una herramienta." : lang==="it" ? "Quattro passi. Un solo strumento." : lang==="hu" ? "Négy lépés. Egy eszköz." : "Four steps. One tool. No switching."}
           </p>
         </div>
-        <div style={{ position:"relative" }}>
-          <div className="grid2" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
-            {steps.map(function(step, i) {
-              return (
-                <div key={step.num} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, padding:"28px 28px 24px", position:"relative", overflow:"hidden" }}>
-                  <div style={{ position:"absolute", top:20, right:24, fontFamily:fMono, fontSize:48, fontWeight:700, color:L.border, lineHeight:1, userSelect:"none" }}>{step.num}</div>
-                  <div style={{ width:44, height:44, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:16 }}>
-                    <Icon name={step.icon} size={20} color={L.accent} />
+        <div className="grid2" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+          {steps.map(function(step, i) {
+            return (
+              <div key={step.num} style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", borderRadius:14, padding:"28px 26px", position:"relative", overflow:"hidden" }}>
+                <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:18 }}>
+                  <div style={{ width:40, height:40, borderRadius:10, background:L.accent+"1A", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    <Icon name={step.icon} size={18} color={L.accent} />
                   </div>
-                  <h3 className="d-card-title" style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:L.ink, marginBottom:8, letterSpacing:"-0.01em" }}>{step.title}</h3>
-                  <p className="d-card-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300 }}>{step.desc}</p>
-                  {i === 2 && (
-                    <div style={{ marginTop:14, display:"inline-flex", alignItems:"center", gap:6, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:6, padding:"4px 10px" }}>
-                      <Icon name="check" size={11} color={L.accent} />
-                      <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.05em" }}>
-                        {lang==="de" ? "Kein doppeltes Eingeben" : lang==="fr" ? "Aucune double saisie" : lang==="es" ? "Sin duplicar datos" : lang==="it" ? "Nessuna duplicazione" : lang==="hu" ? "Nincs kétszeres bevitel" : "No re-entering data"}
-                      </span>
-                    </div>
-                  )}
+                  <span style={{ fontFamily:fMono, fontSize:32, fontWeight:500, color:"rgba(255,255,255,0.06)", lineHeight:1 }}>{step.num}</span>
                 </div>
-              );
-            })}
-          </div>
+                <h3 style={{ fontFamily:fSans, fontSize:16, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:8, letterSpacing:"-0.01em" }}>{step.title}</h3>
+                <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.4)", lineHeight:1.65, margin:0, fontWeight:300 }}>{step.desc}</p>
+                {i === 2 && (
+                  <div style={{ marginTop:14, display:"inline-flex", alignItems:"center", gap:5, background:L.accent+"18", borderRadius:5, padding:"3px 9px" }}>
+                    <Icon name="check" size={10} color={L.accent} />
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.04em" }}>
+                      {lang==="de" ? "Kein doppeltes Eingeben" : "No re-entering data"}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-        <div style={{ textAlign:"center", marginTop:40 }}>
-          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 6px 20px rgba(59,91,219,0.25)" }}>
+        <div style={{ textAlign:"center", marginTop:44 }}>
+          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 30px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : lang==="es" ? "Probarlo ahora →" : lang==="it" ? "Provalo adesso →" : lang==="hu" ? "Próbáld ki most →" : "Try it now →"}
           </button>
         </div>
@@ -701,28 +718,31 @@ function HowItWorksSection(props) {
 }
 
 function FeaturesSection(props) {
-  var lang = props.lang || "en"; // lang already passed
+  var lang = props.lang || "en";
   return (
-    <section style={{ padding:"72px 24px", background:L.paper }}>
-      <div className="desktop-section" style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:48 }}>
-          <Pill color={L.gold}>{t(lang,"pillFeatures")||"Features"}</Pill>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-{t(lang,"featTitle")}
+    <section style={{ padding:"80px 24px", background:L.white }}>
+      <div className="desktop-section" style={{ maxWidth:1060, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:52 }}>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:16 }}>
+            <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillFeatures")||"Features"}</span>
+          </div>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,42px)", fontWeight:400, color:L.ink, margin:"0 0 12px", letterSpacing:"-0.025em", lineHeight:1.15 }}>
+            {t(lang,"featTitle")}
           </h2>
-          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:440, margin:"0 auto" }}>
             {t(lang,"featSub")}
           </p>
         </div>
-        <div className="grid3" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16 }}>
+        <div className="grid3" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14 }}>
           {FEATURES.map(function(f) {
             return (
-              <div key={f.title} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:14, padding:"24px 22px" }}>
-                <div style={{ width:36, height:36, background:L.accentGlow, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:14 }}>
-                  <Icon name={f.icon} size={18} color={L.accent} />
+              <div key={f.title} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:12, padding:"24px 22px" }}>
+                <div style={{ width:34, height:34, background:L.navy+"0D", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:14 }}>
+                  <Icon name={f.icon} size={16} color={L.navyMid} />
                 </div>
-                <h3 className="d-card-title" style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, marginBottom:8 }}>{f.title}</h3>
-                <p className="d-card-desc" style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
+                <h3 className="d-card-title" style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink, marginBottom:7, letterSpacing:"-0.01em" }}>{f.title}</h3>
+                <p className="d-card-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
               </div>
             );
           })}
@@ -817,66 +837,55 @@ var EU_FEATURES = [
 function EUComplianceSection(props) {
   var lang = props.lang || "en";
   var setPage = props.setPage;
-  var highlights = [
-    {
-      icon:"reverse",
-      title:"Reverse charge — automatic",
-      badge:"Art. 44 EU VAT Dir.",
-      desc:"Invoicing a VAT-registered business in another EU country? InvoiceAI detects it, sets VAT to 0%, and adds the required legal text. No manual configuration.",
-    },
-    {
-      icon:"bank",
-      title:"SEPA & IBAN validation",
-      badge:"ISO 20022",
-      desc:"Every invoice includes a validated SEPA bank transfer block. IBAN checked with mod-97, BIC format verified. Payment references included for clean reconciliation.",
-    },
-    {
-      icon:"hash",
-      title:"Sequential numbering",
-      badge:"Art. 226 EU VAT Dir.",
-      desc:"EU law requires unbroken invoice sequences. InvoiceAI manages numbering automatically — no gaps, no duplicates, separate sequences for credit notes.",
-    },
+  var chips = [
+    { icon:"reverse", label:"Reverse charge automatic" },
+    { icon:"document", label:"XRechnung & Factur-X ready" },
+    { icon:"hash",    label:"Sequential numbering" },
+    { icon:"shield",  label:"VIES VAT validation" },
+    { icon:"eu",      label:"GDPR notice included" },
+    { icon:"bank",    label:"SEPA payment block" },
+    { icon:"archive", label:"10-year archive" },
+    { icon:"clock",   label:"Late payment directive" },
   ];
   return (
-    <section style={{ background:L.white, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"72px 24px" }}>
-      <div style={{ maxWidth:900, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:40 }}>
-          <Pill color={L.blue}>{t(lang,"pillCompliance")||"EU-Native Compliance"}</Pill>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-            {t(lang,"euTitle")}
-          </h2>
-          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:460, margin:"0 auto" }}>
-            {t(lang,"euSub")}
+    <section style={{ background:L.paper, padding:"80px 24px" }}>
+      <div style={{ maxWidth:960, margin:"0 auto" }}>
+        <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:48, flexWrap:"wrap", gap:20 }}>
+          <div>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
+              <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+              <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillCompliance")||"Compliance"}</span>
+            </div>
+            <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:400, color:L.ink, letterSpacing:"-0.025em", lineHeight:1.1, maxWidth:480 }}>
+              {t(lang,"euTitle")}
+            </h2>
+          </div>
+          <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, maxWidth:320, lineHeight:1.65 }}>
+            VAT, reverse charge, XRechnung and SEPA handled quietly in the background — so you just invoice.
           </p>
         </div>
-        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr", gap:14, marginBottom:28 }}>
-          {highlights.map(function(f) {
+        <div style={{ display:"flex", flexWrap:"wrap", gap:10, marginBottom:36 }}>
+          {chips.map(function(c) {
             return (
-              <div key={f.title} style={{ background:L.paper, border:"1.5px solid "+L.border, borderRadius:12, padding:"22px 24px", display:"flex", alignItems:"flex-start", gap:16 }}>
-                <div style={{ width:40, height:40, borderRadius:10, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:2 }}>
-                  <Icon name={f.icon} size={18} color={L.accent} />
+              <div key={c.label} style={{ display:"flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"7px 14px 7px 10px" }}>
+                <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={c.icon} size={11} color={L.navyMid} />
                 </div>
-                <div style={{ flex:1 }}>
-                  <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
-                    <span className="d-card-title" style={{ fontFamily:fSans, fontSize:16, fontWeight:600, color:L.ink }}>{f.title}</span>
-                    <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{f.badge}</span>
-                  </div>
-                  <p className="d-compliance-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300 }}>{f.desc}</p>
-                </div>
+                <span style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:400, whiteSpace:"nowrap" }}>{c.label}</span>
               </div>
             );
           })}
         </div>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:L.ink, borderRadius:14, padding:"20px 28px", flexWrap:"wrap", gap:14 }}>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:L.navy, borderRadius:14, padding:"22px 28px", flexWrap:"wrap", gap:14 }}>
           <div>
-            <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.paper, marginBottom:3 }}>
-              12 EU compliance rules built in — VIES, GDPR, XRechnung, OSS, and more.
+            <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:4 }}>
+              12 compliance rules. Built in. Not bolted on.
             </div>
-            <div style={{ fontFamily:fMono, fontSize:12, color:"rgba(248,249,252,0.4)", letterSpacing:"0.04em" }}>
-              Reverse charge · Late payment · Credit notes · 10-year archive · Non-EU invoicing
+            <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.35)", letterSpacing:"0.04em" }}>
+              Always current with EU directives · Updated as mandates change
             </div>
           </div>
-          <button onClick={function(){ if(setPage) setPage("EUCompliance"); }} style={{ background:"transparent", color:L.paper, border:"1.5px solid rgba(248,249,252,0.25)", padding:"10px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap" }}>
+          <button onClick={function(){ if(setPage) setPage("EUCompliance"); }} style={{ background:"transparent", color:"rgba(240,244,248,0.8)", border:"1px solid rgba(255,255,255,0.15)", padding:"10px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:400, whiteSpace:"nowrap" }}>
             Full compliance guide →
           </button>
         </div>
@@ -891,17 +900,15 @@ function ReviewsSection(props) {
   var featured = REVIEWS.slice(0, 3);
   var extra = REVIEWS.slice(3);
   return (
-    <section style={{ background:L.cream, borderBottom:"1px solid "+L.border, padding:"88px 0 72px" }}>
-      <div style={{ textAlign:"center", marginBottom:32, padding:"0 24px" }}>
-        <Pill color={L.gold}>{t(lang,"pillReviews")||"Reviews"}</Pill>
-        <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 8px", letterSpacing:"-0.025em" }}>
-{t(lang,"reviewsTitle")}
-        </h2>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginBottom:4 }}>
-          <Stars n={5} size={14} />
-          <span style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>4.9</span>
-          <span style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>from 340+ reviews</span>
+    <section style={{ background:L.white, borderTop:"1px solid "+L.border, padding:"88px 0 72px" }}>
+      <div style={{ textAlign:"center", marginBottom:40, padding:"0 24px" }}>
+        <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
+          <Stars n={5} size={12} />
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.08em" }}>4.9 from 340+ reviews</span>
         </div>
+        <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:400, color:L.ink, margin:"0 0 0", letterSpacing:"-0.025em", fontStyle:"italic" }}>
+          {t(lang,"reviewsTitle")}
+        </h2>
       </div>
 
       {/* Desktop: 3-col grid */}
@@ -1031,40 +1038,43 @@ function PricingSection(props) {
     });
   }
   return (
-    <section style={{ background:embedded ? L.paper : L.white, padding:"72px 24px" }}>
-      <div style={{ maxWidth:860, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:40 }}>
-          <Pill color={L.gold}>{t(lang,"pillPricing")||"Pricing"}</Pill>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-{t(lang,"pricingTitle")}
+    <section style={{ background:embedded ? L.white : L.paper, padding:"80px 24px" }}>
+      <div style={{ maxWidth:900, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:44 }}>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
+            <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillPricing")||"Pricing"}</span>
+          </div>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,42px)", fontWeight:400, color:L.ink, margin:"0 0 10px", letterSpacing:"-0.025em" }}>
+            {t(lang,"pricingTitle")}
           </h2>
-          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
         </div>
         <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
           {PLANS.map(function(plan) {
             return (
-              <div key={plan.name} style={{ background:plan.hi ? L.accent : L.white, border:plan.hi ? "2px solid "+L.accent : "1.5px solid "+L.border, borderRadius:16, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 12px 36px rgba(200,80,42,0.25)" : "none" }}>
+              <div key={plan.name} style={{ background:plan.hi ? L.navy : L.paper, border:plan.hi ? "1.5px solid rgba(34,212,199,0.25)" : "1px solid "+L.border, borderRadius:14, padding:"26px 22px", flex:"0 0 280px", minWidth:280, position:"relative", boxShadow:plan.hi ? "0 16px 48px rgba(8,17,32,0.25)" : "none" }}>
                 {plan.badge && (
-                  <div style={{ position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)", background:L.gold, color:"#fff", padding:"4px 16px", borderRadius:99, fontFamily:fMono, fontSize:11, letterSpacing:"0.08em", whiteSpace:"nowrap", boxShadow:"0 2px 8px rgba(154,120,32,0.3)" }}>
+                  <div style={{ position:"absolute", top:-12, left:"50%", transform:"translateX(-50%)", background:L.accent, color:L.navy, padding:"3px 14px", borderRadius:99, fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", whiteSpace:"nowrap", fontWeight:600 }}>
                     {plan.badge}
                   </div>
                 )}
-                <div style={{ fontFamily:fMono, fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase", color:plan.hi ? "rgba(255,255,255,0.7)" : L.muted, marginBottom:12 }}>{plan.name}</div>
+                <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:plan.hi ? "rgba(240,244,248,0.4)" : L.muted, marginBottom:14 }}>{plan.name}</div>
                 <div style={{ display:"flex", alignItems:"baseline", gap:3, marginBottom:22 }}>
-                  <span style={{ fontFamily:fSerif, fontSize:40, fontWeight:900, color:plan.hi ? "#fff" : L.ink, lineHeight:1 }}>{"€"+plan.price}</span>
-                  <span style={{ fontFamily:fSans, fontSize:15, color:plan.hi ? "rgba(255,255,255,0.55)" : L.muted }}>/mo</span>
+                  <span style={{ fontFamily:fSerif, fontSize:42, fontWeight:400, color:plan.hi ? "#F0F4F8" : L.ink, lineHeight:1 }}>{"€"+plan.price}</span>
+                  <span style={{ fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(240,244,248,0.4)" : L.muted }}>/mo</span>
                 </div>
                 <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:24 }}>
                   {plan.features.map(function(f) {
                     return (
-                      <div key={f} className="d-pricing-feat" style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(255,255,255,0.8)" : L.ink, lineHeight:1.4 }}>
-                        <Icon name="check" size={13} color={plan.hi ? "rgba(255,255,255,0.7)" : L.green} />
+                      <div key={f} className="d-pricing-feat" style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:13, color:plan.hi ? "rgba(240,244,248,0.7)" : L.muted, lineHeight:1.4 }}>
+                        <Icon name="check" size={12} color={plan.hi ? L.accent : L.green} />
                         {f}
                       </div>
                     );
                   })}
                 </div>
-                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? "rgba(255,255,255,0.15)" : L.accent, color:"#fff", border:plan.hi ? "1.5px solid rgba(255,255,255,0.3)" : "none", padding:"12px 0", borderRadius:9, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:15, fontWeight:500, opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
+                <button onClick={function(){ startCheckout(plan.name); }} disabled={checkoutLoading === plan.name.toLowerCase()} style={{ width:"100%", background:plan.hi ? L.accent : L.navy, color:plan.hi ? L.navy : "#fff", border:"none", padding:"12px 0", borderRadius:8, cursor:checkoutLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em", opacity:checkoutLoading === plan.name.toLowerCase() ? 0.7 : 1 }}>
                   {checkoutLoading === plan.name.toLowerCase() ? "Loading…" : t(lang,"pricingCta")}
                 </button>
               </div>
@@ -1350,7 +1360,7 @@ function InvoicePreviewPanel(props) {
           <Icon name="download" size={13} color="#fff" />
           Export PDF
         </button>
-        <button onClick={exportXRechnung} disabled={xrLoading} style={{ flex:1, background:xrLoading ? L.border : "#1A3A5C", color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+        <button onClick={exportXRechnung} disabled={xrLoading} style={{ flex:1, background:xrLoading ? L.border : "#0E1F33", color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <Icon name="document" size={13} color="#fff" />
           {xrLoading ? "…" : "XRechnung XML"}
         </button>
@@ -1512,7 +1522,7 @@ function InvoicePreviewPanel(props) {
         </div>
         {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:11, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) — EU Regulation 2016/679.</p>}
         {s.latePayment && (
-          <div style={{ background:"rgba(200,80,42,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
+          <div style={{ background:"rgba(34,212,199,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
             <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, margin:0, lineHeight:1.55 }}>
               Late payment: statutory interest at 8% above ECB base rate applies on overdue amounts per EU Directive 2011/7/EU.
             </p>
@@ -1778,7 +1788,7 @@ function InvoiceForm(props) {
             return null;
           })()}
         </div>
-        <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(200,80,42,0.25)" }}>
+        <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(34,212,199,0.25)" }}>
           Preview Invoice →
         </button>
       </div>
@@ -2007,7 +2017,7 @@ function ProposalForm(props) {
             </div>
           </div>
         </div>
-        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(200,80,42,0.25)" : "none" }}>
+        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(34,212,199,0.25)" : "none" }}>
           {loading ? "✦ Writing your proposal…" : "✦ Generate Proposal"}
         </button>
       </div>
@@ -2205,7 +2215,7 @@ function Dashboard(props) {
 
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#F0EDE6" }}>
-      <div className="dash-aside" style={{ width:220, background:"#1A1F2E", padding:"20px 0", flexShrink:0 }}>
+      <div className="dash-aside" style={{ width:220, background:L.navy, padding:"20px 0", flexShrink:0 }}>
         <div style={{ padding:"0 16px 20px", borderBottom:"1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:"#FAF7F2", marginBottom:2 }}>InvoiceAI</div>
           <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(250,247,242,0.3)", letterSpacing:"0.08em" }}>for Europe</div>
@@ -2214,7 +2224,7 @@ function Dashboard(props) {
           {nav.map(function(item) {
             var active = section === item.id;
             return (
-              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(200,80,42,0.15)" : "transparent", color:active ? "#E8896A" : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:active?500:400, marginBottom:2 }}>
+              <button key={item.id} onClick={function(){ setSection(item.id); setClient(null); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:9, padding:"9px 12px", borderRadius:8, border:"none", background:active ? "rgba(34,212,199,0.1)" : "transparent", color:active ? L.accent : "rgba(250,247,242,0.45)", cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:active?500:400, marginBottom:2 }}>
                 <Icon name={item.icon} size={14} color={active ? "#E8896A" : "rgba(250,247,242,0.4)"} />
                 {item.label}
               </button>
@@ -2432,7 +2442,7 @@ function DPayments() {
           var toast = sent[r.inv];
           return (
             <div key={r.inv} style={{ borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(200,80,42,0.03)" : "transparent" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(34,212,199,0.04)" : "transparent" }}>
                 <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, width:130, flexShrink:0 }}>{r.inv}</div>
                 <div style={{ flex:1 }}>
                   <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:15, color:L.ink }}>{r.client}</div>
@@ -2638,35 +2648,30 @@ function Footer(props) {
     { title:t(lang,"footerLegal")||"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
   ];
   return (
-    <footer style={{ background:"#1A1F2E", borderTop:"1px solid rgba(255,255,255,0.06)", padding:"48px 24px 32px", overflowX:"hidden" }}>
-      <div style={{ maxWidth:960, margin:"0 auto" }}>
+    <footer style={{ background:L.navy, borderTop:"1px solid rgba(255,255,255,0.06)", padding:"56px 24px 36px", overflowX:"hidden" }}>
+      <div style={{ maxWidth:1060, margin:"0 auto" }}>
         <div className="footer-inner">
-        {/* Logo + tagline — full width on mobile, first col on desktop */}
         <div className="footer-brand" style={{ marginBottom:28 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-            <LogoMark size={28} />
-            <div>
-              <div style={{ fontFamily:fSerif, fontWeight:700, fontSize:15, color:L.paper, lineHeight:1.1 }}>InvoiceAI</div>
-              <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
-            </div>
+          <div style={{ display:"flex", alignItems:"center", gap:9, marginBottom:12 }}>
+            <LogoMark size={26} />
+            <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:16, color:"rgba(240,244,248,0.9)", letterSpacing:"-0.02em" }}>InvoiceAI</span>
           </div>
-          <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:280, fontWeight:300, marginBottom:12 }}>From proposal to payment in minutes — built for European freelancers who work across borders.</p>
+          <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.35)", lineHeight:1.65, maxWidth:260, fontWeight:300, marginBottom:16 }}>From proposal to payment in minutes — built for European freelancers who work across borders.</p>
           <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-            {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
-              return <span key={b} style={{ fontFamily:fMono, fontSize:11, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"3px 8px", letterSpacing:"0.07em" }}>{b}</span>;
+            {["EU compliant","GDPR ready","SEPA"].map(function(b) {
+              return <span key={b} style={{ fontFamily:fMono, fontSize:10, color:L.accent, border:"1px solid "+L.accent+"30", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{b}</span>;
             })}
           </div>
         </div>
-        {/* 3 link columns — always in one row */}
         <div className="footer-cols" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:40 }}>
           {cols.map(function(col) {
             return (
               <div key={col.title}>
-                <div style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(245,240,232,0.25)", marginBottom:12 }}>{col.title}</div>
+                <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(240,244,248,0.2)", marginBottom:14 }}>{col.title}</div>
                 {col.links.map(function(pair) {
                   var lb = pair[0]; var pg = pair[1];
                   return (
-                    <div key={lb} onClick={pg ? function(){ setPage(pg); } : null} style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.45)", marginBottom:8, cursor:pg?"pointer":"default" }}>{lb}</div>
+                    <div key={lb} onClick={pg ? function(){ setPage(pg); } : null} style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.4)", marginBottom:9, cursor:pg?"pointer":"default", transition:"color 0.15s" }}>{lb}</div>
                   );
                 })}
               </div>
@@ -2674,20 +2679,20 @@ function Footer(props) {
           })}
         </div>
         </div>
-        <div style={{ background:"rgba(200,80,42,0.1)", border:"1px solid rgba(200,80,42,0.2)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
+        <div style={{ background:"rgba(34,212,199,0.07)", border:"1px solid rgba(34,212,199,0.15)", borderRadius:12, padding:"20px 24px", marginBottom:28, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
           <div>
-            <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>{t(lang,"footerWaitlist")}</div>
-            <div style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
+            <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:"rgba(240,244,248,0.9)", marginBottom:3 }}>{t(lang,"footerWaitlist")}</div>
+            <div style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.35)", fontWeight:300 }}>{t(lang,"footerWaitlistSub")}</div>
           </div>
-          <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.3)" }}>
+          <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600 }}>
             {t(lang,"footerCta")}
           </button>
         </div>
-        <div style={{ borderTop:"1px solid rgba(255,255,255,0.07)", paddingTop:20, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
-          <span style={{ fontFamily:fMono, fontSize:12, color:"rgba(245,240,232,0.25)" }}>© {yr} InvoiceAI. All rights reserved.</span>
+        <div style={{ borderTop:"1px solid rgba(255,255,255,0.06)", paddingTop:20, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
+          <span style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.2)" }}>© {yr} InvoiceAI. All rights reserved.</span>
           <div style={{ display:"flex", gap:14 }}>
             {[["eu","EU VAT"],["shield","GDPR"],["bank","SEPA"]].map(function(pair) {
-              return <span key={pair[1]} style={{ display:"flex", alignItems:"center", gap:4, fontFamily:fMono, fontSize:11, color:"rgba(245,240,232,0.2)" }}><Icon name={pair[0]} size={10} color="rgba(245,240,232,0.25)" />{pair[1]}</span>;
+              return <span key={pair[1]} style={{ display:"flex", alignItems:"center", gap:4, fontFamily:fMono, fontSize:10, color:"rgba(240,244,248,0.2)" }}><Icon name={pair[0]} size={10} color="rgba(240,244,248,0.2)" />{pair[1]}</span>;
             })}
           </div>
         </div>
@@ -2701,11 +2706,14 @@ function SubLayout(props) {
   var pill = props.pill; var title = props.title; var sub = props.sub; var accent = props.accent;
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
-      <div style={{ background:accent ? L.accent : L.white, borderBottom:"1px solid "+(accent ? "rgba(255,255,255,0.15)" : L.border), padding:"56px 24px 44px", textAlign:"center" }}>
+      <div style={{ background:accent ? L.navy : L.white, borderBottom:"1px solid "+(accent ? "rgba(255,255,255,0.08)" : L.border), padding:"64px 24px 52px", textAlign:"center" }}>
         <div className="desktop-sub-header" style={{ maxWidth:700, margin:"0 auto" }}>
-          <Pill color={accent ? "rgba(255,255,255,0.85)" : L.gold}>{pill}</Pill>
-          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,5vw,52px)", fontWeight:900, color:accent ? "#fff" : L.ink, margin:"16px 0 12px", letterSpacing:"-0.025em", lineHeight:1.1 }}>{title}</h1>
-          <p style={{ fontFamily:fSans, fontSize:15, color:accent ? "rgba(255,255,255,0.75)" : L.muted, fontWeight:300, lineHeight:1.65, maxWidth:520, margin:"0 auto" }}>{sub}</p>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:16 }}>
+            <div style={{ width:4, height:4, borderRadius:"50%", background:accent ? L.accent : L.muted }} />
+            <span style={{ fontFamily:fMono, fontSize:11, color:accent ? L.accent : L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{pill}</span>
+          </div>
+          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,5vw,52px)", fontWeight:400, color:accent ? "#F0F4F8" : L.ink, margin:"0 0 14px", letterSpacing:"-0.025em", lineHeight:1.1 }}>{title}</h1>
+          <p style={{ fontFamily:fSans, fontSize:15, color:accent ? "rgba(240,244,248,0.5)" : L.muted, fontWeight:300, lineHeight:1.65, maxWidth:520, margin:"0 auto" }}>{sub}</p>
         </div>
       </div>
       <div className="desktop-prose d-body" style={{ maxWidth:720, margin:"0 auto", padding:"48px 24px 80px", fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
@@ -2785,7 +2793,7 @@ function PageAbout(props) {
       <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:12, padding:"24px 28px", textAlign:"center" }}>
         <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:700, color:L.ink, marginBottom:8 }}>Try InvoiceAI free for 14 days</h3>
         <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>No credit card. No setup wizards.</p>
-        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)" }}>Get early access →</button>
+        <button onClick={function(){ openModal("about"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)" }}>Get early access →</button>
       </div>
     </SubLayout>
   );
@@ -3514,7 +3522,7 @@ function ClientPortal(props) {
                   <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
                     Please review the invoice above and approve it. Once approved, you can pay via SEPA transfer or card.
                   </p>
-                  <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)", marginRight:10 }}>
+                  <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)", marginRight:10 }}>
                     ✓ Approve Invoice
                   </button>
                   <button style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"13px 20px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
@@ -3535,7 +3543,7 @@ function ClientPortal(props) {
                       );
                     })}
                   </div>
-                  <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(200,80,42,0.25)" }}>
+                  <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(34,212,199,0.25)" }}>
                     Pay €5,400 →
                   </button>
                 </div>
@@ -3708,7 +3716,7 @@ function SupportBot() {
           </div>
         </div>
       )}
-      <button onClick={function(){ setOpen(function(o){ return !o; }); }} className="bot-trigger" style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(200,80,42,0.35)", transition:"background 0.15s" }}>
+      <button onClick={function(){ setOpen(function(o){ return !o; }); }} className="bot-trigger" style={{ width:48, height:48, borderRadius:"50%", background:open ? L.ink : L.accent, border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 6px 20px rgba(34,212,199,0.2)", transition:"background 0.15s" }}>
         {open
           ? <Icon name="x" size={18} color="#fff" />
           : <Icon name="bolt" size={20} color="#fff" />
@@ -3726,7 +3734,7 @@ function PwField(props) {
   var placeholder = props.placeholder;
   var show = props.show;
   var toggleShow = props.toggleShow;
-  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid #E2E5EF", borderRadius:8, padding:"10px 12px", fontFamily:"'Inter',sans-serif", fontSize:15, color:"#1A1F2E", background:"#FFFFFF", outline:"none", marginBottom:0, paddingRight:44 };
+  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid #DDE3EA", borderRadius:8, padding:"10px 12px", fontFamily:"'DM Sans',sans-serif", fontSize:15, color:"#0A1628", background:"#FFFFFF", outline:"none", marginBottom:0, paddingRight:44 };
   return (
     <div style={{ position:"relative", marginBottom:10 }}>
       <input
@@ -3793,7 +3801,7 @@ function AuthModal(props) {
   return (
     <div style={{ position:"fixed", inset:0, background:"rgba(26,31,46,0.6)", zIndex:1000, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }} onClick={function(e){ if(e.target===e.currentTarget) onClose(); }}>
       <div style={{ background:L.white, borderRadius:20, width:"100%", maxWidth:400, overflow:"hidden", boxShadow:"0 24px 64px rgba(26,31,46,0.2)" }}>
-        <div style={{ background:L.accent, padding:"22px 28px 18px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+        <div style={{ background:L.navy, padding:"22px 28px 18px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
             <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.6)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>invoice-ai.de</div>
             <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>
@@ -3845,7 +3853,7 @@ function AuthModal(props) {
 
             {error && <p style={{ fontFamily:fSans, fontSize:14, color:"#C0392B", marginBottom:10 }}>{error}</p>}
 
-            <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(59,91,219,0.3)" }}>
+            <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading ? "none" : "0 4px 14px rgba(34,212,199,0.2)" }}>
               {loading ? "Loading…" : mode==="signup" ? "Create account →" : mode==="magic" ? "Send magic link →" : "Sign in →"}
             </button>
 
@@ -3941,7 +3949,7 @@ function SignupModal(props) {
                 </select>
               </div>
               {error && <p style={{ fontFamily:fSans, fontSize:14, color:L.accent, margin:0 }}>{error}</p>}
-              <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(200,80,42,0.3)" }}>
+              <button onClick={submit} disabled={loading} style={{ background:loading?L.border:L.accent, color:"#fff", border:"none", padding:"13px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:loading?"none":"0 4px 14px rgba(34,212,199,0.2)" }}>
 {loading ? t(lang,"modalJoining") : t(lang,"modalCta")}
               </button>
             </div>
@@ -4071,7 +4079,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 17px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 64px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; } .hero-pill { justify-content: flex-start !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
