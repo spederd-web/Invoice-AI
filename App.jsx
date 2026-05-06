@@ -14,9 +14,9 @@ var L = {
   navy:       "#081120",
   navyMid:    "#0E1F33",
   navySlate:  "#182B3E",
-  gold:       "#F5C542",
+  gold:       "#A78BFA",
   goldGlow:   "rgba(245,197,66,0.12)",
-  muted:      "#5A6478",
+  muted:      "#4A5568",
   faint:      "#8A95A8",
   border:     "#DDE3EA",
   borderLt:   "#EEF1F5",
@@ -437,7 +437,7 @@ function Nav(props) {
   }, []);
 
   return (
-    <nav style={{ position:"sticky", top:0, zIndex:100, background:scrolled ? "rgba(247,248,250,0.75)" : L.white, backdropFilter:scrolled ? "blur(20px)" : "none", WebkitBackdropFilter:scrolled ? "blur(20px)" : "none", borderBottom:"1px solid "+L.border, flexShrink:0, transition:"background 0.3s ease" }}>
+    <nav style={{ position:"sticky", top:0, zIndex:100, background:scrolled ? "rgba(247,248,250,0.88)" : L.white, backdropFilter:scrolled ? "blur(20px)" : "none", WebkitBackdropFilter:scrolled ? "blur(20px)" : "none", borderBottom:"1px solid "+L.border, flexShrink:0, transition:"background 0.3s ease" }}>
       <div style={{ height:58, display:"grid", gridTemplateColumns:"1fr auto 1fr", alignItems:"center", padding:"0 24px", maxWidth:1200, margin:"0 auto", width:"100%" }}>
         {/* Left — logo */}
         <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }} onClick={function(){ setPage("Home"); setMenuOpen(false); }}>
@@ -513,7 +513,7 @@ function Nav(props) {
         </div>
       </div>
       {menuOpen && (
-        <div style={{ borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white }}>
+        <div style={{ position:"absolute", top:58, left:0, right:0, zIndex:200, borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white, boxShadow:"0 8px 24px rgba(10,22,40,0.1)" }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
             var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
             return (
@@ -569,32 +569,11 @@ function HeroSection(props) {
   var openModal = props.openModal;
   var lang = props.lang || "en";
   var [step, setStep] = useState(0);
-  var [pathProgress, setPathProgress] = useState(0);
-
-  useEffect(function() {
-    var prog = 0;
-    var drawing = setInterval(function() {
-      prog += 2;
-      setPathProgress(Math.min(prog, 100));
-      if (prog >= 100) clearInterval(drawing);
-    }, 16);
-    return function(){ clearInterval(drawing); };
-  }, []);
 
   useEffect(function() {
     var t = setInterval(function(){ setStep(function(s){ return (s + 1) % 4; }); }, 2400);
     return function(){ clearInterval(t); };
   }, []);
-
-  var flowSteps = [
-    { icon:"proposal", label:"Proposal sent",     sub:"Brand Identity · Studio Verde",  color:"#17A99E", y:52  },
-    { icon:"overview", label:"Viewed 7 times",    sub:"3 hours ago · still open",       color:"#F5C542", y:178 },
-    { icon:"document", label:"Invoice created",   sub:"One click · EU-compliant",       color:"#4B7BFF", y:304 },
-    { icon:"card",     label:"Payment received",  sub:"€8,400 · SEPA confirmed",        color:"#1A9E6B", y:430 },
-  ];
-
-  var totalH = 500;
-  var nodeX = 36;
 
   return (
     <section style={{ background:L.navy, minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 24px 72px", overflow:"hidden", position:"relative" }}>
@@ -621,11 +600,60 @@ function HeroSection(props) {
              lang==="hu" ? <>Az ajánlattól<br/>a kifizetésig.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Kész.</span></> :
              <>From proposal<br/>to payment.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Handled.</span></>}
           </h1>
-          <p className="hero-sub" style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.42)", lineHeight:1.75, maxWidth:360, margin:"0 auto 44px", fontWeight:300, textAlign:"center", letterSpacing:"0.01em" }}>
+          <p className="hero-sub" style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.55)", lineHeight:1.75, maxWidth:360, margin:"0 auto 36px", fontWeight:300, textAlign:"center", letterSpacing:"0.01em" }}>
             {lang==="de" ? "Angebote, Rechnungen, Zahlungen und EU-Compliance in einem ruhigen Workflow." :
              lang==="fr" ? "Propositions, factures, paiements et conformité UE dans un flux simple." :
              "Proposals, invoices, payments and EU compliance — one seamless workflow."}
           </p>
+
+          {/* Mobile constellation — hidden on desktop */}
+          <div className="hero-constellation-mobile" style={{ margin:"0 auto 36px", position:"relative", width:"100%", maxWidth:320, height:200 }}>
+            <svg style={{ width:"100%", height:"100%", overflow:"visible" }} viewBox="0 0 320 200">
+              <defs>
+                <radialGradient id="nodeGlow0" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#17A99E" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#17A99E" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="nodeGlow1" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#A78BFA" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#A78BFA" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="nodeGlow2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#4B7BFF" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#4B7BFF" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="nodeGlow3" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#1A9E6B" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#1A9E6B" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              {/* Connecting lines */}
+              <line x1="60" y1="40" x2="160" y2="80" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+              <line x1="160" y1="80" x2="240" y2="120" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+              <line x1="240" y1="120" x2="140" y2="165" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+              {/* Glow halos */}
+              <circle cx="60" cy="40" r="28" fill="url(#nodeGlow0)" />
+              <circle cx="160" cy="80" r="24" fill="url(#nodeGlow1)" />
+              <circle cx="240" cy="120" r="24" fill="url(#nodeGlow2)" />
+              <circle cx="140" cy="165" r="28" fill="url(#nodeGlow3)" />
+              {/* Nodes */}
+              <circle cx="60" cy="40" r="4" fill="#17A99E" opacity="0.9" />
+              <circle cx="160" cy="80" r="4" fill="#A78BFA" opacity="0.9" />
+              <circle cx="240" cy="120" r="4" fill="#4B7BFF" opacity="0.9" />
+              <circle cx="140" cy="165" r="5" fill="#1A9E6B" opacity="0.9" />
+              {/* Distant dim nodes for depth */}
+              <circle cx="100" cy="155" r="2" fill="rgba(255,255,255,0.15)" />
+              <circle cx="200" cy="40" r="1.5" fill="rgba(255,255,255,0.1)" />
+              <circle cx="290" cy="70" r="2" fill="rgba(255,255,255,0.1)" />
+              <circle cx="30" cy="120" r="1.5" fill="rgba(255,255,255,0.1)" />
+              {/* Labels */}
+              <text x="76" y="44" fontFamily="'DM Sans',sans-serif" fontSize="10" fill="rgba(238,242,247,0.45)" fontWeight="400">Proposal sent</text>
+              <text x="174" y="84" fontFamily="'DM Sans',sans-serif" fontSize="10" fill="rgba(238,242,247,0.45)" fontWeight="400">Viewed 7×</text>
+              <text x="206" y="116" fontFamily="'DM Sans',sans-serif" fontSize="10" fill="rgba(238,242,247,0.45)" fontWeight="400" textAnchor="end">Invoice created</text>
+              <text x="150" y="162" fontFamily="'DM Sans',sans-serif" fontSize="10" fill="rgba(238,242,247,0.6)" fontWeight="500">Payment received</text>
+            </svg>
+          </div>
+
           <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:28 }}>
             <button onClick={function(){ openModal("hero"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"14px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>
               {lang==="de" ? "Kostenlos starten" : lang==="fr" ? "Commencer gratuitement" : "Start free"}
@@ -639,105 +667,54 @@ function HeroSection(props) {
           </p>
         </div>
 
-        {/* Right — SVG animated flow composition */}
+        {/* Right — Constellation flow composition */}
         <div className="hero-cards" style={{ display:"none", alignItems:"center", justifyContent:"center", position:"relative" }}>
-          <div style={{ position:"relative", width:320, height:totalH }}>
-
-            {/* SVG path layer — draws from top to bottom */}
-            <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", overflow:"visible" }} viewBox={"0 0 320 "+totalH}>
-              {/* Base dim line */}
-              <line x1={nodeX} y1={flowSteps[0].y} x2={nodeX} y2={flowSteps[3].y}
-                stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-              {/* Animated drawing line */}
-              <line x1={nodeX} y1={flowSteps[0].y}
-                x2={nodeX}
-                y2={flowSteps[0].y + (flowSteps[3].y - flowSteps[0].y) * pathProgress / 100}
-                stroke="url(#lineGrad)" strokeWidth="1.5"
-                style={{ transition:"y2 0.08s linear" }} />
+          <div style={{ position:"relative", width:"100%", maxWidth:420, height:480 }}>
+            <svg style={{ width:"100%", height:"100%", overflow:"visible" }} viewBox="0 0 420 480">
               <defs>
-                <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%"   stopColor="#17A99E" stopOpacity="0.8" />
-                  <stop offset="50%"  stopColor="#4B7BFF" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#1A9E6B" stopOpacity="0.7" />
-                </linearGradient>
+                <radialGradient id="cg0" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#17A99E" stopOpacity="0.25"/><stop offset="100%" stopColor="#17A99E" stopOpacity="0"/></radialGradient>
+                <radialGradient id="cg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#A78BFA" stopOpacity="0.22"/><stop offset="100%" stopColor="#A78BFA" stopOpacity="0"/></radialGradient>
+                <radialGradient id="cg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#4B7BFF" stopOpacity="0.22"/><stop offset="100%" stopColor="#4B7BFF" stopOpacity="0"/></radialGradient>
+                <radialGradient id="cg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#1A9E6B" stopOpacity="0.28"/><stop offset="100%" stopColor="#1A9E6B" stopOpacity="0"/></radialGradient>
               </defs>
-              {/* Step connector dots on the path */}
-              {flowSteps.map(function(fs, i) {
-                var revealed = pathProgress >= (i / 3) * 100;
-                var active = step === i;
-                return (
-                  <g key={i}>
-                    {/* Outer glow ring when active */}
-                    {active && revealed && (
-                      <circle cx={nodeX} cy={fs.y} r="22"
-                        fill={fs.color} fillOpacity="0.06"
-                        stroke={fs.color} strokeOpacity="0.15" strokeWidth="1" />
-                    )}
-                    {/* Node circle */}
-                    <circle cx={nodeX} cy={fs.y} r={active ? 10 : 7}
-                      fill={revealed ? (active ? fs.color : "rgba(255,255,255,0.08)") : "rgba(255,255,255,0.03)"}
-                      stroke={revealed ? (active ? fs.color : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.04)"}
-                      strokeWidth="1"
-                      style={{ transition:"all 0.4s ease" }} />
-                    {/* Inner dot */}
-                    {revealed && !active && (
-                      <circle cx={nodeX} cy={fs.y} r="3"
-                        fill={fs.color} fillOpacity="0.5" />
-                    )}
-                  </g>
-                );
+              {/* Background ambient dots */}
+              {[[80,60],[340,90],[60,200],[380,240],[150,380],[310,400],[200,130],[90,320]].map(function(pt, i) {
+                return <circle key={i} cx={pt[0]} cy={pt[1]} r={i%3===0?2:1.5} fill="rgba(255,255,255,0.08)" />;
               })}
+              {/* Connecting lines between main nodes */}
+              <line x1="90" y1="110" x2="220" y2="195" stroke="rgba(255,255,255,0.07)" strokeWidth="1"/>
+              <line x1="220" y1="195" x2="330" y2="290" stroke="rgba(255,255,255,0.07)" strokeWidth="1"/>
+              <line x1="330" y1="290" x2="185" y2="385" stroke="rgba(255,255,255,0.07)" strokeWidth="1"/>
+              {/* Glow halos */}
+              <circle cx="90" cy="110" r="40" fill="url(#cg0)"/>
+              <circle cx="220" cy="195" r="36" fill="url(#cg1)"/>
+              <circle cx="330" cy="290" r="36" fill="url(#cg2)"/>
+              <circle cx="185" cy="385" r="44" fill="url(#cg3)"/>
+              {/* Main nodes */}
+              <circle cx="90" cy="110" r={step===0?7:5} fill="#17A99E" opacity={step===0?1:0.6} style={{transition:"all 0.4s"}}/>
+              <circle cx="220" cy="195" r={step===1?7:5} fill="#A78BFA" opacity={step===1?1:0.6} style={{transition:"all 0.4s"}}/>
+              <circle cx="330" cy="290" r={step===2?7:5} fill="#4B7BFF" opacity={step===2?1:0.6} style={{transition:"all 0.4s"}}/>
+              <circle cx="185" cy="385" r={step===3?8:5} fill="#1A9E6B" opacity={step===3?1:0.6} style={{transition:"all 0.4s"}}/>
+              {/* Pulse ring on active node */}
+              {step===0 && <circle cx="90" cy="110" r="18" fill="none" stroke="#17A99E" strokeWidth="1" opacity="0.3"/>}
+              {step===1 && <circle cx="220" cy="195" r="18" fill="none" stroke="#A78BFA" strokeWidth="1" opacity="0.3"/>}
+              {step===2 && <circle cx="330" cy="290" r="18" fill="none" stroke="#4B7BFF" strokeWidth="1" opacity="0.3"/>}
+              {step===3 && <circle cx="185" cy="385" r="20" fill="none" stroke="#1A9E6B" strokeWidth="1" opacity="0.3"/>}
+              {/* Labels */}
+              <text x="108" y="105" fontFamily="'DM Sans',sans-serif" fontSize="13" fill={step===0?"rgba(238,242,247,0.9)":"rgba(238,242,247,0.4)"} fontWeight={step===0?"500":"400"} style={{transition:"fill 0.4s"}}>Proposal sent</text>
+              <text x="108" y="120" fontFamily="'DM Mono',monospace" fontSize="10" fill="rgba(238,242,247,0.22)">Brand Identity · Studio Verde</text>
+              <text x="238" y="190" fontFamily="'DM Sans',sans-serif" fontSize="13" fill={step===1?"rgba(238,242,247,0.9)":"rgba(238,242,247,0.4)"} fontWeight={step===1?"500":"400"} style={{transition:"fill 0.4s"}}>Viewed 7 times</text>
+              <text x="238" y="205" fontFamily="'DM Mono',monospace" fontSize="10" fill="rgba(238,242,247,0.22)">3 hours ago · still open</text>
+              <text x="200" y="285" fontFamily="'DM Sans',sans-serif" fontSize="13" fill={step===2?"rgba(238,242,247,0.9)":"rgba(238,242,247,0.4)"} fontWeight={step===2?"500":"400"} textAnchor="end" style={{transition:"fill 0.4s"}}>Invoice created</text>
+              <text x="200" y="300" fontFamily="'DM Mono',monospace" fontSize="10" fill="rgba(238,242,247,0.22)" textAnchor="end">One click · EU-compliant</text>
+              <text x="205" y="378" fontFamily="'DM Sans',sans-serif" fontSize="13" fill={step===3?"rgba(238,242,247,0.9)":"rgba(238,242,247,0.4)"} fontWeight={step===3?"500":"400"} style={{transition:"fill 0.4s"}}>Payment received</text>
+              <text x="205" y="393" fontFamily="'DM Mono',monospace" fontSize="10" fill="rgba(238,242,247,0.22)">€8,400 · SEPA confirmed</text>
+              {/* Amount badge appears on payment step */}
+              {step===3 && <rect x="205" y="400" width="80" height="22" rx="5" fill="#1A9E6B" fillOpacity="0.15" stroke="#1A9E6B" strokeOpacity="0.3" strokeWidth="1"/>}
+              {step===3 && <text x="245" y="415" fontFamily="'DM Mono',monospace" fontSize="11" fill="#1A9E6B" fontWeight="600" textAnchor="middle">€8,400</text>}
+              {/* Bottom footer */}
+              <text x="210" y="455" fontFamily="'DM Mono',monospace" fontSize="10" fill="rgba(238,242,247,0.18)" letterSpacing="3" textAnchor="middle">EU · SEPA · XRECHNUNG · GDPR</text>
             </svg>
-
-            {/* Step labels — positioned absolutely beside the nodes */}
-            {flowSteps.map(function(fs, i) {
-              var revealed = pathProgress >= (i / 3) * 100;
-              var active = step === i;
-              var past = step > i;
-              return (
-                <div key={i} style={{
-                  position:"absolute",
-                  left:nodeX + 28,
-                  top:fs.y - 22,
-                  right:0,
-                  opacity: revealed ? (past ? 0.3 : 1) : 0,
-                  transition:"opacity 0.5s ease",
-                }}>
-                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:8 }}>
-                    <div>
-                      <div style={{
-                        fontFamily:fSans,
-                        fontSize:14,
-                        fontWeight: active ? 500 : 400,
-                        color: active ? "rgba(238,242,247,0.95)" : "rgba(238,242,247,0.45)",
-                        marginBottom:3,
-                        letterSpacing:"-0.01em",
-                        transition:"all 0.4s ease",
-                      }}>{fs.label}</div>
-                      <div style={{ fontFamily:fMono, fontSize:10, color:"rgba(238,242,247,0.2)", letterSpacing:"0.03em" }}>{fs.sub}</div>
-                    </div>
-                    {active && i >= 2 && (
-                      <div style={{
-                        background: fs.color+"18",
-                        border:"1px solid "+fs.color+"30",
-                        borderRadius:6,
-                        padding:"3px 9px",
-                        flexShrink:0,
-                      }}>
-                        <span style={{ fontFamily:fMono, fontSize:12, color:fs.color, fontWeight:500 }}>€8,400</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Bottom label */}
-            <div style={{ position:"absolute", bottom:-36, left:0, right:0, display:"flex", justifyContent:"center" }}>
-              <span style={{ fontFamily:fMono, fontSize:10, color:"rgba(238,242,247,0.18)", letterSpacing:"0.1em", textTransform:"uppercase" }}>
-                EU · SEPA · XRechnung · GDPR
-              </span>
-            </div>
           </div>
         </div>
 
@@ -901,35 +878,45 @@ function WhyItWorksSection(props) {
   var lang = props.lang || "en";
   var openModal = props.openModal;
   var statements = lang==="de" ? [
-    { headline:"Weniger Zeit mit Nachverfolgen verbringen.", sub:"Sieh sofort, wenn ein Angebot geöffnet wird. Sende Follow-ups im richtigen Moment." },
-    { headline:"Für ganz Europa gebaut.", sub:"VAT, Reverse Charge, XRechnung und SEPA werden automatisch richtig gemacht." },
-    { headline:"Wisse immer, was als nächstes kommt.", sub:"Dein Dashboard zeigt dir genau, was Aufmerksamkeit braucht — nichts mehr, nichts weniger." },
+    { headline:"Weniger Zeit mit Nachverfolgen.", sub:"Sieh sofort, wenn ein Angebot geöffnet wird — und folge im richtigen Moment nach." },
+    { headline:"Für ganz Europa gebaut.", sub:"VAT, Reverse Charge, XRechnung, SEPA. Automatisch. Richtig." },
+    { headline:"Immer wissen, was als nächstes kommt.", sub:"Dein Dashboard zeigt genau, was Aufmerksamkeit braucht." },
   ] : lang==="fr" ? [
-    { headline:"Passez moins de temps à relancer.", sub:"Voyez quand une proposition est ouverte. Relancez au bon moment, sans effort." },
-    { headline:"Conçu pour toute l'Europe.", sub:"TVA, autoliquidation, Factur-X et SEPA — tout géré automatiquement et correctement." },
-    { headline:"Sachez toujours ce qui vient ensuite.", sub:"Votre tableau de bord vous montre exactement ce qui demande attention." },
+    { headline:"Moins de temps à relancer.", sub:"Voyez quand une proposition est ouverte. Relancez au bon moment." },
+    { headline:"Conçu pour toute l'Europe.", sub:"TVA, autoliquidation, Factur-X, SEPA. Automatiquement. Correctement." },
+    { headline:"Sachez toujours quoi faire ensuite.", sub:"Votre tableau de bord vous montre exactement ce qui demande attention." },
   ] : [
     { headline:"Spend less time chasing.", sub:"See the moment a proposal is opened. Follow up at exactly the right time." },
-    { headline:"Built for working across Europe.", sub:"VAT, reverse charge, XRechnung and SEPA handled correctly, automatically." },
-    { headline:"Know what needs attention.", sub:"Your dashboard shows exactly what matters right now — nothing more, nothing less." },
+    { headline:"Built for working across Europe.", sub:"VAT, reverse charge, XRechnung, SEPA. Handled correctly. Automatically." },
+    { headline:"Always know what's next.", sub:"Your dashboard shows exactly what needs attention — nothing more." },
   ];
   return (
-    <section style={{ background:L.white, borderTop:"1px solid "+L.border, padding:"100px 24px" }}>
-      <div style={{ maxWidth:760, margin:"0 auto" }}>
+    <section style={{ background:L.navy, padding:"100px 24px", position:"relative", overflow:"hidden" }}>
+      <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+        <div style={{ position:"absolute", top:"20%", right:"10%", width:400, height:400, borderRadius:"50%", background:"rgba(23,169,158,0.04)", filter:"blur(80px)" }} />
+        <div style={{ position:"absolute", bottom:"15%", left:"5%", width:300, height:300, borderRadius:"50%", background:"rgba(75,123,255,0.04)", filter:"blur(60px)" }} />
+      </div>
+      <div style={{ maxWidth:800, margin:"0 auto", position:"relative", zIndex:1 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:60 }}>
+          <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.12em", textTransform:"uppercase", opacity:0.7 }}>
+            {lang==="de" ? "Warum es funktioniert" : lang==="fr" ? "Pourquoi ça marche" : "Why it works"}
+          </span>
+        </div>
         {statements.map(function(s, i) {
           return (
-            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 88 : 0 }}>
-              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(24px,3.5vw,40px)", fontWeight:400, color:L.ink, letterSpacing:"-0.028em", lineHeight:1.18, marginBottom:18 }}>
+            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 72 : 0, paddingBottom: i < statements.length - 1 ? 72 : 0, borderBottom: i < statements.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
+              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(26px,3.5vw,44px)", fontWeight:400, color:"#EEF2F7", letterSpacing:"-0.03em", lineHeight:1.12, marginBottom:16, fontStyle: i === 0 ? "italic" : "normal" }}>
                 {s.headline}
               </h3>
-              <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.85, maxWidth:480, letterSpacing:"0.005em" }}>
+              <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.45)", fontWeight:300, lineHeight:1.8, maxWidth:520, letterSpacing:"0.01em" }}>
                 {s.sub}
               </p>
             </div>
           );
         })}
-        <div style={{ marginTop:64, paddingTop:48, borderTop:"1px solid "+L.border }}>
-          <button onClick={function(){ openModal("why"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
+        <div style={{ marginTop:72, paddingTop:56, borderTop:"1px solid rgba(255,255,255,0.07)" }}>
+          <button onClick={function(){ openModal("why"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Frühen Zugang erhalten →" : lang==="fr" ? "Accès anticipé →" : "Get early access →"}
           </button>
         </div>
@@ -1088,13 +1075,11 @@ function EUComplianceSection(props) {
         <div className="compliance-chips" style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:36 }}>
           {chips.map(function(c, i) {
             return (
-              <div key={c.label} style={{ display:"flex", justifyContent: i % 2 === 0 ? "flex-start" : "flex-end" }}>
-                <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"9px 16px 9px 12px" }}>
-                  <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                    <Icon name={c.icon} size={11} color={L.navyMid} />
-                  </div>
-                  <span style={{ fontFamily:fSans, fontSize:14, color:L.ink, fontWeight:400, whiteSpace:"nowrap" }}>{c.label}</span>
+              <div key={c.label} style={{ display:"flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"10px 16px 10px 12px", justifyContent:"center" }}>
+                <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={c.icon} size={11} color={L.navyMid} />
                 </div>
+                <span style={{ fontFamily:fSans, fontSize:14, color:L.ink, fontWeight:400 }}>{c.label}</span>
               </div>
             );
           })}
@@ -1196,7 +1181,7 @@ function PricingSection(props) {
         <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:16, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:16, paddingLeft:2, paddingRight:2 }}>
           {PLANS.map(function(plan) {
             return (
-              <div key={plan.name} style={{ background:plan.hi ? L.navy : "transparent", border:plan.hi ? "1px solid rgba(23,169,158,0.2)" : "1px solid "+L.border, borderRadius:16, padding:"32px 28px", flex:"0 0 300px", minWidth:300, position:"relative" }}>
+              <div key={plan.name} style={{ background:plan.hi ? L.navy : "transparent", border: plan.hi ? "1px solid rgba(23,169,158,0.15)" : "none", borderRadius:16, padding:"40px 32px", flex:"0 0 300px", minWidth:300, position:"relative" }}>
                 {plan.badge && (
                   <div style={{ position:"absolute", top:-11, left:28, background:L.accent, color:L.navy, padding:"3px 12px", borderRadius:99, fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", whiteSpace:"nowrap", fontWeight:600 }}>
                     {plan.badge}
@@ -1915,7 +1900,7 @@ function InvoiceForm(props) {
           </div>
         </div>
         <div style={{ marginBottom:8 }}>
-          {(function() {
+        {(function() {
             var errs = [];
             if (!s.sName || !s.sName.trim()) errs.push("Business name required");
             if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push("IBAN invalid");
@@ -1932,16 +1917,31 @@ function InvoiceForm(props) {
             return null;
           })()}
         </div>
-        <button onClick={function(){ setView("preview"); }} style={{ width:"100%", background:L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 16px rgba(23,169,158,0.25)" }}>
-          Preview Invoice →
-        </button>
+        {(function() {
+            var errs = [];
+            if (!s.sName || !s.sName.trim()) errs.push(true);
+            if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push(true);
+            if (s.sBIC && validateBIC(s.sBIC) !== "valid") errs.push(true);
+            if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") errs.push(true);
+            if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") errs.push(true);
+            if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push(true);
+            var blocked = errs.length > 0;
+            return (
+              <button onClick={function(){ if(!blocked) setView("preview"); }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.accent, color:blocked ? L.muted : "#fff", border:"none", padding:"12px", borderRadius:9, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:blocked ? "none" : "0 4px 16px rgba(23,169,158,0.25)" }}>
+                Preview Invoice →
+              </button>
+            );
+          })()}
       </div>
       <div style={{ position:"sticky", top:72, alignSelf:"start" }}>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, padding:"12px 14px" }}>
           <p style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
           {[
             { i:"eu",       l:"Country",        sub:(s.country?s.country.name:"Germany")+" · VAT "+(s.country?s.country.vat:19)+"%", ok:true },
-            { i:"bank",     l:"SEPA",           sub:s.sIBAN ? "IBAN provided" : "⚠ Missing",      ok:!!s.sIBAN },
+            { i:"bank",     l:"SEPA / IBAN",    sub: !s.sIBAN ? "⚠ Missing" : validateIBAN(s.sIBAN) === "valid" ? "✓ Valid IBAN" : "✗ Invalid IBAN", ok: !!s.sIBAN && validateIBAN(s.sIBAN) === "valid" },
+            { i:"send",     l:"BIC / SWIFT",    sub: !s.sBIC ? "Not entered" : validateBIC(s.sBIC) === "valid" ? "✓ Valid BIC" : "✗ Invalid BIC", ok: !s.sBIC || validateBIC(s.sBIC) === "valid" },
+            { i:"shield",   l:"Your VAT",       sub: !s.sVAT ? "Not entered" : validateEUVAT(s.sVAT) === "valid" ? "✓ Valid" : "✗ Invalid format", ok: !s.sVAT || validateEUVAT(s.sVAT) === "valid" },
+            { i:"users",    l:"Client VAT",     sub: !s.cVAT ? "Not entered" : validateEUVAT(s.cVAT) === "valid" ? "✓ Valid" : "✗ Invalid format", ok: !s.cVAT || validateEUVAT(s.cVAT) === "valid" },
             { i:"reverse",  l:"Reverse Charge", sub:s.rc ? "Active (0%)" : sameCountry ? "N/A same country" : "Standard", ok:s.rc },
             { i:"shield",   l:"GDPR Notice",    sub:s.gdpr ? "Included" : "Off",                   ok:s.gdpr },
             { i:"hash",     l:"Invoice No.",    sub:s.creditNote ? "CN-"+new Date().getFullYear()+"-001" : (s.invNum || (s.country?s.country.code:"DE")+"-"+new Date().getFullYear()+"-001"), ok:true },
@@ -1949,14 +1949,15 @@ function InvoiceForm(props) {
             { i:"document", l:"Document Type",  sub:s.creditNote ? "Credit Note" : s.vatExempt ? "VAT-Exempt" : "Standard Invoice", ok:true },
             { i:"send",     l:"E-Invoice",      sub:s.eInvoice ? "Active" : "PDF only",            ok:s.eInvoice },
           ].map(function(r) {
+            var isErr = r.ok === false;
             return (
               <div key={r.l} style={{ display:"flex", alignItems:"center", gap:7, marginBottom:7 }}>
                 <Icon name={r.i} size={13} color={L.muted} />
                 <div style={{ flex:1 }}>
                   <div style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:500 }}>{r.l}</div>
-                  <div style={{ fontFamily:fMono, fontSize:10, color:r.ok ? L.green : L.muted }}>{r.sub}</div>
+                  <div style={{ fontFamily:fMono, fontSize:10, color: isErr ? "#C0392B" : r.ok ? L.green : L.muted }}>{r.sub}</div>
                 </div>
-                <span style={{ color:r.ok ? L.green : L.faint, fontSize:12 }}>{r.ok ? "✓" : "—"}</span>
+                <span style={{ color: isErr ? "#C0392B" : r.ok ? L.green : L.faint, fontSize:12 }}>{isErr ? "✗" : r.ok ? "✓" : "—"}</span>
               </div>
             );
           })}
@@ -4223,7 +4224,7 @@ export default function App() {
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .nav-desktop-center { display: none !important; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } .compliance-chips { display: flex !important; flex-direction: column !important; align-items: flex-start !important; } } @media (min-width: 1024px) { .compliance-chips { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; gap: 10px !important; } .compliance-svg { display: none !important; } .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 80px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; align-items: center !important; justify-content: center !important; } .hero-pill { justify-content: flex-start !important; } .hero-headline { text-align: left !important; } .hero-sub { text-align: left !important; margin-left: 0 !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F7F8FA; overflow-x: hidden; font-family: 'DM Sans', sans-serif; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } @keyframes floatUp { 0% { opacity:0; transform:translateY(12px); } 100% { opacity:1; transform:translateY(0); } } @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EEF1F5; } ::-webkit-scrollbar-thumb { background: #C8D0DC; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .nav-desktop-center { display: none !important; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .hero-cards { display: none !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } } @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } .compliance-chips { display: flex !important; flex-direction: column !important; align-items: flex-start !important; } .hero-constellation-mobile { display: block !important; } } @media (min-width: 1024px) { .hero-constellation-mobile { display: none !important; } .compliance-chips { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; gap: 10px !important; } .compliance-svg { display: none !important; } .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 1100px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 280px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .hero-layout { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 80px !important; align-items: center !important; text-align: left !important; } .hero-cards { display: flex !important; align-items: center !important; justify-content: center !important; } .hero-pill { justify-content: flex-start !important; } .hero-headline { text-align: left !important; } .hero-sub { text-align: left !important; margin-left: 0 !important; } .hero-btns { justify-content: flex-start !important; } .hero-fine { text-align: left !important; } .hero-counter { justify-content: flex-start !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 18px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
       {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
@@ -4236,6 +4237,7 @@ export default function App() {
       {page==="Privacy"      && <PagePrivacy />}
       {page==="Terms"        && <PageTerms />}
       {page==="GDPR"         && <PageGDPR />}
+      {page==="Cookies"      && <PageCookies />}
       {page==="EUCompliance" && <PageEUCompliance setPage={setPage} openModal={openModal} />}
       {page==="FAQ"          && <PageFAQ setPage={setPage} openModal={openModal} />}
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
