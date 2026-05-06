@@ -448,19 +448,19 @@ function Nav(props) {
         </div>
         {user ? (
           <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+            <button onClick={function(){ props.onSignOut(); }} style={{ width:80, textAlign:"center", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
+              Sign out
+            </button>
             <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"5px 12px 5px 6px", cursor:"pointer" }}>
               <div style={{ width:24, height:24, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#fff", fontWeight:600, flexShrink:0 }}>
                 {user.email ? user.email[0].toUpperCase() : "U"}
               </div>
               <span style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.accent }}>Dashboard</span>
             </button>
-            <button onClick={function(){ props.onSignOut(); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
-              Sign out
-            </button>
           </div>
         ) : (
           <div style={{ display:"flex", gap:7, flexShrink:0, alignItems:"center" }}>
-            <button onClick={openAuth} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
+            <button onClick={openAuth} style={{ width:80, textAlign:"center", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
               Log in
             </button>
             <div className="nav-cta" style={{ display:"flex" }}>
@@ -471,12 +471,15 @@ function Nav(props) {
           </div>
         )}
         <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
+          <div style={{ position:"absolute", left:8, top:"50%", transform:"translateY(-50%)", pointerEvents:"none", fontSize:15, lineHeight:1 }}>
+            {lang==="de" ? "🇩🇪" : lang==="en" ? "🇬🇧" : lang==="fr" ? "🇫🇷" : lang==="es" ? "🇪🇸" : lang==="it" ? "🇮🇹" : "🇭🇺"}
+          </div>
           <select
             value={lang}
             onChange={function(e){ setLang(e.target.value); }}
-            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 8px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
+            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 28px 5px 30px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
           >
-            {[["de","🇩🇪 DE"],["en","🇬🇧 EN"],["fr","🇫🇷 FR"],["es","🇪🇸 ES"],["it","🇮🇹 IT"],["hu","🇭🇺 HU"]].map(function(pair) {
+            {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
             })}
           </select>
@@ -1478,6 +1481,8 @@ function InvoiceForm(props) {
   return (
     <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
       <div>
+        <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>Create an Invoice</h2>
+        <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Fill in your details. Every EU rule — VAT, reverse charge, SEPA — applied automatically.</p>
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
             <div style={{ gridColumn:"1/-1" }}><label style={lblStyle}>Business Name *</label><input value={s.sName} onChange={function(e){ u("sName",e.target.value); }} style={inpStyle} /></div>
@@ -1974,7 +1979,7 @@ function InvoiceGen(props) {
 
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
-      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
         <div style={{ display:"inline-flex", gap:4, background:L.cream, borderRadius:10, padding:"4px", border:"1px solid "+L.border }}>
           {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
             var m = pair[0]; var lb = pair[1];
@@ -1985,15 +1990,15 @@ function InvoiceGen(props) {
             );
           })}
         </div>
+        {mode === "invoice" && (
+          <div style={{ display:"inline-flex", gap:2, background:L.paper, borderRadius:8, padding:"3px", border:"1px solid "+L.border }}>
+            {[["form","Form"],["preview","Preview"]].map(function(pair) {
+              var v = pair[0]; var lb = pair[1];
+              return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"5px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
+            })}
+          </div>
+        )}
       </div>
-      {mode==="invoice" && (
-        <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 20px", display:"flex", gap:4, height:38, alignItems:"center" }}>
-          {[["form","Form"],["preview","Preview"]].map(function(pair) {
-            var v = pair[0]; var lb = pair[1];
-            return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"4px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
-          })}
-        </div>
-      )}
       {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} />}
       {mode==="invoice" && view==="form" && (
         <InvoiceForm state={invState} update={updateInv} setView={setView} addLine={addLine} updLine={updLine} remLine={remLine} />
@@ -2064,6 +2069,41 @@ function StatCard(props) {
   );
 }
 
+var DASH_META = {
+  overview:  { title:"Overview",          sub:"Your studio at a glance." },
+  clients:   { title:"Clients",           sub:"Manage your client relationships and invoices." },
+  payments:  { title:"Payment Records",   sub:"Track sent, overdue and paid invoices." },
+  proposals: { title:"Proposal Analytics",sub:"Track performance across all sent proposals." },
+  brandkits: { title:"Brand Kits",        sub:"Create a kit per client. Applied automatically to invoices and proposals." },
+};
+
+function DashHeader(props) {
+  var section = props.section;
+  var action = props.action;
+  var meta = DASH_META[section] || { title:section, sub:"" };
+  return (
+    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:24, paddingBottom:20, borderBottom:"1px solid "+L.border }}>
+      <div>
+        <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:800, color:L.ink, letterSpacing:"-0.02em", marginBottom:4 }}>{meta.title}</h2>
+        <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>{meta.sub}</p>
+      </div>
+      {action}
+    </div>
+  );
+}
+
+function DashStatPill(props) {
+  var label = props.label;
+  var value = props.value;
+  var color = props.color || L.ink;
+  return (
+    <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:8, padding:"8px 16px", display:"flex", alignItems:"center", gap:10 }}>
+      <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.06em", textTransform:"uppercase" }}>{label}</span>
+      <span style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:color }}>{value}</span>
+    </div>
+  );
+}
+
 function DOverview() {
   return (
     <div>
@@ -2109,10 +2149,9 @@ function DClients(props) {
   var setClient = props.setClient;
   return (
     <div>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-        <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>Clients</h2>
-        <button style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>+ New Invoice</button>
-      </div>
+      <DashHeader section="clients" action={
+        <button style={{ background:L.accent, color:"#fff", border:"none", padding:"9px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap" }}>+ New Invoice</button>
+      } />
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
         {CLIENTS.map(function(c) {
           var stColor = c.status==="active" ? L.green : c.status==="overdue" ? L.accent : L.gold;
@@ -2181,15 +2220,12 @@ function DPayments() {
 
   return (
     <div>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-        <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>Payment Records</h2>
-        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-          <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"7px 12px", display:"flex", alignItems:"center", gap:7 }}>
-            <Icon name="clock" size={13} color={L.accent} />
-            <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.06em" }}>1 overdue · €3,200</span>
-          </div>
+      <DashHeader section="payments" action={
+        <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"9px 14px", display:"flex", alignItems:"center", gap:7 }}>
+          <Icon name="clock" size={13} color={L.accent} />
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.06em" }}>1 overdue · €3,200</span>
         </div>
-      </div>
+      } />
       <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, overflow:"hidden" }}>
         {rows.map(function(r, i) {
           var isOverdue = r.status === "overdue";
@@ -2253,13 +2289,12 @@ function DProposals() {
   var stColor = { won:L.green, sent:L.blue, viewed:L.gold, declined:L.accent };
   return (
     <div>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-        <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink }}>Proposal Analytics</h2>
-        <div style={{ display:"flex", gap:12 }}>
-          <StatCard label="Win rate" value="68%" color={L.green} />
-          <StatCard label="Avg views" value="3.5" />
+      <DashHeader section="proposals" action={
+        <div style={{ display:"flex", gap:8 }}>
+          <DashStatPill label="Win rate" value="68%" color={L.green} />
+          <DashStatPill label="Avg views" value="3.5" />
         </div>
-      </div>
+      } />
       <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, overflow:"hidden" }}>
         {rows.map(function(r, i) {
           return (
@@ -2287,8 +2322,7 @@ function DBrandKits() {
   var [sel, setSel] = useState(kits[0]);
   return (
     <div>
-      <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:700, color:L.ink, marginBottom:4 }}>Brand Kits</h2>
-      <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Create a kit per client. Applied automatically to invoices and proposals.</p>
+      <DashHeader section="brandkits" />
       <div style={{ display:"grid", gridTemplateColumns:"200px 1fr", gap:16 }}>
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
           {kits.map(function(kit) {
@@ -3008,11 +3042,11 @@ function ClientPortal(props) {
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, padding:"20px 24px", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
           <div>
             <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Invoice from</div>
-            <div style={{ fontFamily:fSerif, fontSize:19, fontWeight:800, color:L.ink, letterSpacing:"-0.02em" }}>{inv.from.name}</div>
+            <div style={{ fontFamily:fSerif, fontSize:19, fontWeight:800, color:L.ink, letterSpacing:"-0.02em" }}>{inv.from ? inv.from.name : ""}</div>
             <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginTop:2 }}>Invoice {inv.num} · Due {inv.due}</div>
           </div>
           <div style={{ textAlign:"right" }}>
-            <div style={{ fontFamily:fSerif, fontSize:30, fontWeight:900, color:L.accent, letterSpacing:"-0.02em" }}>{"€"+inv.total.toLocaleString()}</div>
+            <div style={{ fontFamily:fSerif, fontSize:30, fontWeight:900, color:L.accent, letterSpacing:"-0.02em" }}>{"€"+(parseFloat(inv.total)||0).toFixed(2)}</div>
             <div style={{ fontFamily:fMono, fontSize:11, color:status==="paid"?L.green:status==="approved"?L.blue:L.gold, background:(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"18", border:"1px solid "+(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"44", borderRadius:4, padding:"3px 10px", letterSpacing:"0.07em", display:"inline-block", marginTop:4 }}>
               {status==="paid" ? "✓ PAID" : status==="approved" ? "APPROVED" : "AWAITING APPROVAL"}
             </div>
@@ -3056,17 +3090,17 @@ function ClientPortal(props) {
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:20, flexWrap:"wrap", gap:16 }}>
               <div>
                 <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>From</div>
-                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.from.name}</div>
-                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from.street}</div>
-                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from.city}</div>
-                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.from.vat}</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.from ? inv.from.name : ""}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from ? inv.from.street : ""}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.from ? inv.from.city : ""}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.from ? inv.from.vat : ""}</div>
               </div>
               <div style={{ textAlign:"right" }}>
                 <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>Billed to</div>
-                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.to.name}</div>
-                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to.contact}</div>
-                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to.city}</div>
-                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.to.vat}</div>
+                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{inv.to ? inv.to.name : ""}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to ? inv.to.contact : ""}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{inv.to ? inv.to.city : ""}</div>
+                <div style={{ fontFamily:fMono, fontSize:12, color:L.faint, marginTop:3 }}>VAT: {inv.to ? inv.to.vat : ""}</div>
               </div>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, marginBottom:16 }}>
@@ -3089,13 +3123,16 @@ function ClientPortal(props) {
                 </tr>
               </thead>
               <tbody>
-                {inv.lines.map(function(line, i) {
+                {(inv.lines || []).map(function(line, i) {
+                  var qty = parseFloat(line.qty) || 0;
+                  var rate = parseFloat(line.rate) || 0;
+                  var lineTotal = parseFloat(line.total || line.lineTotal || (qty * rate)) || 0;
                   return (
                     <tr key={i} style={{ borderBottom:"1px solid "+L.border }}>
                       <td style={{ fontFamily:fSans, fontSize:14, color:L.ink, padding:"9px 0" }}>{line.desc}</td>
-                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{line.qty}</td>
-                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{"€"+line.rate.toLocaleString()}</td>
-                      <td style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500, textAlign:"right", padding:"9px 0" }}>{"€"+line.total.toLocaleString()}</td>
+                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{qty}</td>
+                      <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"9px 0" }}>{"€"+rate.toFixed(2)}</td>
+                      <td style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500, textAlign:"right", padding:"9px 0" }}>{"€"+lineTotal.toFixed(2)}</td>
                     </tr>
                   );
                 })}
@@ -3104,21 +3141,21 @@ function ClientPortal(props) {
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
               <div style={{ minWidth:240 }}>
                 <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.muted, padding:"2px 0" }}>
-                  <span>Subtotal</span><span style={{ fontFamily:fMono }}>{"€"+inv.sub.toLocaleString()}</span>
+                  <span>Subtotal</span><span style={{ fontFamily:fMono }}>{"€"+(parseFloat(inv.sub) || 0).toFixed(2)}</span>
                 </div>
                 <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.blue, padding:"3px 0 6px", borderBottom:"1.5px solid "+L.ink }}>
-                  <span>{inv.vatLabel}</span><span style={{ fontFamily:fMono }}>€0.00</span>
+                  <span>{inv.vatLabel || "VAT"}</span><span style={{ fontFamily:fMono }}>{"€"+(parseFloat(inv.vat) || 0).toFixed(2)}</span>
                 </div>
                 <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, paddingTop:6 }}>
-                  <span>Total Due</span><span style={{ color:L.accent }}>{"€"+inv.total.toLocaleString()}</span>
+                  <span>Total Due</span><span style={{ color:L.accent }}>{"€"+(parseFloat(inv.total) || 0).toFixed(2)}</span>
                 </div>
               </div>
             </div>
             <div style={{ background:L.cream, borderRadius:8, padding:"12px 14px", marginTop:16 }}>
               <div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:6 }}>SEPA Bank Transfer</div>
               <div style={{ display:"flex", gap:28, flexWrap:"wrap" }}>
-                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from.iban}</div></div>
-                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from.bic}</div></div>
+                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>IBAN</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from ? inv.from.iban : ""}</div></div>
+                <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>BIC</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.from ? inv.from.bic : ""}</div></div>
                 <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>Reference</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{inv.num}</div></div>
               </div>
             </div>
@@ -3170,7 +3207,7 @@ function ClientPortal(props) {
               {status === "approved" && showPay && (
                 <div>
                   <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>
-                    {payMethod === "sepa" && "Transfer " + (inv.currency === "EUR" ? "€" : inv.currency + " ") + inv.total.toLocaleString() + " to the IBAN above with reference " + inv.num + ". Payment typically clears in 1 business day."}
+                    {payMethod === "sepa" && "Transfer " + (inv.currency === "EUR" ? "€" : inv.currency + " ") + (parseFloat(inv.total)||0).toFixed(2) + " to the IBAN above with reference " + inv.num + ". Payment typically clears in 1 business day."}
                     {payMethod === "card" && "Card payments launching Q3 2026 via Stripe. Use SEPA transfer for now."}
                     {payMethod === "apple" && "Apple Pay launching Q3 2026. Use SEPA transfer for now."}
                   </p>
@@ -3347,11 +3384,34 @@ function SupportBot() {
 
 
 // ── Auth Modal ────────────────────────────────────────────────────────────────
+function PwField(props) {
+  var val = props.value;
+  var onChange = props.onChange;
+  var placeholder = props.placeholder;
+  var show = props.show;
+  var toggleShow = props.toggleShow;
+  var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid #E2E5EF", borderRadius:8, padding:"10px 12px", fontFamily:"'Inter',sans-serif", fontSize:15, color:"#1A1F2E", background:"#FFFFFF", outline:"none", marginBottom:0, paddingRight:44 };
+  return (
+    <div style={{ position:"relative", marginBottom:10 }}>
+      <input
+        type={show ? "text" : "password"}
+        value={val}
+        onChange={onChange}
+        placeholder={placeholder}
+        style={inp}
+      />
+      <button onClick={toggleShow} style={{ position:"absolute", right:10, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#6B7280", padding:4, fontSize:15, lineHeight:1 }}>
+        {show ? "🙈" : "👁"}
+      </button>
+    </div>
+  );
+}
+
 function AuthModal(props) {
   var onClose = props.onClose;
   var onAuth  = props.onAuth;
   var lang = props.lang || "en";
-  var [mode, setMode] = useState("signin"); // signin | signup | magic | done
+  var [mode, setMode] = useState("signin");
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
   var [confirm, setConfirm] = useState("");
@@ -3361,7 +3421,6 @@ function AuthModal(props) {
   var [error, setError] = useState("");
 
   var inp = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:8, padding:"10px 12px", fontFamily:fSans, fontSize:15, color:L.ink, background:L.white, outline:"none", marginBottom:10 };
-  var eyeBtn = { background:"none", border:"none", cursor:"pointer", color:L.muted, padding:"0 4px", fontSize:16, lineHeight:1, flexShrink:0 };
 
   function submit() {
     if (!email.trim()) { setError("Email required."); return; }
@@ -3395,28 +3454,6 @@ function AuthModal(props) {
     });
   }
 
-  function PwField(fieldProps) {
-    var val = fieldProps.value;
-    var onChange = fieldProps.onChange;
-    var placeholder = fieldProps.placeholder;
-    var show = fieldProps.show;
-    var toggleShow = fieldProps.toggleShow;
-    return (
-      <div style={{ position:"relative", marginBottom:10 }}>
-        <input
-          type={show ? "text" : "password"}
-          value={val}
-          onChange={onChange}
-          placeholder={placeholder}
-          style={Object.assign({}, inp, { marginBottom:0, paddingRight:44 })}
-        />
-        <button onClick={toggleShow} style={{ position:"absolute", right:10, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:L.muted, padding:4, fontSize:15, lineHeight:1 }}>
-          {show ? "🙈" : "👁"}
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div style={{ position:"fixed", inset:0, background:"rgba(26,31,46,0.6)", zIndex:1000, display:"flex", alignItems:"center", justifyContent:"center", padding:20 }} onClick={function(e){ if(e.target===e.currentTarget) onClose(); }}>
       <div style={{ background:L.white, borderRadius:20, width:"100%", maxWidth:400, overflow:"hidden", boxShadow:"0 24px 64px rgba(26,31,46,0.2)" }}>
@@ -3431,13 +3468,13 @@ function AuthModal(props) {
         </div>
 
         {mode === "done" ? (
-          <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
+          <div style={{ padding:"36px 28px 40px", textAlign:"center", minHeight:260 }}>
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="send" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:20, fontWeight:800, color:L.ink, marginBottom:8 }}>Check your email</h3>
             <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, lineHeight:1.6 }}>We sent a magic link to <strong style={{ color:L.ink }}>{email}</strong>. Click it to sign in — no password needed.</p>
           </div>
         ) : (
-          <div style={{ padding:"24px 28px 28px" }}>
+          <div style={{ padding:"24px 28px 28px", minHeight:400 }}>
             <div style={{ display:"flex", gap:6, marginBottom:20 }}>
               {[["signin",t(lang,"authSignIn")||"Sign in"],["signup",t(lang,"authSignUp")||"Sign up"],["magic",t(lang,"authMagic")||"Magic link"]].map(function(pair) {
                 return (
