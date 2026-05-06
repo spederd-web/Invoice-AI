@@ -34,13 +34,13 @@ var TR = {
     navStart:        "Start Free",
     navStartArrow:   "Start Free →",
     heroPill:        "For EU freelancers who invoice across borders",
-    heroTitle1:      "Your clients are across Europe.",
-    heroTitle2:      "Your invoices should be too.",
-    heroSub:         "InvoiceAI writes your proposals and builds your invoices — with every EU rule applied automatically. One tool for every client, in every country.",
+    heroTitle1:      "From proposal to payment",
+    heroTitle2:      "in minutes — built for Europe.",
+    heroSub:         "AI-powered proposals and EU-compliant invoices in one simple flow. Less admin, faster payments, zero VAT headaches.",
     heroCta:         "Get early access →",
     heroSecondary:   "See pricing",
     heroFine:        "No credit card · 14-day free trial · Cancel anytime",
-    heroFeatures:    "Reverse charge auto-detect  ·  XRechnung XML export  ·  AI proposals in 6 languages",
+    heroFeatures:    "Proposal to invoice in one click  ·  EU VAT handled automatically  ·  AI proposals in 6 languages",
     navHome:"Home", navGenerator:"Generator", navPricing:"Pricing", navDashboard:"Dashboard",
     footerProduct:"Product", footerCompany:"Company", footerLegal:"Legal",
     pillFeatures:"Features", pillCompliance:"EU-Native Compliance", pillReviews:"Reviews", pillPricing:"Pricing",
@@ -74,13 +74,13 @@ var TR = {
     navStart:        "Kostenlos starten",
     navStartArrow:   "Kostenlos starten →",
     heroPill:        "Für Freelancer, die grenzüberschreitend abrechnen",
-    heroTitle1:      "Deine Kunden sind in ganz Europa.",
-    heroTitle2:      "Deine Rechnungen auch.",
-    heroSub:         "InvoiceAI schreibt deine Angebote und erstellt deine Rechnungen — mit jeder EU-Regel automatisch angewendet. Ein Tool für jeden Kunden, in jedem Land.",
+    heroTitle1:      "Von Angebot bis Zahlung —",
+    heroTitle2:      "in Minuten. Gebaut für Europa.",
+    heroSub:         "KI-Angebote und EU-konforme Rechnungen in einem einfachen Ablauf. Weniger Verwaltung, schnellere Zahlungen, keine MwSt-Probleme.",
     heroCta:         "Frühen Zugang erhalten →",
     heroSecondary:   "Preise ansehen",
     heroFine:        "Keine Kreditkarte · 14 Tage kostenlos · Jederzeit kündbar",
-    heroFeatures:    "Reverse Charge automatisch  ·  XRechnung XML Export  ·  KI-Angebote in 6 Sprachen",
+    heroFeatures:    "Angebot zu Rechnung per Klick  ·  EU-Steuer automatisch  ·  KI-Angebote in 6 Sprachen",
     navHome:"Startseite", navGenerator:"Generator", navPricing:"Preise", navDashboard:"Dashboard",
     footerProduct:"Produkt", footerCompany:"Unternehmen", footerLegal:"Rechtliches",
     pillFeatures:"Funktionen", pillCompliance:"EU-Konformität", pillReviews:"Bewertungen", pillPricing:"Preise",
@@ -114,13 +114,13 @@ var TR = {
     navStart:        "Commencer gratuitement",
     navStartArrow:   "Commencer gratuitement →",
     heroPill:        "Pour les freelances qui facturent en Europe",
-    heroTitle1:      "Vos clients sont partout en Europe.",
-    heroTitle2:      "Vos factures aussi.",
-    heroSub:         "InvoiceAI rédige vos propositions et génère vos factures — avec chaque règle UE appliquée automatiquement. Un outil pour chaque client, dans chaque pays.",
+    heroTitle1:      "De la proposition au paiement —",
+    heroTitle2:      "en quelques minutes. Pour l'Europe.",
+    heroSub:         "Propositions IA et factures conformes à l'UE dans un flux simple. Moins d'admin, paiements plus rapides, zéro prise de tête TVA.",
     heroCta:         "Accès anticipé →",
     heroSecondary:   "Voir les tarifs",
     heroFine:        "Sans carte bancaire · 14 jours gratuits · Résiliation à tout moment",
-    heroFeatures:    "Autoliquidation automatique  ·  Export XML Factur-X  ·  Propositions IA en 6 langues",
+    heroFeatures:    "Proposition en facture en un clic  ·  TVA UE automatique  ·  Propositions IA en 6 langues",
     navHome:"Accueil", navGenerator:"Générateur", navPricing:"Tarifs", navDashboard:"Tableau de bord",
     footerProduct:"Produit", footerCompany:"Entreprise", footerLegal:"Mentions légales",
     pillFeatures:"Fonctionnalités", pillCompliance:"Conformité UE", pillReviews:"Avis", pillPricing:"Tarifs",
@@ -154,13 +154,13 @@ var TR = {
     navStart:        "Empezar gratis",
     navStartArrow:   "Empezar gratis →",
     heroPill:        "Para freelances que facturan en toda Europa",
-    heroTitle1:      "Tus clientes están en toda Europa.",
-    heroTitle2:      "Tus facturas también.",
-    heroSub:         "InvoiceAI redacta tus propuestas y genera tus facturas — con cada regla de la UE aplicada automáticamente. Una herramienta para cada cliente, en cada país.",
+    heroTitle1:      "De la propuesta al cobro —",
+    heroTitle2:      "en minutos. Hecho para Europa.",
+    heroSub:         "Propuestas con IA y facturas conformes a la UE en un flujo simple. Menos gestión, cobros más rápidos, sin problemas de IVA.",
     heroCta:         "Acceso anticipado →",
     heroSecondary:   "Ver precios",
     heroFine:        "Sin tarjeta de crédito · 14 días gratis · Cancela cuando quieras",
-    heroFeatures:    "Inversión del sujeto pasivo  ·  Export XML XRechnung  ·  Propuestas IA en 6 idiomas",
+    heroFeatures:    "Propuesta a factura en un clic  ·  IVA UE automático  ·  Propuestas IA en 6 idiomas",
     navHome:"Inicio", navGenerator:"Generador", navPricing:"Precios", navDashboard:"Panel",
     footerProduct:"Producto", footerCompany:"Empresa", footerLegal:"Legal",
     pillFeatures:"Funciones", pillCompliance:"Cumplimiento UE", pillReviews:"Reseñas", pillPricing:"Precios",
@@ -194,13 +194,13 @@ var TR = {
     navStart:        "Inizia gratis",
     navStartArrow:   "Inizia gratis →",
     heroPill:        "Per i freelance che fatturano in tutta Europa",
-    heroTitle1:      "I tuoi clienti sono in tutta Europa.",
-    heroTitle2:      "Le tue fatture anche.",
-    heroSub:         "InvoiceAI scrive le tue proposte e genera le tue fatture — con ogni regola UE applicata automaticamente. Uno strumento per ogni cliente, in ogni paese.",
+    heroTitle1:      "Dalla proposta al pagamento —",
+    heroTitle2:      "in pochi minuti. Per l'Europa.",
+    heroSub:         "Proposte IA e fatture conformi all'UE in un flusso semplice. Meno burocrazia, pagamenti più veloci, zero problemi IVA.",
     heroCta:         "Accesso anticipato →",
     heroSecondary:   "Vedi i prezzi",
     heroFine:        "Senza carta di credito · 14 giorni gratis · Disdici quando vuoi",
-    heroFeatures:    "Inversione contabile auto  ·  Export XML FatturaPA  ·  Proposte IA in 6 lingue",
+    heroFeatures:    "Proposta in fattura in un clic  ·  IVA UE automatica  ·  Proposte IA in 6 lingue",
     navHome:"Home", navGenerator:"Generatore", navPricing:"Prezzi", navDashboard:"Dashboard",
     footerProduct:"Prodotto", footerCompany:"Azienda", footerLegal:"Legale",
     pillFeatures:"Funzionalità", pillCompliance:"Conformità UE", pillReviews:"Recensioni", pillPricing:"Prezzi",
@@ -234,13 +234,13 @@ var TR = {
     navStart:        "Kezdd ingyen",
     navStartArrow:   "Kezdd ingyen →",
     heroPill:        "Határon átnyúló számlázáshoz Európában",
-    heroTitle1:      "Az ügyfeleid egész Európában vannak.",
-    heroTitle2:      "A számláid is legyenek.",
-    heroSub:         "Az InvoiceAI megírja az ajánlataidat és elkészíti a számláidat — minden EU-szabályt automatikusan alkalmazva. Egy eszköz minden ügyfélhez, minden országban.",
+    heroTitle1:      "Ajánlattól a kifizetésig —",
+    heroTitle2:      "percek alatt. Európára tervezve.",
+    heroSub:         "AI-ajánlatok és EU-kompatibilis számlák egyszerű folyamatban. Kevesebb adminisztráció, gyorsabb fizetés, nulla ÁFA-fejfájás.",
     heroCta:         "Korai hozzáférés →",
     heroSecondary:   "Árak megtekintése",
     heroFine:        "Bankkártya nélkül · 14 napos ingyenes próba · Bármikor lemondható",
-    heroFeatures:    "Fordított adózás automatikusan  ·  NAV XML export  ·  MI ajánlatok 6 nyelven",
+    heroFeatures:    "Ajánlatból számla egy kattintással  ·  EU-ÁFA automatikusan  ·  AI ajánlatok 6 nyelven",
     navHome:"Főoldal", navGenerator:"Generátor", navPricing:"Árak", navDashboard:"Irányítópult",
     footerProduct:"Termék", footerCompany:"Cég", footerLegal:"Jogi",
     pillFeatures:"Funkciók", pillCompliance:"EU-megfelelés", pillReviews:"Vélemények", pillPricing:"Árak",
@@ -414,7 +414,7 @@ function Stars(props) {
 }
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
-var PAGES = ["Home","Generator","Pricing","Dashboard"];
+var PAGES = ["Home","Generator","EUCompliance","Pricing","Dashboard"];
 
 function Nav(props) {
   var page = props.page;
@@ -438,7 +438,7 @@ function Nav(props) {
         <div style={{ flex:1 }} />
         <div className="nav-desktop" style={{ display:"flex", gap:2 }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
-            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
+            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400 }}>
                 {pgLabel}
@@ -448,10 +448,10 @@ function Nav(props) {
         </div>
         {user ? (
           <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
-            <button onClick={function(){ props.onSignOut(); }} style={{ width:80, textAlign:"center", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
+            <button onClick={function(){ props.onSignOut(); }} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"7px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
               Sign out
             </button>
-            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"5px 12px 5px 6px", cursor:"pointer" }}>
+            <button onClick={function(){ setPage("Dashboard"); }} style={{ display:"flex", alignItems:"center", gap:7, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:8, padding:"5px 12px 5px 6px", cursor:"pointer", flexShrink:0, whiteSpace:"nowrap" }}>
               <div style={{ width:24, height:24, borderRadius:"50%", background:L.accent, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:"#fff", fontWeight:600, flexShrink:0 }}>
                 {user.email ? user.email[0].toUpperCase() : "U"}
               </div>
@@ -460,24 +460,21 @@ function Nav(props) {
           </div>
         ) : (
           <div style={{ display:"flex", gap:7, flexShrink:0, alignItems:"center" }}>
-            <button onClick={openAuth} style={{ width:80, textAlign:"center", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>
+            <button onClick={openAuth} style={{ whiteSpace:"nowrap", background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, flexShrink:0 }}>
               Log in
             </button>
             <div className="nav-cta" style={{ display:"flex" }}>
-              <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)" }}>
+              <button onClick={function(){ openModal("nav"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 4px 14px rgba(59,91,219,0.25)", whiteSpace:"nowrap" }}>
                 {t(lang,"navStart")}
               </button>
             </div>
           </div>
         )}
         <div style={{ position:"relative", flexShrink:0, marginLeft:4 }}>
-          <div style={{ position:"absolute", left:8, top:"50%", transform:"translateY(-50%)", pointerEvents:"none", fontSize:15, lineHeight:1 }}>
-            {lang==="de" ? "🇩🇪" : lang==="en" ? "🇬🇧" : lang==="fr" ? "🇫🇷" : lang==="es" ? "🇪🇸" : lang==="it" ? "🇮🇹" : "🇭🇺"}
-          </div>
           <select
             value={lang}
             onChange={function(e){ setLang(e.target.value); }}
-            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 28px 5px 30px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
+            style={{ background:L.white, border:"1px solid "+L.border, borderRadius:7, padding:"5px 24px 5px 10px", cursor:"pointer", fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600, letterSpacing:"0.04em", outline:"none", appearance:"none", WebkitAppearance:"none" }}
           >
             {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {
               return <option key={pair[0]} value={pair[0]}>{pair[1]}</option>;
@@ -496,7 +493,7 @@ function Nav(props) {
       {menuOpen && (
         <div style={{ borderTop:"1px solid "+L.border, padding:"12px 16px 16px", display:"flex", flexDirection:"column", gap:4, background:L.white }}>
           {PAGES.filter(function(pg){ return user ? pg !== "Dashboard" : true; }).map(function(pg) {
-            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg;
+            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Generator" ? t(lang,"navGenerator") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:page===pg ? L.accentGlow : "transparent", color:page===pg ? L.accent : L.ink, border:"none", padding:"10px 14px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
                 {pgLabel}
@@ -532,7 +529,8 @@ function Landing(props) {
     <div style={{ background:L.paper }}>
       <HeroSection setPage={setPage} openModal={openModal} lang={lang} />
       <FeaturesSection lang={lang} />
-      <EUComplianceSection lang={lang} />
+      <HowItWorksSection lang={lang} setPage={setPage} openModal={openModal} />
+      <EUComplianceSection lang={lang} setPage={setPage} />
       <ReviewsSection lang={lang} />
       <PricingSection setPage={setPage} openModal={openModal} lang={lang} embedded={true} />
     </div>
@@ -563,7 +561,7 @@ function HeroSection(props) {
           {t(lang,"heroTitle1")}<br />
           <span style={{ color:L.accent }}>{t(lang,"heroTitle2")}</span>
         </h1>
-        <p style={{ fontFamily:fSans, fontSize:17, color:L.muted, lineHeight:1.65, maxWidth:500, margin:"0 auto 36px", fontWeight:300 }}>
+        <p className="d-body-lg" style={{ fontFamily:fSans, fontSize:17, color:L.muted, lineHeight:1.65, maxWidth:500, margin:"0 auto 36px", fontWeight:300 }}>
 {t(lang,"heroSub")}
         </p>
         <div className="hero-btns" style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap", marginBottom:24 }}>
@@ -579,9 +577,9 @@ function HeroSection(props) {
         </p>
         <div className="desktop-feat-cards" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10, marginTop:28, maxWidth:520, margin:"28px auto 0" }}>
           {[
-            { icon:"reverse", label: lang==="de" ? "Reverse Charge automatisch" : lang==="fr" ? "Autoliquidation auto" : lang==="it" ? "Inversione contabile" : lang==="es" ? "IVA invertido auto" : lang==="hu" ? "Fordított adózás" : "Reverse charge auto" },
-            { icon:"document", label: lang==="de" ? "XRechnung XML" : lang==="fr" ? "Factur-X XML" : lang==="it" ? "FatturaPA XML" : lang==="hu" ? "NAV XML export" : "XRechnung XML" },
-            { icon:"send", label: lang==="de" ? "KI-Angebote, 6 Sprachen" : lang==="fr" ? "Propositions IA × 6" : lang==="it" ? "Proposte IA × 6" : lang==="es" ? "Propuestas IA × 6" : lang==="hu" ? "AI ajánlatok × 6" : "AI proposals × 6 langs" },
+            { icon:"proposal", label: lang==="de" ? "Angebot in Sekunden" : lang==="fr" ? "Proposition en secondes" : lang==="it" ? "Proposta in secondi" : lang==="es" ? "Propuesta en segundos" : lang==="hu" ? "Ajánlat másodpercek alatt" : "Proposal in seconds" },
+            { icon:"reverse",  label: lang==="de" ? "EU-Steuer automatisch" : lang==="fr" ? "TVA UE automatique" : lang==="it" ? "IVA UE automatica" : lang==="es" ? "IVA UE automático" : lang==="hu" ? "EU-ÁFA automatikusan" : "EU VAT automatic" },
+            { icon:"card",     label: lang==="de" ? "Schneller bezahlt werden" : lang==="fr" ? "Paiements plus rapides" : lang==="it" ? "Pagamenti più veloci" : lang==="es" ? "Cobra más rápido" : lang==="hu" ? "Gyorsabb kifizetés" : "Get paid faster" },
           ].map(function(f) {
             return (
               <div key={f.label} style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"12px 10px", display:"flex", flexDirection:"column", alignItems:"center", gap:7 }}>
@@ -612,6 +610,96 @@ var FEATURES = [
   { icon:"shield",   title:"GDPR Built-in",      desc:"Auto-GDPR notice on invoices, EU-hosted data, Data Processing Agreement available, cookieless analytics." },
 ];
 
+var HOW_STEPS = {
+  en: [
+    { num:"01", icon:"proposal", title:"Describe the project",    desc:"Tell InvoiceAI who the client is, what you're building, and your rough budget. The AI writes a structured, client-ready proposal in under 30 seconds." },
+    { num:"02", icon:"send",     title:"Send and track",          desc:"Share the proposal with your client. See when they open it, how many times they view it, and get notified the moment they respond." },
+    { num:"03", icon:"document", title:"Convert to invoice",      desc:"Accepted? Turn the proposal into a fully EU-compliant invoice in one click. Client details, line items and amounts carry over automatically." },
+    { num:"04", icon:"card",     title:"Get paid",                desc:"Send the invoice with a payment link. Automatic reminders handle the follow-up so you can focus on the next project." },
+  ],
+  de: [
+    { num:"01", icon:"proposal", title:"Projekt beschreiben",     desc:"Gib an, wer der Kunde ist, was du baust und dein Budget. Die KI schreibt in unter 30 Sekunden ein strukturiertes, kundenfertiges Angebot." },
+    { num:"02", icon:"send",     title:"Senden und verfolgen",    desc:"Teile das Angebot mit deinem Kunden. Sieh, wann es geöffnet wird, wie oft es angesehen wird, und werde benachrichtigt, sobald eine Antwort kommt." },
+    { num:"03", icon:"document", title:"In Rechnung umwandeln",   desc:"Akzeptiert? Wandle das Angebot mit einem Klick in eine EU-konforme Rechnung um. Kundendaten und Positionen werden automatisch übernommen." },
+    { num:"04", icon:"card",     title:"Bezahlt werden",          desc:"Sende die Rechnung mit Zahlungslink. Automatische Erinnerungen übernehmen das Nachfassen — du kannst dich aufs nächste Projekt konzentrieren." },
+  ],
+  fr: [
+    { num:"01", icon:"proposal", title:"Décrire le projet",       desc:"Indiquez qui est le client, ce que vous créez et votre budget. L'IA rédige une proposition structurée et prête à envoyer en moins de 30 secondes." },
+    { num:"02", icon:"send",     title:"Envoyer et suivre",       desc:"Partagez la proposition avec votre client. Voyez quand il l'ouvre, combien de fois il la consulte, et soyez notifié dès qu'il répond." },
+    { num:"03", icon:"document", title:"Convertir en facture",    desc:"Acceptée ? Transformez la proposition en facture conforme UE en un clic. Les données client et les postes sont repris automatiquement." },
+    { num:"04", icon:"card",     title:"Être payé",               desc:"Envoyez la facture avec un lien de paiement. Les relances automatiques gèrent le suivi — vous pouvez vous concentrer sur le prochain projet." },
+  ],
+  es: [
+    { num:"01", icon:"proposal", title:"Describe el proyecto",    desc:"Di quién es el cliente, qué estás creando y tu presupuesto. La IA escribe una propuesta estructurada y lista para el cliente en menos de 30 segundos." },
+    { num:"02", icon:"send",     title:"Envía y haz seguimiento", desc:"Comparte la propuesta con tu cliente. Ve cuándo la abre, cuántas veces la consulta y recibe una notificación en cuanto responda." },
+    { num:"03", icon:"document", title:"Convierte en factura",    desc:"¿Aceptada? Convierte la propuesta en una factura conforme a la UE con un clic. Los datos del cliente y las líneas se copian automáticamente." },
+    { num:"04", icon:"card",     title:"Cobra",                   desc:"Envía la factura con enlace de pago. Los recordatorios automáticos se encargan del seguimiento — tú céntrate en el siguiente proyecto." },
+  ],
+  it: [
+    { num:"01", icon:"proposal", title:"Descrivi il progetto",    desc:"Indica chi è il cliente, cosa stai creando e il tuo budget. L'IA scrive una proposta strutturata e pronta per il cliente in meno di 30 secondi." },
+    { num:"02", icon:"send",     title:"Invia e monitora",        desc:"Condividi la proposta con il tuo cliente. Vedi quando la apre, quante volte la consulta e ricevi una notifica non appena risponde." },
+    { num:"03", icon:"document", title:"Converti in fattura",     desc:"Accettata? Trasforma la proposta in una fattura conforme all'UE con un clic. I dati cliente e le voci vengono copiati automaticamente." },
+    { num:"04", icon:"card",     title:"Incassa",                 desc:"Invia la fattura con link di pagamento. I promemoria automatici gestiscono il follow-up — tu concentrati sul prossimo progetto." },
+  ],
+  hu: [
+    { num:"01", icon:"proposal", title:"Írd le a projektet",      desc:"Mondd meg, ki az ügyfél, mit építesz és a hozzávetőleges büdzsét. Az AI 30 másodperc alatt strukturált, ügyfélkész ajánlatot ír." },
+    { num:"02", icon:"send",     title:"Küld el és kövesd",       desc:"Oszd meg az ajánlatot az ügyféllel. Látod, mikor nyitja meg, hányszor nézi meg, és azonnal értesítést kapsz, ha válaszol." },
+    { num:"03", icon:"document", title:"Alakítsd számlává",       desc:"Elfogadta? Alakítsd az ajánlatot EU-kompatibilis számlává egy kattintással. Az ügyfél adatai és tételek automatikusan átkerülnek." },
+    { num:"04", icon:"card",     title:"Kapd meg a pénzt",        desc:"Küldd el a számlát fizetési linkkel. Az automatikus emlékeztetők kezelik az utánkövetést — te a következő projektre koncentrálhatsz." },
+  ],
+};
+
+function HowItWorksSection(props) {
+  var lang = props.lang || "en";
+  var setPage = props.setPage;
+  var openModal = props.openModal;
+  var steps = HOW_STEPS[lang] || HOW_STEPS.en;
+  return (
+    <section style={{ background:L.paper, borderTop:"1px solid "+L.border, padding:"80px 24px" }}>
+      <div className="desktop-section" style={{ maxWidth:960, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:56 }}>
+          <Pill color={L.accent}>How it works</Pill>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
+            {lang==="de" ? "Von der Idee zur Zahlung" : lang==="fr" ? "De l'idée au paiement" : lang==="es" ? "De la idea al cobro" : lang==="it" ? "Dall'idea al pagamento" : lang==="hu" ? "Az ötlettől a kifizetésig" : "From idea to payment"}
+          </h2>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:440, margin:"0 auto" }}>
+            {lang==="de" ? "Vier Schritte. Ein Tool. Kein Wechsel zwischen Apps." : lang==="fr" ? "Quatre étapes. Un outil. Aucun changement d'application." : lang==="es" ? "Cuatro pasos. Una herramienta. Sin cambiar de app." : lang==="it" ? "Quattro passi. Un solo strumento. Nessun cambio di app." : lang==="hu" ? "Négy lépés. Egy eszköz. Nincs váltogatás az appok között." : "Four steps. One tool. No switching between apps."}
+          </p>
+        </div>
+        <div style={{ position:"relative" }}>
+          <div className="grid2" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+            {steps.map(function(step, i) {
+              return (
+                <div key={step.num} style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:16, padding:"28px 28px 24px", position:"relative", overflow:"hidden" }}>
+                  <div style={{ position:"absolute", top:20, right:24, fontFamily:fMono, fontSize:48, fontWeight:700, color:L.border, lineHeight:1, userSelect:"none" }}>{step.num}</div>
+                  <div style={{ width:44, height:44, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:16 }}>
+                    <Icon name={step.icon} size={20} color={L.accent} />
+                  </div>
+                  <h3 className="d-card-title" style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:L.ink, marginBottom:8, letterSpacing:"-0.01em" }}>{step.title}</h3>
+                  <p className="d-card-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300 }}>{step.desc}</p>
+                  {i === 2 && (
+                    <div style={{ marginTop:14, display:"inline-flex", alignItems:"center", gap:6, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:6, padding:"4px 10px" }}>
+                      <Icon name="check" size={11} color={L.accent} />
+                      <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.05em" }}>
+                        {lang==="de" ? "Kein doppeltes Eingeben" : lang==="fr" ? "Aucune double saisie" : lang==="es" ? "Sin duplicar datos" : lang==="it" ? "Nessuna duplicazione" : lang==="hu" ? "Nincs kétszeres bevitel" : "No re-entering data"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div style={{ textAlign:"center", marginTop:40 }}>
+          <button onClick={function(){ setPage("Generator"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:10, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, boxShadow:"0 6px 20px rgba(59,91,219,0.25)" }}>
+            {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : lang==="es" ? "Probarlo ahora →" : lang==="it" ? "Provalo adesso →" : lang==="hu" ? "Próbáld ki most →" : "Try it now →"}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FeaturesSection(props) {
   var lang = props.lang || "en"; // lang already passed
   return (
@@ -622,7 +710,7 @@ function FeaturesSection(props) {
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
 {t(lang,"featTitle")}
           </h2>
-          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>
             {t(lang,"featSub")}
           </p>
         </div>
@@ -633,8 +721,8 @@ function FeaturesSection(props) {
                 <div style={{ width:36, height:36, background:L.accentGlow, borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:14 }}>
                   <Icon name={f.icon} size={18} color={L.accent} />
                 </div>
-                <h3 style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, marginBottom:8 }}>{f.title}</h3>
-                <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
+                <h3 className="d-card-title" style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, marginBottom:8 }}>{f.title}</h3>
+                <p className="d-card-desc" style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, fontWeight:300 }}>{f.desc}</p>
               </div>
             );
           })}
@@ -728,48 +816,69 @@ var EU_FEATURES = [
 
 function EUComplianceSection(props) {
   var lang = props.lang || "en";
-  var [open, setOpen] = useState(-1);
+  var setPage = props.setPage;
+  var highlights = [
+    {
+      icon:"reverse",
+      title:"Reverse charge — automatic",
+      badge:"Art. 44 EU VAT Dir.",
+      desc:"Invoicing a VAT-registered business in another EU country? InvoiceAI detects it, sets VAT to 0%, and adds the required legal text. No manual configuration.",
+    },
+    {
+      icon:"bank",
+      title:"SEPA & IBAN validation",
+      badge:"ISO 20022",
+      desc:"Every invoice includes a validated SEPA bank transfer block. IBAN checked with mod-97, BIC format verified. Payment references included for clean reconciliation.",
+    },
+    {
+      icon:"hash",
+      title:"Sequential numbering",
+      badge:"Art. 226 EU VAT Dir.",
+      desc:"EU law requires unbroken invoice sequences. InvoiceAI manages numbering automatically — no gaps, no duplicates, separate sequences for credit notes.",
+    },
+  ];
   return (
     <section style={{ background:L.white, borderTop:"1px solid "+L.border, borderBottom:"1px solid "+L.border, padding:"72px 24px" }}>
-      <div style={{ maxWidth:960, margin:"0 auto" }}>
+      <div style={{ maxWidth:900, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:40 }}>
           <Pill color={L.blue}>{t(lang,"pillCompliance")||"EU-Native Compliance"}</Pill>
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
-{t(lang,"euTitle")}
+            {t(lang,"euTitle")}
           </h2>
-          <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, maxWidth:480, margin:"0 auto" }}>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:460, margin:"0 auto" }}>
             {t(lang,"euSub")}
           </p>
         </div>
-        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
-          {EU_FEATURES.map(function(f, i) {
-            var isOpen = open === i;
+        <div className="desktop-eu-grid" style={{ display:"grid", gridTemplateColumns:"1fr", gap:14, marginBottom:28 }}>
+          {highlights.map(function(f) {
             return (
-              <div key={f.title} onClick={function(){ setOpen(isOpen ? -1 : i); }}
-                style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"44" : L.border), borderRadius:10, padding:"14px 16px", cursor:"pointer", transition:"background 0.1s" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:isOpen ? 8 : 0 }}>
-                  <div style={{ width:28, height:28, borderRadius:7, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                    <Icon name={f.icon} size={13} color={L.accent} />
-                  </div>
-                  <div style={{ flex:1, minWidth:0 }}>
-                    <div className="eu-title" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink, lineHeight:1.3 }}>{f.title}</div>
-                    <div className="eu-badge" style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.05em", marginTop:1 }}>{f.badge}</div>
-                  </div>
-                  <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
+              <div key={f.title} style={{ background:L.paper, border:"1.5px solid "+L.border, borderRadius:12, padding:"22px 24px", display:"flex", alignItems:"flex-start", gap:16 }}>
+                <div style={{ width:40, height:40, borderRadius:10, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:2 }}>
+                  <Icon name={f.icon} size={18} color={L.accent} />
                 </div>
-                {isOpen && <p className="eu-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, margin:0, fontWeight:300, paddingTop:8, borderTop:"1px solid "+L.borderLt }}>{f.desc}</p>}
+                <div style={{ flex:1 }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
+                    <span className="d-card-title" style={{ fontFamily:fSans, fontSize:16, fontWeight:600, color:L.ink }}>{f.title}</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 7px", letterSpacing:"0.05em" }}>{f.badge}</span>
+                  </div>
+                  <p className="d-compliance-desc" style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.65, margin:0, fontWeight:300 }}>{f.desc}</p>
+                </div>
               </div>
             );
           })}
         </div>
-        <div style={{ background:L.ink, borderRadius:14, padding:"22px 28px", marginTop:20, display:"flex", alignItems:"center", gap:20, flexWrap:"wrap" }}>
-          <Icon name="archive" size={24} color={L.accentLt} />
-          <div style={{ flex:1 }}>
-            <div style={{ fontFamily:fSerif, fontSize:16, fontWeight:700, color:L.paper, marginBottom:3 }}>10-Year Invoice Archive</div>
-            <div style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.5)", fontWeight:300 }}>
-              German GoBD (§147 AO), French LPF, Italian CAF — EU tax law requires 10-year retention. InvoiceAI archives every invoice automatically.
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:L.ink, borderRadius:14, padding:"20px 28px", flexWrap:"wrap", gap:14 }}>
+          <div>
+            <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.paper, marginBottom:3 }}>
+              12 EU compliance rules built in — VIES, GDPR, XRechnung, OSS, and more.
+            </div>
+            <div style={{ fontFamily:fMono, fontSize:12, color:"rgba(248,249,252,0.4)", letterSpacing:"0.04em" }}>
+              Reverse charge · Late payment · Credit notes · 10-year archive · Non-EU invoicing
             </div>
           </div>
+          <button onClick={function(){ if(setPage) setPage("EUCompliance"); }} style={{ background:"transparent", color:L.paper, border:"1.5px solid rgba(248,249,252,0.25)", padding:"10px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, whiteSpace:"nowrap" }}>
+            Full compliance guide →
+          </button>
         </div>
       </div>
     </section>
@@ -812,7 +921,7 @@ function ReviewsSection(props) {
                   <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                 </div>
                 <Stars n={r.rating} size={12} />
-                <p style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                <p className="d-review-text" style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                 <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
                   <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
                   <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
@@ -837,7 +946,7 @@ function ReviewsSection(props) {
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                   </div>
                   <Stars n={r.rating} size={12} />
-                  <p style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <p className="d-review-text" style={{ fontFamily:fSans, fontSize:15, color:L.ink, lineHeight:1.65, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                   <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
@@ -866,14 +975,14 @@ function ReviewsSection(props) {
                     <div style={{ display:"flex", alignItems:"center", gap:9 }}>
                       <div style={{ width:34, height:34, borderRadius:"50%", background:r.col+"22", border:"1.5px solid "+r.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:13, color:r.col, fontWeight:500, flexShrink:0 }}>{r.av}</div>
                       <div>
-                        <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{r.name}</div>
+                        <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{r.name}</div>
                         <div style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.role} · {r.city}</div>
                       </div>
                     </div>
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.platform}</span>
                   </div>
                   <Stars n={r.rating} size={11} />
-                  <p style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
+                  <p className="d-review-text" style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.6, margin:0, fontStyle:"italic", flex:1 }}>"{r.text}"</p>
                   <div style={{ display:"flex", justifyContent:"space-between", paddingTop:8, borderTop:"1px solid "+L.borderLt }}>
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.green }}>✓ Verified</span>
                     <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{r.helpful} helpful</span>
@@ -929,7 +1038,7 @@ function PricingSection(props) {
           <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4vw,44px)", fontWeight:800, color:L.ink, margin:"14px 0 10px", letterSpacing:"-0.025em" }}>
 {t(lang,"pricingTitle")}
           </h2>
-          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
+          <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300 }}>{t(lang,"pricingSub")}</p>
         </div>
         <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:12, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:20, paddingLeft:4, paddingRight:4 }}>
           {PLANS.map(function(plan) {
@@ -948,7 +1057,7 @@ function PricingSection(props) {
                 <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:24 }}>
                   {plan.features.map(function(f) {
                     return (
-                      <div key={f} style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(255,255,255,0.8)" : L.ink, lineHeight:1.4 }}>
+                      <div key={f} className="d-pricing-feat" style={{ display:"flex", gap:8, fontFamily:fSans, fontSize:14, color:plan.hi ? "rgba(255,255,255,0.8)" : L.ink, lineHeight:1.4 }}>
                         <Icon name="check" size={13} color={plan.hi ? "rgba(255,255,255,0.7)" : L.green} />
                         {f}
                       </div>
@@ -1031,6 +1140,15 @@ function InvoicePreviewPanel(props) {
   var [xrError, setXrError] = useState("");
   var [navLoading, setNavLoading] = useState(false);
   var [navError, setNavError] = useState("");
+  var [numCopied, setNumCopied] = useState(false);
+
+  function copyInvNum() {
+    var num = s.creditNote ? cnNum : invNum;
+    navigator.clipboard.writeText(num).then(function(){
+      setNumCopied(true);
+      setTimeout(function(){ setNumCopied(false); }, 2000);
+    }).catch(function(){});
+  }
 
   function exportXRechnung() {
     setXrLoading(true); setXrError("");
@@ -1156,12 +1274,12 @@ function InvoicePreviewPanel(props) {
     })
     .catch(function(err){ setNavError(err.message); setNavLoading(false); });
   }
-  var [shareLoading, setShareLoading] = useState(false);
+  var [sharePhase, setSharePhase] = useState("idle"); // idle | saving | copied | error
   var [shareUrl, setShareUrl] = useState("");
   var [shareCopied, setShareCopied] = useState(false);
 
   function shareInvoice() {
-    setShareLoading(true); setShareUrl(""); setShareCopied(false);
+    setSharePhase("saving"); setShareUrl("");
     var payload = {
       inv_number:    invNum,
       seller_name:   s.sName || "Your Name / Studio",
@@ -1201,13 +1319,25 @@ function InvoicePreviewPanel(props) {
       if (data.id) {
         var url = "https://invoice-ai.de/?portal=" + data.id;
         setShareUrl(url);
-        navigator.clipboard.writeText(url).then(function(){ setShareCopied(true); }).catch(function(){});
+        navigator.clipboard.writeText(url).catch(function(){});
+        setSharePhase("copied");
+        setTimeout(function(){ setSharePhase("idle"); }, 3000);
       } else {
-        setShareUrl("error");
+        setSharePhase("error");
+        setTimeout(function(){ setSharePhase("idle"); }, 4000);
       }
-      setShareLoading(false);
     })
-    .catch(function() { setShareUrl("error"); setShareLoading(false); });
+    .catch(function() {
+      setSharePhase("error");
+      setTimeout(function(){ setSharePhase("idle"); }, 4000);
+    });
+  }
+
+  function copyShareUrl() {
+    navigator.clipboard.writeText(shareUrl).then(function(){
+      setShareCopied(true);
+      setTimeout(function(){ setShareCopied(false); }, 2000);
+    }).catch(function(){});
   }
 
   return (
@@ -1224,24 +1354,20 @@ function InvoicePreviewPanel(props) {
           <Icon name="document" size={13} color="#fff" />
           {xrLoading ? "…" : "XRechnung XML"}
         </button>
-        <button onClick={shareInvoice} disabled={shareLoading} style={{ flex:1, background:shareLoading ? L.border : L.accent, color:shareLoading ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:shareLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-          <Icon name="send" size={13} color={shareLoading ? L.muted : "#fff"} />
-          {shareLoading ? "…" : "Share"}
+        <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{ flex:1, background:sharePhase === "copied" ? L.green : sharePhase === "saving" ? L.border : L.accent, color:sharePhase === "saving" ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:sharePhase === "saving" ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6, transition:"background 0.2s" }}>
+          <Icon name={sharePhase === "copied" ? "check" : "send"} size={13} color={sharePhase === "saving" ? L.muted : "#fff"} />
+          {sharePhase === "saving" ? "Saving…" : sharePhase === "copied" ? "✓ Link copied" : "Share with client"}
         </button>
       </div>
-      {shareUrl && shareUrl !== "error" && (
-        <div style={{ background:L.greenGlow, border:"1px solid "+L.green+"44", borderRadius:8, padding:"10px 14px", marginBottom:8, maxWidth:580, display:"flex", alignItems:"center", gap:10 }}>
-          <Icon name="check" size={13} color={L.green} />
-          <div style={{ flex:1 }}>
-            <div style={{ fontFamily:fMono, fontSize:11, color:L.green, letterSpacing:"0.06em", marginBottom:2 }}>{shareCopied ? "✓ Link copied to clipboard" : "Link ready"}</div>
-            <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, wordBreak:"break-all" }}>{shareUrl}</div>
-          </div>
-          <button onClick={function(){ navigator.clipboard.writeText(shareUrl).then(function(){ setShareCopied(true); }); }} style={{ background:"transparent", border:"1px solid "+L.green+"55", borderRadius:5, padding:"4px 9px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0 }}>
-            Copy
+      {sharePhase === "copied" && shareUrl && (
+        <div style={{ maxWidth:580, marginBottom:8, display:"flex", alignItems:"center", gap:8, background:L.greenGlow, border:"1px solid "+L.green+"33", borderRadius:8, padding:"9px 12px" }}>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{shareUrl}</span>
+          <button onClick={copyShareUrl} style={{ background:"transparent", border:"1px solid "+L.green+"44", borderRadius:5, padding:"3px 9px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0, whiteSpace:"nowrap" }}>
+            {shareCopied ? "✓ Copied" : "Copy again"}
           </button>
         </div>
       )}
-      {shareUrl === "error" && (
+      {sharePhase === "error" && (
         <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"9px 14px", marginBottom:8, maxWidth:580, fontFamily:fSans, fontSize:13, color:"#C0392B" }}>
           Share failed — check that Supabase is configured in Vercel env vars.
         </div>
@@ -1277,7 +1403,10 @@ function InvoicePreviewPanel(props) {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22 }}>
           <div>
             <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:900, color:s.creditNote ? L.gold : L.ink, letterSpacing:"-0.02em" }}>{s.creditNote ? "CREDIT NOTE" : "INVOICE"}</div>
-            <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, marginTop:2 }}>No. {s.creditNote ? cnNum : invNum}</div>
+            <div onClick={copyInvNum} title="Click to copy" style={{ fontFamily:fMono, fontSize:12, color:numCopied ? L.green : L.muted, marginTop:2, cursor:"pointer", display:"inline-flex", alignItems:"center", gap:5, userSelect:"none" }}>
+              {numCopied ? "✓ Copied" : "No. " + (s.creditNote ? cnNum : invNum)}
+              {!numCopied && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><rect x="4" y="1" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><rect x="1" y="4" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="white"/></svg>}
+            </div>
             {s.projRef && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:3, fontStyle:"italic" }}>Re: {s.projRef}</div>}
           </div>
           <div style={{ textAlign:"right" }}>
@@ -1327,7 +1456,7 @@ function InvoicePreviewPanel(props) {
         )}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:4 }}>Bill To</div>
-          <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{s.cName}</div>
+          <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{s.cName}</div>
           {s.cStreet && <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{s.cStreet}</div>}
           {s.cCity && <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{s.cCity}</div>}
           {s.cVAT && <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, marginTop:2 }}>VAT No: {s.cVAT}</div>}
@@ -1345,7 +1474,7 @@ function InvoicePreviewPanel(props) {
               var lt = (parseFloat(l.qty)||0) * (parseFloat(l.rate)||0);
               return (
                 <tr key={i} style={{ borderBottom:"1px solid "+L.border }}>
-                  <td style={{ fontFamily:fSans, fontSize:14, color:L.ink, padding:"8px 0" }}>{l.desc}</td>
+                  <td className="d-inv-td" style={{ fontFamily:fSans, fontSize:14, color:L.ink, padding:"8px 0" }}>{l.desc}</td>
                   <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"8px 0" }}>{l.qty}</td>
                   <td style={{ fontFamily:fMono, fontSize:13, color:L.muted, textAlign:"right", padding:"8px 0" }}>{sym+parseFloat(l.rate||0).toFixed(2)}</td>
                   <td style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500, textAlign:"right", padding:"8px 0" }}>{sym+lt.toFixed(2)}</td>
@@ -1482,7 +1611,7 @@ function InvoiceForm(props) {
     <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
       <div>
         <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>Create an Invoice</h2>
-        <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Fill in your details. Every EU rule — VAT, reverse charge, SEPA — applied automatically.</p>
+        <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Fill in your details. Every EU rule — VAT, reverse charge, SEPA — applied automatically.</p>
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
             <div style={{ gridColumn:"1/-1" }}><label style={lblStyle}>Business Name *</label><input value={s.sName} onChange={function(e){ u("sName",e.target.value); }} style={inpStyle} /></div>
@@ -1686,6 +1815,7 @@ function InvoiceForm(props) {
 function ProposalForm(props) {
   var onFirstGenerate = props.onFirstGenerate;
   var lang = props.lang || "en";
+  var onConvertToInvoice = props.onConvertToInvoice;
   var [clientName, setClientName] = useState("");
   var [clientCo, setClientCo] = useState("");
   var [clientCountry, setClientCountry] = useState("DE");
@@ -1698,6 +1828,14 @@ function ProposalForm(props) {
   var [result, setResult] = useState("");
   var [hasGen, setHasGen] = useState(false);
   var [history, setHistory] = useState([]);
+  var [convertToInvoice, setConvertToInvoice] = useState(false);
+
+  useEffect(function() {
+    if (convertToInvoice && onConvertToInvoice) {
+      onConvertToInvoice({ client: clientCo || clientName, title: projType || "Project", value: 0 });
+      setConvertToInvoice(false);
+    }
+  }, [convertToInvoice]);
 
   var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'Inter',sans-serif", fontSize:15, color:L.ink, background:L.white, outline:"none" };
   var lblStyle = { display:"block", marginBottom:4, fontFamily:"'DM Mono',monospace", fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
@@ -1793,7 +1931,7 @@ function ProposalForm(props) {
     <div className="prop-grid desktop-prop" style={{ maxWidth:900, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
-        <p style={{ fontFamily:"'Inter',sans-serif", fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
+        <p className="d-section-sub" style={{ fontFamily:"'Inter',sans-serif", fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
           <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
           <div style={{ padding:"16px 16px" }}>
@@ -1896,7 +2034,8 @@ function ProposalForm(props) {
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
                   <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>↺ Redo</button>
-                  <button onClick={function(){ window.print(); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
+                  <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
+                  <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12, fontWeight:500 }}>→ Invoice</button>
                 </div>
               )}
             </div>
@@ -1933,15 +2072,22 @@ function InvoiceGen(props) {
   var onFirstGenerate = props.onFirstGenerate;
   var setPage = props.setPage;
   var lang = props.lang || "en";
-  var [mode, setMode] = useState("invoice");
+  var convertProposal = props.convertProposal;
+  var onConvertDone = props.onConvertDone;
+  var [mode, setMode] = useState(convertProposal ? "invoice" : "invoice");
   var [view, setView] = useState("form");
+  var [convertBanner, setConvertBanner] = useState(!!convertProposal);
 
   var defaultInvState = {
     country:EU[0], terms:"30", rc:false, gdpr:true, latePayment:false, creditNote:false, vatExempt:false, eInvoice:false, discount:"", projRef:"",
     invNum:"DE-" + new Date().getFullYear() + "-001",
     sName:"Your Name / Studio", sVAT:"", sIBAN:"", sBIC:"", sStreet:"Your Street", sCity:"Your City",
-    cName:"Studio Verde GmbH", cVAT:"", cCo:"DE", cStreet:"", cCity:"",
-    lines:[{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
+    cName: convertProposal ? convertProposal.client : "Studio Verde GmbH",
+    cVAT:"", cCo:"DE", cStreet:"", cCity:"",
+    projRef: convertProposal ? convertProposal.title : "",
+    lines: convertProposal
+      ? [{ id:1, desc:convertProposal.title, qty:1, rate:convertProposal.value }]
+      : [{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
   };
 
   var [invState, setInvState] = useState(defaultInvState);
@@ -1979,6 +2125,17 @@ function InvoiceGen(props) {
 
   return (
     <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
+      {convertBanner && convertProposal && (
+        <div style={{ background:L.greenGlow, borderBottom:"1px solid "+L.green+"44", padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <Icon name="check" size={14} color={L.green} />
+            <span style={{ fontFamily:fSans, fontSize:14, color:L.green, fontWeight:500 }}>
+              Converting "{convertProposal.title}" — client and amount pre-filled.
+            </span>
+          </div>
+          <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss ×</button>
+        </div>
+      )}
       <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
         <div style={{ display:"inline-flex", gap:4, background:L.cream, borderRadius:10, padding:"4px", border:"1px solid "+L.border }}>
           {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
@@ -1999,7 +2156,17 @@ function InvoiceGen(props) {
           </div>
         )}
       </div>
-      {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} />}
+      {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} onConvertToInvoice={function(data){
+        setConvertBanner(true);
+        var newState = Object.assign({}, invState, {
+          cName: data.client || invState.cName,
+          projRef: data.title || "",
+          lines: data.value > 0 ? [{ id:1, desc:data.title, qty:1, rate:data.value }] : invState.lines,
+        });
+        setInvState(newState);
+        setMode("invoice");
+        setView("form");
+      }} />}
       {mode==="invoice" && view==="form" && (
         <InvoiceForm state={invState} update={updateInv} setView={setView} addLine={addLine} updLine={updLine} remLine={remLine} />
       )}
@@ -2019,6 +2186,8 @@ var CLIENTS = [
 ];
 
 function Dashboard(props) {
+  var setPage = props.setPage;
+  var setConvertProposal = props.setConvertProposal;
   var [section, setSection] = useState("overview");
   var [client, setClient] = useState(null);
   var nav = [
@@ -2028,6 +2197,12 @@ function Dashboard(props) {
     { id:"proposals", label:"Proposals", icon:"proposal" },
     { id:"brandkits", label:"Brand Kits",icon:"brand" },
   ];
+
+  function handleConvert(proposal) {
+    if (setConvertProposal) setConvertProposal(proposal);
+    if (setPage) setPage("Generator");
+  }
+
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 56px)", background:"#F0EDE6" }}>
       <div className="dash-aside" style={{ width:220, background:"#1A1F2E", padding:"20px 0", flexShrink:0 }}>
@@ -2052,7 +2227,7 @@ function Dashboard(props) {
         {section==="clients" && !client && <DClients setClient={setClient} />}
         {section==="clients" && client && <DClientDetail client={client} setClient={setClient} />}
         {section==="payments" && <DPayments />}
-        {section==="proposals" && <DProposals />}
+        {section==="proposals" && <DProposals onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
       </div>
     </div>
@@ -2085,7 +2260,7 @@ function DashHeader(props) {
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:24, paddingBottom:20, borderBottom:"1px solid "+L.border }}>
       <div>
         <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:800, color:L.ink, letterSpacing:"-0.02em", marginBottom:4 }}>{meta.title}</h2>
-        <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>{meta.sub}</p>
+        <p className="d-dash-sub" style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>{meta.sub}</p>
       </div>
       {action}
     </div>
@@ -2105,10 +2280,34 @@ function DashStatPill(props) {
 }
 
 function DOverview() {
+  var nudges = [
+    { icon:"clock",    color:L.accent, msg:"App UI Kit proposal hasn't had a reply in 3 days.", action:"Send follow-up" },
+    { icon:"document", color:L.accent, msg:"Invoice FR-2026-0021 is overdue by 108 days.", action:"Send reminder" },
+    { icon:"send",     color:L.gold,   msg:"Pitch Deck proposal was viewed 7 times — no reply yet.", action:"Follow up now" },
+  ];
+  var [dismissed, setDismissed] = useState([]);
+  var visible = nudges.filter(function(n, i){ return dismissed.indexOf(i) < 0; });
   return (
     <div>
       <h1 style={{ fontFamily:fSerif, fontSize:26, fontWeight:800, color:L.ink, marginBottom:4, letterSpacing:"-0.025em" }}>Good morning, Alex.</h1>
       <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:24 }}>Wednesday, 29 April 2026 · 4 clients · 1 overdue</p>
+      {visible.length > 0 && (
+        <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:24 }}>
+          {visible.map(function(n, i) {
+            var realIdx = nudges.indexOf(n);
+            return (
+              <div key={i} style={{ background:L.white, border:"1px solid "+n.color+"33", borderRadius:10, padding:"11px 16px", display:"flex", alignItems:"center", gap:12 }}>
+                <div style={{ width:28, height:28, borderRadius:7, background:n.color+"12", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={n.icon} size={13} color={n.color} />
+                </div>
+                <span style={{ flex:1, fontFamily:fSans, fontSize:14, color:L.ink }}>{n.msg}</span>
+                <button style={{ background:n.color, color:"#fff", border:"none", padding:"5px 12px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:500, whiteSpace:"nowrap" }}>{n.action}</button>
+                <button onClick={function(){ setDismissed(function(d){ return d.concat([realIdx]); }); }} style={{ background:"none", border:"none", color:L.faint, cursor:"pointer", fontSize:16, padding:"0 2px", lineHeight:1 }}>×</button>
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div className="stat-grid" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:24 }}>
         <StatCard label="Total Billed" value="€84,200" sub="↑ +23% vs last month" color={L.ink} />
         <StatCard label="Collected" value="€71,400" sub="84.8% collection rate" color={L.green} />
@@ -2159,7 +2358,7 @@ function DClients(props) {
             <div key={c.id} onClick={function(){ setClient(c); }} style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, padding:"16px 20px", cursor:"pointer", display:"flex", alignItems:"center", gap:14 }}>
               <div style={{ width:40, height:40, borderRadius:"50%", background:c.col+"22", border:"1.5px solid "+c.col+"30", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:15, color:c.col, fontWeight:500, flexShrink:0 }}>{c.av}</div>
               <div style={{ flex:1 }}>
-                <div style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{c.name}</div>
+                <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:14, fontWeight:600, color:L.ink }}>{c.name}</div>
                 <div style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>{c.flag} · {c.city} · {c.invoices} invoices</div>
               </div>
               <div style={{ textAlign:"right" }}>
@@ -2236,7 +2435,7 @@ function DPayments() {
               <div style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 20px", background:isOverdue ? "rgba(200,80,42,0.03)" : "transparent" }}>
                 <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, width:130, flexShrink:0 }}>{r.inv}</div>
                 <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:fSans, fontSize:15, color:L.ink }}>{r.client}</div>
+                  <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:15, color:L.ink }}>{r.client}</div>
                   {isOverdue && <div style={{ fontFamily:fMono, fontSize:11, color:L.accent, marginTop:2 }}>{"Overdue "+r.daysOver+" days"}</div>}
                 </div>
                 <div style={{ fontFamily:fMono, fontSize:15, color:L.ink, fontWeight:500, flexShrink:0 }}>{"€"+r.amount.toLocaleString()}</div>
@@ -2279,14 +2478,23 @@ function DPayments() {
   );
 }
 
-function DProposals() {
+function DProposals(props) {
+  var onConvert = props.onConvert;
   var rows = [
-    { title:"Brand Identity — TechFlow",    client:"Studio Verde GmbH", value:8400,  status:"won",      sent:"12 Apr", views:4 },
-    { title:"App UI Kit + Design System",   client:"Nord Digital AS",   value:12000, status:"sent",     sent:"28 Apr", views:2 },
-    { title:"Pitch Deck — Series A",        client:"Bianchi & Co.",     value:2800,  status:"viewed",   sent:"22 Apr", views:7 },
-    { title:"Website Redesign",             client:"Maison Fontaine",   value:6500,  status:"declined", sent:"5 Mar",  views:1 },
+    { title:"Brand Identity — TechFlow",    client:"Studio Verde GmbH", value:8400,  status:"won",      sent:"12 Apr", views:4, lastViewed:"2 days ago" },
+    { title:"App UI Kit + Design System",   client:"Nord Digital AS",   value:12000, status:"sent",     sent:"28 Apr", views:2, lastViewed:"3 days ago" },
+    { title:"Pitch Deck — Series A",        client:"Bianchi & Co.",     value:2800,  status:"viewed",   sent:"22 Apr", views:7, lastViewed:"6 hours ago" },
+    { title:"Website Redesign",             client:"Maison Fontaine",   value:6500,  status:"declined", sent:"5 Mar",  views:1, lastViewed:"8 Mar" },
   ];
-  var stColor = { won:L.green, sent:L.blue, viewed:L.gold, declined:L.accent };
+  var stColor = { won:L.green, sent:L.blue, viewed:L.gold, declined:L.muted };
+  var stLabel = { won:"Won", sent:"Sent", viewed:"Viewed", declined:"Declined" };
+  var [copied, setCopied] = useState(null);
+
+  function duplicate(title) {
+    setCopied(title);
+    setTimeout(function(){ setCopied(null); }, 2000);
+  }
+
   return (
     <div>
       <DashHeader section="proposals" action={
@@ -2297,14 +2505,46 @@ function DProposals() {
       } />
       <div style={{ background:"#FAF7F2", border:"1.5px solid #D8D0C4", borderRadius:12, overflow:"hidden" }}>
         {rows.map(function(r, i) {
+          var sc = stColor[r.status] || L.muted;
+          var isWon = r.status === "won";
+          var noReply = r.status === "sent" || r.status === "viewed";
           return (
-            <div key={r.title} style={{ display:"flex", alignItems:"center", gap:14, padding:"14px 20px", borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
-              <div style={{ flex:1 }}>
-                <div style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.ink }}>{r.title}</div>
-                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{r.client} · {r.views} views · sent {r.sent}</div>
+            <div key={r.title} style={{ borderBottom:i<rows.length-1?"1px solid "+L.borderLt:"none" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:14, padding:"14px 20px" }}>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div className="d-dash-body" style={{ fontFamily:fSans, fontSize:15, fontWeight:500, color:L.ink, marginBottom:3 }}>{r.title}</div>
+                  <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+                    <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>{r.client}</span>
+                    <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>·</span>
+                    <div style={{ display:"flex", alignItems:"center", gap:4 }}>
+                      <Icon name="overview" size={11} color={L.faint} />
+                      <span style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>{r.views} views</span>
+                    </div>
+                    <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>·</span>
+                    <span style={{ fontFamily:fMono, fontSize:11, color:L.muted }}>last seen {r.lastViewed}</span>
+                    <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>·</span>
+                    <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>sent {r.sent}</span>
+                  </div>
+                </div>
+                <div style={{ fontFamily:fMono, fontSize:15, color:L.ink, fontWeight:500, flexShrink:0 }}>{"€"+r.value.toLocaleString()}</div>
+                <div style={{ fontFamily:fMono, fontSize:11, color:sc, background:sc+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em", flexShrink:0 }}>{stLabel[r.status]}</div>
+                <button onClick={function(){ duplicate(r.title); }} style={{ background:"transparent", border:"1px solid "+L.border, color:L.muted, padding:"5px 10px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:12, flexShrink:0, whiteSpace:"nowrap" }}>
+                  {copied === r.title ? "✓ Duplicated" : "Duplicate"}
+                </button>
+                {isWon && (
+                  <button onClick={function(){ if(onConvert) onConvert(r); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"5px 10px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>
+                    → Invoice
+                  </button>
+                )}
               </div>
-              <div style={{ fontFamily:fMono, fontSize:15, color:L.ink, fontWeight:500 }}>{"€"+r.value.toLocaleString()}</div>
-              <div style={{ fontFamily:fMono, fontSize:11, color:stColor[r.status]||L.muted, background:(stColor[r.status]||L.muted)+"15", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{r.status}</div>
+              {noReply && r.views >= 2 && (
+                <div style={{ margin:"0 20px 10px", padding:"8px 12px", background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:7, display:"flex", alignItems:"center", justifyContent:"space-between", gap:10 }}>
+                  <span style={{ fontFamily:fSans, fontSize:13, color:L.gold }}>
+                    {r.views >= 5 ? "Viewed " + r.views + " times with no reply — strong interest signal." : "No reply yet — last viewed " + r.lastViewed + "."}
+                  </span>
+                  <button style={{ background:L.gold, color:"#fff", border:"none", padding:"4px 10px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500, whiteSpace:"nowrap" }}>Follow up</button>
+                </div>
+              )}
             </div>
           );
         })}
@@ -2393,7 +2633,7 @@ function Footer(props) {
   var lang = props.lang || "en";
   var yr = new Date().getFullYear();
   var cols = [
-    { title:t(lang,"footerProduct")||"Product", links:[[t(lang,"navGenerator")||"Generator","Generator"],[t(lang,"navPricing")||"Pricing","Pricing"],[t(lang,"navDashboard")||"Dashboard","Dashboard"]] },
+    { title:t(lang,"footerProduct")||"Product", links:[[t(lang,"navGenerator")||"Generator","Generator"],[t(lang,"navPricing")||"Pricing","Pricing"],[t(lang,"navDashboard")||"Dashboard","Dashboard"],["EU Compliance","EUCompliance"]] },
     { title:t(lang,"footerCompany")||"Company", links:[["About","About"],["Blog","Blog"],["Careers","Careers"]] },
     { title:t(lang,"footerLegal")||"Legal",   links:[["Privacy Policy","Privacy"],["Terms of Service","Terms"],["GDPR & Data","GDPR"],["Cookie Policy","Cookies"],["FAQ","FAQ"]] },
   ];
@@ -2410,7 +2650,7 @@ function Footer(props) {
               <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(245,240,232,0.3)", letterSpacing:"0.1em", textTransform:"uppercase" }}>for Europe</div>
             </div>
           </div>
-          <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:280, fontWeight:300, marginBottom:12 }}>The only invoicing tool built for EU freelancers who work across borders.</p>
+          <p style={{ fontFamily:fSans, fontSize:14, color:"rgba(245,240,232,0.4)", lineHeight:1.6, maxWidth:280, fontWeight:300, marginBottom:12 }}>From proposal to payment in minutes — built for European freelancers who work across borders.</p>
           <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
             {["EU VAT compliant","GDPR compliant","SEPA ready"].map(function(b) {
               return <span key={b} style={{ fontFamily:fMono, fontSize:11, color:L.gold, border:"1px solid "+L.gold+"55", borderRadius:4, padding:"3px 8px", letterSpacing:"0.07em" }}>{b}</span>;
@@ -2468,7 +2708,7 @@ function SubLayout(props) {
           <p style={{ fontFamily:fSans, fontSize:15, color:accent ? "rgba(255,255,255,0.75)" : L.muted, fontWeight:300, lineHeight:1.65, maxWidth:520, margin:"0 auto" }}>{sub}</p>
         </div>
       </div>
-      <div className="desktop-prose" style={{ maxWidth:720, margin:"0 auto", padding:"48px 24px 80px", fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
+      <div className="desktop-prose d-body" style={{ maxWidth:720, margin:"0 auto", padding:"48px 24px 80px", fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
         {props.children}
       </div>
     </div>
@@ -2770,6 +3010,102 @@ function PageGDPR() {
             </div>
           );
         })}
+      </div>
+    </SubLayout>
+  );
+}
+
+function PageEUCompliance(props) {
+  var setPage = props.setPage;
+  var openModal = props.openModal;
+  var [open, setOpen] = useState(-1);
+
+  var VAT_TABLE = [
+    { country:"Germany",     code:"DE", rate:"19%", threshold:"€22,000",  format:"DD.MM.YYYY", note:"XRechnung mandatory B2G, phasing B2B 2025–2028" },
+    { country:"France",      code:"FR", rate:"20%", threshold:"€37,500",  format:"DD/MM/YYYY", note:"Factur-X mandatory from Sept 2026" },
+    { country:"Italy",       code:"IT", rate:"22%", threshold:"€85,000",  format:"DD/MM/YYYY", note:"FatturaPA via SDI mandatory since 2019" },
+    { country:"Netherlands", code:"NL", rate:"21%", threshold:"€20,000",  format:"DD-MM-YYYY", note:"Peppol BIS widely used" },
+    { country:"Spain",       code:"ES", rate:"21%", threshold:"€85,000",  format:"DD/MM/YYYY", note:"Facturae for public sector" },
+    { country:"Belgium",     code:"BE", rate:"21%", threshold:"€25,000",  format:"DD/MM/YYYY", note:"Peppol live for B2G" },
+    { country:"Austria",     code:"AT", rate:"20%", threshold:"€35,000",  format:"DD.MM.YYYY", note:"ebInterface for public sector" },
+    { country:"Sweden",      code:"SE", rate:"25%", threshold:"SEK 80,000", format:"YYYY-MM-DD", note:"Peppol mandatory B2G" },
+    { country:"Poland",      code:"PL", rate:"23%", threshold:"PLN 200,000", format:"DD.MM.YYYY", note:"KSeF mandatory April 2026" },
+    { country:"Hungary",     code:"HU", rate:"27%", threshold:"HUF 12M",  format:"YYYY.MM.DD", note:"NAV Online Számla real-time reporting" },
+  ];
+
+  return (
+    <SubLayout pill="EU Compliance" title="How InvoiceAI handles EU compliance." sub="Every rule, explained plainly. Built into the product so you don't have to think about it.">
+
+      <SH>The 12 rules built into every invoice</SH>
+      <SP>EU invoicing law is a patchwork of directives, national implementations, and special cases. Here's everything InvoiceAI handles automatically.</SP>
+
+      <div style={{ display:"flex", flexDirection:"column", gap:8, margin:"20px 0 36px" }}>
+        {EU_FEATURES.map(function(f, i) {
+          var isOpen = open === i;
+          return (
+            <div key={f.title} style={{ background:isOpen ? L.cream : L.white, border:"1.5px solid "+(isOpen ? L.accent+"33" : L.border), borderRadius:10, overflow:"hidden" }}>
+              <button onClick={function(){ setOpen(isOpen ? -1 : i); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:12, padding:"14px 16px", background:"transparent", border:"none", cursor:"pointer", textAlign:"left" }}>
+                <div style={{ width:32, height:32, borderRadius:8, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={f.icon} size={14} color={L.accent} />
+                </div>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink }}>{f.title}</div>
+                  <div style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.05em", marginTop:2 }}>{f.badge}</div>
+                </div>
+                <span style={{ fontFamily:fMono, fontSize:12, color:L.faint, flexShrink:0 }}>{isOpen ? "▲" : "▼"}</span>
+              </button>
+              {isOpen && (
+                <div style={{ padding:"0 16px 16px 60px", borderTop:"1px solid "+L.borderLt }}>
+                  <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.7, margin:"12px 0 0", fontWeight:300 }}>{f.desc}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <SH>VAT rates and thresholds by country</SH>
+      <SP>Small-business VAT exemptions vary significantly across the EU. InvoiceAI shows the correct threshold for each client country and flags when you may need to register.</SP>
+
+      <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, overflow:"hidden", margin:"16px 0 36px" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 60px 60px 100px 1fr", gap:0, padding:"10px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}>
+          {["Country","Code","VAT","Threshold","Notes"].map(function(h) {
+            return <span key={h} style={{ fontFamily:fMono, fontSize:10, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase" }}>{h}</span>;
+          })}
+        </div>
+        {VAT_TABLE.map(function(row, i) {
+          return (
+            <div key={row.code} style={{ display:"grid", gridTemplateColumns:"1fr 60px 60px 100px 1fr", gap:0, padding:"11px 16px", borderBottom:i<VAT_TABLE.length-1?"1px solid "+L.borderLt:"none", background:i%2===0 ? "transparent" : L.paper }}>
+              <span style={{ fontFamily:fSans, fontSize:14, color:L.ink, fontWeight:500 }}>{row.country}</span>
+              <span style={{ fontFamily:fMono, fontSize:13, color:L.muted }}>{row.code}</span>
+              <span style={{ fontFamily:fMono, fontSize:13, color:L.ink, fontWeight:600 }}>{row.rate}</span>
+              <span style={{ fontFamily:fMono, fontSize:12, color:L.green }}>{row.threshold}</span>
+              <span style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300 }}>{row.note}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      <SH>Reverse charge — when it applies</SH>
+      <SP>Reverse charge (Art. 44 EU VAT Directive) applies when all three conditions are met: you are VAT-registered, your client is VAT-registered, and you are invoicing a business in a different EU member state. InvoiceAI detects this automatically when you enter a valid client VAT number and the client country differs from yours.</SP>
+      <SP>When reverse charge applies: VAT is set to 0%, the required legal text is added ("Steuerschuldnerschaft des Leistungsempfängers" / "Autoliquidation"), and you are reminded to include the transaction in your quarterly ZM (recapitulative statement).</SP>
+      <SP>Reverse charge does not apply to B2C invoices, to clients in the same country, or to Kleinunternehmer (§19 UStG) — InvoiceAI blocks the combination automatically.</SP>
+
+      <SH>XRechnung and e-invoice mandates</SH>
+      <SP>Germany requires XRechnung (EN 16931 / XRechnung 3.0) for all invoices to public authorities (B2G) since 2020, with B2B phasing in from 2025 to 2028. InvoiceAI generates fully compliant XRechnung 3.0 XML from your invoice form with one click.</SP>
+      <SP>France's Factur-X mandate takes effect September 2026. Italy's FatturaPA via SDI has been mandatory for all invoices since 2019. Poland's KSeF system launched April 2026. InvoiceAI adds these as they become available.</SP>
+
+      <SH>What we don't do (and why)</SH>
+      <SP>InvoiceAI is not a tax filing system, accounting software, or registered tax advisor. We handle invoice generation and compliance formatting — VAT calculations, required legal text, and e-invoice XML. You remain responsible for filing your VAT returns, ZM statements, and OSS registrations. We recommend working with a local Steuerberater or accountant for those obligations.</SP>
+
+      <div style={{ background:L.accent, borderRadius:14, padding:"24px 28px", marginTop:36, display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:14 }}>
+        <div>
+          <div style={{ fontFamily:fSerif, fontSize:18, fontWeight:700, color:"#fff", marginBottom:4 }}>Questions about your specific situation?</div>
+          <div style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>The support bot knows EU compliance well. Or email us at hello@invoice-ai.de</div>
+        </div>
+        <button onClick={function(){ if(openModal) openModal("eu-compliance"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, whiteSpace:"nowrap" }}>
+          Get early access →
+        </button>
       </div>
     </SubLayout>
   );
@@ -3725,21 +4061,22 @@ export default function App() {
     try { localStorage.removeItem("invoiceai_user"); } catch(e) {}
     setPage("Home");
   }
+  var [convertProposal, setConvertProposal] = useState(null);
 
   useEffect(function() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
-  var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ"].indexOf(page) >= 0;
+  var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ","EUCompliance"].indexOf(page) >= 0;
   return (
     <>
       <style>{FONTS}</style>
-      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 15px !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } }"}</style>
+      <style>{"* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #F8F9FC; overflow-x: hidden; } @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } } ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: #EDE8DC; } ::-webkit-scrollbar-thumb { background: #D8D0C4; border-radius: 2px; } @media (min-width: 769px) { .nav-burger { display: none !important; } } @media (max-width: 768px) { .nav-desktop { display: none !important; } .nav-cta { display: none !important; } .nav-burger { display: flex !important; flex-direction: column; } .hero-btns { flex-direction: column !important; align-items: stretch !important; } .grid3 { grid-template-columns: 1fr !important; } .grid2 { grid-template-columns: 1fr !important; } .grid4 { grid-template-columns: 1fr 1fr !important; } .prop-grid { grid-template-columns: 1fr !important; } .inv-grid { grid-template-columns: 1fr !important; } .dash-layout { flex-direction: column !important; } .dash-aside { width: 100% !important; flex-direction: row !important; flex-wrap: wrap !important; padding: 10px 8px !important; display: flex !important; gap: 4px; } .bot-panel { width: calc(100vw - 32px) !important; right: 0 !important; } .stat-grid { grid-template-columns: 1fr 1fr !important; } .sub-grid { grid-template-columns: 1fr 1fr !important; } .pricing-scroll > div { flex: 0 0 calc(85vw) !important; min-width: calc(85vw) !important; } .reviews-desktop { display: none !important; } .reviews-mobile { display: block !important; } }  @media (max-width: 480px) { .grid4 { grid-template-columns: 1fr !important; } .stat-grid { grid-template-columns: 1fr !important; } .sub-grid { grid-template-columns: 1fr !important; } } @media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } body * { visibility: hidden; } #print-invoice, #print-invoice * { visibility: visible; } #print-invoice { position: fixed; top: 0; left: 0; width: 100%; padding: 32px 40px; margin: 0; border: none !important; border-radius: 0 !important; box-shadow: none !important; background: #fff !important; } #print-proposal, #print-proposal * { visibility: visible; } #print-proposal { position: fixed; top: 0; left: 0; width: 100%; max-height: none !important; overflow: visible !important; padding: 40px 56px; margin: 0; background: #fff !important; font-size: 14px !important; } } @media (min-width: 1024px) { .reviews-mobile { display: none !important; } .reviews-desktop { display: block !important; } .desktop-pricing { justify-content: center !important; overflow-x: visible !important; } .desktop-pricing > div { flex: 1 !important; min-width: 0 !important; max-width: 340px !important; } .desktop-hero { max-width: 900px !important; } .desktop-feat-cards { max-width: 720px !important; } .desktop-section { max-width: 1100px !important; } .desktop-eu-grid { grid-template-columns: repeat(3, 1fr) !important; } .desktop-eu-grid > div { padding: 16px 18px !important; } .desktop-eu-grid .eu-title { font-size: 14px !important; } .desktop-eu-grid .eu-badge { font-size: 9px !important; } .desktop-eu-grid .eu-desc { font-size: 13px !important; } .desktop-prop { max-width: 960px !important; grid-template-columns: 1fr 1fr !important; gap: 32px !important; padding: 32px 40px 64px !important; } .desktop-inv { max-width: 960px !important; grid-template-columns: 1fr 300px !important; gap: 24px !important; padding: 32px 40px 64px !important; } .desktop-strip { max-width: 700px !important; } .payment-badges { flex-wrap: nowrap !important; } .desktop-prose { max-width: 920px !important; padding: 64px 48px 100px !important; font-size: 16px !important; line-height: 1.85 !important; } .desktop-sub-header { max-width: 900px !important; } .footer-inner { display: flex !important; gap: 48px !important; align-items: flex-start !important; } .footer-brand { max-width: 260px !important; flex-shrink: 0 !important; margin-bottom: 0 !important; } .footer-cols { flex: 1 !important; margin-bottom: 0 !important; } .bot-panel { width: 400px !important; } .bot-trigger { width: 56px !important; height: 56px !important; } .cookie-banner { max-width: 380px !important; padding: 22px 22px 18px !important; font-size: 13px !important; } .d-body { font-size: 15px !important; line-height: 1.7 !important; } .d-body-lg { font-size: 17px !important; line-height: 1.7 !important; } .d-label { font-size: 15px !important; } .d-card-title { font-size: 17px !important; } .d-card-desc { font-size: 15px !important; line-height: 1.65 !important; } .d-section-sub { font-size: 17px !important; line-height: 1.65 !important; } .d-dash-body { font-size: 15px !important; } .d-dash-sub { font-size: 14px !important; } .d-review-text { font-size: 16px !important; line-height: 1.7 !important; } .d-pricing-feat { font-size: 15px !important; } .d-inv-body { font-size: 15px !important; } .d-inv-td { font-size: 15px !important; } .d-compliance-desc { font-size: 15px !important; line-height: 1.7 !important; } }"}</style>
       {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} />}
+      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
       {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Dashboard"    && <Dashboard />}
+      {page==="Dashboard"    && <Dashboard setPage={setPage} setConvertProposal={setConvertProposal} />}
       {page==="ClientPortal" && <ClientPortal setPage={setPage} />}
       {page==="About"        && <PageAbout setPage={setPage} openModal={openModal} />}
       {page==="Blog"         && <PageBlog />}
@@ -3747,6 +4084,7 @@ export default function App() {
       {page==="Privacy"      && <PagePrivacy />}
       {page==="Terms"        && <PageTerms />}
       {page==="GDPR"         && <PageGDPR />}
+      {page==="EUCompliance" && <PageEUCompliance setPage={setPage} openModal={openModal} />}
       {page==="FAQ"          && <PageFAQ setPage={setPage} openModal={openModal} />}
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
       {page !== "ClientPortal" && <SupportBot />}
