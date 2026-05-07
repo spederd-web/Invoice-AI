@@ -75,8 +75,6 @@ export function Nav(props) {
     return function(){ document.removeEventListener("mousedown", handleOutside); };
   }, [genOpen]);
 
-  var nonGenPages = PAGES.filter(function(pg){ return pg !== "Generator" && (user ? pg !== "Dashboard" : true); });
-
   return (
     <nav style={{ position:"sticky", top:0, zIndex:100, background:scrolled ? "rgba(247,248,250,0.88)" : L.white, backdropFilter:scrolled ? "blur(20px)" : "none", WebkitBackdropFilter:scrolled ? "blur(20px)" : "none", borderBottom:"1px solid "+L.border, flexShrink:0, transition:"background 0.3s ease" }}>
       <div style={{ height:58, display:"grid", gridTemplateColumns:"1fr auto 1fr", alignItems:"center", padding:"0 24px", maxWidth:1200, margin:"0 auto", width:"100%" }}>
@@ -86,19 +84,14 @@ export function Nav(props) {
           <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:18, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
         </div>
 
-        {/* Center nav — desktop */}
+        {/* Center nav — desktop. Order: Home · Generator · Compliance · Pricing · Dashboard */}
         <div className="nav-desktop" style={{ display:"flex", gap:1, alignItems:"center" }}>
-          {nonGenPages.map(function(pg) {
-            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
-            var active = page === pg;
-            return (
-              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:"transparent", color:active ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:active ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
-                {pgLabel}
-              </button>
-            );
-          })}
+          {/* Home */}
+          <button onClick={function(){ setPage("Home"); }} style={{ background:"transparent", color:page==="Home" ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page==="Home" ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
+            {t(lang,"navHome") || "Home"}
+          </button>
 
-          {/* Generator dropdown trigger */}
+          {/* Generator dropdown — second */}
           <div ref={genRef} style={{ position:"relative" }}>
             <button onClick={function(){ setGenOpen(function(o){ return !o; }); }} style={{
               background:"transparent",
@@ -117,6 +110,17 @@ export function Nav(props) {
               <GeneratorDropdown setPage={setPage} setGenMode={setGenMode} onClose={function(){ setGenOpen(false); }} />
             )}
           </div>
+
+          {/* Remaining pages: Compliance · Pricing · Dashboard */}
+          {["EUCompliance","Pricing","Dashboard"].filter(function(pg){ return user ? true : pg !== "Dashboard"; }).map(function(pg) {
+            var pgLabel = pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : "Compliance";
+            var active = page === pg;
+            return (
+              <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:"transparent", color:active ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:active ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
+                {pgLabel}
+              </button>
+            );
+          })}
         </div>
 
         {/* Mobile spacer */}
@@ -165,15 +169,11 @@ export function Nav(props) {
       {/* Mobile menu */}
       {menuOpen && (
         <div style={{ position:"absolute", top:58, left:0, right:0, zIndex:200, borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white, boxShadow:"0 8px 24px rgba(10,22,40,0.1)" }}>
-          {nonGenPages.map(function(pg) {
-            var pgLabel = pg === "Home" ? t(lang,"navHome") : pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : pg === "EUCompliance" ? "Compliance" : pg;
-            return (
-              <button key={pg} onClick={function(){ setPage(pg); setMenuOpen(false); }} style={{ background:"transparent", color:page===pg ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pg ? 500 : 400, textAlign:"left" }}>
-                {pgLabel}
-              </button>
-            );
-          })}
-          {/* Generator options in mobile menu */}
+          {/* Home first */}
+          <button onClick={function(){ setPage("Home"); setMenuOpen(false); }} style={{ background:"transparent", color:page==="Home" ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page==="Home" ? 500 : 400, textAlign:"left" }}>
+            {t(lang,"navHome") || "Home"}
+          </button>
+          {/* Generator options inline */}
           <div style={{ height:1, background:L.border, margin:"4px 0" }} />
           <div style={{ padding:"6px 8px 2px" }}>
             <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:L.faint }}>Generator</div>
@@ -197,6 +197,15 @@ export function Nav(props) {
               <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, textAlign:"left" }}>Sign out</button>
             </>
           )}
+          {/* Remaining nav pages */}
+          <div style={{ height:1, background:L.border, margin:"4px 0" }} />
+          {[["EUCompliance","Compliance"],["Pricing",t(lang,"navPricing")||"Pricing"],["Dashboard",t(lang,"navDashboard")||"Dashboard"]].filter(function(pair){ return user ? true : pair[0] !== "Dashboard"; }).map(function(pair) {
+            return (
+              <button key={pair[0]} onClick={function(){ setPage(pair[0]); setMenuOpen(false); }} style={{ background:"transparent", color:page===pair[0] ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pair[0] ? 500 : 400, textAlign:"left" }}>
+                {pair[1]}
+              </button>
+            );
+          })}
           <div style={{ height:1, background:L.border, margin:"8px 0" }} />
           <div style={{ display:"flex", gap:6, flexWrap:"wrap", padding:"4px 8px" }}>
             {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {

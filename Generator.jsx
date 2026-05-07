@@ -972,6 +972,14 @@ export function InvoiceGen(props) {
   var initialMode = props.initialMode || "invoice";
   var [mode, setMode] = useState(convertProposal ? "invoice" : initialMode);
   var [view, setView] = useState("form");
+
+  // Sync when user picks a different mode from the nav dropdown while Generator is already open
+  useEffect(function() {
+    if (!convertProposal) {
+      setMode(initialMode);
+      setView("form");
+    }
+  }, [initialMode]);
   var [convertBanner, setConvertBanner] = useState(!!convertProposal);
 
   var defaultInvState = {
