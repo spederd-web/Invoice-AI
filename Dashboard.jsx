@@ -343,18 +343,17 @@ function DOverview(props) {
       </div>
 
       {/* ── Main 2-col grid ── */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 340px", gap:28, marginBottom:28 }}>
+      <div className="dash-overview-grid" style={{ display:"grid", gridTemplateColumns:"1fr 340px", gap:28, marginBottom:28 }}>
 
         {/* Left column */}
         <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
 
           {/* KPI row — 2 wide cards with sparklines */}
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+          <div className="dash-kpi-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
             <StatCard label="Revenue · May" value="€14,280" sub="↑ +18% vs April" subColor={C.green} spark={SPARK_REV} sparkColor={C.accent} />
             <StatCard label="Outstanding" value="€4,320" sub="4 overdue invoices" subColor={C.red} spark={SPARK_PAID} sparkColor={C.red} />
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
-            <StatCard label="Collected · May" value="€9,960" sub="↑ +24% vs April" subColor={C.green} spark={SPARK_PAID} sparkColor={C.green} />
+          <div className="dash-kpi-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}> sub="↑ +24% vs April" subColor={C.green} spark={SPARK_PAID} sparkColor={C.green} />
             <StatCard label="Open proposals" value="6" sub="2 awaiting reply" subColor={C.gold} />
           </div>
 
