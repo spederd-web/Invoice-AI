@@ -230,52 +230,15 @@ export function HowItWorksSection(props) {
   );
 }
 
-function useScrollReveal(total) {
-  var [visible, setVisible] = useState([]);
-  var refs = [];
-  for (var i = 0; i < total; i++) {
-    refs.push({ current: null });
-  }
-  var refsRef = useRef(refs);
-
-  useEffect(function() {
-    var observers = [];
-    refsRef.current.forEach(function(ref, idx) {
-      if (!ref.current) return;
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            setTimeout(function() {
-              setVisible(function(prev) {
-                if (prev.indexOf(idx) >= 0) return prev;
-                return prev.concat([idx]);
-              });
-            }, idx * 160);
-            obs.disconnect();
-          }
-        });
-      }, { threshold: 0.25 });
-      obs.observe(ref.current);
-      observers.push(obs);
-    });
-    return function() { observers.forEach(function(o) { o.disconnect(); }); };
-  }, []);
-
-  return { visible: visible, refsRef: refsRef };
-}
-
 export function FlowSection(props) {
   var lang = props.lang || "en";
   var setPage = props.setPage;
   var steps = [
-    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",    detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
-    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",           detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
+    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",   detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
+    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",          detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
     { num:"03", label: lang==="de" ? "In Rechnung umwandeln" : lang==="fr" ? "Convertir en facture" : "Convert to invoice", detail: lang==="de" ? "Ein Klick, EU-konform" : lang==="fr" ? "Un clic, conforme UE" : "One click, EU-compliant" },
-    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                            detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
+    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                           detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
   ];
-
-  var reveal = useScrollReveal(steps.length);
-
   return (
     <section style={{ background:L.paper, padding:"100px 24px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
@@ -287,61 +250,26 @@ export function FlowSection(props) {
             {lang==="de" ? "Vier Schritte. Ein Tool." : lang==="fr" ? "Quatre étapes. Un outil." : "Four steps. One tool. Nothing duplicated."}
           </p>
         </div>
-
         <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
           {steps.map(function(s, i) {
             var last = i === steps.length - 1;
-            var shown = reveal.visible.indexOf(i) >= 0;
-            var isLast = i === steps.length - 1;
             return (
-              <div
-                key={i}
-                ref={function(el) { reveal.refsRef.current[i].current = el; }}
-                style={{
-                  display:"flex", gap:32, alignItems:"flex-start",
-                  paddingBottom: last ? 0 : 64,
-                  position:"relative",
-                  opacity: shown ? 1 : 0,
-                  transform: shown ? "translateY(0)" : "translateY(28px)",
-                  transition: "opacity 0.55s ease, transform 0.55s ease",
-                }}
-              >
-                {/* Left — number + connecting line */}
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:56 }}>
-                  <span style={{
-                    fontFamily:fSerif, fontSize:52, fontWeight:400, lineHeight:1,
-                    letterSpacing:"-0.04em", userSelect:"none",
-                    color: shown ? (isLast ? L.accent : L.ink) : L.border,
-                    transition: "color 0.4s ease 0.2s",
-                  }}>
-                    {i + 1}
-                  </span>
-                  {!last && (
-                    <div style={{
-                      width:1, flex:1, marginTop:10,
-                      background: shown
-                        ? "linear-gradient(to bottom, "+L.border+", transparent)"
-                        : "transparent",
-                      transition: "background 0.6s ease 0.35s",
-                    }} />
-                  )}
+              <div key={i} style={{ display:"flex", gap:24, alignItems:"flex-start", paddingBottom: last ? 0 : 56, position:"relative" }}>
+                {/* Left — large floating number + line */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:52 }}>
+                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, color: i === 3 ? L.accent : L.border, lineHeight:1, letterSpacing:"-0.04em", userSelect:"none" }}>{i + 1}</span>
+                  {!last && <div style={{ width:1, flex:1, marginTop:8, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
                 </div>
-
-                {/* Right — label + detail */}
-                <div style={{ paddingTop:10 }}>
-                  <div style={{ fontFamily:fSerif, fontSize:"clamp(22px,3vw,30px)", fontWeight:400, color:L.ink, marginBottom:8, letterSpacing:"-0.02em", lineHeight:1.1 }}>
-                    {s.label}
-                  </div>
-                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>
-                    {s.detail}
-                  </div>
+                {/* Right — content */}
+                <div style={{ paddingTop:8 }}>
+                  <div style={{ fontFamily:fSerif, fontSize:"clamp(20px,3vw,28px)", fontWeight:400, color:L.ink, marginBottom:6, letterSpacing:"-0.02em" }}>{s.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>{s.detail}</div>
                 </div>
               </div>
             );
           })}
         </div>
-
-        <div style={{ marginTop:72, textAlign:"center" }}>
+        <div style={{ marginTop:64, textAlign:"center" }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.navy, color:"#EEF2F7", border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : "Try it now →"}
           </button>
