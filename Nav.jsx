@@ -169,24 +169,10 @@ export function Nav(props) {
           <button onClick={function(){ setPage("Home"); setMenuOpen(false); }} style={{ background:"transparent", color:page==="Home" ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page==="Home" ? 500 : 400, textAlign:"left" }}>
             {t(lang,"navHome") || "Home"}
           </button>
-          {/* Generator options inline */}
-          <div style={{ height:1, background:L.border, margin:"4px 0" }} />
-          <div style={{ padding:"6px 8px 2px" }}>
-            <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:L.faint }}>Generator</div>
-          </div>
-          {GEN_ITEMS.map(function(item) {
-            return (
-              <button key={item.mode} onClick={function(){
-                if (setGenMode) setGenMode(item.mode);
-                setPage("Generator");
-                setMenuOpen(false);
-              }} style={{ display:"flex", alignItems:"center", gap:10, background:"transparent", color:L.muted, border:"none", padding:"9px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, textAlign:"left" }}>
-                <Icon name={item.icon} size={14} color={L.accent} />
-                <span style={{ color:L.ink, fontWeight:400 }}>{item.label}</span>
-                <span style={{ fontFamily:fMono, fontSize:11, color:L.faint }}>— {item.sub}</span>
-              </button>
-            );
-          })}
+          {/* Generator — single link, no sub-items on mobile */}
+          <button onClick={function(){ setPage("Generator"); setMenuOpen(false); }} style={{ background:"transparent", color:page==="Generator" ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page==="Generator" ? 500 : 400, textAlign:"left" }}>
+            Generator
+          </button>
           {user && (
             <>
               <div style={{ height:1, background:L.border, margin:"8px 0" }} />
