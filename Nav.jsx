@@ -15,9 +15,9 @@ function GeneratorDropdown(props) {
     <div style={{
       position:"absolute", top:"calc(100% + 8px)", left:"50%", transform:"translateX(-50%)",
       background:"rgba(255,255,255,0.97)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
-      border:"1px solid "+L.border, borderRadius:12, padding:"6px",
+      border:"1px solid "+L.border, borderRadius:10, padding:"4px",
       boxShadow:"0 8px 32px rgba(10,22,40,0.12), 0 1px 3px rgba(10,22,40,0.06)",
-      minWidth:220, zIndex:300,
+      minWidth:140, zIndex:300,
     }}>
       {GEN_ITEMS.map(function(item) {
         return (
@@ -26,19 +26,15 @@ function GeneratorDropdown(props) {
             setPage("Generator");
             onClose();
           }} style={{
-            width:"100%", display:"flex", alignItems:"center", gap:10, padding:"10px 12px",
-            border:"none", borderRadius:8, background:"transparent", cursor:"pointer", textAlign:"left",
+            width:"100%", display:"block", padding:"9px 16px",
+            border:"none", borderRadius:7, background:"transparent",
+            cursor:"pointer", textAlign:"left",
+            fontFamily:fSans, fontSize:14, fontWeight:400, color:L.ink,
           }}
           onMouseEnter={function(e){ e.currentTarget.style.background = L.cream; }}
           onMouseLeave={function(e){ e.currentTarget.style.background = "transparent"; }}
           >
-            <div style={{ width:32, height:32, borderRadius:8, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-              <Icon name={item.icon} size={15} color={L.accent} />
-            </div>
-            <div>
-              <div style={{ fontFamily:fSans, fontSize:14, fontWeight:500, color:L.ink, lineHeight:1.2 }}>{item.label}</div>
-              <div style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.04em", marginTop:1 }}>{item.sub}</div>
-            </div>
+            {item.label}
           </button>
         );
       })}
@@ -111,9 +107,9 @@ export function Nav(props) {
             )}
           </div>
 
-          {/* Remaining pages: Compliance · Pricing · Dashboard */}
-          {["EUCompliance","Pricing","Dashboard"].filter(function(pg){ return user ? true : pg !== "Dashboard"; }).map(function(pg) {
-            var pgLabel = pg === "Pricing" ? t(lang,"navPricing") : pg === "Dashboard" ? t(lang,"navDashboard") : "Compliance";
+          {/* Remaining pages: Compliance · Pricing */}
+          {["EUCompliance","Pricing"].map(function(pg) {
+            var pgLabel = pg === "Pricing" ? t(lang,"navPricing") : "Compliance";
             var active = page === pg;
             return (
               <button key={pg} onClick={function(){ setPage(pg); }} style={{ background:"transparent", color:active ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:active ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
