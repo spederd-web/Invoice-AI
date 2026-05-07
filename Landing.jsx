@@ -259,7 +259,12 @@ export function FlowSection(props) {
                 return next;
               });
             }, idx * 160);
-            obs.disconnect();
+          } else {
+            setVisible(function(prev) {
+              var next = prev.slice();
+              next[idx] = false;
+              return next;
+            });
           }
         });
       }, { threshold: 0.2 });
