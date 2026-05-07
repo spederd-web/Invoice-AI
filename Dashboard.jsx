@@ -412,12 +412,12 @@ function DOverview(props) {
 // ── Section header ────────────────────────────────────────────────────────────
 function SectionHeader(props) {
   return (
-    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:32 }}>
-      <div>
-        <h2 style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.025em", marginBottom:5 }}>{props.title}</h2>
+    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:28, gap:12, flexWrap:"wrap" }}>
+      <div style={{ minWidth:0 }}>
+        <h2 style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.025em", marginBottom:5 }}>{props.title}</h2>
         {props.sub && <p style={{ fontFamily:fUI, fontSize:14, color:C.muted, fontWeight:300 }}>{props.sub}</p>}
       </div>
-      {props.action && <div style={{ marginTop:4 }}>{props.action}</div>}
+      {props.action && <div style={{ flexShrink:0 }}>{props.action}</div>}
     </div>
   );
 }
@@ -575,18 +575,19 @@ function DInvoices(props) {
           var toast = toasts[inv.id];
           return (
             <div key={inv.id} style={{ borderBottom:i<filtered.length-1 ? "1px solid "+C.borderLt : "none" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:14, padding:"16px 22px", background:isOverdue ? C.redSoft : "transparent" }}>
-                <div style={{ fontFamily:fMono, fontSize:13, color:C.ink, width:140, flexShrink:0 }}>{inv.inv_number}</div>
-                <div style={{ flex:1, minWidth:0 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, padding:"14px 18px", background:isOverdue ? C.redSoft : "transparent", flexWrap:"wrap" }}>
+                <div style={{ fontFamily:fMono, fontSize:12, color:C.ink, flexShrink:0, width:130 }}>{inv.inv_number}</div>
+                <div style={{ flex:1, minWidth:120 }}>
                   <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>{clientMap[inv.client_id] || "Unknown"}</div>
                   {isOverdue && <div style={{ fontFamily:fMono, fontSize:11, color:C.red, marginTop:2 }}>Overdue · due {inv.due_date}</div>}
                 </div>
-                <div style={{ fontFamily:fMono, fontSize:15, color:C.ink, fontWeight:500, flexShrink:0 }}>{"€"+inv.amount_gross.toLocaleString()}</div>
-                <div style={{ fontFamily:fMono, fontSize:12, color:C.faint, flexShrink:0 }}>{inv.due_date}</div>
-                <Chip color={sc} dot={true}>{inv.status}</Chip>
-                {isOverdue && <button onClick={function(){ handleAction(inv.id, "reminder"); }} style={{ background:C.red, color:"#fff", border:"none", padding:"7px 14px", borderRadius:8, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>Send reminder</button>}
-                {inv.status === "sent" && <button onClick={function(){ handleAction(inv.id, "followup"); }} style={{ background:"transparent", color:C.blue, border:"1px solid "+C.blue+"44", padding:"7px 14px", borderRadius:8, cursor:"pointer", fontFamily:fUI, fontSize:13, flexShrink:0, whiteSpace:"nowrap" }}>Follow up</button>}
-                {inv.status === "paid" && <span style={{ fontFamily:fMono, fontSize:12, color:C.green, flexShrink:0 }}>✓ Paid</span>}
+                <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+                  <div style={{ fontFamily:fMono, fontSize:14, color:C.ink, fontWeight:500 }}>{"€"+inv.amount_gross.toLocaleString()}</div>
+                  <Chip color={sc} dot={true}>{inv.status}</Chip>
+                  {isOverdue && <button onClick={function(){ handleAction(inv.id, "reminder"); }} style={{ background:C.red, color:"#fff", border:"none", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fUI, fontSize:12, fontWeight:500, whiteSpace:"nowrap" }}>Remind</button>}
+                  {inv.status === "sent" && <button onClick={function(){ handleAction(inv.id, "followup"); }} style={{ background:"transparent", color:C.blue, border:"1px solid "+C.blue+"44", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fUI, fontSize:12, whiteSpace:"nowrap" }}>Follow up</button>}
+                  {inv.status === "paid" && <span style={{ fontFamily:fMono, fontSize:11, color:C.green }}>✓ Paid</span>}
+                </div>
               </div>
               {toast && (
                 <div style={{ margin:"0 22px 14px", padding:"11px 16px", background:toast==="reminder" ? C.redSoft : C.blueSoft, border:"1px solid "+(toast==="reminder" ? C.red : C.blue)+"22", borderRadius:9 }}>
@@ -655,23 +656,25 @@ export function DProposals(props) {
             var noReply = (p.status === "sent" || p.status === "viewed") && p.view_count >= 2;
             return (
               <div key={p.id} style={{ borderBottom:i<MOCK_PROPOSALS.length-1 ? "1px solid "+C.borderLt : "none" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:14, padding:"16px 22px" }}>
-                  <div style={{ flex:1, minWidth:0 }}>
-                    <div style={{ fontFamily:fUI, fontSize:15, fontWeight:500, color:C.ink, marginBottom:3 }}>{p.title}</div>
-                    <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
+                <div style={{ display:"flex", alignItems:"flex-start", gap:12, padding:"16px 18px", flexWrap:"wrap" }}>
+                  <div style={{ flex:1, minWidth:180 }}>
+                    <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink, marginBottom:3 }}>{p.title}</div>
+                    <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
                       <span style={{ fontFamily:fUI, fontSize:13, color:C.muted }}>{clientMap[p.client_id] || "Unknown"}</span>
                       <span style={{ color:C.faint }}>·</span>
                       <span style={{ fontFamily:fMono, fontSize:11, color:C.muted }}>{p.view_count} views</span>
                       <span style={{ color:C.faint }}>·</span>
-                      <span style={{ fontFamily:fMono, fontSize:11, color:C.faint }}>last seen {p.last_viewed}</span>
+                      <span style={{ fontFamily:fMono, fontSize:11, color:C.faint }}>{p.last_viewed}</span>
                     </div>
                   </div>
-                  <div style={{ fontFamily:fMono, fontSize:15, color:C.ink, fontWeight:500, flexShrink:0 }}>{"€"+p.value.toLocaleString()}</div>
-                  <Chip color={sc} dot={true}>{p.status}</Chip>
-                  <button onClick={function(){ duplicate(p.id); }} style={{ background:"transparent", border:"1px solid "+C.border, color:C.muted, padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fUI, fontSize:12, flexShrink:0, whiteSpace:"nowrap" }}>
-                    {copied === p.id ? "✓ Copied" : "Duplicate"}
-                  </button>
-                  {isWon && <button onClick={function(){ if (onConvert) onConvert(p); }} style={{ background:C.accent, color:"#fff", border:"none", padding:"6px 12px", borderRadius:7, cursor:"pointer", fontFamily:fUI, fontSize:12, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>→ Invoice</button>}
+                  <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0, flexWrap:"wrap" }}>
+                    <div style={{ fontFamily:fMono, fontSize:14, color:C.ink, fontWeight:500 }}>{"€"+p.value.toLocaleString()}</div>
+                    <Chip color={sc} dot={true}>{p.status}</Chip>
+                    <button onClick={function(){ duplicate(p.id); }} style={{ background:"transparent", border:"1px solid "+C.border, color:C.muted, padding:"5px 10px", borderRadius:6, cursor:"pointer", fontFamily:fUI, fontSize:12, whiteSpace:"nowrap" }}>
+                      {copied === p.id ? "✓" : "Dupe"}
+                    </button>
+                    {isWon && <button onClick={function(){ if (onConvert) onConvert(p); }} style={{ background:C.accent, color:"#fff", border:"none", padding:"5px 10px", borderRadius:6, cursor:"pointer", fontFamily:fUI, fontSize:12, fontWeight:500, whiteSpace:"nowrap" }}>→ Invoice</button>}
+                  </div>
                 </div>
                 {noReply && (
                   <div style={{ margin:"0 22px 14px", padding:"11px 16px", background:C.goldSoft, border:"1px solid "+C.gold+"22", borderRadius:9, display:"flex", alignItems:"center", justifyContent:"space-between", gap:12 }}>
@@ -759,7 +762,7 @@ export function DBrandKits(props) {
   return (
     <div>
       <SectionHeader title="Brand Kits" sub="One kit per client. Applied automatically to invoices and proposals." />
-      <div style={{ display:"grid", gridTemplateColumns:"190px 1fr", gap:20 }}>
+      <div className="dash-brandkit-grid" style={{ display:"grid", gridTemplateColumns:"190px 1fr", gap:20 }}>
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
           {kits.map(function(kit) {
             var active = selId === kit.id;

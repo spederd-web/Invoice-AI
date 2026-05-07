@@ -363,7 +363,7 @@ export function SupportBot() {
   var SUGGESTIONS = ["How does reverse charge work?","What's in the Studio plan?","How do I add my VAT number?","Can I issue a credit note?"];
 
   return (
-    <div style={{ position:"fixed", bottom:24, right:24, zIndex:999 }}>
+    <div style={{ position:"fixed", bottom:24, right:24, zIndex:999 }} className="support-bot-wrap">
       {open && (
         <div className="bot-panel" style={{ position:"absolute", bottom:60, right:0, width:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:16, boxShadow:"0 16px 48px rgba(44,36,22,0.18)", overflow:"hidden", display:"flex", flexDirection:"column" }}>
           <div style={{ background:L.accent, padding:"16px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
