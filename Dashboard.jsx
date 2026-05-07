@@ -231,8 +231,8 @@ export function Dashboard(props) {
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 58px)", background:C.bg }}>
 
-      {/* ── Sidebar (desktop) ── */}
-      <div className="dash-aside" style={{ width:220, background:C.navy, flexShrink:0, display:"flex", flexDirection:"column", position:"sticky", top:58, height:"calc(100vh - 58px)" }}>
+      {/* ── Sidebar (desktop only) ── */}
+      <div style={{ width:220, background:C.navy, flexShrink:0, display:"flex", flexDirection:"column", position:"sticky", top:58, height:"calc(100vh - 58px)" }} className="nav-desktop">
         <div style={{ padding:"28px 20px 20px" }}>
           <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(240,244,248,0.2)", marginBottom:20 }}>Workspace</div>
           {nav.map(function(item) {
@@ -275,7 +275,7 @@ export function Dashboard(props) {
       </div>
 
       {/* ── Main content ── */}
-      <div style={{ flex:1, overflowY:"auto", padding:"40px 44px" }}>
+      <div style={{ flex:1, overflowY:"auto", padding:"40px 44px" }} className="dash-main">
         {section==="overview"  && <DOverview userId={userId} setSection={goSection} user={user} onConvert={handleConvert} />}
         {section==="clients"   && !clientId && <DClients userId={userId} setClientId={setClientId} setPage={setPage} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={MOCK_INVOICES} proposals={MOCK_PROPOSALS} />}
@@ -285,7 +285,7 @@ export function Dashboard(props) {
       </div>
 
       {/* ── Mobile bottom nav ── */}
-      <div className="nav-burger" style={{ display:"none", position:"fixed", bottom:0, left:0, right:0, zIndex:200, background:C.navy, borderTop:"1px solid rgba(255,255,255,0.07)", padding:"8px 0 12px" }}>
+      <div className="nav-burger" style={{ display:"none", position:"fixed", bottom:0, left:0, right:0, zIndex:200, background:C.navy, borderTop:"1px solid rgba(255,255,255,0.07)", padding:"10px 0 16px" }}>
         <div style={{ display:"flex", justifyContent:"space-around" }}>
           {nav.map(function(item) {
             var active = section === item.id;
