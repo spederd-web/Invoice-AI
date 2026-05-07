@@ -275,7 +275,7 @@ export function Dashboard(props) {
       </div>
 
       {/* ── Main content ── */}
-      <div style={{ flex:1, overflowY:"auto", padding:"40px 44px" }} className="dash-main">
+      <div style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"40px 44px", minWidth:0 }} className="dash-main">
         {section==="overview"  && <DOverview userId={userId} setSection={goSection} user={user} onConvert={handleConvert} />}
         {section==="clients"   && !clientId && <DClients userId={userId} setClientId={setClientId} setPage={setPage} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={MOCK_INVOICES} proposals={MOCK_PROPOSALS} />}
@@ -335,7 +335,7 @@ function DOverview(props) {
   ];
 
   return (
-    <div>
+    <div style={{ width:"100%", minWidth:0, maxWidth:"100%" }}>
       {/* ── Greeting ── */}
       <div style={{ marginBottom:40 }}>
         <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,3.5vw,40px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:8 }}>{greetingFull}</h1>
