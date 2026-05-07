@@ -24,6 +24,9 @@ export default function App() {
       return stored ? JSON.parse(stored) : null;
     } catch(e) { return null; }
   });
+  var [convertProposal, setConvertProposal] = useState(null);
+  // genMode controls which tab InvoiceGen opens on when navigating from the nav dropdown
+  var [genMode, setGenMode] = useState("invoice");
 
   function openModal(source) { setModal(source); }
   function closeModal() { setModal(null); }
@@ -37,22 +40,34 @@ export default function App() {
     try { localStorage.removeItem("invoiceai_user"); } catch(e) {}
     setPage("Home");
   }
-  var [convertProposal, setConvertProposal] = useState(null);
 
   useEffect(function() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
   var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ","EUCompliance"].indexOf(page) >= 0;
+
   return (
     <>
       <style>{FONTS}</style>
       <style>{GLOBAL_CSS}</style>
-      {page !== "ClientPortal" && <Nav page={page} setPage={setPage} openModal={openModal} lang={lang} setLang={setLang} openAuth={function(){ setAuthOpen(true); }} user={user} onSignOut={handleSignOut} />}
+      {page !== "ClientPortal" && (
+        <Nav
+          page={page}
+          setPage={setPage}
+          setGenMode={setGenMode}
+          openModal={openModal}
+          lang={lang}
+          setLang={setLang}
+          openAuth={function(){ setAuthOpen(true); }}
+          user={user}
+          onSignOut={handleSignOut}
+        />
+      )}
       {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
+      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} initialMode={genMode} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
       {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Dashboard"    && <Dashboard setPage={setPage} setConvertProposal={setConvertProposal} />}
+      {page==="Dashboard"    && <Dashboard setPage={setPage} setConvertProposal={setConvertProposal} user={user} />}
       {page==="ClientPortal" && <ClientPortal setPage={setPage} />}
       {page==="About"        && <PageAbout setPage={setPage} openModal={openModal} />}
       {page==="Blog"         && <PageBlog />}

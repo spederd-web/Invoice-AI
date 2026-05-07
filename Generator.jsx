@@ -968,7 +968,9 @@ export function InvoiceGen(props) {
   var lang = props.lang || "en";
   var convertProposal = props.convertProposal;
   var onConvertDone = props.onConvertDone;
-  var [mode, setMode] = useState(convertProposal ? "invoice" : "invoice");
+  // initialMode comes from the nav dropdown ("invoice" or "proposal")
+  var initialMode = props.initialMode || "invoice";
+  var [mode, setMode] = useState(convertProposal ? "invoice" : initialMode);
   var [view, setView] = useState("form");
   var [convertBanner, setConvertBanner] = useState(!!convertProposal);
 
@@ -1030,25 +1032,27 @@ export function InvoiceGen(props) {
           <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss ×</button>
         </div>
       )}
-      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
-        <div style={{ display:"inline-flex", gap:4, background:L.cream, borderRadius:10, padding:"4px", border:"1px solid "+L.border }}>
-          {[["invoice","Create an Invoice"],["proposal","Write a Proposal"]].map(function(pair) {
-            var m = pair[0]; var lb = pair[1];
-            return (
-              <button key={m} onClick={function(){ setMode(m); setView("form"); }} style={{ background:mode===m ? L.white : "transparent", color:mode===m ? L.ink : L.muted, border:"none", borderRadius:7, padding:"8px 22px", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:mode===m ? 500 : 400, whiteSpace:"nowrap", boxShadow:mode===m ? "0 1px 4px rgba(26,31,46,0.1)" : "none", transition:"all 0.12s" }}>
-                {lb}
-              </button>
-            );
-          })}
+      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12, maxWidth:1200, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <div style={{ width:6, height:6, borderRadius:"50%", background:L.accent }} />
+          <span style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase" }}>
+            {mode === "invoice" ? "Invoice Generator" : "Proposal Generator"}
+          </span>
         </div>
-        {mode === "invoice" && (
-          <div style={{ display:"inline-flex", gap:2, background:L.paper, borderRadius:8, padding:"3px", border:"1px solid "+L.border }}>
-            {[["form","Form"],["preview","Preview"]].map(function(pair) {
-              var v = pair[0]; var lb = pair[1];
-              return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"5px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
-            })}
-          </div>
-        )}
+        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+          {/* Switch mode link */}
+          <button onClick={function(){ setMode(mode === "invoice" ? "proposal" : "invoice"); setView("form"); }} style={{ background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:13, color:L.muted }}>
+            Switch to {mode === "invoice" ? "Proposal" : "Invoice"}
+          </button>
+          {mode === "invoice" && (
+            <div style={{ display:"inline-flex", gap:2, background:L.paper, borderRadius:8, padding:"3px", border:"1px solid "+L.border }}>
+              {[["form","Form"],["preview","Preview"]].map(function(pair) {
+                var v = pair[0]; var lb = pair[1];
+                return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"5px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
+              })}
+            </div>
+          )}
+        </div>
       </div>
       {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} onConvertToInvoice={function(data){
         setConvertBanner(true);
