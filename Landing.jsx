@@ -230,6 +230,40 @@ export function HowItWorksSection(props) {
   );
 }
 
+function useScrollReveal(total) {
+  var [visible, setVisible] = useState([]);
+  var refs = [];
+  for (var i = 0; i < total; i++) {
+    refs.push({ current: null });
+  }
+  var refsRef = useRef(refs);
+
+  useEffect(function() {
+    var observers = [];
+    refsRef.current.forEach(function(ref, idx) {
+      if (!ref.current) return;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            setTimeout(function() {
+              setVisible(function(prev) {
+                if (prev.indexOf(idx) >= 0) return prev;
+                return prev.concat([idx]);
+              });
+            }, idx * 160);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+      obs.observe(ref.current);
+      observers.push(obs);
+    });
+    return function() { observers.forEach(function(o) { o.disconnect(); }); };
+  }, []);
+
+  return { visible: visible, refsRef: refsRef };
+}
+
 export function FlowSection(props) {
   var lang = props.lang || "en";
   var setPage = props.setPage;
@@ -240,36 +274,7 @@ export function FlowSection(props) {
     { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                            detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
   ];
 
-  var containerRef = useRef(null);
-  var [visible, setVisible] = useState([false, false, false, false]);
-
-  useEffect(function() {
-    var container = containerRef.current;
-    if (!container) return;
-    var items = container.querySelectorAll(".flow-step");
-    var observers = [];
-    items.forEach(function(el, idx) {
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            setTimeout(function() {
-              setVisible(function(prev) {
-                var next = prev.slice();
-                next[idx] = true;
-                return next;
-              });
-            }, idx * 160);
-            obs.disconnect();
-          }
-        });
-      }, { threshold: 0.2 });
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return function() {
-      observers.forEach(function(o) { o.disconnect(); });
-    };
-  }, []);
+  var reveal = useScrollReveal(steps.length);
 
   return (
     <section style={{ background:L.paper, padding:"100px 24px" }}>
@@ -283,15 +288,15 @@ export function FlowSection(props) {
           </p>
         </div>
 
-        <div ref={containerRef} style={{ display:"flex", flexDirection:"column", gap:0 }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
           {steps.map(function(s, i) {
             var last = i === steps.length - 1;
-            var shown = visible[i];
+            var shown = reveal.visible.indexOf(i) >= 0;
             var isLast = i === steps.length - 1;
             return (
               <div
                 key={i}
-                className="flow-step"
+                ref={function(el) { reveal.refsRef.current[i].current = el; }}
                 style={{
                   display:"flex", gap:32, alignItems:"flex-start",
                   paddingBottom: last ? 0 : 64,
@@ -301,21 +306,28 @@ export function FlowSection(props) {
                   transition: "opacity 0.55s ease, transform 0.55s ease",
                 }}
               >
+                {/* Left — number + connecting line */}
                 <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:56 }}>
                   <span style={{
                     fontFamily:fSerif, fontSize:52, fontWeight:400, lineHeight:1,
                     letterSpacing:"-0.04em", userSelect:"none",
-                    color: isLast ? L.accent : L.ink,
+                    color: shown ? (isLast ? L.accent : L.ink) : L.border,
+                    transition: "color 0.4s ease 0.2s",
                   }}>
                     {i + 1}
                   </span>
                   {!last && (
                     <div style={{
-                      width:1, flex:1, marginTop:10, minHeight:40,
-                      background:"linear-gradient(to bottom, "+L.border+", transparent)",
+                      width:1, flex:1, marginTop:10,
+                      background: shown
+                        ? "linear-gradient(to bottom, "+L.border+", transparent)"
+                        : "transparent",
+                      transition: "background 0.6s ease 0.35s",
                     }} />
                   )}
                 </div>
+
+                {/* Right — label + detail */}
                 <div style={{ paddingTop:10 }}>
                   <div style={{ fontFamily:fSerif, fontSize:"clamp(22px,3vw,30px)", fontWeight:400, color:L.ink, marginBottom:8, letterSpacing:"-0.02em", lineHeight:1.1 }}>
                     {s.label}
