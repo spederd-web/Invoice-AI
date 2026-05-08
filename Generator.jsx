@@ -469,27 +469,27 @@ export function InvoiceForm(props) {
   var total = (sub - discAmt) + vatAmt;
   var sym = s.country && s.country.cur === "SEK" ? "kr" : "€";
 
-  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.white, outline:"none" };
-  var monoStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"6px 9px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none" };
-  var lblStyle = { display:"block", marginBottom:3, fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
+  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1px solid "+L.border, borderRadius:8, padding:"9px 12px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" };
+  var monoStyle = { width:"100%", boxSizing:"border-box", border:"1px solid "+L.border, borderRadius:8, padding:"9px 12px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.paper, outline:"none" };
+  var lblStyle = { display:"block", marginBottom:5, fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:400 };
 
   function cardWrap(title, badge, content) {
     return (
-      <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:12, overflow:"hidden" }}>
-        <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <span style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>{title}</span>
+      <div style={{ background:L.white, borderRadius:14, marginBottom:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.06)" }}>
+        <div style={{ padding:"14px 20px 10px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink, letterSpacing:"-0.01em" }}>{title}</span>
           {badge}
         </div>
-        <div style={{ padding:"16px 16px" }}>{content}</div>
+        <div style={{ padding:"0 20px 20px" }}>{content}</div>
       </div>
     );
   }
 
   return (
-    <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"22px 24px 48px" }}>
+    <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"24px 20px 64px" }}>
       <div>
-        <h2 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>Create an Invoice</h2>
-        <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>Fill in your details. Every EU rule — VAT, reverse charge, SEPA — applied automatically.</p>
+        <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:400, color:L.ink, marginBottom:5, letterSpacing:"-0.02em" }}>Invoice details</h2>
+        <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginBottom:24, fontWeight:300, lineHeight:1.5 }}>Fill in your details. EU VAT, reverse charge and SEPA applied automatically.</p>
         {cardWrap("Your Business", <Tag c={L.accent}>Seller</Tag>, (
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
             <div style={{ gridColumn:"1/-1" }}><label style={lblStyle}>Business Name *</label><input value={s.sName} onChange={function(e){ u("sName",e.target.value); }} style={inpStyle} /></div>
@@ -625,11 +625,11 @@ export function InvoiceForm(props) {
             </div>
           </div>
         ))}
-        <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:12, overflow:"hidden" }}>
-          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}>
-            <span style={{ fontFamily:fMono, fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>EU Compliance</span>
+        <div style={{ background:L.white, borderRadius:14, marginBottom:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.06)" }}>
+          <div style={{ padding:"14px 20px 10px" }}>
+            <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>EU Compliance</span>
           </div>
-          <div style={{ padding:"16px 16px", display:"flex", flexDirection:"column", gap:4 }}>
+          <div style={{ padding:"0 20px 16px", display:"flex", flexDirection:"column", gap:4 }}>
             <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={(sameCountry && !s.cVAT) || s.vatExempt} blockedReason={s.vatExempt ? "Kleinunternehmer cannot apply reverse charge — no VAT number issued under §19 UStG" : "Same country — RC only applies cross-border EU B2B"} warn={viesStatus === "invalid" ? "VIES could not verify this VAT number — confirm B2B status before applying reverse charge" : null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
             <CheckRow checked={s.gdpr} onChange={function(v){ u("gdpr",v); }} label="GDPR Notice" badge="GDPR" badgeColor={L.green} blocked={false} blockedReason="" warn={null} infoOpen={activeInfo==="gdpr"} onInfo={function(){ setActiveInfo(activeInfo==="gdpr"?null:"gdpr"); }} infoWhat="A short legal notice that you process your client's personal data for invoicing purposes." infoWhen="Recommended for all EU B2B invoices — it shows you take data protection seriously." infoEffect="Adds one sentence to the bottom of your invoice referencing GDPR Art. 6(1)(b)." infoLaw="GDPR Art. 6(1)(b) — EU Regulation 2016/679" />
             <CheckRow checked={s.latePayment} onChange={function(v){ u("latePayment",v); }} label="Late Payment Interest" badge="EU 2011/7" badgeColor={L.accent} blocked={s.creditNote} blockedReason="Cannot charge interest on a credit note" warn={null} infoOpen={activeInfo==="lp"} onInfo={function(){ setActiveInfo(activeInfo==="lp"?null:"lp"); }} infoWhat="EU law gives you the right to charge statutory interest if a B2B client pays late." infoWhen="Tick for B2B invoices where you want to signal late payment will incur interest." infoEffect="Adds a notice: 8% above ECB base rate applies on overdue amounts from due date." infoLaw="EU Directive 2011/7/EU on combating late payment" />
@@ -666,8 +666,8 @@ export function InvoiceForm(props) {
             if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push(true);
             var blocked = errs.length > 0;
             return (
-              <button onClick={function(){ if(!blocked) setView("preview"); }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.accent, color:blocked ? L.muted : "#fff", border:"none", padding:"12px", borderRadius:9, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:blocked ? "none" : "0 4px 16px rgba(23,169,158,0.25)" }}>
-                Preview Invoice →
+              <button onClick={function(){ if(!blocked) setView("preview"); }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.accent, color:blocked ? L.muted : "#fff", border:"none", padding:"13px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:blocked ? "none" : "0 2px 12px rgba(20,153,144,0.2)", letterSpacing:"-0.01em" }}>
+                Preview →
               </button>
             );
           })()}
@@ -1028,7 +1028,7 @@ export function InvoiceGen(props) {
   }
 
   return (
-    <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)" }}>
+    <div style={{ background:L.paper, minHeight:"calc(100vh - 56px)", paddingBottom:40 }}>
       {convertBanner && convertProposal && (
         <div style={{ background:L.greenGlow, borderBottom:"1px solid "+L.green+"44", padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
@@ -1040,27 +1040,45 @@ export function InvoiceGen(props) {
           <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss ×</button>
         </div>
       )}
-      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"10px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12, maxWidth:1200, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-          <div style={{ width:6, height:6, borderRadius:"50%", background:L.accent }} />
-          <span style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase" }}>
-            {mode === "invoice" ? "Invoice Generator" : "Proposal Generator"}
-          </span>
-        </div>
-        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
-          {/* Switch mode link */}
-          <button onClick={function(){ setMode(mode === "invoice" ? "proposal" : "invoice"); setView("form"); }} style={{ background:"none", border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:13, color:L.muted }}>
-            Switch to {mode === "invoice" ? "Proposal" : "Invoice"}
-          </button>
+      {/* ── Top navigation — calm floating pill ── */}
+      <div style={{ padding:"14px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
+        {/* Mode switcher — underline tabs, not boxes */}
+        <div style={{ display:"flex", alignItems:"center", gap:0, marginBottom:0 }}>
+          {[["invoice","Invoice"],["proposal","Proposal"]].map(function(pair) {
+            var active = mode === pair[0];
+            return (
+              <button key={pair[0]} onClick={function(){ setMode(pair[0]); setView("form"); }} style={{
+                background:"transparent", border:"none", borderBottom:"2px solid " + (active ? L.ink : "transparent"),
+                padding:"10px 18px 10px 0", marginRight:20,
+                cursor:"pointer", fontFamily:fSerif, fontSize:20,
+                color:active ? L.ink : L.muted,
+                fontWeight:400, letterSpacing:"-0.02em",
+                transition:"color 0.15s, border-color 0.15s",
+              }}>{pair[1]}</button>
+            );
+          })}
+          {/* Form/Preview — only for invoice, far right, minimal */}
           {mode === "invoice" && (
-            <div style={{ display:"inline-flex", gap:2, background:L.paper, borderRadius:8, padding:"3px", border:"1px solid "+L.border }}>
-              {[["form","Form"],["preview","Preview"]].map(function(pair) {
-                var v = pair[0]; var lb = pair[1];
-                return <button key={v} onClick={function(){ setView(v); }} style={{ background:view===v ? L.ink : "transparent", color:view===v ? "#fff" : L.muted, border:"none", padding:"5px 14px", borderRadius:6, cursor:"pointer", fontFamily:fMono, fontSize:12, fontWeight:view===v ? 600 : 400 }}>{lb}</button>;
+            <div style={{ marginLeft:"auto", display:"flex", gap:1, background:"rgba(0,0,0,0.04)", borderRadius:8, padding:"3px" }}>
+              {[["form","Edit"],["preview","Preview"]].map(function(pair) {
+                var active = view === pair[0];
+                return (
+                  <button key={pair[0]} onClick={function(){ setView(pair[0]); }} style={{
+                    background:active ? L.white : "transparent",
+                    color:active ? L.ink : L.faint,
+                    border:"none", padding:"5px 14px", borderRadius:6,
+                    cursor:"pointer", fontFamily:fSans, fontSize:12,
+                    fontWeight:active ? 500 : 400,
+                    boxShadow:active ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                    transition:"all 0.12s",
+                  }}>{pair[1]}</button>
+                );
               })}
             </div>
           )}
         </div>
+        {/* Subtle divider */}
+        <div style={{ height:"1px", background:L.border, marginTop:0 }} />
       </div>
       {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} onConvertToInvoice={function(data){
         setConvertBanner(true);

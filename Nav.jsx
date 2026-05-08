@@ -268,7 +268,7 @@ export function Footer(props) {
                   {col.links.map(function(pair) {
                     var lb = pair[0]; var pg = pair[1];
                     return (
-                      <div key={lb} onClick={pg ? function(){ setPage(pg); } : null} style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.4)", marginBottom:9, cursor:pg?"pointer":"default", transition:"color 0.15s" }}>{lb}</div>
+                      <div key={lb} onClick={pg ? function(){ setPage(pg); window.scrollTo({ top:0, behavior:"smooth" }); } : null} style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.4)", marginBottom:9, cursor:pg?"pointer":"default", transition:"color 0.15s" }}>{lb}</div>
                     );
                   })}
                 </div>
@@ -310,7 +310,8 @@ var BOT_QA = [
   { q:["cancel","refund","trial","free"],                   a:"You can cancel anytime from account settings. Your 14-day trial is completely free with no credit card required. If you upgrade and change your mind, we offer a full refund within 14 days." },
 ];
 
-export function SupportBot() {
+export function SupportBot(props) {
+  var isDashboard = props.isDashboard || false;
   var [open, setOpen] = useState(false);
   var [msgs, setMsgs] = useState([{ role:"bot", text:"Hi! I'm the InvoiceAI assistant. Ask me anything about proposals, invoices, EU compliance or pricing." }]);
   var [input, setInput] = useState("");
@@ -361,7 +362,7 @@ export function SupportBot() {
   var SUGGESTIONS = ["How does reverse charge work?","What's in the Studio plan?","How do I add my VAT number?","Can I issue a credit note?"];
 
   return (
-    <div style={{ position:"fixed", bottom:24, right:24, zIndex:999 }} className="support-bot-wrap">
+    <div style={{ position:"fixed", bottom:24, right:24, zIndex:999 }} className={isDashboard ? "support-bot-wrap support-bot-dashboard" : "support-bot-wrap"}>
       {open && (
         <div className="bot-panel" style={{ position:"absolute", bottom:60, right:0, width:320, background:L.white, border:"1.5px solid "+L.border, borderRadius:16, boxShadow:"0 16px 48px rgba(44,36,22,0.18)", overflow:"hidden", display:"flex", flexDirection:"column" }}>
           <div style={{ background:L.accent, padding:"16px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
