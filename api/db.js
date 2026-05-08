@@ -83,11 +83,16 @@
 const ALLOWED_TABLES = ["profiles", "clients", "invoices", "proposals", "brand_kits"];
 
 export default async function handler(req, res) {
+  try {
   const { createClient } = await import("@supabase/supabase-js");
   const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
+
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return res.status(500).json({ error: "Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env vars" });
+  }
 
   // ── GET — list rows for a user, or single profile ─────────────────────────
   if (req.method === "GET") {
@@ -200,4 +205,8 @@ export default async function handler(req, res) {
   }
 
   return res.status(405).json({ error: "Method not allowed" });
+  } catch (err) {
+    console.error("db handler error:", err);
+    return res.status(500).json({ error: err.message || "Internal server error" });
+  }
 }
