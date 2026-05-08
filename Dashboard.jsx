@@ -204,13 +204,22 @@ export function Dashboard(props) {
   var setPage = props.setPage;
   var setConvertProposal = props.setConvertProposal;
   var user = props.user;
-  // Fallback: read user id directly from localStorage in case props.user is stale
-  var userId = (user && user.id) ? user.id : (function() {
+
+  // userId as state so useDB re-fetches when it becomes available
+  var [userId, setUserId] = useState(function() {
+    if (user && user.id) return user.id;
     try {
       var stored = JSON.parse(localStorage.getItem("invoiceai_user"));
       return stored && stored.id ? stored.id : null;
     } catch(e) { return null; }
-  })();
+  });
+
+  // If user prop updates after mount, sync userId
+  useEffect(function() {
+    if (user && user.id && user.id !== userId) {
+      setUserId(user.id);
+    }
+  }, [user]);
   var [section, setSection] = useState("overview");
   var [clientId, setClientId] = useState(null);
 
@@ -292,7 +301,7 @@ export function Dashboard(props) {
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
         {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
-        {section==="clients"   && !clientId && <DClients setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} />}
+        {section==="clients"   && !clientId && <DClients setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={clientsDB.refresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={invoices} proposals={proposals} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
@@ -687,6 +696,7 @@ function DClients(props) {
   var clients = props.clients || MOCK_CLIENTS;
   var db = props.db;
   var userId = props.userId;
+  var onRefresh = props.onRefresh;
   var [search, setSearch] = useState("");
   var [adding, setAdding] = useState(false);
   var [newName, setNewName] = useState("");
@@ -724,6 +734,7 @@ function DClients(props) {
       .then(function() {
         setSaving(false); setAdding(false);
         setNewName(""); setNewEmail(""); setNewCity("");
+        if (onRefresh) onRefresh();
       })
       .catch(function(err) {
         setSaving(false);
