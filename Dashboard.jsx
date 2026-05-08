@@ -696,53 +696,68 @@ function DOverview(props) {
 function DClients(props) {
   var setClientId = props.setClientId;
   var setPage = props.setPage;
-  var clients = props.clients || MOCK_CLIENTS;
-  var db = props.db;
   var userId = props.userId;
-  var onRefresh = props.onRefresh;
+
+  var [clients, setClients] = useState([]);
+  var [loading, setLoading] = useState(false);
   var [search, setSearch] = useState("");
   var [adding, setAdding] = useState(false);
   var [newName, setNewName] = useState("");
   var [newEmail, setNewEmail] = useState("");
   var [newCity, setNewCity] = useState("");
   var [saving, setSaving] = useState(false);
-  var stColor = { active:C.green, overdue:C.red, prospect:C.blue };
+  var [addError, setAddError] = useState("");
 
+  function loadClients() {
+    if (!userId) return;
+    setLoading(true);
+    fetch("/api/db?table=clients&user_id=" + encodeURIComponent(userId))
+      .then(function(r) { return r.json(); })
+      .then(function(data) { setClients(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(function() { setLoading(false); });
+  }
+
+  useEffect(function() { loadClients(); }, [userId]);
+
+  var stColor = { active:C.green, overdue:C.red, prospect:C.blue };
   var filtered = clients.filter(function(c){
     return !search || c.name.toLowerCase().indexOf(search.toLowerCase()) >= 0;
   });
 
-  var [addError, setAddError] = useState("");
-
   function addClient() {
     if (!newName.trim()) return;
     setAddError("");
+    if (!userId) { setAddError("Sign in to save clients."); return; }
     setSaving(true);
-    var payload = {
-      name: newName.trim(), email: newEmail.trim(), city: newCity.trim(),
-      status: "prospect", balance: 0, paid: 0, invoices: 0,
-      avatar: newName.trim().slice(0,2).toUpperCase(), color: "#6E7A8A",
-    };
-    if (!userId) {
-      setAddError("Sign in to save clients.");
-      setSaving(false);
-      return;
-    }
-    if (!db) {
-      setAddError("Database not connected — check api/db.js is deployed.");
-      setSaving(false);
-      return;
-    }
-    db.insert(payload)
-      .then(function() {
-        setSaving(false); setAdding(false);
-        setNewName(""); setNewEmail(""); setNewCity("");
-        if (onRefresh) onRefresh();
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        table: "clients",
+        action: "insert",
+        user_id: userId,
+        payload: {
+          name: newName.trim(),
+          email: newEmail.trim() || null,
+          city: newCity.trim() || null,
+          status: "prospect",
+          avatar: newName.trim().slice(0,2).toUpperCase(),
+          color: "#6E7A8A",
+        }
       })
-      .catch(function(err) {
-        setSaving(false);
-        setAddError("Save failed: " + (err.message || "unknown error"));
-      });
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) { setAddError(data.error); setSaving(false); return; }
+      setSaving(false);
+      setAdding(false);
+      setNewName(""); setNewEmail(""); setNewCity("");
+      loadClients();
+    })
+    .catch(function(err) {
+      setSaving(false);
+      setAddError("Failed: " + err.message);
+    });
   }
 
   return (
@@ -779,8 +794,12 @@ function DClients(props) {
         <input value={search} onChange={function(e){ setSearch(e.target.value); }} placeholder="Search…" style={{ width:"100%", boxSizing:"border-box", border:"none", borderRadius:12, padding:"11px 14px 11px 38px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.surface, outline:"none", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }} />
         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)" }}><Icon name="users" size={14} color={C.faint} /></div>
       </div>
+
       <div style={{ background:C.surface, borderRadius:18, overflow:"hidden", boxShadow:"0 1px 6px rgba(10,22,40,0.05)" }}>
-        {filtered.map(function(c, i) {
+        {loading && (
+          <div style={{ padding:"32px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint }}>Loading…</div>
+        )}
+        {!loading && filtered.map(function(c, i) {
           var col = c.color || "#6E7A8A";
           var av  = c.avatar || (c.name||"?").slice(0,2).toUpperCase();
           return (
@@ -800,16 +819,15 @@ function DClients(props) {
             </div>
           );
         })}
-        {filtered.length === 0 && (
+        {!loading && filtered.length === 0 && (
           <div style={{ padding:"48px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint, fontWeight:300 }}>
-            {search ? "No clients match \""+search+"\"" : "No clients yet. Add your first one above."}
+            {search ? "No clients match \""+search+"\"" : userId ? "No clients yet. Add your first one above." : "Sign in to see your clients."}
           </div>
         )}
       </div>
     </div>
   );
 }
-
 function DClientDetail(props) {
   var c = props.client;
   var setClientId = props.setClientId;
