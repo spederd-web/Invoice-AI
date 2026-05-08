@@ -222,6 +222,12 @@ export function Dashboard(props) {
   }, [user]);
   var [section, setSection] = useState("overview");
   var [clientId, setClientId] = useState(null);
+  var [selectedClient, setSelectedClient] = useState(null);
+
+  function selectClient(client) {
+    setClientId(client ? client.id : null);
+    setSelectedClient(client);
+  }
   var [refreshKey, setRefreshKey] = useState(0);
 
   function forceRefresh() { setRefreshKey(function(k){ return k + 1; }); }
@@ -251,8 +257,7 @@ export function Dashboard(props) {
     { id:"integrations", label:"Integrations", icon:"eu"       },
   ];
   function handleConvert(p) { if (setConvertProposal) setConvertProposal(p); if (setPage) setPage("Generator"); }
-  var selectedClient = clients.find(function(c){ return c.id === clientId; }) || null;
-  function goSection(id) { setSection(id); setClientId(null); }
+  var nav = [
 
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 58px)", background:C.bg }}>
@@ -304,8 +309,8 @@ export function Dashboard(props) {
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
         {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
-        {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
-        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={invoices} proposals={proposals} />}
+        {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
+        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
@@ -802,7 +807,7 @@ function DClients(props) {
           var col = c.color || "#6E7A8A";
           var av  = c.avatar || (c.name||"?").slice(0,2).toUpperCase();
           return (
-            <div key={c.id} onClick={function(){ setClientId(c.id); }} style={{ display:"flex", alignItems:"center", gap:14, padding:"20px 22px", borderBottom:i<filtered.length-1 ? "1px solid "+C.borderLt : "none", cursor:"pointer", transition:"background 0.1s" }}
+            <div key={c.id} onClick={function(){ setClientId(c); }} style={{ display:"flex", alignItems:"center", gap:14, padding:"20px 22px", borderBottom:i<filtered.length-1 ? "1px solid "+C.borderLt : "none", cursor:"pointer", transition:"background 0.1s" }}
               onMouseEnter={function(e){ e.currentTarget.style.background = C.bg; }}
               onMouseLeave={function(e){ e.currentTarget.style.background = "transparent"; }}
             >
