@@ -185,7 +185,12 @@ export function Dashboard(props) {
     { id:"clients",   label:"Clients",   icon:"users"     },
     { id:"invoices",  label:"Invoices",  icon:"document"  },
     { id:"proposals", label:"Proposals", icon:"proposal"  },
-    { id:"brandkits", label:"Kits",      icon:"brand"     },
+    { id:"brandkits", label:"Brand Kits",icon:"brand"     },
+  ];
+  var navBottom = [
+    { id:"reports",      label:"Reports",      icon:"chart"    },
+    { id:"settings",     label:"Settings",     icon:"settings" },
+    { id:"integrations", label:"Integrations", icon:"eu"       },
   ];
   function handleConvert(p) { if (setConvertProposal) setConvertProposal(p); if (setPage) setPage("Generator"); }
   var selectedClient = MOCK_CLIENTS.find(function(c){ return c.id === clientId; }) || null;
@@ -208,6 +213,19 @@ export function Dashboard(props) {
                 <Icon name={item.icon} size={14} color={active ? C.accent : "rgba(240,244,248,0.22)"} />
                 {item.label}
                 {active && <div style={{ marginLeft:"auto", width:4, height:4, borderRadius:"50%", background:C.accent, flexShrink:0 }} />}
+              </button>
+            );
+          })}
+          <div style={{ height:1, background:"rgba(255,255,255,0.05)", margin:"12px 0" }} />
+          {navBottom.map(function(item) {
+            var active = section === item.id;
+            return (
+              <button key={item.id} onClick={function(){ goSection(item.id); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:10, border:"none", marginBottom:1, cursor:"pointer", background:"transparent", color:C.navyItem, fontFamily:fUI, fontSize:13, fontWeight:400, transition:"all 0.14s", textAlign:"left", opacity:0.7 }}
+                onMouseEnter={function(e){ e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.opacity = "1"; }}
+                onMouseLeave={function(e){ e.currentTarget.style.background = "transparent"; e.currentTarget.style.opacity = "0.7"; }}
+              >
+                <Icon name={item.icon} size={13} color="rgba(240,244,248,0.22)" />
+                {item.label}
               </button>
             );
           })}
@@ -266,6 +284,137 @@ function SectionHeader(props) {
   );
 }
 
+// ── Chart data ────────────────────────────────────────────────────────────────
+var ACTIVITY_LABELS = ["1 May","8 May","15 May","22 May","31 May"];
+var ACTIVITY_REV  = [4200, 6800, 8100, 11200, 14280];
+var ACTIVITY_PAID = [3800, 5900, 7200,  9800, 12100];
+var ACTIVITY_OUT  = [1200, 2100, 2800,  3600,  4320];
+
+var CASHFLOW_LABELS = ["1","8","15","22","31"];
+var CASHFLOW_IN  = [4200, 3100, 5800, 6200, 0];
+var CASHFLOW_OUT = [0,    0,    1200, 0,    2800];
+
+var TOP_CLIENTS = [
+  { name:"Bianchi & Co.",   revenue:31200, color:C.accent },
+  { name:"Studio Verde",    revenue:22400, color:C.accent },
+  { name:"Maison Fontaine", revenue:18600, color:C.accent },
+  { name:"Nord Digital",    revenue:4200,  color:C.accent },
+];
+
+// ── Line chart (Activity Overview) ───────────────────────────────────────────
+function LineChart(props) {
+  var series = props.series || [];
+  var labels = props.labels || [];
+  var w = props.w || 500;
+  var h = props.h || 160;
+  var pad = { t:8, r:8, b:28, l:44 };
+  var cw = w - pad.l - pad.r;
+  var ch = h - pad.t - pad.b;
+  var allVals = [];
+  series.forEach(function(s){ s.data.forEach(function(v){ allVals.push(v); }); });
+  var min = 0;
+  var max = Math.max.apply(null, allVals) * 1.1 || 1;
+
+  function xp(i) { return pad.l + (i / (labels.length - 1)) * cw; }
+  function yp(v) { return pad.t + ch - ((v - min) / (max - min)) * ch; }
+
+  function fmtY(v) {
+    if (v >= 1000) return "€" + Math.round(v/1000) + "K";
+    return "€" + v;
+  }
+
+  var yTicks = [0, Math.round(max/3), Math.round(max*2/3), Math.round(max)];
+
+  return (
+    <svg width="100%" viewBox={"0 0 " + w + " " + h} preserveAspectRatio="none" style={{ display:"block", overflow:"visible" }}>
+      <defs>
+        {series.map(function(s) {
+          return (
+            <linearGradient key={s.key} id={"lc"+s.key} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={s.color} stopOpacity="0.12" />
+              <stop offset="100%" stopColor={s.color} stopOpacity="0" />
+            </linearGradient>
+          );
+        })}
+      </defs>
+      {/* Grid lines */}
+      {yTicks.map(function(v) {
+        var y = yp(v);
+        return (
+          <g key={v}>
+            <line x1={pad.l} y1={y} x2={w-pad.r} y2={y} stroke={C.borderLt} strokeWidth="1" />
+            <text x={pad.l - 6} y={y + 4} fontFamily={fUI} fontSize="9" fill={C.faint} textAnchor="end">{fmtY(v)}</text>
+          </g>
+        );
+      })}
+      {/* X labels */}
+      {labels.map(function(lb, i) {
+        return <text key={i} x={xp(i)} y={h - 4} fontFamily={fUI} fontSize="9" fill={C.faint} textAnchor="middle">{lb}</text>;
+      })}
+      {/* Series */}
+      {series.map(function(s) {
+        var pts = s.data.map(function(v, i){ return xp(i) + "," + yp(v); });
+        var areaPath = "M" + pts.join(" L") + " L" + xp(s.data.length-1) + "," + (pad.t+ch) + " L" + pad.l + "," + (pad.t+ch) + " Z";
+        return (
+          <g key={s.key}>
+            <path d={areaPath} fill={"url(#lc"+s.key+")"} />
+            <path d={"M"+pts.join(" L")} fill="none" stroke={s.color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            {s.data.map(function(v, i) {
+              return <circle key={i} cx={xp(i)} cy={yp(v)} r="2.5" fill={s.color} opacity="0.9" />;
+            })}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+// ── Bar chart (Cash Flow) ─────────────────────────────────────────────────────
+function BarChart(props) {
+  var inData  = props.inData  || [];
+  var outData = props.outData || [];
+  var labels  = props.labels  || [];
+  var w = props.w || 320;
+  var h = props.h || 140;
+  var pad = { t:8, r:8, b:28, l:44 };
+  var cw = w - pad.l - pad.r;
+  var ch = h - pad.t - pad.b;
+  var allVals = inData.concat(outData);
+  var maxV = Math.max.apply(null, allVals) * 1.2 || 1;
+  var barW = Math.floor(cw / labels.length * 0.3);
+  var slot = cw / labels.length;
+
+  function yp(v) { return pad.t + ch - (v / maxV) * ch; }
+  function yh(v) { return (v / maxV) * ch; }
+
+  return (
+    <svg width="100%" viewBox={"0 0 " + w + " " + h} preserveAspectRatio="none" style={{ display:"block", overflow:"visible" }}>
+      {/* Grid */}
+      {[0, Math.round(maxV/2), Math.round(maxV)].map(function(v) {
+        var y = yp(v);
+        return (
+          <g key={v}>
+            <line x1={pad.l} y1={y} x2={w-pad.r} y2={y} stroke={C.borderLt} strokeWidth="1" />
+            <text x={pad.l - 6} y={y+4} fontFamily={fUI} fontSize="8" fill={C.faint} textAnchor="end">{v >= 1000 ? "€"+(v/1000)+"K" : "€"+v}</text>
+          </g>
+        );
+      })}
+      {labels.map(function(lb, i) {
+        var cx = pad.l + i * slot + slot / 2;
+        var inV  = inData[i]  || 0;
+        var outV = outData[i] || 0;
+        return (
+          <g key={i}>
+            {inV > 0 && <rect x={cx - barW - 1} y={yp(inV)} width={barW} height={yh(inV)} rx="2" fill={C.accent} opacity="0.8" />}
+            {outV > 0 && <rect x={cx + 1}        y={yp(outV)} width={barW} height={yh(outV)} rx="2" fill={C.red} opacity="0.7" />}
+            <text x={cx} y={h-4} fontFamily={fUI} fontSize="8" fill={C.faint} textAnchor="middle">{lb}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 // ── Overview ──────────────────────────────────────────────────────────────────
 function DOverview(props) {
   var setSection = props.setSection;
@@ -277,89 +426,207 @@ function DOverview(props) {
   var greetingFull = firstName ? greeting + ", " + firstName[0].toUpperCase() + firstName.slice(1) + "." : greeting + ".";
   var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var dateStr = days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()];
+  var dateStr = days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
 
   var [dismissed, setDismissed] = useState([]);
   var allAttention = [
-    { id:0, type:"viewed",   title:"Pitch Deck viewed 7 times",       desc:"Bianchi & Co. has opened this 7 times. Strong buying signal — follow up now.",                    cta:"Send follow-up" },
-    { id:1, type:"overdue",  title:"Invoice overdue · €3,200",        desc:"Maison Fontaine · FR-2026-0021 · Due 14 Jan. EU late payment interest applies.",                  cta:"Send reminder"  },
-    { id:2, type:"followup", title:"App UI Kit — no reply in 3 days", desc:"Nord Digital opened your proposal twice. A short message typically doubles the reply rate.",       cta:"Follow up"      },
+    { id:0, type:"followup", title:"App UI Kit proposal",     sub:"No reply in 3 days",   cta:"Follow up" },
+    { id:1, type:"overdue",  title:"Invoice FR-2026-0021",    sub:"Overdue by 5 days",     cta:"Send reminder" },
+    { id:2, type:"viewed",   title:"Pitch Deck — Series A",   sub:"Proposal viewed 7 times", cta:"View" },
   ];
   var attention = allAttention.filter(function(a){ return dismissed.indexOf(a.id) < 0; });
 
-  // Activity: only 3 items, stripped to essentials
+  var attnColor = { followup:C.gold, overdue:C.red, viewed:C.blue };
+
   var activity = [
-    { color:C.blue,  label:"Invoice sent",      meta:"Studio Verde · €4,200",  time:"2h ago"    },
-    { color:C.green, label:"Proposal accepted",  meta:"Maison Fontaine · €8,400", time:"Yesterday" },
-    { color:C.red,   label:"Invoice overdue",    meta:"Bianchi & Co. · €3,200", time:"16d ago"   },
+    { icon:"eye",      color:C.blue,  label:"Proposal viewed",     sub:"Brand Redesign",    time:"2h ago"    },
+    { icon:"check",    color:C.green, label:"Invoice paid",         sub:"FR-2026-0018",      time:"Yesterday" },
+    { icon:"clock",    color:C.red,   label:"Invoice overdue",      sub:"FR-2026-0021",      time:"5d"        },
+    { icon:"bank",     color:C.green, label:"Payment received",     sub:"FR-2026-0017",      time:"6d"        },
+    { icon:"proposal", color:C.accent,label:"Proposal accepted",    sub:"Website Design",    time:"1w ago"    },
   ];
+
+  var maxRev = Math.max.apply(null, TOP_CLIENTS.map(function(c){ return c.revenue; }));
 
   return (
     <div style={{ width:"100%", minWidth:0 }}>
-      {/* Greeting — generous space */}
-      <div style={{ marginBottom:48 }}>
-        <h1 style={{ fontFamily:fSerif, fontSize:"clamp(32px,3.5vw,44px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", lineHeight:1.05, marginBottom:10 }}>{greetingFull}</h1>
-        <p style={{ fontFamily:fUI, fontSize:13, color:C.faint }}>{dateStr} · 1 overdue</p>
+
+      {/* Header row with greeting + search + new button */}
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:32, gap:16 }}>
+        <div>
+          <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,3vw,38px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", lineHeight:1.05, marginBottom:8 }}>{greetingFull}</h1>
+          <p style={{ fontFamily:fMono, fontSize:11, color:C.faint, letterSpacing:"0.04em" }}>{dateStr} · 4 clients · 1 overdue</p>
+        </div>
+        <div style={{ display:"flex", gap:10, alignItems:"center", flexShrink:0 }} className="nav-desktop">
+          <div style={{ display:"flex", alignItems:"center", gap:8, background:C.surface, borderRadius:9, padding:"8px 14px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }}>
+            <Icon name="users" size={13} color={C.faint} />
+            <span style={{ fontFamily:fUI, fontSize:13, color:C.faint }}>Search…</span>
+            <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, background:C.bg, borderRadius:4, padding:"1px 5px", marginLeft:12 }}>⌘K</span>
+          </div>
+          <div style={{ width:32, height:32, borderRadius:8, background:C.surface, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 1px 4px rgba(10,22,40,0.05)", cursor:"pointer" }}>
+            <Icon name="clock" size={14} color={C.faint} />
+          </div>
+          <button style={{ display:"flex", alignItems:"center", gap:6, background:C.ink, color:"#fff", border:"none", borderRadius:9, padding:"8px 16px", cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>
+            + New <span style={{ opacity:0.5, fontSize:11 }}>↓</span>
+          </button>
+        </div>
       </div>
 
-      {/* Two-col grid on desktop, single col on mobile */}
-      <div className="dash-overview-grid" style={{ display:"grid", gridTemplateColumns:"1fr 300px", gap:24 }}>
+      {/* 4-col KPI row — desktop only */}
+      <div className="nav-desktop" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
+        <StatCard label="Revenue (May)" value="€14,280" sub="+18% vs April" subColor={C.green} spark={SPARK_UP} sparkColor={C.accent} />
+        <StatCard label="Outstanding"   value="€4,320"  sub="4 overdue"    subColor={C.red}   spark={SPARK_DOWN} sparkColor={C.red} />
+        <StatCard label="Paid (May)"    value="€9,960"  sub="+24% vs April" subColor={C.green} spark={SPARK_UP} sparkColor={C.green} />
+        <StatCard label="Open proposals" value="6"      sub="2 awaiting reply" subColor={C.gold} spark={SPARK_FLAT} sparkColor={C.gold} />
+      </div>
 
-        {/* Left column */}
-        <div style={{ display:"flex", flexDirection:"column", gap:16, minWidth:0 }}>
+      {/* Mobile KPI — 2-col */}
+      <div className="dash-kpi-grid" style={{ display:"none", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
+        <StatCard label="Revenue" value="€14,280" sub="+18%" subColor={C.green} spark={SPARK_UP} sparkColor={C.accent} />
+        <StatCard label="Outstanding" value="€4,320" sub="4 overdue" subColor={C.red} spark={SPARK_DOWN} sparkColor={C.red} />
+      </div>
 
-          {/* Featured metric — large, dominant */}
-          <div style={{ background:C.surface, borderRadius:20, padding:"28px 24px 22px", boxShadow:"0 1px 6px rgba(10,22,40,0.05)" }}>
-            <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.12em", textTransform:"uppercase", color:C.faint, marginBottom:16 }}>Revenue · May 2026</div>
-            <div style={{ fontFamily:fSerif, fontSize:44, fontWeight:400, color:C.ink, letterSpacing:"-0.045em", lineHeight:1, marginBottom:12 }}>€14,280</div>
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-              <span style={{ fontFamily:fUI, fontSize:12, color:C.green }}>↑ +18% vs April</span>
-              <Spark data={SPARK_UP} color={C.accent} w={80} h={24} />
+      {/* Main body — 3-col on desktop */}
+      <div className="dash-overview-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 300px", gap:18 }}>
+
+        {/* Activity Overview chart */}
+        <div style={{ background:C.surface, borderRadius:16, padding:"20px 22px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+            <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Activity overview</span>
+            <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+              {[["Revenue",C.accent],["Paid",C.green],["Outstanding",C.red]].map(function(pair) {
+                return (
+                  <div key={pair[0]} style={{ display:"flex", alignItems:"center", gap:5 }}>
+                    <div style={{ width:6, height:6, borderRadius:"50%", background:pair[1] }} />
+                    <span style={{ fontFamily:fUI, fontSize:11, color:C.muted }}>{pair[0]}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
+          <LineChart
+            series={[
+              { key:"rev", color:C.accent, data:ACTIVITY_REV  },
+              { key:"paid",color:C.green,  data:ACTIVITY_PAID },
+              { key:"out", color:C.red,    data:ACTIVITY_OUT  },
+            ]}
+            labels={ACTIVITY_LABELS}
+            w={480} h={170}
+          />
+        </div>
 
-          {/* Secondary metrics — smaller 2-col */}
-          <div className="dash-kpi-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            <StatCard label="Outstanding" value="€4,320" sub="4 overdue" subColor={C.red} spark={SPARK_DOWN} sparkColor={C.red} />
-            <StatCard label="Collected" value="€9,960" sub="↑ +24%" subColor={C.green} spark={SPARK_UP} sparkColor={C.green} />
-          </div>
+        {/* Bottom-left: Recent activity + Cash flow stacked */}
+        <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
 
-          {/* Activity — 3 rows max, stripped */}
-          <div style={{ background:C.surface, borderRadius:18, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
-            <div style={{ padding:"20px 22px 14px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Activity</span>
-              <button onClick={function(){ setSection("invoices"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:12, color:C.accent, cursor:"pointer" }}>All →</button>
+          {/* Recent activity */}
+          <div style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.04)", flex:1 }}>
+            <div style={{ padding:"18px 20px 12px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Recent activity</span>
+              <button onClick={function(){ setSection("invoices"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer" }}>View all activity</button>
             </div>
             {activity.map(function(a, i) {
               return (
-                <div key={i} style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 22px", borderTop:"1px solid "+C.borderLt }}>
-                  <div style={{ width:6, height:6, borderRadius:"50%", background:a.color, flexShrink:0 }} />
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 20px", borderTop:"1px solid "+C.borderLt }}>
+                  <div style={{ width:28, height:28, borderRadius:"50%", background:a.color+"12", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    <Icon name={a.icon} size={12} color={a.color} />
+                  </div>
                   <div style={{ flex:1, minWidth:0 }}>
                     <div style={{ fontFamily:fUI, fontSize:13, fontWeight:500, color:C.ink }}>{a.label}</div>
-                    <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>{a.meta}</div>
+                    <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.sub}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, flexShrink:0 }}>{a.time}</span>
+                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>→</span>
                 </div>
               );
             })}
           </div>
+
+          {/* Cash flow */}
+          <div style={{ background:C.surface, borderRadius:16, padding:"18px 20px", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
+              <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Cash flow</span>
+            </div>
+            <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>€14,280</div>
+            <div style={{ fontFamily:fUI, fontSize:11, color:C.faint, marginBottom:14 }}>Total cash flow</div>
+            <BarChart inData={CASHFLOW_IN} outData={CASHFLOW_OUT} labels={CASHFLOW_LABELS} w={300} h={110} />
+          </div>
         </div>
 
-        {/* Right — attention cards */}
-        <div style={{ display:"flex", flexDirection:"column", gap:12, minWidth:0 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
-            <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Needs attention</span>
-            {attention.length > 0 && <span style={{ fontFamily:fMono, fontSize:10, color:C.red, background:C.redSoft, borderRadius:4, padding:"2px 6px" }}>{attention.length}</span>}
-          </div>
-          {attention.map(function(item) {
-            return <AttentionCard key={item.id} item={item} onDismiss={function(){ setDismissed(function(d){ return d.concat([item.id]); }); }} />;
-          })}
-          {attention.length === 0 && (
-            <div style={{ background:C.surface, borderRadius:18, padding:"40px 24px", textAlign:"center", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
-              <div style={{ fontFamily:fUI, fontSize:14, color:C.ink, fontWeight:500, marginBottom:4 }}>All clear.</div>
-              <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, fontWeight:300 }}>Nothing needs attention.</div>
+        {/* Right column — dark attention panel + top clients */}
+        <div style={{ display:"flex", flexDirection:"column", gap:18, minWidth:0 }}>
+
+          {/* What needs attention — dark card */}
+          <div style={{ background:C.navy, borderRadius:16, padding:"20px", boxShadow:"0 4px 16px rgba(10,22,40,0.14)" }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+              <span style={{ fontFamily:fUI, fontSize:13, fontWeight:600, color:"rgba(240,244,248,0.9)" }}>What needs attention</span>
+              {attention.length > 0 && <span style={{ fontFamily:fMono, fontSize:10, color:C.red, background:"rgba(201,72,64,0.15)", borderRadius:4, padding:"2px 6px" }}>{attention.length}</span>}
             </div>
-          )}
+            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+              {attention.map(function(item) {
+                var ac = attnColor[item.type] || C.gold;
+                return (
+                  <div key={item.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:10, background:"rgba(255,255,255,0.05)" }}>
+                    <div style={{ width:28, height:28, borderRadius:7, background:ac+"20", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                      <Icon name={item.type==="overdue" ? "clock" : item.type==="viewed" ? "eye" : "send"} size={12} color={ac} />
+                    </div>
+                    <div style={{ flex:1, minWidth:0 }}>
+                      <div style={{ fontFamily:fUI, fontSize:12, fontWeight:500, color:"rgba(240,244,248,0.85)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{item.title}</div>
+                      <div style={{ fontFamily:fUI, fontSize:11, color:"rgba(240,244,248,0.35)", marginTop:1 }}>{item.sub}</div>
+                    </div>
+                    <button onClick={function(){ setDismissed(function(d){ return d.concat([item.id]); }); }} style={{ background:"rgba(255,255,255,0.08)", border:"none", color:"rgba(240,244,248,0.7)", borderRadius:6, padding:"4px 9px", cursor:"pointer", fontFamily:fUI, fontSize:11, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>
+                      {item.cta}
+                    </button>
+                  </div>
+                );
+              })}
+              {attention.length === 0 && (
+                <div style={{ textAlign:"center", padding:"16px 0", fontFamily:fUI, fontSize:13, color:"rgba(240,244,248,0.3)" }}>All clear ✓</div>
+              )}
+            </div>
+          </div>
+
+          {/* Top clients by revenue */}
+          <div style={{ background:C.surface, borderRadius:16, padding:"18px 20px", boxShadow:"0 1px 4px rgba(10,22,40,0.04)", flex:1 }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+              <span style={{ fontFamily:fUI, fontSize:13, fontWeight:600, color:C.ink }}>Top clients by revenue</span>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+              {TOP_CLIENTS.map(function(c) {
+                var pct = Math.round(c.revenue / maxRev * 100);
+                return (
+                  <div key={c.name}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
+                      <span style={{ fontFamily:fUI, fontSize:13, color:C.ink }}>{c.name}</span>
+                      <span style={{ fontFamily:fMono, fontSize:12, color:C.ink }}>{"€"+c.revenue.toLocaleString()}</span>
+                    </div>
+                    <div style={{ height:3, background:C.borderLt, borderRadius:2 }}>
+                      <div style={{ height:"100%", width:pct+"%", background:C.accent, borderRadius:2, transition:"width 0.4s" }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <button onClick={function(){ setSection("clients"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", marginTop:16, padding:0 }}>View all clients →</button>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Mobile fallback — simple activity feed */}
+      <div className="nav-burger" style={{ display:"none", marginTop:16 }}>
+        <div style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
+          {activity.slice(0,3).map(function(a, i) {
+            return (
+              <div key={i} style={{ display:"flex", alignItems:"center", gap:12, padding:"14px 18px", borderBottom:i<2 ? "1px solid "+C.borderLt : "none" }}>
+                <div style={{ width:6, height:6, borderRadius:"50%", background:a.color, flexShrink:0 }} />
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div style={{ fontFamily:fUI, fontSize:13, fontWeight:500, color:C.ink }}>{a.label}</div>
+                  <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{a.sub}</div>
+                </div>
+                <span style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.time}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
