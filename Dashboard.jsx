@@ -50,7 +50,33 @@ export function useDB(table, userId) {
   return { rows:rows, loading:loading, error:error, refresh:fetch_, insert:insert, update:update, remove:remove };
 }
 
-// ── Mock data ─────────────────────────────────────────────────────────────────
+// ── useProfile — load/save user profile from Supabase ────────────────────────
+export function useProfile(userId) {
+  var [profile, setProfile] = useState(null);
+  var [loading, setLoading] = useState(false);
+
+  useEffect(function() {
+    if (!userId) return;
+    setLoading(true);
+    fetch("/api/db?table=profiles&user_id=" + encodeURIComponent(userId))
+      .then(function(r) { return r.json(); })
+      .then(function(data) { setProfile(data || {}); setLoading(false); })
+      .catch(function() { setLoading(false); });
+  }, [userId]);
+
+  function save(payload) {
+    return fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ table:"profiles", action:"upsert", user_id:userId, payload:payload }),
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      setProfile(data);
+      return data;
+    });
+  }
+
+  return { profile:profile, loading:loading, save:save };
+}
 var MOCK_CLIENTS = [
   { id:"1", name:"Studio Verde GmbH",  country:"DE", city:"Berlin",    avatar:"SV", color:"#5E8A6E", status:"active",   balance:8400,  paid:22400, invoices:14 },
   { id:"2", name:"Maison Fontaine",    country:"FR", city:"Paris",     avatar:"MF", color:"#8A6E5E", status:"overdue",  balance:3200,  paid:18600, invoices:9  },
@@ -178,8 +204,21 @@ export function Dashboard(props) {
   var setPage = props.setPage;
   var setConvertProposal = props.setConvertProposal;
   var user = props.user;
+  var userId = user ? user.id : null;
   var [section, setSection] = useState("overview");
   var [clientId, setClientId] = useState(null);
+
+  // ── Real data from Supabase (falls back to mock when userId is null) ──────
+  var profileHook  = useProfile(userId);
+  var profile      = profileHook.profile;
+  var invoicesDB   = useDB("invoices",   userId);
+  var proposalsDB  = useDB("proposals",  userId);
+  var clientsDB    = useDB("clients",    userId);
+
+  // Use real rows if loaded, otherwise fall back to mock data
+  var invoices  = invoicesDB.rows.length   > 0 ? invoicesDB.rows   : MOCK_INVOICES;
+  var proposals = proposalsDB.rows.length  > 0 ? proposalsDB.rows  : MOCK_PROPOSALS;
+  var clients   = clientsDB.rows.length    > 0 ? clientsDB.rows    : MOCK_CLIENTS;
   var nav = [
     { id:"overview",  label:"Overview",  icon:"overview"  },
     { id:"clients",   label:"Clients",   icon:"users"     },
@@ -193,7 +232,7 @@ export function Dashboard(props) {
     { id:"integrations", label:"Integrations", icon:"eu"       },
   ];
   function handleConvert(p) { if (setConvertProposal) setConvertProposal(p); if (setPage) setPage("Generator"); }
-  var selectedClient = MOCK_CLIENTS.find(function(c){ return c.id === clientId; }) || null;
+  var selectedClient = clients.find(function(c){ return c.id === clientId; }) || null;
   function goSection(id) { setSection(id); setClientId(null); }
 
   return (
@@ -245,13 +284,13 @@ export function Dashboard(props) {
 
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
-        {section==="overview"  && <DOverview setSection={goSection} user={user} />}
-        {section==="clients"   && !clientId && <DClients setClientId={setClientId} setPage={setPage} />}
-        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={MOCK_INVOICES} proposals={MOCK_PROPOSALS} />}
-        {section==="invoices"  && <DInvoices />}
-        {section==="proposals" && <DProposals onConvert={handleConvert} />}
+        {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
+        {section==="clients"   && !clientId && <DClients setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} />}
+        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={invoices} proposals={proposals} />}
+        {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} />}
+        {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
-        {section==="settings"  && <DSettings user={user} />}
+        {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} />}
       </div>
 
       {/* Mobile bottom nav — lighter, shorter */}
@@ -638,40 +677,91 @@ function DOverview(props) {
 function DClients(props) {
   var setClientId = props.setClientId;
   var setPage = props.setPage;
+  var clients = props.clients || MOCK_CLIENTS;
+  var db = props.db;
+  var userId = props.userId;
   var [search, setSearch] = useState("");
+  var [adding, setAdding] = useState(false);
+  var [newName, setNewName] = useState("");
+  var [newEmail, setNewEmail] = useState("");
+  var [newCity, setNewCity] = useState("");
+  var [saving, setSaving] = useState(false);
   var stColor = { active:C.green, overdue:C.red, prospect:C.blue };
-  var filtered = MOCK_CLIENTS.filter(function(c){
+
+  var filtered = clients.filter(function(c){
     return !search || c.name.toLowerCase().indexOf(search.toLowerCase()) >= 0;
   });
 
+  function addClient() {
+    if (!newName.trim()) return;
+    setSaving(true);
+    var payload = { name:newName.trim(), email:newEmail.trim(), city:newCity.trim(), status:"prospect", balance:0, paid:0, invoices:0, avatar:newName.trim().slice(0,2).toUpperCase(), color:"#6E7A8A" };
+    if (db && userId) {
+      db.insert(payload).then(function(){ setSaving(false); setAdding(false); setNewName(""); setNewEmail(""); setNewCity(""); });
+    } else {
+      setSaving(false); setAdding(false);
+    }
+  }
+
   return (
     <div>
-      <SectionHeader title="Clients" action={<Btn onClick={function(){ if(setPage) setPage("Generator"); }}>+ Invoice</Btn>} />
+      <SectionHeader title="Clients" action={
+        <Btn onClick={function(){ setAdding(function(a){ return !a; }); }}>
+          {adding ? "Cancel" : "+ Add client"}
+        </Btn>
+      } />
+
+      {adding && (
+        <div style={{ background:C.surface, borderRadius:14, padding:"20px 22px", marginBottom:16, boxShadow:"0 1px 6px rgba(10,22,40,0.07)" }}>
+          <div style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink, marginBottom:14 }}>New client</div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:14 }}>
+            <div>
+              <label style={{ display:"block", marginBottom:4, fontFamily:fUI, fontSize:12, color:C.muted }}>Name *</label>
+              <input value={newName} onChange={function(e){ setNewName(e.target.value); }} placeholder="Studio Verde GmbH" style={{ width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" }} />
+            </div>
+            <div>
+              <label style={{ display:"block", marginBottom:4, fontFamily:fUI, fontSize:12, color:C.muted }}>Email</label>
+              <input value={newEmail} onChange={function(e){ setNewEmail(e.target.value); }} placeholder="hello@studio.de" style={{ width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" }} />
+            </div>
+            <div>
+              <label style={{ display:"block", marginBottom:4, fontFamily:fUI, fontSize:12, color:C.muted }}>City</label>
+              <input value={newCity} onChange={function(e){ setNewCity(e.target.value); }} placeholder="Berlin" style={{ width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" }} />
+            </div>
+          </div>
+          <Btn onClick={addClient}>{saving ? "Saving…" : "Add client"}</Btn>
+        </div>
+      )}
+
       <div style={{ position:"relative", marginBottom:20 }}>
         <input value={search} onChange={function(e){ setSearch(e.target.value); }} placeholder="Search…" style={{ width:"100%", boxSizing:"border-box", border:"none", borderRadius:12, padding:"11px 14px 11px 38px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.surface, outline:"none", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }} />
         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)" }}><Icon name="users" size={14} color={C.faint} /></div>
       </div>
       <div style={{ background:C.surface, borderRadius:18, overflow:"hidden", boxShadow:"0 1px 6px rgba(10,22,40,0.05)" }}>
         {filtered.map(function(c, i) {
+          var col = c.color || "#6E7A8A";
+          var av  = c.avatar || (c.name||"?").slice(0,2).toUpperCase();
           return (
             <div key={c.id} onClick={function(){ setClientId(c.id); }} style={{ display:"flex", alignItems:"center", gap:14, padding:"20px 22px", borderBottom:i<filtered.length-1 ? "1px solid "+C.borderLt : "none", cursor:"pointer", transition:"background 0.1s" }}
               onMouseEnter={function(e){ e.currentTarget.style.background = C.bg; }}
               onMouseLeave={function(e){ e.currentTarget.style.background = "transparent"; }}
             >
-              <div style={{ width:40, height:40, borderRadius:12, background:c.color+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:c.color, fontWeight:700, flexShrink:0 }}>{c.avatar}</div>
+              <div style={{ width:40, height:40, borderRadius:12, background:col+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:col, fontWeight:700, flexShrink:0 }}>{av}</div>
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink, marginBottom:3 }}>{c.name}</div>
-                {/* City only — no count, no country */}
-                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}{c.email ? " · "+c.email : ""}</div>
               </div>
-              {/* Balance only if nonzero */}
-              {c.balance > 0
-                ? <div style={{ fontFamily:fMono, fontSize:13, color:C.red, fontWeight:500, flexShrink:0 }}>{"€"+c.balance.toLocaleString()}</div>
-                : <Dot color={stColor[c.status]||C.muted}>{c.status}</Dot>
+              {(c.balance||0) > 0
+                ? <div style={{ fontFamily:fMono, fontSize:13, color:C.red, fontWeight:500, flexShrink:0 }}>{"€"+(c.balance||0).toLocaleString()}</div>
+                : <Dot color={stColor[c.status]||C.muted}>{c.status||"active"}</Dot>
               }
             </div>
           );
         })}
+        {filtered.length === 0 && (
+          <div style={{ padding:"48px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint, fontWeight:300 }}>
+            {search ? "No clients match \""+search+"\"" : "No clients yet. Add your first one above."}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -729,17 +819,20 @@ function DClientDetail(props) {
 }
 
 // ── Invoices — calm overview, not admin table ─────────────────────────────────
-function DInvoices() {
+function DInvoices(props) {
+  var invoices = props.invoices || MOCK_INVOICES;
+  var clients  = props.clients  || MOCK_CLIENTS;
+  var db = props.db;
   var [filter, setFilter] = useState("all");
   var [acted, setActed] = useState({});
   var clientMap = {};
-  MOCK_CLIENTS.forEach(function(c){ clientMap[c.id] = c.name; });
-  var filtered = MOCK_INVOICES.filter(function(inv){
+  clients.forEach(function(c){ clientMap[c.id] = c.name; });
+  var filtered = invoices.filter(function(inv){
     if (filter==="outstanding") return inv.status==="sent"||inv.status==="overdue";
     if (filter==="paid") return inv.status==="paid";
     return true;
   });
-  var outstanding = MOCK_INVOICES.filter(function(i){ return i.status==="sent"||i.status==="overdue"; }).reduce(function(s,i){ return s+i.amount_gross; },0);
+  var outstanding = invoices.filter(function(i){ return i.status==="sent"||i.status==="overdue"; }).reduce(function(s,i){ return s+(i.amount_gross||0); },0);
 
   function act(id, type) {
     setActed(function(s){ return Object.assign({},s,{ [id]:type }); });
@@ -807,10 +900,13 @@ function DInvoices() {
 // ── Proposals — intelligence layer, simplified ────────────────────────────────
 export function DProposals(props) {
   var onConvert = props.onConvert;
+  var proposals = props.proposals || MOCK_PROPOSALS;
+  var clients   = props.clients   || MOCK_CLIENTS;
+  var db = props.db;
   var clientMap = {};
-  MOCK_CLIENTS.forEach(function(c){ clientMap[c.id] = c.name; });
-  var won = MOCK_PROPOSALS.filter(function(p){ return p.status==="won"; }).length;
-  var total = MOCK_PROPOSALS.filter(function(p){ return p.status!=="draft"; }).length;
+  clients.forEach(function(c){ clientMap[c.id] = c.name; });
+  var won = proposals.filter(function(p){ return p.status==="won"; }).length;
+  var total = proposals.filter(function(p){ return p.status!=="draft"; }).length;
   var winRate = total > 0 ? Math.round(won/total*100) : 0;
   var stColor = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
 
@@ -824,7 +920,7 @@ export function DProposals(props) {
     <div>
       <SectionHeader title="Proposals" sub={"Win rate " + winRate + "% · " + MOCK_PROPOSALS.length + " total"} />
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-        {MOCK_PROPOSALS.map(function(p) {
+        {proposals.map(function(p) {
           var sig = signal(p);
           var sc = stColor[p.status]||C.muted;
           return (
@@ -949,30 +1045,54 @@ export function DBrandKits() {
 // ── Settings ──────────────────────────────────────────────────────────────────
 function DSettings(props) {
   var user = props.user;
+  var profile = props.profile || {};
+  var profileHook = props.profileHook;
   var [tab, setTab] = useState("profile");
 
-  // Profile state
-  var [firstName, setFirstName]   = useState("Daniel");
-  var [lastName, setLastName]     = useState("Speder");
-  var [email, setEmail]           = useState(user && user.email ? user.email : "daniel.speder@gmail.com");
-  var [phone, setPhone]           = useState("");
-  var [website, setWebsite]       = useState("");
-  var [bio, setBio]               = useState("");
+  // Profile state — pre-filled from Supabase profile
+  var [firstName, setFirstName]   = useState(profile.first_name || "");
+  var [lastName, setLastName]     = useState(profile.last_name  || "");
+  var [email, setEmail]           = useState(profile.email      || (user && user.email ? user.email : ""));
+  var [phone, setPhone]           = useState(profile.phone      || "");
+  var [website, setWebsite]       = useState(profile.website    || "");
+  var [bio, setBio]               = useState(profile.bio        || "");
 
   // Business state
-  var [bizName, setBizName]       = useState("");
-  var [vatNum, setVatNum]         = useState("");
-  var [iban, setIban]             = useState("");
-  var [bic, setBic]               = useState("");
-  var [street, setStreet]         = useState("");
-  var [city, setCity]             = useState("");
-  var [country, setCountry]       = useState("DE");
+  var [bizName, setBizName]   = useState(profile.biz_name    || "");
+  var [vatNum, setVatNum]     = useState(profile.vat_number  || "");
+  var [iban, setIban]         = useState(profile.iban         || "");
+  var [bic, setBic]           = useState(profile.bic          || "");
+  var [street, setStreet]     = useState(profile.street       || "");
+  var [city, setCity]         = useState(profile.city         || "");
+  var [country, setCountry]   = useState(profile.country      || "DE");
 
-  // Notifications state
-  var [notifProposal, setNotifProposal] = useState(true);
-  var [notifInvoice, setNotifInvoice]   = useState(true);
-  var [notifOverdue, setNotifOverdue]   = useState(true);
-  var [notifDigest, setNotifDigest]     = useState(false);
+  // Sync when profile loads from Supabase
+  useEffect(function() {
+    if (!profile || !profile.first_name) return;
+    setFirstName(profile.first_name || "");
+    setLastName(profile.last_name   || "");
+    setEmail(profile.email          || (user && user.email ? user.email : ""));
+    setPhone(profile.phone          || "");
+    setWebsite(profile.website      || "");
+    setBio(profile.bio              || "");
+    setBizName(profile.biz_name     || "");
+    setVatNum(profile.vat_number    || "");
+    setIban(profile.iban            || "");
+    setBic(profile.bic              || "");
+    setStreet(profile.street        || "");
+    setCity(profile.city            || "");
+    setCountry(profile.country      || "DE");
+    setNotifProposal(profile.notif_proposal !== false);
+    setNotifInvoice(profile.notif_invoice   !== false);
+    setNotifOverdue(profile.notif_overdue   !== false);
+    setNotifDigest(!!profile.notif_digest);
+  }, [profile]);
+
+  // Notifications
+  var [notifProposal, setNotifProposal] = useState(profile.notif_proposal !== false);
+  var [notifInvoice, setNotifInvoice]   = useState(profile.notif_invoice   !== false);
+  var [notifOverdue, setNotifOverdue]   = useState(profile.notif_overdue   !== false);
+  var [notifDigest, setNotifDigest]     = useState(!!profile.notif_digest);
 
   // Password state
   var [pwCurrent, setPwCurrent]   = useState("");
@@ -980,10 +1100,30 @@ function DSettings(props) {
   var [pwConfirm, setPwConfirm]   = useState("");
 
   var [saved, setSaved] = useState("");
+  var [saving, setSaving] = useState(false);
 
   function save(section) {
-    setSaved(section);
-    setTimeout(function(){ setSaved(""); }, 2500);
+    setSaving(true);
+    var payload = {};
+    if (section === "profile") {
+      payload = { first_name:firstName, last_name:lastName, email:email, phone:phone, website:website, bio:bio };
+    } else if (section === "business-info") {
+      payload = { biz_name:bizName, vat_number:vatNum, country:country, street:street, city:city };
+    } else if (section === "business-payment") {
+      payload = { iban:iban, bic:bic };
+    } else if (section === "notifications") {
+      payload = { notif_proposal:notifProposal, notif_invoice:notifInvoice, notif_overdue:notifOverdue, notif_digest:notifDigest };
+    }
+    if (profileHook && profileHook.save && Object.keys(payload).length > 0) {
+      profileHook.save(payload).then(function() {
+        setSaving(false); setSaved(section);
+        setTimeout(function(){ setSaved(""); }, 2500);
+      }).catch(function() { setSaving(false); });
+    } else {
+      // Demo mode — no userId
+      setSaving(false); setSaved(section);
+      setTimeout(function(){ setSaved(""); }, 2500);
+    }
   }
 
   var tabs = [
@@ -1007,9 +1147,10 @@ function DSettings(props) {
 
   function SaveBtn(tProps) {
     var done = saved === tProps.section;
+    var isSaving = saving && saved !== tProps.section;
     return (
-      <button onClick={function(){ save(tProps.section); }} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:"0 2px 8px rgba(20,153,144,0.18)" }}>
-        {done ? "✓ Saved" : "Save changes"}
+      <button onClick={function(){ save(tProps.section); }} disabled={saving} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:saving?"not-allowed":"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:done?"none":"0 2px 8px rgba(20,153,144,0.18)", opacity:saving&&!done?0.7:1 }}>
+        {done ? "✓ Saved" : isSaving ? "Saving…" : "Save changes"}
       </button>
     );
   }
