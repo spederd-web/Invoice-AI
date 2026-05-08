@@ -673,7 +673,7 @@ export function InvoiceForm(props) {
           })()}
       </div>
       <div style={{ position:"sticky", top:72, alignSelf:"start" }}>
-        <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, padding:"12px 14px" }}>
+        <div style={{ background:L.white, borderRadius:14, marginBottom:16, boxShadow:"0 1px 4px rgba(10,22,40,0.06)", padding:"12px 14px" }}>
           <p style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
           {[
             { i:"eu",       l:"Country",        sub:(s.country?s.country.name:"Germany")+" · VAT "+(s.country?s.country.vat:19)+"%", ok:true },
@@ -731,8 +731,8 @@ export function ProposalForm(props) {
     }
   }, [convertToInvoice]);
 
-  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"7px 10px", fontFamily:"'Inter',sans-serif", fontSize:15, color:L.ink, background:L.white, outline:"none" };
-  var lblStyle = { display:"block", marginBottom:4, fontFamily:"'DM Mono',monospace", fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted };
+  var inpStyle = { width:"100%", boxSizing:"border-box", border:"1px solid "+L.border, borderRadius:8, padding:"9px 12px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" };
+  var lblStyle = { display:"block", marginBottom:5, fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:400 };
 
   function generate() {
     if (!projDesc.trim()) return;
@@ -804,11 +804,11 @@ export function ProposalForm(props) {
 
   function renderProposal(text) {
     return (
-      <div style={{ fontFamily:"'Inter',sans-serif" }}>
+      <div style={{ fontFamily:fSans }}>
         {text.split("\n").map(function(line, i) {
           if (line === "---") return <hr key={i} style={{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" }} />;
-          if (line.startsWith("## ")) return <h3 key={i} style={{ fontFamily:"'Playfair Display',serif", fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
-          if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:"'Inter',sans-serif", fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
+          if (line.startsWith("## ")) return <h3 key={i} style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
+          if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:fSans, fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
           if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:15, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>·</span><span>{line.slice(2)}</span></div>;
           if (line === "") return <div key={i} style={{ height:8 }} />;
           if (line.indexOf("**") >= 0) {
@@ -822,13 +822,13 @@ export function ProposalForm(props) {
   }
 
   return (
-    <div className="prop-grid desktop-prop" style={{ maxWidth:900, margin:"0 auto", padding:"28px 24px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
+    <div className="prop-grid desktop-prop" style={{ maxWidth:900, margin:"0 auto", padding:"24px 20px 56px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
       <div>
-        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:800, color:L.ink, marginBottom:4 }}>{t(lang,"propTitle")}</h2>
-        <p className="d-section-sub" style={{ fontFamily:"'Inter',sans-serif", fontSize:15, color:L.muted, marginBottom:20, fontWeight:300 }}>{t(lang,"propSub")}</p>
-        <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Client</span></div>
-          <div style={{ padding:"16px 16px" }}>
+        <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:400, color:L.ink, marginBottom:5, letterSpacing:"-0.02em" }}>{t(lang,"propTitle")}</h2>
+        <p className="d-section-sub" style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginBottom:24, fontWeight:300, lineHeight:1.5 }}>{t(lang,"propSub")}</p>
+        <div style={{ background:L.white, borderRadius:14, marginBottom:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.06)" }}>
+          <div style={{ padding:"14px 20px 10px" }}><span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>Client</span></div>
+          <div style={{ padding:"0 20px 20px" }}>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9, marginBottom:9 }}>
               <div><label style={lblStyle}>First name</label><input value={clientName} onChange={function(e){ setClientName(e.target.value); }} placeholder="Sarah" style={inpStyle} /></div>
               <div><label style={lblStyle}>Company</label><input value={clientCo} onChange={function(e){ setClientCo(e.target.value); }} placeholder="TechFlow GmbH" style={inpStyle} /></div>
@@ -844,36 +844,36 @@ export function ProposalForm(props) {
                 </optgroup>
               </select>
               {COUNTRY_TONE[clientCountry] && (
-                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.accent, marginTop:5, lineHeight:1.5, letterSpacing:"0.02em" }}>
+                <p style={{ fontFamily:fMono, fontSize:10, color:L.accent, marginTop:5, lineHeight:1.5, letterSpacing:"0.02em" }}>
                   {COUNTRY_TONE[clientCountry].split(".")[0] + "."}
                 </p>
               )}
             </div>
           </div>
         </div>
-        <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Project</span></div>
-          <div style={{ padding:"16px 16px" }}>
+        <div style={{ background:L.white, borderRadius:14, marginBottom:16, boxShadow:"0 1px 4px rgba(10,22,40,0.06)", overflow:"hidden" }}>
+          <div style={{ padding:"14px 20px 10px" }}><span style={{ fontFamily:fMono, fontSize:13, fontWeight:600, color:L.ink }}>Project</span></div>
+          <div style={{ padding:"0 20px 20px" }}>
             <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:10 }}>
               {PROJ_TYPES.slice(0,8).map(function(t) {
-                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:13 }}>{t}</button>;
+                return <button key={t} onClick={function(){ setProjType(t); }} style={{ background:projType===t ? L.accent : L.paper, color:projType===t ? "#fff" : L.muted, border:"1.5px solid "+(projType===t ? L.accent : L.border), borderRadius:99, padding:"4px 11px", cursor:"pointer", fontFamily:fSans, fontSize:13 }}>{t}</button>;
               })}
             </div>
             {projType && PROJ_TEMPLATES[projType] && (
               <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:7, padding:"8px 10px", marginBottom:10 }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
-                <div style={{ fontFamily:"'Inter',sans-serif", fontSize:13, color:L.muted, lineHeight:1.5 }}>
+                <div style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
+                <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.5 }}>
                   {PROJ_TEMPLATES[projType].sections.join(" → ")}
                 </div>
               </div>
             )}
             <label style={lblStyle}>Brief *</label>
-            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:"'Inter',sans-serif", fontSize:15, color:L.ink, background:L.white, outline:"none", resize:"vertical", lineHeight:1.55 }} />
+            <textarea value={projDesc} onChange={function(e){ setProjDesc(e.target.value); }} placeholder="Describe the project and what the client needs. The more context, the better the proposal." rows={4} style={{ width:"100%", boxSizing:"border-box", border:"1.5px solid "+L.border, borderRadius:6, padding:"8px 10px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none", resize:"vertical", lineHeight:1.55 }} />
           </div>
         </div>
-        <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:10, overflow:"hidden" }}>
-          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Scope</span></div>
-          <div style={{ padding:"16px 16px" }}>
+        <div style={{ background:L.white, borderRadius:14, marginBottom:16, boxShadow:"0 1px 4px rgba(10,22,40,0.06)", overflow:"hidden" }}>
+          <div style={{ padding:"14px 20px 10px" }}><span style={{ fontFamily:fMono, fontSize:13, fontWeight:600, color:L.ink }}>Scope</span></div>
+          <div style={{ padding:"0 20px 20px" }}>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:9 }}>
               <div>
                 <label style={lblStyle}>Budget range</label>
@@ -891,17 +891,17 @@ export function ProposalForm(props) {
           </div>
         </div>
         <div style={{ background:L.white, border:"1.5px solid "+L.border, borderRadius:12, marginBottom:14, overflow:"hidden" }}>
-          <div style={{ padding:"12px 16px", background:L.cream, borderBottom:"1px solid "+L.border }}><span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted }}>Tone</span></div>
-          <div style={{ padding:"16px 16px" }}>
+          <div style={{ padding:"14px 20px 10px" }}><span style={{ fontFamily:fMono, fontSize:13, fontWeight:600, color:L.ink }}>Tone</span></div>
+          <div style={{ padding:"0 20px 20px" }}>
             <div style={{ display:"flex", gap:6 }}>
               {[["direct","Direct & confident"],["warm","Warm & personal"],["formal","Formal & precise"]].map(function(pair) {
                 var v = pair[0]; var lb = pair[1];
-                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:13, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
+                return <button key={v} onClick={function(){ setTone(v); }} style={{ flex:1, background:tone===v ? L.ink : L.paper, color:tone===v ? L.paper : L.muted, border:"1.5px solid "+(tone===v ? L.ink : L.border), borderRadius:7, padding:"7px 6px", cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:tone===v ? 500 : 400 }}>{lb}</button>;
               })}
             </div>
           </div>
         </div>
-        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:"'Inter',sans-serif", fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(23,169,158,0.25)" : "none" }}>
+        <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(23,169,158,0.25)" : "none" }}>
           {loading ? "✦ Writing your proposal…" : "✦ Generate Proposal"}
         </button>
       </div>
@@ -912,24 +912,24 @@ export function ProposalForm(props) {
               {loading ? (
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                   {[0,1,2].map(function(i){ return <div key={i} style={{ width:5, height:5, borderRadius:"50%", background:L.accent, animation:"pulse 1s "+i*0.2+"s infinite" }} />; })}
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.muted, marginLeft:5 }}>Writing…</span>
+                  <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginLeft:5 }}>Writing…</span>
                 </div>
               ) : (
                 <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
+                  <span style={{ fontFamily:fMono, fontSize:11, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
                   {result && (
                     <>
-                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
-                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
+                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
+                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
                     </>
                   )}
                 </div>
               )}
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
-                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>↺ Redo</button>
-                  <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>Export PDF ↓</button>
-                  <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:"'Inter',sans-serif", fontSize:12, fontWeight:500 }}>→ Invoice</button>
+                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>↺ Redo</button>
+                  <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>Export PDF ↓</button>
+                  <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>→ Invoice</button>
                 </div>
               )}
             </div>
@@ -938,10 +938,10 @@ export function ProposalForm(props) {
             </div>
             {result && !loading && (
               <div style={{ padding:"12px 16px", borderTop:"1px solid "+L.border, display:"flex", gap:6, flexWrap:"wrap", background:L.cream }}>
-                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:L.muted, alignSelf:"center" }}>Refine:</span>
+                <span style={{ fontFamily:fMono, fontSize:10, color:L.muted, alignSelf:"center" }}>Refine:</span>
                 {[["Make it shorter","Cut this proposal to under 180 words. Keep the structure but be ruthless."],["More formal","Rewrite in a more formal, corporate tone suitable for a large enterprise client."],["Add case studies","Add a brief 'Why us' section mentioning 2 relevant past projects with outcomes."],["Stronger close","Rewrite the closing paragraph to be more confident and create a clear next step."]].map(function(pair) {
                   return (
-                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:"'Inter',sans-serif", fontSize:12 }}>
+                    <button key={pair[0]} onClick={function(){ refine(pair[1]); }} disabled={loading} style={{ background:L.white, border:"1px solid "+L.border, color:loading ? L.faint : L.muted, padding:"3px 9px", borderRadius:99, cursor:loading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:12 }}>
                       {pair[0]}
                     </button>
                   );
@@ -951,7 +951,7 @@ export function ProposalForm(props) {
           </div>
         ) : (
           <div>
-            <p style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:10 }}>Example proposal</p>
+            <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:10 }}>Example proposal</p>
             <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:12, padding:"22px 24px", opacity:0.7 }}>
               {renderProposal("Sarah,\n\nWe've looked at TechFlow carefully — the fintech space in Berlin is crowded, and what you need isn't just a logo. You need a visual identity that signals credibility to investors while still feeling approachable.\n\n## What we'll create\n\n**Brand strategy foundation**\nA half-day positioning session to nail the brand DNA.\n\n**Visual identity system**\nPrimary logo + 2 variants · Colour palette · Typography · Iconography\n\n**Application files**\nFigma system · SVG/AI source files · Brand guidelines PDF\n\n## How it works\n\nWeeks 1–2 · Strategy and concepting\nWeeks 3–4 · Design development (2 review rounds)\nWeek 5 · Refinement and delivery\n\n## Investment\n\n**€8,400 total**\n€4,200 on kickoff · €4,200 on final delivery\n\n---\nReady when you are.")}
             </div>
