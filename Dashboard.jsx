@@ -204,7 +204,13 @@ export function Dashboard(props) {
   var setPage = props.setPage;
   var setConvertProposal = props.setConvertProposal;
   var user = props.user;
-  var userId = user ? user.id : null;
+  // Fallback: read user id directly from localStorage in case props.user is stale
+  var userId = (user && user.id) ? user.id : (function() {
+    try {
+      var stored = JSON.parse(localStorage.getItem("invoiceai_user"));
+      return stored && stored.id ? stored.id : null;
+    } catch(e) { return null; }
+  })();
   var [section, setSection] = useState("overview");
   var [clientId, setClientId] = useState(null);
 
