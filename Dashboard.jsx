@@ -740,7 +740,6 @@ function DClients(props) {
           name: newName.trim(),
           email: newEmail.trim() || null,
           city: newCity.trim() || null,
-          status: "prospect",
           avatar: newName.trim().slice(0,2).toUpperCase(),
           color: "#6E7A8A",
         }
