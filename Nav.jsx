@@ -165,29 +165,27 @@ export function Nav(props) {
       {/* Mobile menu */}
       {menuOpen && (
         <div style={{ position:"absolute", top:58, left:0, right:0, zIndex:200, borderTop:"1px solid "+L.border, padding:"12px 20px 20px", display:"flex", flexDirection:"column", gap:3, background:L.white, boxShadow:"0 8px 24px rgba(10,22,40,0.1)" }}>
-          {/* Home first */}
-          <button onClick={function(){ setPage("Home"); setMenuOpen(false); }} style={{ background:"transparent", color:page==="Home" ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page==="Home" ? 500 : 400, textAlign:"left" }}>
-            {t(lang,"navHome") || "Home"}
-          </button>
-          {/* Generator — single link, no sub-items on mobile */}
-          <button onClick={function(){ setPage("Generator"); setMenuOpen(false); }} style={{ background:"transparent", color:page==="Generator" ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page==="Generator" ? 500 : 400, textAlign:"left" }}>
-            Generator
-          </button>
-          {user && (
-            <>
-              <div style={{ height:1, background:L.border, margin:"8px 0" }} />
-              <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, textAlign:"left" }}>Sign out</button>
-            </>
-          )}
-          {/* Remaining nav pages */}
-          <div style={{ height:1, background:L.border, margin:"4px 0" }} />
-          {[["EUCompliance","Compliance"],["Pricing",t(lang,"navPricing")||"Pricing"],["Dashboard",t(lang,"navDashboard")||"Dashboard"]].filter(function(pair){ return user ? true : pair[0] !== "Dashboard"; }).map(function(pair) {
+          {/* Main nav links in logical order */}
+          {[
+            ["Home", t(lang,"navHome")||"Home"],
+            ["Generator", "Generator"],
+            ["EUCompliance", "Compliance"],
+            ["Pricing", t(lang,"navPricing")||"Pricing"],
+          ].concat(user ? [["Dashboard", t(lang,"navDashboard")||"Dashboard"]] : []).map(function(pair) {
             return (
               <button key={pair[0]} onClick={function(){ setPage(pair[0]); setMenuOpen(false); }} style={{ background:"transparent", color:page===pair[0] ? L.ink : L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:page===pair[0] ? 500 : 400, textAlign:"left" }}>
                 {pair[1]}
               </button>
             );
           })}
+          {/* Sign out — only when logged in, at the bottom before languages */}
+          {user && (
+            <>
+              <div style={{ height:1, background:L.border, margin:"8px 0" }} />
+              <button onClick={function(){ props.onSignOut(); setMenuOpen(false); }} style={{ background:"transparent", color:L.muted, border:"none", padding:"10px 8px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, textAlign:"left" }}>Sign out</button>
+            </>
+          )}
+          {/* Language switcher */}
           <div style={{ height:1, background:L.border, margin:"8px 0" }} />
           <div style={{ display:"flex", gap:6, flexWrap:"wrap", padding:"4px 8px" }}>
             {[["de","DE"],["en","EN"],["fr","FR"],["es","ES"],["it","IT"],["hu","HU"]].map(function(pair) {

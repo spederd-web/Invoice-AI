@@ -715,7 +715,7 @@ export function DProposals(props) {
       )}
 
       {view === "pipeline" && (
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14 }}>
+        <div className="dash-pipeline-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14 }}>
           {pipeline.map(function(col) {
             var items = MOCK_PROPOSALS.filter(function(p){ return p.status===col.status; });
             var total = items.reduce(function(s,p){ return s+p.value; },0);
