@@ -234,42 +234,92 @@ export function FlowSection(props) {
   var lang = props.lang || "en";
   var setPage = props.setPage;
   var steps = [
-    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",   detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
-    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",          detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
-    { num:"03", label: lang==="de" ? "In Rechnung umwandeln" : lang==="fr" ? "Convertir en facture" : "Convert to invoice", detail: lang==="de" ? "Ein Klick, EU-konform" : lang==="fr" ? "Un clic, conforme UE" : "One click, EU-compliant" },
-    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                           detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
+    { label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",    detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
+    { label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",           detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
+    { label: lang==="de" ? "In Rechnung umwandeln" : lang==="fr" ? "Convertir en facture" : "Convert to invoice", detail: lang==="de" ? "Ein Klick, EU-konform" : lang==="fr" ? "Un clic, conforme UE" : "One click, EU-compliant" },
+    { label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                            detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
   ];
+
+  var containerRef = useRef(null);
+  var [visible, setVisible] = useState([false, false, false, false]);
+
+  useEffect(function() {
+    var container = containerRef.current;
+    if (!container) return;
+    var items = container.querySelectorAll(".flow-step");
+    var observers = [];
+    items.forEach(function(el, idx) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            setTimeout(function() {
+              setVisible(function(prev) {
+                var next = prev.slice();
+                next[idx] = true;
+                return next;
+              });
+            }, idx * 160);
+          } else {
+            setVisible(function(prev) {
+              var next = prev.slice();
+              next[idx] = false;
+              return next;
+            });
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return function() {
+      observers.forEach(function(o) { o.disconnect(); });
+    };
+  }, []);
+
   return (
-    <section style={{ background:L.paper, padding:"100px 24px" }}>
+    <section style={{ background:L.paper, padding:"88px 20px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:72 }}>
-          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(28px,4.5vw,52px)", fontWeight:400, color:L.ink, letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:16, fontStyle:"italic" }}>
+        <div style={{ textAlign:"center", marginBottom:64 }}>
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(26px,4.5vw,52px)", fontWeight:400, color:L.ink, letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:12, fontStyle:"italic" }}>
             {lang==="de" ? "Wie es fließt." : lang==="fr" ? "Comment ça s'enchaîne." : "How it flows."}
           </h2>
-          <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, fontWeight:300, maxWidth:360, margin:"0 auto" }}>
+          <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, maxWidth:320, margin:"0 auto" }}>
             {lang==="de" ? "Vier Schritte. Ein Tool." : lang==="fr" ? "Quatre étapes. Un outil." : "Four steps. One tool. Nothing duplicated."}
           </p>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
+
+        <div ref={containerRef} style={{ display:"flex", flexDirection:"column", gap:0 }}>
           {steps.map(function(s, i) {
             var last = i === steps.length - 1;
+            var shown = visible[i];
             return (
-              <div key={i} style={{ display:"flex", gap:24, alignItems:"flex-start", paddingBottom: last ? 0 : 56, position:"relative" }}>
-                {/* Left — large floating number + line */}
+              <div
+                key={i}
+                className="flow-step"
+                style={{
+                  display:"flex", gap:32, alignItems:"flex-start",
+                  paddingBottom: last ? 0 : 56,
+                  opacity: shown ? 1 : 0,
+                  transform: shown ? "translateY(0)" : "translateY(24px)",
+                  transition: "opacity 0.5s ease, transform 0.5s ease",
+                }}
+              >
                 <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:52 }}>
-                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, color: i === 3 ? L.accent : L.border, lineHeight:1, letterSpacing:"-0.04em", userSelect:"none" }}>{i + 1}</span>
-                  {!last && <div style={{ width:1, flex:1, marginTop:8, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
+                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, lineHeight:1, letterSpacing:"-0.04em", userSelect:"none", color: i === steps.length - 1 ? L.accent : L.ink }}>
+                    {i + 1}
+                  </span>
+                  {!last && <div style={{ width:1, flex:1, marginTop:8, minHeight:36, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
                 </div>
-                {/* Right — content */}
                 <div style={{ paddingTop:8 }}>
-                  <div style={{ fontFamily:fSerif, fontSize:"clamp(20px,3vw,28px)", fontWeight:400, color:L.ink, marginBottom:6, letterSpacing:"-0.02em" }}>{s.label}</div>
-                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>{s.detail}</div>
+                  <div style={{ fontFamily:fSerif, fontSize:"clamp(20px,3vw,28px)", fontWeight:400, color:L.ink, marginBottom:6, letterSpacing:"-0.02em", lineHeight:1.15 }}>{s.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.04em" }}>{s.detail}</div>
                 </div>
               </div>
             );
           })}
         </div>
-        <div style={{ marginTop:64, textAlign:"center" }}>
+
+        <div style={{ marginTop:60, textAlign:"center" }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.navy, color:"#EEF2F7", border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : "Try it now →"}
           </button>
