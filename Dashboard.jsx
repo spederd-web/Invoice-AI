@@ -257,7 +257,6 @@ export function Dashboard(props) {
     { id:"integrations", label:"Integrations", icon:"eu"       },
   ];
   function handleConvert(p) { if (setConvertProposal) setConvertProposal(p); if (setPage) setPage("Generator"); }
-  var nav = [
 
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 58px)", background:C.bg }}>
