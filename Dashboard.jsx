@@ -692,15 +692,36 @@ function DClients(props) {
     return !search || c.name.toLowerCase().indexOf(search.toLowerCase()) >= 0;
   });
 
+  var [addError, setAddError] = useState("");
+
   function addClient() {
     if (!newName.trim()) return;
+    setAddError("");
     setSaving(true);
-    var payload = { name:newName.trim(), email:newEmail.trim(), city:newCity.trim(), status:"prospect", balance:0, paid:0, invoices:0, avatar:newName.trim().slice(0,2).toUpperCase(), color:"#6E7A8A" };
-    if (db && userId) {
-      db.insert(payload).then(function(){ setSaving(false); setAdding(false); setNewName(""); setNewEmail(""); setNewCity(""); });
-    } else {
-      setSaving(false); setAdding(false);
+    var payload = {
+      name: newName.trim(), email: newEmail.trim(), city: newCity.trim(),
+      status: "prospect", balance: 0, paid: 0, invoices: 0,
+      avatar: newName.trim().slice(0,2).toUpperCase(), color: "#6E7A8A",
+    };
+    if (!userId) {
+      setAddError("Sign in to save clients.");
+      setSaving(false);
+      return;
     }
+    if (!db) {
+      setAddError("Database not connected — check api/db.js is deployed.");
+      setSaving(false);
+      return;
+    }
+    db.insert(payload)
+      .then(function() {
+        setSaving(false); setAdding(false);
+        setNewName(""); setNewEmail(""); setNewCity("");
+      })
+      .catch(function(err) {
+        setSaving(false);
+        setAddError("Save failed: " + (err.message || "unknown error"));
+      });
   }
 
   return (
@@ -729,6 +750,7 @@ function DClients(props) {
             </div>
           </div>
           <Btn onClick={addClient}>{saving ? "Saving…" : "Add client"}</Btn>
+          {addError && <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginTop:10 }}>{addError}</div>}
         </div>
       )}
 
