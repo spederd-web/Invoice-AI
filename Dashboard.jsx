@@ -31,7 +31,7 @@ var C = {
 var fUI = "'DM Sans', sans-serif";
 
 // ── Supabase hook ─────────────────────────────────────────────────────────────
-export function useDB(table, userId) {
+export function useDB(table, userId, refreshKey) {
   var [rows, setRows] = useState([]);
   var [loading, setLoading] = useState(false);
   var [error, setError] = useState(null);
@@ -42,7 +42,7 @@ export function useDB(table, userId) {
       .then(function(r) { return r.json(); })
       .then(function(data) { setRows(data || []); setLoading(false); })
       .catch(function(err) { setError(err.message); setLoading(false); });
-  }, [table, userId]);
+  }, [table, userId, refreshKey]);
   useEffect(function() { fetch_(); }, [fetch_]);
   function insert(p) { return fetch("/api/db", { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify({ table:table, action:"insert", user_id:userId, payload:p }) }).then(function(r){ return r.json(); }).then(function(d){ fetch_(); return d; }); }
   function update(id, p) { return fetch("/api/db", { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify({ table:table, action:"update", id:id, user_id:userId, payload:p }) }).then(function(r){ return r.json(); }).then(function(d){ fetch_(); return d; }); }
@@ -222,13 +222,16 @@ export function Dashboard(props) {
   }, [user]);
   var [section, setSection] = useState("overview");
   var [clientId, setClientId] = useState(null);
+  var [refreshKey, setRefreshKey] = useState(0);
+
+  function forceRefresh() { setRefreshKey(function(k){ return k + 1; }); }
 
   // ── Real data from Supabase (falls back to mock when userId is null) ──────
   var profileHook  = useProfile(userId);
   var profile      = profileHook.profile;
-  var invoicesDB   = useDB("invoices",   userId);
-  var proposalsDB  = useDB("proposals",  userId);
-  var clientsDB    = useDB("clients",    userId);
+  var invoicesDB   = useDB("invoices",   userId, refreshKey);
+  var proposalsDB  = useDB("proposals",  userId, refreshKey);
+  var clientsDB    = useDB("clients",    userId, refreshKey);
 
   // Use real rows when logged in (even if empty — new users start with nothing)
   // Only fall back to mock data when there is no userId (demo/logged-out mode)
@@ -301,7 +304,7 @@ export function Dashboard(props) {
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
         {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
-        {section==="clients"   && !clientId && <DClients setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={clientsDB.refresh} />}
+        {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={setClientId} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={setClientId} invoices={invoices} proposals={proposals} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
