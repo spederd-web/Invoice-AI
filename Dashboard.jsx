@@ -221,10 +221,11 @@ export function Dashboard(props) {
   var proposalsDB  = useDB("proposals",  userId);
   var clientsDB    = useDB("clients",    userId);
 
-  // Use real rows if loaded, otherwise fall back to mock data
-  var invoices  = invoicesDB.rows.length   > 0 ? invoicesDB.rows   : MOCK_INVOICES;
-  var proposals = proposalsDB.rows.length  > 0 ? proposalsDB.rows  : MOCK_PROPOSALS;
-  var clients   = clientsDB.rows.length    > 0 ? clientsDB.rows    : MOCK_CLIENTS;
+  // Use real rows when logged in (even if empty — new users start with nothing)
+  // Only fall back to mock data when there is no userId (demo/logged-out mode)
+  var invoices  = userId ? invoicesDB.rows  : MOCK_INVOICES;
+  var proposals = userId ? proposalsDB.rows : MOCK_PROPOSALS;
+  var clients   = userId ? clientsDB.rows   : MOCK_CLIENTS;
   var nav = [
     { id:"overview",  label:"Overview",  icon:"overview"  },
     { id:"clients",   label:"Clients",   icon:"users"     },
