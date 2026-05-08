@@ -152,9 +152,49 @@ export function InvoicePreviewPanel(props) {
     })
     .catch(function(err){ setNavError(err.message); setNavLoading(false); });
   }
-  var [sharePhase, setSharePhase] = useState("idle"); // idle | saving | copied | error
+  var [sharePhase, setSharePhase] = useState("idle");
   var [shareUrl, setShareUrl] = useState("");
   var [shareCopied, setShareCopied] = useState(false);
+  var [savePhase, setSavePhase] = useState("idle"); // idle | saving | saved | error
+
+  function saveToDashboard() {
+    setSavePhase("saving");
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+    if (!user || !user.id) { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); return; }
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        table: "invoices",
+        action: "insert",
+        user_id: user.id,
+        payload: {
+          inv_number:    invNum,
+          issue_date:    new Date().toISOString().slice(0,10),
+          due_date:      new Date(Date.now() + (parseInt(s.terms||30))*86400000).toISOString().slice(0,10),
+          status:        "draft",
+          amount_net:    Math.round(subAfter * 100) / 100,
+          amount_vat:    Math.round(vatAmt * 100) / 100,
+          amount_gross:  Math.round(total * 100) / 100,
+          currency:      s.country && s.country.cur ? s.country.cur : "EUR",
+          data: {
+            seller: { name:s.sName, vat:s.sVAT, iban:s.sIBAN, bic:s.sBIC, street:s.sStreet, city:s.sCity },
+            buyer:  { name:s.cName, vat:s.cVAT, street:s.cStreet, city:s.cCity },
+            lines:  s.lines,
+            rc:     s.rc, gdpr:s.gdpr, vatExempt:s.vatExempt, terms:s.terms,
+          },
+        },
+      }),
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); return; }
+      setSavePhase("saved");
+      setTimeout(function(){ setSavePhase("idle"); }, 3000);
+    })
+    .catch(function() { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); });
+  }
 
   function shareInvoice() {
     setSharePhase("saving"); setShareUrl("");
@@ -195,7 +235,7 @@ export function InvoicePreviewPanel(props) {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.id) {
-        var url = "https://invoice-ai.de/?portal=" + data.id;
+        var url = window.location.origin + "/?portal=" + data.id;
         setShareUrl(url);
         navigator.clipboard.writeText(url).catch(function(){});
         setSharePhase("copied");
@@ -220,9 +260,6 @@ export function InvoicePreviewPanel(props) {
 
   return (
     <div style={{ padding:"0 24px 48px", maxWidth:960, margin:"0 auto" }}>
-      <button onClick={function(){ setView("form"); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontFamily:fMono, fontSize:11, letterSpacing:"0.06em", marginBottom:14, padding:0 }}>
-        ← Back to form
-      </button>
       <div style={{ display:"flex", gap:8, marginBottom:8, maxWidth:580 }}>
         <button onClick={function(){ window.print(); }} style={{ flex:1, background:L.ink, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <Icon name="download" size={13} color="#fff" />
@@ -235,6 +272,10 @@ export function InvoicePreviewPanel(props) {
         <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{ flex:1, background:sharePhase === "copied" ? L.green : sharePhase === "saving" ? L.border : L.accent, color:sharePhase === "saving" ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:sharePhase === "saving" ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6, transition:"background 0.2s" }}>
           <Icon name={sharePhase === "copied" ? "check" : "send"} size={13} color={sharePhase === "saving" ? L.muted : "#fff"} />
           {sharePhase === "saving" ? "Saving…" : sharePhase === "copied" ? "✓ Link copied" : "Share with client"}
+        </button>
+        <button onClick={saveToDashboard} disabled={savePhase === "saving"} style={{ flex:1, background:savePhase === "saved" ? L.green : savePhase === "saving" ? L.border : L.navy, color:savePhase === "saving" ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:savePhase === "saving" ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6, transition:"background 0.2s" }}>
+          <Icon name={savePhase === "saved" ? "check" : "document"} size={13} color={savePhase === "saving" ? L.muted : "#fff"} />
+          {savePhase === "saving" ? "Saving…" : savePhase === "saved" ? "✓ Saved" : savePhase === "error" ? "Sign in first" : "Save to dashboard"}
         </button>
       </div>
       {sharePhase === "copied" && shareUrl && (
@@ -666,8 +707,8 @@ export function InvoiceForm(props) {
             if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push(true);
             var blocked = errs.length > 0;
             return (
-              <button onClick={function(){ if(!blocked) setView("preview"); }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.accent, color:blocked ? L.muted : "#fff", border:"none", padding:"13px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:blocked ? "none" : "0 2px 12px rgba(20,153,144,0.2)", letterSpacing:"-0.01em" }}>
-                Preview →
+              <button onClick={function(){ if(!blocked) setView("preview"); }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.ink, color:blocked ? L.muted : "#fff", border:"none", padding:"15px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSerif, fontSize:16, fontWeight:400, boxShadow:blocked ? "none" : "0 2px 12px rgba(10,22,40,0.15)", letterSpacing:"-0.01em" }}>
+                {blocked ? "Complete form to preview" : "Preview invoice →"}
               </button>
             );
           })()}
@@ -1063,46 +1104,44 @@ export function InvoiceGen(props) {
           <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss ×</button>
         </div>
       )}
-      {/* ── Top navigation — calm floating pill ── */}
-      <div style={{ padding:"14px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
-        {/* Mode switcher — underline tabs, not boxes */}
-        <div style={{ display:"flex", alignItems:"center", gap:0, marginBottom:0 }}>
-          {[["invoice","Invoice"],["proposal","Proposal"]].map(function(pair) {
-            var active = mode === pair[0];
-            return (
-              <button key={pair[0]} onClick={function(){ setMode(pair[0]); setView("form"); }} style={{
-                background:"transparent", border:"none", borderBottom:"2px solid " + (active ? L.ink : "transparent"),
-                padding:"10px 18px 10px 0", marginRight:20,
-                cursor:"pointer", fontFamily:fSerif, fontSize:20,
-                color:active ? L.ink : L.muted,
-                fontWeight:400, letterSpacing:"-0.02em",
-                transition:"color 0.15s, border-color 0.15s",
-              }}>{pair[1]}</button>
-            );
-          })}
-          {/* Form/Preview — only for invoice, far right, minimal */}
-          {mode === "invoice" && (
-            <div style={{ marginLeft:"auto", display:"flex", gap:1, background:"rgba(0,0,0,0.04)", borderRadius:8, padding:"3px" }}>
-              {[["form","Edit"],["preview","Preview"]].map(function(pair) {
-                var active = view === pair[0];
-                return (
-                  <button key={pair[0]} onClick={function(){ setView(pair[0]); }} style={{
-                    background:active ? L.white : "transparent",
-                    color:active ? L.ink : L.faint,
-                    border:"none", padding:"5px 14px", borderRadius:6,
-                    cursor:"pointer", fontFamily:fSans, fontSize:12,
-                    fontWeight:active ? 500 : 400,
-                    boxShadow:active ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-                    transition:"all 0.12s",
-                  }}>{pair[1]}</button>
-                );
-              })}
-            </div>
-          )}
+      {/* ── Top navigation ── */}
+      {view === "form" && (
+        <div style={{ padding:"16px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:0 }}>
+            {[["invoice","Invoice"],["proposal","Proposal"]].map(function(pair) {
+              var active = mode === pair[0];
+              return (
+                <button key={pair[0]} onClick={function(){ setMode(pair[0]); setView("form"); }} style={{
+                  background:"transparent", border:"none",
+                  borderBottom:"2px solid " + (active ? L.ink : "transparent"),
+                  padding:"10px 18px 10px 0", marginRight:20,
+                  cursor:"pointer", fontFamily:fSerif, fontSize:20,
+                  color:active ? L.ink : L.muted,
+                  fontWeight:400, letterSpacing:"-0.02em",
+                  transition:"color 0.15s, border-color 0.15s",
+                }}>{pair[1]}</button>
+              );
+            })}
+          </div>
+          <div style={{ height:"1px", background:L.border }} />
         </div>
-        {/* Subtle divider */}
-        <div style={{ height:"1px", background:L.border, marginTop:0 }} />
-      </div>
+      )}
+      {/* ── Preview back link — appears only in preview mode ── */}
+      {view === "preview" && mode === "invoice" && (
+        <div style={{ padding:"16px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
+          <button onClick={function(){ setView("form"); }} style={{
+            background:"none", border:"none", cursor:"pointer",
+            display:"flex", alignItems:"center", gap:7,
+            fontFamily:fSans, fontSize:14, color:L.muted,
+            padding:0, marginBottom:16,
+          }}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Back to editing
+          </button>
+        </div>
+      )}
       {mode==="proposal" && <ProposalForm onFirstGenerate={onFirstGenerate} lang={lang} onConvertToInvoice={function(data){
         setConvertBanner(true);
         var newState = Object.assign({}, invState, {
