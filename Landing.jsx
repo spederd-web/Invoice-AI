@@ -29,7 +29,7 @@ export function HeroSection(props) {
   }, []);
 
   return (
-    <section style={{ background:L.navy, minHeight:"100vh", display:"flex", alignItems:"center", padding:"80px 24px 72px", overflow:"hidden", position:"relative" }}>
+    <section style={{ background:L.navy, minHeight:"100vh", display:"flex", alignItems:"center", padding:"60px 20px 56px", overflow:"hidden", position:"relative" }}>
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"25%", left:"3%",  width:600, height:600, borderRadius:"50%", background:"rgba(23,169,158,0.025)", filter:"blur(120px)" }} />
         <div style={{ position:"absolute", bottom:"10%", right:"5%", width:400, height:400, borderRadius:"50%", background:"rgba(75,123,255,0.03)", filter:"blur(80px)" }} />
@@ -39,13 +39,13 @@ export function HeroSection(props) {
 
         {/* Left — headline + CTA */}
         <div>
-          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:32 }}>
+          <div className="hero-pill" style={{ display:"flex", justifyContent:"center", marginBottom:22 }}>
             <span style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(23,169,158,0.08)", border:"1px solid rgba(23,169,158,0.18)", borderRadius:999, padding:"6px 16px 6px 12px" }}>
               <span style={{ width:6, height:6, borderRadius:"50%", background:"#17A99E", display:"inline-block", flexShrink:0 }} />
               <span style={{ fontFamily:fMono, fontSize:11, color:"#17A99E", letterSpacing:"0.1em", textTransform:"uppercase" }}>Built for European freelancers</span>
             </span>
           </div>
-          <h1 className="hero-headline" style={{ fontFamily:fSerif, fontSize:"clamp(44px,7vw,84px)", fontWeight:400, color:"#EEF2F7", margin:"0 0 28px", letterSpacing:"-0.035em", lineHeight:0.98, textAlign:"center" }}>
+          <h1 className="hero-headline" style={{ fontFamily:fSerif, fontSize:"clamp(40px,7vw,84px)", fontWeight:400, color:"#EEF2F7", margin:"0 0 20px", letterSpacing:"-0.035em", lineHeight:0.98, textAlign:"center" }}>
             {lang==="de" ? <>Von Angebot<br/>zu Zahlung.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Erledigt.</span></> :
              lang==="fr" ? <>De la proposition<br/>au paiement.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Géré.</span></> :
              lang==="es" ? <>De la propuesta<br/>al cobro.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Listo.</span></> :
@@ -53,14 +53,14 @@ export function HeroSection(props) {
              lang==="hu" ? <>Az ajánlattól<br/>a kifizetésig.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Kész.</span></> :
              <>From proposal<br/>to payment.<br/><span style={{ color:"#17A99E", fontStyle:"italic" }}>Handled.</span></>}
           </h1>
-          <p className="hero-sub" style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.55)", lineHeight:1.75, maxWidth:360, margin:"0 auto 36px", fontWeight:300, textAlign:"center", letterSpacing:"0.01em" }}>
+          <p className="hero-sub" style={{ fontFamily:fSans, fontSize:14, color:"rgba(238,242,247,0.55)", lineHeight:1.7, maxWidth:340, margin:"0 auto 28px", fontWeight:300, textAlign:"center", letterSpacing:"0.01em" }}>
             {lang==="de" ? "Angebote, Rechnungen, Zahlungen und EU-Compliance in einem ruhigen Workflow." :
              lang==="fr" ? "Propositions, factures, paiements et conformité UE dans un flux simple." :
              "Proposals, invoices, payments and EU compliance — one seamless workflow."}
           </p>
 
-          {/* Mobile constellation — hidden on desktop */}
-          <div className="hero-constellation-mobile" style={{ margin:"0 auto 36px", position:"relative", width:"100%", maxWidth:320, height:200 }}>
+          {/* Mobile constellation */}
+          <div className="hero-constellation-mobile" style={{ margin:"0 auto 28px", position:"relative", width:"100%", maxWidth:300, height:170 }}>
             <svg style={{ width:"100%", height:"100%", overflow:"visible" }} viewBox="0 0 320 200">
               <defs>
                 <radialGradient id="nodeGlow0" cx="50%" cy="50%" r="50%">
@@ -107,7 +107,7 @@ export function HeroSection(props) {
             </svg>
           </div>
 
-          <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:28 }}>
+          <div className="hero-btns" style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", marginBottom:20 }}>
             <button onClick={function(){ openModal("hero"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"14px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:600, letterSpacing:"-0.01em", whiteSpace:"nowrap" }}>
               {lang==="de" ? "Kostenlos starten" : lang==="fr" ? "Commencer gratuitement" : "Start free"}
             </button>
@@ -234,48 +234,11 @@ export function FlowSection(props) {
   var lang = props.lang || "en";
   var setPage = props.setPage;
   var steps = [
-    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",    detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
-    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",           detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
+    { num:"01", label: lang==="de" ? "Angebot erstellen" : lang==="fr" ? "Créer la proposition" : "Write the proposal",   detail: lang==="de" ? "KI schreibt in 30 Sekunden" : lang==="fr" ? "L'IA rédige en 30 secondes" : "AI writes it in 30 seconds" },
+    { num:"02", label: lang==="de" ? "Senden & verfolgen" : lang==="fr" ? "Envoyer & suivre" : "Send and track",          detail: lang==="de" ? "Sieh wann & wie oft geöffnet" : lang==="fr" ? "Vu quand et combien de fois" : "See when and how often viewed" },
     { num:"03", label: lang==="de" ? "In Rechnung umwandeln" : lang==="fr" ? "Convertir en facture" : "Convert to invoice", detail: lang==="de" ? "Ein Klick, EU-konform" : lang==="fr" ? "Un clic, conforme UE" : "One click, EU-compliant" },
-    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                            detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
+    { num:"04", label: lang==="de" ? "Bezahlt werden" : lang==="fr" ? "Être payé" : "Get paid",                           detail: lang==="de" ? "SEPA + automatische Erinnerungen" : lang==="fr" ? "SEPA + relances automatiques" : "SEPA + automatic reminders" },
   ];
-
-  var containerRef = useRef(null);
-  var [visible, setVisible] = useState([false, false, false, false]);
-
-  useEffect(function() {
-    var container = containerRef.current;
-    if (!container) return;
-    var items = container.querySelectorAll(".flow-step");
-    var observers = [];
-    items.forEach(function(el, idx) {
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            setTimeout(function() {
-              setVisible(function(prev) {
-                var next = prev.slice();
-                next[idx] = true;
-                return next;
-              });
-            }, idx * 160);
-          } else {
-            setVisible(function(prev) {
-              var next = prev.slice();
-              next[idx] = false;
-              return next;
-            });
-          }
-        });
-      }, { threshold: 0.2 });
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return function() {
-      observers.forEach(function(o) { o.disconnect(); });
-    };
-  }, []);
-
   return (
     <section style={{ background:L.paper, padding:"100px 24px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
@@ -287,54 +250,26 @@ export function FlowSection(props) {
             {lang==="de" ? "Vier Schritte. Ein Tool." : lang==="fr" ? "Quatre étapes. Un outil." : "Four steps. One tool. Nothing duplicated."}
           </p>
         </div>
-
-        <div ref={containerRef} style={{ display:"flex", flexDirection:"column", gap:0 }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
           {steps.map(function(s, i) {
             var last = i === steps.length - 1;
-            var shown = visible[i];
-            var isLast = i === steps.length - 1;
             return (
-              <div
-                key={i}
-                className="flow-step"
-                style={{
-                  display:"flex", gap:32, alignItems:"flex-start",
-                  paddingBottom: last ? 0 : 64,
-                  position:"relative",
-                  opacity: shown ? 1 : 0,
-                  transform: shown ? "translateY(0)" : "translateY(28px)",
-                  transition: "opacity 0.55s ease, transform 0.55s ease",
-                }}
-              >
-                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:56 }}>
-                  <span style={{
-                    fontFamily:fSerif, fontSize:52, fontWeight:400, lineHeight:1,
-                    letterSpacing:"-0.04em", userSelect:"none",
-                    color: isLast ? L.accent : L.ink,
-                  }}>
-                    {i + 1}
-                  </span>
-                  {!last && (
-                    <div style={{
-                      width:1, flex:1, marginTop:10, minHeight:40,
-                      background:"linear-gradient(to bottom, "+L.border+", transparent)",
-                    }} />
-                  )}
+              <div key={i} style={{ display:"flex", gap:24, alignItems:"flex-start", paddingBottom: last ? 0 : 56, position:"relative" }}>
+                {/* Left — large floating number + line */}
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:52 }}>
+                  <span style={{ fontFamily:fSerif, fontSize:48, fontWeight:400, color: i === 3 ? L.accent : L.border, lineHeight:1, letterSpacing:"-0.04em", userSelect:"none" }}>{i + 1}</span>
+                  {!last && <div style={{ width:1, flex:1, marginTop:8, background:"linear-gradient(to bottom, "+L.border+", transparent)" }} />}
                 </div>
-                <div style={{ paddingTop:10 }}>
-                  <div style={{ fontFamily:fSerif, fontSize:"clamp(22px,3vw,30px)", fontWeight:400, color:L.ink, marginBottom:8, letterSpacing:"-0.02em", lineHeight:1.1 }}>
-                    {s.label}
-                  </div>
-                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>
-                    {s.detail}
-                  </div>
+                {/* Right — content */}
+                <div style={{ paddingTop:8 }}>
+                  <div style={{ fontFamily:fSerif, fontSize:"clamp(20px,3vw,28px)", fontWeight:400, color:L.ink, marginBottom:6, letterSpacing:"-0.02em" }}>{s.label}</div>
+                  <div style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.04em" }}>{s.detail}</div>
                 </div>
               </div>
             );
           })}
         </div>
-
-        <div style={{ marginTop:72, textAlign:"center" }}>
+        <div style={{ marginTop:64, textAlign:"center" }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.navy, color:"#EEF2F7", border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Jetzt ausprobieren →" : lang==="fr" ? "Essayer maintenant →" : "Try it now →"}
           </button>
@@ -361,13 +296,13 @@ export function WhyItWorksSection(props) {
     { headline:"Always know what's next.", sub:"Your dashboard shows exactly what needs attention — nothing more." },
   ];
   return (
-    <section style={{ background:L.navy, padding:"100px 24px", position:"relative", overflow:"hidden" }}>
+    <section style={{ background:L.navy, padding:"72px 20px", position:"relative", overflow:"hidden" }}>
       <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
         <div style={{ position:"absolute", top:"20%", right:"10%", width:400, height:400, borderRadius:"50%", background:"rgba(23,169,158,0.04)", filter:"blur(80px)" }} />
         <div style={{ position:"absolute", bottom:"15%", left:"5%", width:300, height:300, borderRadius:"50%", background:"rgba(75,123,255,0.04)", filter:"blur(60px)" }} />
       </div>
       <div style={{ maxWidth:800, margin:"0 auto", position:"relative", zIndex:1 }}>
-        <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:60 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:44 }}>
           <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
           <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, letterSpacing:"0.12em", textTransform:"uppercase", opacity:0.7 }}>
             {lang==="de" ? "Warum es funktioniert" : lang==="fr" ? "Pourquoi ça marche" : "Why it works"}
@@ -375,8 +310,8 @@ export function WhyItWorksSection(props) {
         </div>
         {statements.map(function(s, i) {
           return (
-            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 72 : 0, paddingBottom: i < statements.length - 1 ? 72 : 0, borderBottom: i < statements.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
-              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(26px,3.5vw,44px)", fontWeight:400, color:"#EEF2F7", letterSpacing:"-0.03em", lineHeight:1.12, marginBottom:16, fontStyle: i === 0 ? "italic" : "normal" }}>
+            <div key={i} style={{ marginBottom: i < statements.length - 1 ? 48 : 0, paddingBottom: i < statements.length - 1 ? 48 : 0, borderBottom: i < statements.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
+              <h3 style={{ fontFamily:fSerif, fontSize:"clamp(22px,3.5vw,40px)", fontWeight:400, color:"#EEF2F7", letterSpacing:"-0.03em", lineHeight:1.12, marginBottom:12, fontStyle: i === 0 ? "italic" : "normal" }}>
                 {s.headline}
               </h3>
               <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(238,242,247,0.45)", fontWeight:300, lineHeight:1.8, maxWidth:520, letterSpacing:"0.01em" }}>
@@ -385,7 +320,7 @@ export function WhyItWorksSection(props) {
             </div>
           );
         })}
-        <div style={{ marginTop:72, paddingTop:56, borderTop:"1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{ marginTop:52, paddingTop:40, borderTop:"1px solid rgba(255,255,255,0.07)" }}>
           <button onClick={function(){ openModal("why"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
             {lang==="de" ? "Frühen Zugang erhalten →" : lang==="fr" ? "Accès anticipé →" : "Get early access →"}
           </button>
@@ -443,30 +378,28 @@ export function EUComplianceSection(props) {
     { icon:"clock",   label:"Late payment directive" },
   ];
   return (
-    <section style={{ background:L.paper, padding:"80px 24px" }}>
+    <section style={{ background:L.paper, padding:"64px 20px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:48, flexWrap:"wrap", gap:20 }}>
-          <div>
-            <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:14 }}>
-              <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
-              <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillCompliance")||"Compliance"}</span>
-            </div>
-            <h2 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,40px)", fontWeight:400, color:L.ink, letterSpacing:"-0.025em", lineHeight:1.1, maxWidth:480 }}>
-              {t(lang,"euTitle")}
-            </h2>
+        <div style={{ marginBottom:32 }}>
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:12 }}>
+            <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillCompliance")||"Compliance"}</span>
           </div>
-          <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, maxWidth:320, lineHeight:1.65 }}>
-            VAT, reverse charge, XRechnung and SEPA handled quietly in the background — so you just invoice.
+          <h2 style={{ fontFamily:fSerif, fontSize:"clamp(22px,4vw,40px)", fontWeight:400, color:L.ink, letterSpacing:"-0.025em", lineHeight:1.1, maxWidth:480, marginBottom:12 }}>
+            {t(lang,"euTitle")}
+          </h2>
+          <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300, lineHeight:1.65 }}>
+            VAT, reverse charge, XRechnung and SEPA — handled automatically.
           </p>
         </div>
-        <div className="compliance-chips" style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:36 }}>
+        <div className="compliance-chips" style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:32 }}>
           {chips.map(function(c, i) {
             return (
-              <div key={c.label} style={{ display:"flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"10px 16px 10px 12px", justifyContent:"center" }}>
-                <div style={{ width:22, height:22, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <Icon name={c.icon} size={11} color={L.navyMid} />
+              <div key={c.label} style={{ display:"flex", alignItems:"center", gap:8, background:L.white, border:"1px solid "+L.border, borderRadius:999, padding:"9px 14px 9px 10px", justifyContent:"center" }}>
+                <div style={{ width:20, height:20, borderRadius:"50%", background:L.navy+"08", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                  <Icon name={c.icon} size={10} color={L.navyMid} />
                 </div>
-                <span style={{ fontFamily:fSans, fontSize:14, color:L.ink, fontWeight:400 }}>{c.label}</span>
+                <span style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:400 }}>{c.label}</span>
               </div>
             );
           })}
@@ -493,17 +426,17 @@ export function ReviewsSection(props) {
   var lang = props.lang || "en";
   var picks = [REVIEWS[0], REVIEWS[2]]; // Jonas (reverse charge) + Marco (closed €12k)
   return (
-    <section style={{ background:L.paper, borderTop:"1px solid "+L.border, padding:"100px 24px" }}>
+    <section style={{ background:L.paper, borderTop:"1px solid "+L.border, padding:"72px 20px" }}>
       <div style={{ maxWidth:860, margin:"0 auto" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:64 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:44 }}>
           <Stars n={5} size={13} />
           <span style={{ fontFamily:fMono, fontSize:12, color:L.muted, letterSpacing:"0.06em" }}>4.9 · 340+ reviews</span>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", gap:64 }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:48 }}>
           {picks.map(function(r) {
             return (
               <div key={r.id}>
-                <p style={{ fontFamily:fSerif, fontSize:"clamp(18px,2.8vw,28px)", fontWeight:400, color:L.ink, lineHeight:1.4, letterSpacing:"-0.02em", marginBottom:20, fontStyle:"italic" }}>
+                <p style={{ fontFamily:fSerif, fontSize:"clamp(17px,2.8vw,26px)", fontWeight:400, color:L.ink, lineHeight:1.45, letterSpacing:"-0.02em", marginBottom:16, fontStyle:"italic" }}>
                   "{r.text}"
                 </p>
                 <div style={{ display:"flex", alignItems:"center", gap:10 }}>
@@ -553,9 +486,9 @@ export function PricingSection(props) {
     });
   }
   return (
-    <section style={{ background:embedded ? L.paper : L.white, padding:"100px 24px" }}>
+    <section style={{ background:embedded ? L.paper : L.white, padding:"72px 20px" }}>
       <div style={{ maxWidth:960, margin:"0 auto" }}>
-        <div style={{ marginBottom:60 }}>
+        <div style={{ marginBottom:44 }}>
           <div style={{ display:"inline-flex", alignItems:"center", gap:6, marginBottom:16 }}>
             <div style={{ width:4, height:4, borderRadius:"50%", background:L.accent }} />
             <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.12em", textTransform:"uppercase" }}>{t(lang,"pillPricing")||"Pricing"}</span>
@@ -568,7 +501,7 @@ export function PricingSection(props) {
         <div className="pricing-scroll desktop-pricing" style={{ display:"flex", gap:16, overflowX:"auto", overflowY:"visible", WebkitOverflowScrolling:"touch", paddingBottom:16, paddingTop:16, paddingLeft:2, paddingRight:2 }}>
           {PLANS.map(function(plan) {
             return (
-              <div key={plan.name} style={{ background:plan.hi ? L.navy : "transparent", border: plan.hi ? "1px solid rgba(23,169,158,0.15)" : "none", borderRadius:16, padding:"40px 32px", flex:"0 0 300px", minWidth:300, position:"relative" }}>
+              <div key={plan.name} style={{ background:plan.hi ? L.navy : "transparent", border: plan.hi ? "1px solid rgba(23,169,158,0.15)" : "none", borderRadius:16, padding:"32px 24px", flex:"0 0 300px", minWidth:300, position:"relative" }}>
                 {plan.badge && (
                   <div style={{ position:"absolute", top:-11, left:28, background:L.accent, color:L.navy, padding:"3px 12px", borderRadius:99, fontFamily:fMono, fontSize:10, letterSpacing:"0.08em", whiteSpace:"nowrap", fontWeight:600 }}>
                     {plan.badge}
