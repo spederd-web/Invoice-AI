@@ -259,51 +259,93 @@ export function InvoicePreviewPanel(props) {
   }
 
   return (
-    <div style={{ padding:"0 24px 48px", maxWidth:960, margin:"0 auto" }}>
-      <div style={{ display:"flex", gap:8, marginBottom:8, maxWidth:580 }}>
-        <button onClick={function(){ window.print(); }} style={{ flex:1, background:L.ink, color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-          <Icon name="download" size={13} color="#fff" />
-          Export PDF
-        </button>
-        <button onClick={exportXRechnung} disabled={xrLoading} style={{ flex:1, background:xrLoading ? L.border : "#0E1F33", color:"#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:xrLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-          <Icon name="document" size={13} color="#fff" />
-          {xrLoading ? "…" : "XRechnung XML"}
-        </button>
-        <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{ flex:1, background:sharePhase === "copied" ? L.green : sharePhase === "saving" ? L.border : L.accent, color:sharePhase === "saving" ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:sharePhase === "saving" ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6, transition:"background 0.2s" }}>
-          <Icon name={sharePhase === "copied" ? "check" : "send"} size={13} color={sharePhase === "saving" ? L.muted : "#fff"} />
-          {sharePhase === "saving" ? "Saving…" : sharePhase === "copied" ? "✓ Link copied" : "Share with client"}
-        </button>
-        <button onClick={saveToDashboard} disabled={savePhase === "saving"} style={{ flex:1, background:savePhase === "saved" ? L.green : savePhase === "saving" ? L.border : L.navy, color:savePhase === "saving" ? L.muted : "#fff", border:"none", padding:"9px 12px", borderRadius:7, cursor:savePhase === "saving" ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:14, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6, transition:"background 0.2s" }}>
-          <Icon name={savePhase === "saved" ? "check" : "document"} size={13} color={savePhase === "saving" ? L.muted : "#fff"} />
-          {savePhase === "saving" ? "Saving…" : savePhase === "saved" ? "✓ Saved" : savePhase === "error" ? "Sign in first" : "Save to dashboard"}
-        </button>
-      </div>
+    <div style={{ padding:"0 20px 48px", maxWidth:960, margin:"0 auto" }}>
+
+      {/* ── Primary action — Share ── */}
+      <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{
+        width:"100%", maxWidth:580,
+        background: sharePhase === "copied" ? L.green : sharePhase === "saving" ? L.border : L.accent,
+        color: sharePhase === "saving" ? L.muted : "#fff",
+        border:"none", padding:"14px 20px", borderRadius:11,
+        cursor: sharePhase === "saving" ? "not-allowed" : "pointer",
+        fontFamily:fSans, fontSize:15, fontWeight:500,
+        display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+        marginBottom:10, transition:"background 0.2s",
+        boxShadow: sharePhase === "saving" || sharePhase === "copied" ? "none" : "0 2px 12px rgba(20,153,144,0.2)",
+      }}>
+        <Icon name={sharePhase === "copied" ? "check" : "send"} size={14} color={sharePhase === "saving" ? L.muted : "#fff"} />
+        {sharePhase === "saving" ? "Saving…" : sharePhase === "copied" ? "✓ Link copied" : "Share with client"}
+      </button>
+
+      {/* Share URL strip */}
       {sharePhase === "copied" && shareUrl && (
-        <div style={{ maxWidth:580, marginBottom:8, display:"flex", alignItems:"center", gap:8, background:L.greenGlow, border:"1px solid "+L.green+"33", borderRadius:8, padding:"9px 12px" }}>
+        <div style={{ maxWidth:580, marginBottom:10, display:"flex", alignItems:"center", gap:8, background:L.greenGlow, border:"1px solid "+L.green+"33", borderRadius:8, padding:"9px 12px" }}>
           <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{shareUrl}</span>
-          <button onClick={copyShareUrl} style={{ background:"transparent", border:"1px solid "+L.green+"44", borderRadius:5, padding:"3px 9px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0, whiteSpace:"nowrap" }}>
-            {shareCopied ? "✓ Copied" : "Copy again"}
+          <button onClick={copyShareUrl} style={{ background:"transparent", border:"1px solid "+L.green+"44", borderRadius:5, padding:"3px 9px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0 }}>
+            {shareCopied ? "✓" : "Copy"}
           </button>
         </div>
       )}
       {sharePhase === "error" && (
-        <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"9px 14px", marginBottom:8, maxWidth:580, fontFamily:fSans, fontSize:13, color:"#C0392B" }}>
-          Share failed — check that Supabase is configured in Vercel env vars.
+        <div style={{ maxWidth:580, marginBottom:10, background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"9px 14px", fontFamily:fSans, fontSize:13, color:"#C0392B" }}>
+          Share failed — check Supabase env vars in Vercel.
         </div>
       )}
-      {s.country && s.country.code === "HU" && (
-        <div style={{ marginBottom:8 }}>
-          <button onClick={exportNAV} disabled={navLoading} style={{ width:"100%", background:navLoading ? L.border : "#2A5E3A", color:"#fff", border:"none", padding:"10px 12px", borderRadius:7, cursor:navLoading ? "not-allowed" : "pointer", fontFamily:fSans, fontSize:13, fontWeight:500, display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-            <Icon name="document" size={13} color="#fff" />
-            {navLoading ? "Generating…" : "NAV XML — Hungarian tax reporting"}
+
+      {/* ── Secondary actions — compact pills ── */}
+      <div style={{ display:"flex", gap:8, marginBottom:12, maxWidth:580, flexWrap:"wrap" }}>
+        <button onClick={function(){ window.print(); }} style={{
+          background:"transparent", color:L.ink,
+          border:"1px solid "+L.border, padding:"7px 14px",
+          borderRadius:8, cursor:"pointer", fontFamily:fSans,
+          fontSize:13, fontWeight:400,
+          display:"flex", alignItems:"center", gap:6,
+          whiteSpace:"nowrap",
+        }}>
+          <Icon name="download" size={12} color={L.muted} />
+          Export PDF
+        </button>
+        <button onClick={exportXRechnung} disabled={xrLoading} style={{
+          background:"transparent", color:L.ink,
+          border:"1px solid "+L.border, padding:"7px 14px",
+          borderRadius:8, cursor:xrLoading ? "not-allowed" : "pointer",
+          fontFamily:fSans, fontSize:13, fontWeight:400,
+          display:"flex", alignItems:"center", gap:6,
+          whiteSpace:"nowrap", opacity:xrLoading ? 0.5 : 1,
+        }}>
+          <Icon name="document" size={12} color={L.muted} />
+          {xrLoading ? "Generating…" : "XRechnung XML"}
+        </button>
+        {s.country && s.country.code === "HU" && (
+          <button onClick={exportNAV} disabled={navLoading} style={{
+            background:"transparent", color:L.ink,
+            border:"1px solid "+L.border, padding:"7px 14px",
+            borderRadius:8, cursor:navLoading ? "not-allowed" : "pointer",
+            fontFamily:fSans, fontSize:13, fontWeight:400,
+            display:"flex", alignItems:"center", gap:6,
+            whiteSpace:"nowrap", opacity:navLoading ? 0.5 : 1,
+          }}>
+            <Icon name="document" size={12} color={L.muted} />
+            {navLoading ? "Generating…" : "NAV XML"}
           </button>
-          {navError && <p style={{ fontFamily:fSans, fontSize:13, color:L.accent, marginTop:4 }}>{navError}</p>}
-          <p style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginTop:5, letterSpacing:"0.04em" }}>
-            Upload to onlineszamla.nav.gov.hu after issuing. Required for domestic HU invoices.
-          </p>
-        </div>
-      )}
-      {xrError && <p style={{ fontFamily:fSans, fontSize:13, color:L.accent, marginBottom:10 }}>XRechnung error: {xrError}</p>}
+        )}
+      </div>
+
+      {/* ── Tertiary — Save to dashboard (quiet text link) ── */}
+      <div style={{ maxWidth:580, marginBottom:20 }}>
+        <button onClick={saveToDashboard} disabled={savePhase === "saving"} style={{
+          background:"none", border:"none", padding:0,
+          cursor:savePhase === "saving" ? "not-allowed" : "pointer",
+          fontFamily:fSans, fontSize:13,
+          color: savePhase === "saved" ? L.green : savePhase === "error" ? L.red : L.muted,
+          display:"flex", alignItems:"center", gap:5,
+        }}>
+          <Icon name={savePhase === "saved" ? "check" : "document"} size={11} color={savePhase === "saved" ? L.green : savePhase === "error" ? L.red : L.faint} />
+          {savePhase === "saving" ? "Saving…" : savePhase === "saved" ? "Saved to dashboard" : savePhase === "error" ? "Sign in to save" : "Save to dashboard"}
+        </button>
+        {xrError && <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:6 }}>XRechnung: {xrError}</p>}
+        {navError && <p style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:6 }}>NAV: {navError}</p>}
+      </div>
       <div id="print-invoice" style={{ background:L.white, border:"1px solid "+L.border, borderRadius:14, padding:"36px 40px", boxShadow:"0 8px 32px rgba(10,10,15,0.08)" }}>
         {s.creditNote && (
           <div style={{ background:L.goldGlow, border:"1.5px solid "+L.gold+"55", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
