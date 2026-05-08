@@ -251,6 +251,7 @@ export function Dashboard(props) {
         {section==="invoices"  && <DInvoices />}
         {section==="proposals" && <DProposals onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
+        {section==="settings"  && <DSettings user={user} />}
       </div>
 
       {/* Mobile bottom nav — lighter, shorter */}
@@ -941,6 +942,295 @@ export function DBrandKits() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function DSettings(props) {
+  var user = props.user;
+  var [tab, setTab] = useState("profile");
+
+  // Profile state
+  var [firstName, setFirstName]   = useState("Daniel");
+  var [lastName, setLastName]     = useState("Speder");
+  var [email, setEmail]           = useState(user && user.email ? user.email : "daniel.speder@gmail.com");
+  var [phone, setPhone]           = useState("");
+  var [website, setWebsite]       = useState("");
+  var [bio, setBio]               = useState("");
+
+  // Business state
+  var [bizName, setBizName]       = useState("");
+  var [vatNum, setVatNum]         = useState("");
+  var [iban, setIban]             = useState("");
+  var [bic, setBic]               = useState("");
+  var [street, setStreet]         = useState("");
+  var [city, setCity]             = useState("");
+  var [country, setCountry]       = useState("DE");
+
+  // Notifications state
+  var [notifProposal, setNotifProposal] = useState(true);
+  var [notifInvoice, setNotifInvoice]   = useState(true);
+  var [notifOverdue, setNotifOverdue]   = useState(true);
+  var [notifDigest, setNotifDigest]     = useState(false);
+
+  // Password state
+  var [pwCurrent, setPwCurrent]   = useState("");
+  var [pwNew, setPwNew]           = useState("");
+  var [pwConfirm, setPwConfirm]   = useState("");
+
+  var [saved, setSaved] = useState("");
+
+  function save(section) {
+    setSaved(section);
+    setTimeout(function(){ setSaved(""); }, 2500);
+  }
+
+  var tabs = [
+    { id:"profile",       label:"Profile"        },
+    { id:"business",      label:"Business"       },
+    { id:"notifications", label:"Notifications"  },
+    { id:"billing",       label:"Plan & Billing" },
+    { id:"security",      label:"Security"       },
+  ];
+
+  var inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:9, padding:"10px 13px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
+  var lbl = { display:"block", marginBottom:5, fontFamily:fUI, fontSize:12, color:C.muted, fontWeight:400 };
+
+  function Toggle(tProps) {
+    return (
+      <div onClick={function(){ tProps.onChange(!tProps.value); }} style={{ width:40, height:22, borderRadius:99, background:tProps.value ? C.accent : C.border, cursor:"pointer", position:"relative", transition:"background 0.2s", flexShrink:0 }}>
+        <div style={{ position:"absolute", top:3, left:tProps.value ? 21 : 3, width:16, height:16, borderRadius:"50%", background:"#fff", transition:"left 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.15)" }} />
+      </div>
+    );
+  }
+
+  function SaveBtn(tProps) {
+    var done = saved === tProps.section;
+    return (
+      <button onClick={function(){ save(tProps.section); }} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:"0 2px 8px rgba(20,153,144,0.18)" }}>
+        {done ? "✓ Saved" : "Save changes"}
+      </button>
+    );
+  }
+
+  function Card(cProps) {
+    return (
+      <div style={{ background:C.surface, borderRadius:16, padding:"24px 26px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)", marginBottom:16 }}>
+        {cProps.title && (
+          <div style={{ marginBottom:20, paddingBottom:14, borderBottom:"1px solid "+C.borderLt }}>
+            <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink }}>{cProps.title}</div>
+            {cProps.sub && <div style={{ fontFamily:fUI, fontSize:13, color:C.muted, marginTop:3, fontWeight:300 }}>{cProps.sub}</div>}
+          </div>
+        )}
+        {cProps.children}
+      </div>
+    );
+  }
+
+  function Row2(rProps) {
+    return <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>{rProps.children}</div>;
+  }
+
+  function Field(fProps) {
+    return (
+      <div style={{ marginBottom:14 }}>
+        <label style={lbl}>{fProps.label}{fProps.required && <span style={{ color:C.red }}> *</span>}</label>
+        {fProps.type === "textarea"
+          ? <textarea value={fProps.value} onChange={function(e){ fProps.onChange(e.target.value); }} rows={3} placeholder={fProps.placeholder||""} style={{ ...inp, resize:"vertical", lineHeight:1.5 }} />
+          : <input type={fProps.type||"text"} value={fProps.value} onChange={function(e){ fProps.onChange(e.target.value); }} placeholder={fProps.placeholder||""} style={inp} />
+        }
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ maxWidth:720 }}>
+      <div style={{ marginBottom:32 }}>
+        <h2 style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:5 }}>Settings</h2>
+        <p style={{ fontFamily:fUI, fontSize:13, color:C.muted, fontWeight:300 }}>Manage your account, business details and preferences.</p>
+      </div>
+
+      {/* Tab bar */}
+      <div style={{ display:"flex", gap:2, borderBottom:"1px solid "+C.border, marginBottom:28 }}>
+        {tabs.map(function(t) {
+          var active = tab === t.id;
+          return (
+            <button key={t.id} onClick={function(){ setTab(t.id); }} style={{ background:"none", border:"none", borderBottom:"2px solid "+(active ? C.accent : "transparent"), padding:"10px 16px 11px", cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:active ? 500 : 400, color:active ? C.ink : C.muted, transition:"all 0.15s", marginBottom:-1 }}>
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ── Profile ── */}
+      {tab === "profile" && (
+        <div>
+          <Card title="Personal information" sub="This is how your name appears on invoices and proposals.">
+            {/* Avatar */}
+            <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
+              <div style={{ width:64, height:64, borderRadius:"50%", background:C.accentMid, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:22, color:C.accent, fontWeight:700, flexShrink:0 }}>
+                {firstName ? firstName[0].toUpperCase() : "D"}
+              </div>
+              <div>
+                <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink, marginBottom:3 }}>{firstName} {lastName}</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{email}</div>
+              </div>
+            </div>
+            <Row2>
+              <Field label="First name" required={true} value={firstName} onChange={setFirstName} placeholder="Daniel" />
+              <Field label="Last name" value={lastName} onChange={setLastName} placeholder="Speder" />
+            </Row2>
+            <Field label="Email address" required={true} type="email" value={email} onChange={setEmail} placeholder="daniel@studio.de" />
+            <Row2>
+              <Field label="Phone" type="tel" value={phone} onChange={setPhone} placeholder="+49 171 000 0000" />
+              <Field label="Website" type="url" value={website} onChange={setWebsite} placeholder="https://studio.de" />
+            </Row2>
+            <Field label="Short bio" type="textarea" value={bio} onChange={setBio} placeholder="Freelance brand designer based in Berlin. Working with clients across Europe." />
+            <div style={{ display:"flex", justifyContent:"flex-end" }}>
+              <SaveBtn section="profile" />
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* ── Business ── */}
+      {tab === "business" && (
+        <div>
+          <Card title="Business details" sub="Used on all invoices, proposals and EU compliance documents.">
+            <Field label="Business / Studio name" required={true} value={bizName} onChange={setBizName} placeholder="Studio Speder GbR" />
+            <Row2>
+              <Field label="VAT number" value={vatNum} onChange={setVatNum} placeholder="DE123456789" />
+              <Field label="Country" value={country} onChange={setCountry} placeholder="DE" />
+            </Row2>
+            <Row2>
+              <Field label="Street address" value={street} onChange={setStreet} placeholder="Leopoldstr. 10" />
+              <Field label="City & postal code" value={city} onChange={setCity} placeholder="80802 München" />
+            </Row2>
+            <div style={{ display:"flex", justifyContent:"flex-end" }}>
+              <SaveBtn section="business-info" />
+            </div>
+          </Card>
+          <Card title="Payment details" sub="Shown in the SEPA payment block on every invoice.">
+            <Field label="IBAN" value={iban} onChange={setIban} placeholder="DE89 3704 0044 0532 0130 00" />
+            <Field label="BIC / SWIFT" value={bic} onChange={setBic} placeholder="COBADEFFXXX" />
+            <div style={{ display:"flex", justifyContent:"flex-end" }}>
+              <SaveBtn section="business-payment" />
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* ── Notifications ── */}
+      {tab === "notifications" && (
+        <div>
+          <Card title="Email notifications" sub="Choose what you want to be notified about.">
+            {[
+              { label:"Proposal viewed",       sub:"When a client opens your proposal",              val:notifProposal, set:setNotifProposal },
+              { label:"Invoice activity",      sub:"When an invoice is paid, overdue or opened",     val:notifInvoice,  set:setNotifInvoice  },
+              { label:"Overdue reminders",     sub:"Daily digest of overdue invoices",               val:notifOverdue,  set:setNotifOverdue  },
+              { label:"Weekly digest",         sub:"Summary of revenue, proposals and activity",     val:notifDigest,   set:setNotifDigest   },
+            ].map(function(item, i, arr) {
+              return (
+                <div key={item.label} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 0", borderBottom:i < arr.length-1 ? "1px solid "+C.borderLt : "none" }}>
+                  <div>
+                    <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>{item.label}</div>
+                    <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>{item.sub}</div>
+                  </div>
+                  <Toggle value={item.val} onChange={item.set} />
+                </div>
+              );
+            })}
+            <div style={{ display:"flex", justifyContent:"flex-end", marginTop:20 }}>
+              <SaveBtn section="notifications" />
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* ── Billing ── */}
+      {tab === "billing" && (
+        <div>
+          <Card title="Current plan">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
+              <div>
+                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
+                  <span style={{ fontFamily:fSerif, fontSize:22, fontWeight:400, color:C.ink }}>Studio</span>
+                  <span style={{ fontFamily:fMono, fontSize:10, color:C.accent, background:C.accentSoft, borderRadius:5, padding:"3px 8px", letterSpacing:"0.06em" }}>ACTIVE</span>
+                </div>
+                <div style={{ fontFamily:fUI, fontSize:13, color:C.muted }}>€59/month · Renews 7 June 2026</div>
+              </div>
+              <div style={{ textAlign:"right" }}>
+                <div style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em" }}>€59</div>
+                <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>per month</div>
+              </div>
+            </div>
+            <div style={{ background:C.bg, borderRadius:10, padding:"14px 16px", marginBottom:20 }}>
+              <div style={{ fontFamily:fUI, fontSize:12, fontWeight:600, color:C.ink, marginBottom:8 }}>Plan includes</div>
+              {["Unlimited clients","Unlimited invoices + proposals","AI proposal writer","Brand kits","Client portal + approvals","VIES VAT validation","XRechnung & Factur-X"].map(function(f) {
+                return <div key={f} style={{ display:"flex", alignItems:"center", gap:8, fontFamily:fUI, fontSize:13, color:C.muted, marginBottom:5 }}><span style={{ color:C.green }}>✓</span>{f}</div>;
+              })}
+            </div>
+            <div style={{ display:"flex", gap:10 }}>
+              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe →</button>
+              <button style={{ background:"transparent", color:C.muted, border:"1px solid "+C.border, padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
+            </div>
+          </Card>
+          <Card title="Billing history" sub="Your last 3 payments.">
+            {[
+              { date:"7 May 2026",  amount:"€59.00", status:"Paid" },
+              { date:"7 Apr 2026",  amount:"€59.00", status:"Paid" },
+              { date:"7 Mar 2026",  amount:"€59.00", status:"Paid" },
+            ].map(function(inv, i) {
+              return (
+                <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"13px 0", borderBottom:i<2 ? "1px solid "+C.borderLt : "none" }}>
+                  <div style={{ fontFamily:fUI, fontSize:13, color:C.ink }}>{inv.date}</div>
+                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+                    <span style={{ fontFamily:fMono, fontSize:13, color:C.ink, fontWeight:500 }}>{inv.amount}</span>
+                    <span style={{ fontFamily:fMono, fontSize:10, color:C.green, background:C.greenSoft, borderRadius:4, padding:"2px 7px" }}>{inv.status}</span>
+                    <button style={{ background:"none", border:"none", fontFamily:fUI, fontSize:12, color:C.accent, cursor:"pointer", padding:0 }}>PDF</button>
+                  </div>
+                </div>
+              );
+            })}
+          </Card>
+        </div>
+      )}
+
+      {/* ── Security ── */}
+      {tab === "security" && (
+        <div>
+          <Card title="Change password" sub="Use a strong password of at least 8 characters.">
+            <Field label="Current password" type="password" value={pwCurrent} onChange={setPwCurrent} placeholder="••••••••" />
+            <Field label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="••••••••" />
+            <Field label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="••••••••" />
+            {pwNew && pwConfirm && pwNew !== pwConfirm && (
+              <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginBottom:12 }}>Passwords don't match.</div>
+            )}
+            <div style={{ display:"flex", justifyContent:"flex-end" }}>
+              <SaveBtn section="password" />
+            </div>
+          </Card>
+          <Card title="Sessions" sub="You are currently logged in on this device.">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 0" }}>
+              <div>
+                <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>This device</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>Safari · iPhone · Active now</div>
+              </div>
+              <span style={{ fontFamily:fMono, fontSize:10, color:C.green, background:C.greenSoft, borderRadius:4, padding:"2px 7px" }}>Active</span>
+            </div>
+          </Card>
+          <Card title="Danger zone">
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div>
+                <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>Delete account</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>Permanently delete your account and all data. This cannot be undone.</div>
+              </div>
+              <button style={{ background:"transparent", color:C.red, border:"1px solid "+C.red+"44", padding:"8px 16px", borderRadius:8, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500, flexShrink:0, marginLeft:20 }}>Delete account</button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
