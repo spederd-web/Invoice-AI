@@ -1461,9 +1461,9 @@ function DSettings(props) {
       {tab === "security" && (
         <div>
           <SCard title="Change password" sub="Use a strong password of at least 8 characters.">
-            <SField label="Current password" type="password" value={pwCurrent} onChange={setPwCurrent} placeholder="••••••••" />
-            <SField label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="••••••••" />
-            <SField label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="••••••••" />
+            <SField label="Current password" type="password" value={pwCurrent} onChange={setPwCurrent} placeholder="Password" />
+            <SField label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="Password" />
+            <SField label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="Password" />
             {pwNew && pwConfirm && pwNew !== pwConfirm && (
               <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginBottom:12 }}>Passwords don't match.</div>
             )}
