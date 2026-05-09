@@ -599,7 +599,7 @@ function DOverview(props) {
                     <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.sub}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, flexShrink:0 }}>{a.time}</span>
-                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>"->"</span>
+                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>"Go"</span>
                 </div>
               );
             })}
@@ -670,7 +670,7 @@ function DOverview(props) {
                 );
               })}
             </div>
-            <button onClick={function(){ setSection("clients"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", marginTop:16, padding:0 }}>View all clients -></button>
+            <button onClick={function(){ setSection("clients"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", marginTop:16, padding:0 }}>View all clients</button>
           </div>
         </div>
 
@@ -841,7 +841,7 @@ function DClientDetail(props) {
   var pColors = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
   return (
     <div>
-      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}><- Clients</button>
+      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}>"Back"</button>
       <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:36 }}>
         <div style={{ width:48, height:48, borderRadius:14, background:c.color+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.color, fontWeight:700 }}>{c.avatar}</div>
         <div>
@@ -1067,7 +1067,7 @@ export function DProposals(props) {
               {/* Convert to invoice - only for won */}
               {p.status==="won" && (
                 <div style={{ padding:"0 22px 18px" }}>
-                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>Convert to invoice -></Btn>
+                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>Convert to invoice</Btn>
                 </div>
               )}
             </div>
@@ -1432,7 +1432,7 @@ function DSettings(props) {
               })}
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe -></button>
+              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe</button>
               <button style={{ background:"transparent", color:C.muted, border:"1px solid "+C.border, padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
             </div>
           </SCard>
