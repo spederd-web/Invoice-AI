@@ -1536,7 +1536,7 @@ export function ClientPortal(props) {
         )}
 
         <div style={{ textAlign:"center", padding:"20px 0 4px" }}>
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>Secured &amp; delivered by </span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>Secured and delivered by </span>
           <span onClick={function(){ setPage("Home"); }} style={{ fontFamily:fSerif, fontSize:13, fontWeight:700, color:L.accent, cursor:"pointer", letterSpacing:"-0.01em" }}>InvoiceAI</span>
           <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}> . EU-native invoicing</span>
         </div>

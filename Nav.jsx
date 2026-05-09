@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { L, fSans, fMono, fSerif, t, PAGES, EU_COUNTRIES_LIST, Icon, LogoMark } from "./constants.jsx";
 
-// ── Generator dropdown ────────────────────────────────────────────────────────
+// -- Generator dropdown --------------------------------------------------------
 var GEN_ITEMS = [
   { mode:"invoice",  label:"Invoice",  sub:"EU-compliant invoices", icon:"document" },
   { mode:"proposal", label:"Proposal", sub:"AI-written proposals",  icon:"proposal" },
@@ -80,14 +80,14 @@ export function Nav(props) {
           <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:18, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
         </div>
 
-        {/* Center nav — desktop. Order: Home · Generator · Compliance · Pricing · Dashboard */}
+        {/* Center nav - desktop. Order: Home . Generator . Compliance . Pricing . Dashboard */}
         <div className="nav-desktop" style={{ display:"flex", gap:1, alignItems:"center" }}>
           {/* Home */}
           <button onClick={function(){ setPage("Home"); }} style={{ background:"transparent", color:page==="Home" ? L.ink : L.muted, border:"none", padding:"6px 14px", borderRadius:6, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:page==="Home" ? 500 : 400, letterSpacing:"-0.01em", transition:"color 0.15s" }}>
             {t(lang,"navHome") || "Home"}
           </button>
 
-          {/* Generator dropdown — second */}
+          {/* Generator dropdown - second */}
           <div ref={genRef} style={{ position:"relative" }}>
             <button onClick={function(){ setGenOpen(function(o){ return !o; }); }} style={{
               background:"transparent",
@@ -107,7 +107,7 @@ export function Nav(props) {
             )}
           </div>
 
-          {/* Remaining pages: Compliance · Pricing */}
+          {/* Remaining pages: Compliance . Pricing */}
           {["EUCompliance","Pricing"].map(function(pg) {
             var pgLabel = pg === "Pricing" ? t(lang,"navPricing") : "Compliance";
             var active = page === pg;
@@ -178,7 +178,7 @@ export function Nav(props) {
               </button>
             );
           })}
-          {/* Sign out — only when logged in, at the bottom before languages */}
+          {/* Sign out - only when logged in, at the bottom before languages */}
           {user && (
             <>
               <div style={{ height:1, background:L.border, margin:"8px 0" }} />
@@ -227,7 +227,7 @@ export function PaymentStrip() {
           })}
         </div>
         <span style={{ fontFamily:fMono, fontSize:11, color:L.accent, background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:4, padding:"2px 10px", letterSpacing:"0.06em" }}>Coming Q3 2026</span>
-        <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, marginTop:10, lineHeight:1.6 }}>Apple Pay, Google Pay and card payments via Stripe — launching Q3 2026. SEPA bank transfer available now.</p>
+        <p style={{ fontFamily:fSans, fontSize:13, color:L.muted, fontWeight:300, marginTop:10, lineHeight:1.6 }}>Apple Pay, Google Pay and card payments via Stripe - launching Q3 2026. SEPA bank transfer available now.</p>
       </div>
     </div>
   );
@@ -253,7 +253,7 @@ export function Footer(props) {
               <LogoMark size={26} />
               <span style={{ fontFamily:fSerif, fontWeight:400, fontSize:16, color:"rgba(240,244,248,0.9)", letterSpacing:"-0.02em" }}>InvoiceAI</span>
             </div>
-            <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.35)", lineHeight:1.65, maxWidth:260, fontWeight:300, marginBottom:16 }}>From proposal to payment in minutes — built for European freelancers who work across borders.</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:"rgba(240,244,248,0.35)", lineHeight:1.65, maxWidth:260, fontWeight:300, marginBottom:16 }}>From proposal to payment in minutes - built for European freelancers who work across borders.</p>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
               {["EU compliant","GDPR ready","SEPA"].map(function(b) {
                 return <span key={b} style={{ fontFamily:fMono, fontSize:10, color:L.accent, border:"1px solid "+L.accent+"30", borderRadius:4, padding:"3px 8px", letterSpacing:"0.06em" }}>{b}</span>;
@@ -284,7 +284,7 @@ export function Footer(props) {
           <button onClick={function(){ openModal("footer"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600 }}>{t(lang,"footerCta")}</button>
         </div>
         <div style={{ borderTop:"1px solid rgba(255,255,255,0.06)", paddingTop:20, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
-          <span style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.2)" }}>© {yr} InvoiceAI. All rights reserved.</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:"rgba(240,244,248,0.2)" }}>(c) {yr} InvoiceAI. All rights reserved.</span>
           <div style={{ display:"flex", gap:14 }}>
             {[["eu","EU VAT"],["shield","GDPR"],["bank","SEPA"]].map(function(pair) {
               return <span key={pair[1]} style={{ display:"flex", alignItems:"center", gap:4, fontFamily:fMono, fontSize:10, color:"rgba(240,244,248,0.2)" }}><Icon name={pair[0]} size={10} color="rgba(240,244,248,0.2)" />{pair[1]}</span>;
@@ -298,15 +298,15 @@ export function Footer(props) {
 
 
 var BOT_QA = [
-  { q:["reverse charge","rc","cross-border","art 44"],      a:"Reverse charge applies when you invoice a VAT-registered business in another EU country. InvoiceAI detects this automatically when you enter the client's VAT number — sets VAT to 0% and adds the required legal text." },
-  { q:["vat","tax rate","percent"],                         a:"InvoiceAI uses the correct VAT rate per country automatically: Germany 19%, France 20%, Italy 22%, Netherlands 21%, Sweden 25% and more. You can also mark invoices VAT-exempt (§19 UStG) if you're a small business." },
+  { q:["reverse charge","rc","cross-border","art 44"],      a:"Reverse charge applies when you invoice a VAT-registered business in another EU country. InvoiceAI detects this automatically when you enter the client's VAT number - sets VAT to 0% and adds the required legal text." },
+  { q:["vat","tax rate","percent"],                         a:"InvoiceAI uses the correct VAT rate per country automatically: Germany 19%, France 20%, Italy 22%, Netherlands 21%, Sweden 25% and more. You can also mark invoices VAT-exempt (SS19 UStG) if you're a small business." },
   { q:["sepa","iban","bank transfer","payment"],            a:"Every invoice includes a SEPA bank transfer block with your IBAN and BIC. Just enter them once in the invoice form and they appear on every invoice automatically." },
   { q:["gdpr","data","privacy","personal"],                 a:"InvoiceAI adds a GDPR-compliant notice to every invoice automatically. Your data is hosted on AWS Frankfurt (EU), never leaves the EU, and we never sell it to third parties." },
   { q:["proposal","ai","generate","write"],                 a:"Type a brief project description, choose a tone (direct, warm or formal), and the AI writes a full client-ready proposal in under 30 seconds. You can then refine it with one-click actions." },
-  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €19/mo (up to 3 clients), Studio is €59/mo (unlimited, most popular), Agency is €149/mo (5 team seats + white-label). All plans include a 14-day free trial — no credit card needed." },
+  { q:["plan","price","cost","solo","studio","agency"],     a:"Solo is €19/mo (up to 3 clients), Studio is €59/mo (unlimited, most popular), Agency is €149/mo (5 team seats + white-label). All plans include a 14-day free trial - no credit card needed." },
   { q:["credit note","refund","correct","cancel"],          a:"Enable 'Credit Note' in the EU Compliance section. InvoiceAI automatically assigns a separate CN-YYYY-XXX number sequence as required by EU VAT law." },
   { q:["xml","xrechnung","factur-x","e-invoice"],           a:"E-invoice XML is coming Q4 2026. We're building XRechnung 3.0 for Germany, Factur-X for France, and XML/SDI for Italy. Toggle it on in the compliance section to mark invoices as compliant." },
-  { q:["late payment","interest","overdue","directive"],    a:"EU Directive 2011/7/EU gives you the right to charge 8% above ECB base rate on overdue B2B invoices — no contract needed. Enable 'Late Payment Interest' in the compliance section." },
+  { q:["late payment","interest","overdue","directive"],    a:"EU Directive 2011/7/EU gives you the right to charge 8% above ECB base rate on overdue B2B invoices - no contract needed. Enable 'Late Payment Interest' in the compliance section." },
   { q:["cancel","refund","trial","free"],                   a:"You can cancel anytime from account settings. Your 14-day trial is completely free with no credit card required. If you upgrade and change your mind, we offer a full refund within 14 days." },
 ];
 
@@ -349,12 +349,12 @@ export function SupportBot(props) {
     fetch("/api/claude", { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:300, system:"You are a helpful support assistant for InvoiceAI, an EU-native invoicing and proposal tool for creative professionals. Answer in 1-3 sentences. Key facts: Solo €19/mo, Studio €59/mo, Agency €149/mo. 14-day free trial. Supports EU VAT, reverse charge, SEPA, GDPR, XRechnung. 7 EU languages.", messages:history }) })
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var reply = (data.content || []).map(function(b) { return b.text || ""; }).join("") || "I'm not sure — please email hello@invoice-ai.de";
+        var reply = (data.content || []).map(function(b) { return b.text || ""; }).join("") || "I'm not sure - please email hello@invoice-ai.de";
         setMsgs(newMsgs.concat([{ role:"bot", text:reply }]));
         setLoading(false);
       })
       .catch(function() {
-        setMsgs(newMsgs.concat([{ role:"bot", text:"Connection error — please try again or email hello@invoice-ai.de" }]));
+        setMsgs(newMsgs.concat([{ role:"bot", text:"Connection error - please try again or email hello@invoice-ai.de" }]));
         setLoading(false);
       });
   }
@@ -373,7 +373,7 @@ export function SupportBot(props) {
                 <div style={{ fontFamily:fMono, fontSize:10, color:"rgba(255,255,255,0.65)", letterSpacing:"0.06em" }}>Usually replies instantly</div>
               </div>
             </div>
-            <button onClick={function(){ setOpen(false); }} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.7)", cursor:"pointer", fontSize:18, lineHeight:1, padding:"2px 4px" }}>×</button>
+            <button onClick={function(){ setOpen(false); }} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.7)", cursor:"pointer", fontSize:18, lineHeight:1, padding:"2px 4px" }}>x</button>
           </div>
           <div style={{ flex:1, overflowY:"auto", padding:"14px 14px 8px", display:"flex", flexDirection:"column", gap:10, maxHeight:320 }}>
             {msgs.map(function(m, i) {
@@ -399,7 +399,7 @@ export function SupportBot(props) {
             </div>
           )}
           <div style={{ padding:"10px 12px", borderTop:"1px solid "+L.border, display:"flex", gap:8 }}>
-            <input value={input} onChange={function(e){ setInput(e.target.value); }} onKeyDown={function(e){ if(e.key==="Enter") send(); }} placeholder="Ask anything…" style={{ flex:1, border:"1.5px solid "+L.border, borderRadius:8, padding:"7px 10px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" }} />
+            <input value={input} onChange={function(e){ setInput(e.target.value); }} onKeyDown={function(e){ if(e.key==="Enter") send(); }} placeholder="Ask anything..." style={{ flex:1, border:"1.5px solid "+L.border, borderRadius:8, padding:"7px 10px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" }} />
             <button onClick={send} disabled={!input.trim() || loading} style={{ background:input.trim() && !loading ? L.accent : L.border, color:"#fff", border:"none", borderRadius:8, padding:"7px 12px", cursor:input.trim() && !loading ? "pointer" : "not-allowed" }}>
               <Icon name="send" size={13} color="#fff" />
             </button>
@@ -420,7 +420,7 @@ export function PwField(props) {
     <div style={{ position:"relative", marginBottom:10 }}>
       <input type={props.show ? "text" : "password"} value={props.value} onChange={props.onChange} placeholder={props.placeholder} style={inp} />
       <button onClick={props.toggleShow} style={{ position:"absolute", right:10, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#6B7280", padding:4, fontSize:15, lineHeight:1 }}>
-        {props.show ? "🙈" : "👁"}
+        {props.show ? "" : ""}
       </button>
     </div>
   );
@@ -474,7 +474,7 @@ export function AuthModal(props) {
               <LogoMark size={28} />
               <span style={{ fontFamily:fSerif, fontSize:17, color:L.ink }}>InvoiceAI</span>
             </div>
-            <button onClick={onClose} style={{ background:"none", border:"none", cursor:"pointer", color:L.faint, fontSize:20, lineHeight:1, padding:"2px 4px" }}>×</button>
+            <button onClick={onClose} style={{ background:"none", border:"none", cursor:"pointer", color:L.faint, fontSize:20, lineHeight:1, padding:"2px 4px" }}>x</button>
           </div>
           <div style={{ display:"flex", marginBottom:24, borderBottom:"1px solid "+L.border }}>
             {[["signin",t(lang,"authSignIn")||"Sign in"],["signup",t(lang,"authSignUp")||"Sign up"],["magic",t(lang,"authMagic")||"Magic link"]].map(function(pair) {
@@ -488,9 +488,9 @@ export function AuthModal(props) {
           {mode === "signup" && <PwField value={confirm} onChange={function(e){ setConfirm(e.target.value); }} placeholder="Confirm password" show={showConfirm} toggleShow={function(){ setShowConfirm(function(s){ return !s; }); }} />}
           {error && <p style={{ fontFamily:fSans, fontSize:14, color: error.indexOf("Check") >= 0 ? L.green : L.accent, margin:"0 0 12px" }}>{error}</p>}
           <button onClick={submit} disabled={loading} style={{ width:"100%", background:loading ? L.border : L.accent, color:"#fff", border:"none", padding:"12px", borderRadius:9, cursor:loading?"not-allowed":"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, marginTop:4, boxShadow:loading?"none":"0 4px 14px rgba(23,169,158,0.18)" }}>
-            {loading ? "Working…" : mode === "signin" ? (t(lang,"authSignIn")||"Sign in") : mode === "signup" ? (t(lang,"authSignUp")||"Sign up") : "Send magic link"}
+            {loading ? "Working..." : mode === "signin" ? (t(lang,"authSignIn")||"Sign in") : mode === "signup" ? (t(lang,"authSignUp")||"Sign up") : "Send magic link"}
           </button>
-          <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>14-day free trial · No credit card · Cancel anytime</p>
+          <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, textAlign:"center", marginTop:14, letterSpacing:"0.04em" }}>14-day free trial . No credit card . Cancel anytime</p>
         </div>
       </div>
     </div>
@@ -533,11 +533,11 @@ export function SignupModal(props) {
         <div style={{ background:L.accent, padding:"24px 28px 20px" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
             <div>
-              <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.65)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>Early Access · invoice-ai.de</div>
+              <div style={{ fontFamily:fMono, fontSize:11, color:"rgba(255,255,255,0.65)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>Early Access . invoice-ai.de</div>
               <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.1 }}>{t(lang,"modalTitle")}</h2>
               <p style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.75)", marginTop:6, fontWeight:300, lineHeight:1.5 }}>{t(lang,"modalSub")}</p>
             </div>
-            <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginLeft:12 }}>×</button>
+            <button onClick={onClose} style={{ background:"rgba(255,255,255,0.15)", border:"none", color:"#fff", width:28, height:28, borderRadius:"50%", cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginLeft:12 }}>x</button>
           </div>
           <div style={{ display:"flex", gap:16, marginTop:14 }}>
             {["14-day free trial","No credit card","EU-hosted data"].map(function(badge) {
@@ -548,7 +548,7 @@ export function SignupModal(props) {
         {!done ? (
           <div style={{ padding:"24px 28px 28px" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="e.g. Anna Müller" style={inp} /></div>
+              <div><label style={lbl}>Full name *</label><input value={name} onChange={function(e){ setName(e.target.value); }} placeholder="e.g. Anna Mueller" style={inp} /></div>
               <div><label style={lbl}>Work email *</label><input type="email" value={email} onChange={function(e){ setEmail(e.target.value); }} placeholder="alex@studio.de" style={inp} /></div>
               <div>
                 <label style={lbl}>I am a *</label>
@@ -575,10 +575,10 @@ export function SignupModal(props) {
           <div style={{ padding:"36px 28px 40px", textAlign:"center" }}>
             <div style={{ width:48, height:48, borderRadius:12, background:L.accentGlow, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><Icon name="check" size={22} color={L.accent} /></div>
             <h3 style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.ink, marginBottom:8, letterSpacing:"-0.02em" }}>{t(lang,"modalDoneTitle")}</h3>
-            <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We'll email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
-            <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> — locked in at signup.</p>
+            <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, lineHeight:1.6, marginBottom:6, fontWeight:300 }}>We will email you at <strong style={{ color:L.ink }}>{email}</strong> the moment early access opens.</p>
+            <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, lineHeight:1.6, marginBottom:24, fontWeight:300 }}>Founding member rate: <strong style={{ color:L.accent }}>Studio €29/mo forever</strong> - locked in at signup.</p>
             <div style={{ background:L.cream, border:"1px solid "+L.border, borderRadius:10, padding:"14px 18px", marginBottom:20 }}>
-              <p style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait — try the demo</p>
+              <p style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:6 }}>While you wait - try the demo</p>
               <p style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontWeight:300 }}>Generate a real proposal or invoice right now. No account needed.</p>
             </div>
             <button onClick={onClose} style={{ background:L.accent, color:"#fff", border:"none", padding:"11px 28px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500 }}>{t(lang,"modalExploreCta")}</button>
