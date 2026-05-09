@@ -259,10 +259,10 @@ export function InvoicePreviewPanel(props) {
   }
 
   return (
-    <div style={{ padding:"0 20px 48px", maxWidth:960, margin:"0 auto" }}>
+    <div className="inv-preview-wrap" style={{ padding:"0 20px 48px", maxWidth:960, margin:"0 auto" }}>
 
-      {/* ── Action bar — primary + secondary in one compact area ── */}
-      <div style={{ maxWidth:580, marginBottom:20 }}>
+      {/* ── Action bar ── */}
+      <div style={{ maxWidth:580, marginBottom:16 }}>
 
         {/* Primary — Share */}
         <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{
@@ -295,8 +295,8 @@ export function InvoicePreviewPanel(props) {
           </div>
         )}
 
-        {/* Secondary row — all in one flex line */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
+        {/* Secondary row — scrollable on mobile */}
+        <div style={{ display:"flex", alignItems:"center", gap:8, overflowX:"auto", WebkitOverflowScrolling:"touch", paddingBottom:2 }}>
           <button onClick={function(){ window.print(); }} style={{
             background:"transparent", color:L.ink,
             border:"1px solid "+L.border, padding:"7px 14px",
