@@ -189,7 +189,7 @@ function AttentionCard(props) {
           </div>
           <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:t.color }}>{t.label}</span>
         </div>
-        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>&times;</button>
+        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>"x"</button>
       </div>
       {/* Title large, desc quieter */}
       <div style={{ fontFamily:fUI, fontSize:16, fontWeight:600, color:C.ink, lineHeight:1.3, marginBottom:10 }}>{item.title}</div>
@@ -599,7 +599,7 @@ function DOverview(props) {
                     <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.sub}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, flexShrink:0 }}>{a.time}</span>
-                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }>&rarr;</span>
+                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>"->"</span>
                 </div>
               );
             })}
