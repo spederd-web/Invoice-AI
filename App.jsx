@@ -45,6 +45,36 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
+  // ── Magic link auth — detect #access_token in URL hash on load ───────────
+  useEffect(function() {
+    var hash = window.location.hash;
+    if (!hash || hash.indexOf("access_token") < 0) return;
+    // Parse hash params
+    var params = {};
+    hash.slice(1).split("&").forEach(function(pair) {
+      var parts = pair.split("=");
+      params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || "");
+    });
+    var token = params["access_token"];
+    var refresh = params["refresh_token"];
+    if (!token) return;
+    // Exchange token for user via our auth endpoint
+    fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "verify", access_token: token, refresh_token: refresh }),
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data.user) {
+        handleAuth(data.user, data.session);
+        // Clean hash from URL without reload
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    })
+    .catch(function() {});
+  }, []);
+
   var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ","EUCompliance"].indexOf(page) >= 0;
 
   return (

@@ -311,7 +311,7 @@ export function Dashboard(props) {
         {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
         {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} />}
-        {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} />}
+        {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
         {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} />}
@@ -888,70 +888,124 @@ function DInvoices(props) {
   var invoices = props.invoices || MOCK_INVOICES;
   var clients  = props.clients  || MOCK_CLIENTS;
   var db = props.db;
+  var userId = props.userId;
   var [filter, setFilter] = useState("all");
-  var [acted, setActed] = useState({});
+  var [updating, setUpdating] = useState({});
+  var [localStatus, setLocalStatus] = useState({});
   var clientMap = {};
   clients.forEach(function(c){ clientMap[c.id] = c.name; });
-  var filtered = invoices.filter(function(inv){
-    if (filter==="outstanding") return inv.status==="sent"||inv.status==="overdue";
-    if (filter==="paid") return inv.status==="paid";
-    return true;
-  });
-  var outstanding = invoices.filter(function(i){ return i.status==="sent"||i.status==="overdue"; }).reduce(function(s,i){ return s+(i.amount_gross||0); },0);
 
-  function act(id, type) {
-    setActed(function(s){ return Object.assign({},s,{ [id]:type }); });
-    setTimeout(function(){ setActed(function(s){ var n=Object.assign({},s); delete n[id]; return n; }); },3000);
+  function getStatus(inv) { return localStatus[inv.id] || inv.status || "draft"; }
+
+  function updateStatus(inv, newStatus) {
+    // Optimistic update immediately
+    setLocalStatus(function(s){ return Object.assign({}, s, { [inv.id]: newStatus }); });
+    setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: true }); });
+    if (!db || !userId) {
+      // Demo mode — just update locally
+      setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); });
+      return;
+    }
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ table:"invoices", action:"update", id:inv.id, user_id:userId, payload:{ status:newStatus } }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); })
+    .catch(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); });
   }
 
+  var enriched = invoices.map(function(inv){ return Object.assign({}, inv, { _status: getStatus(inv) }); });
+  var filtered = enriched.filter(function(inv){
+    if (filter==="outstanding") return inv._status==="sent" || inv._status==="overdue";
+    if (filter==="paid") return inv._status==="paid";
+    if (filter==="draft") return inv._status==="draft";
+    return true;
+  });
+  var outstanding = enriched.filter(function(i){ return i._status==="sent"||i._status==="overdue"; }).reduce(function(s,i){ return s+(i.amount_gross||0); }, 0);
   var stColor = { sent:C.blue, paid:C.green, overdue:C.red, draft:C.muted };
 
   return (
     <div>
       <SectionHeader title="Invoices" action={
         outstanding > 0
-          ? <div style={{ display:"flex", alignItems:"center", gap:6, background:C.redSoft, borderRadius:9, padding:"7px 13px" }}><span style={{ fontFamily:fMono, fontSize:11, color:C.red }}>{"€"+outstanding.toLocaleString()+" due"}</span></div>
+          ? <div style={{ display:"flex", alignItems:"center", gap:6, background:C.redSoft, borderRadius:9, padding:"7px 13px" }}>
+              <span style={{ fontFamily:fMono, fontSize:11, color:C.red }}>{"€"+outstanding.toLocaleString()+" due"}</span>
+            </div>
           : null
       } />
-      {/* Filter — minimal pill */}
       <div style={{ display:"flex", gap:2, marginBottom:24 }}>
-        {[["all","All"],["outstanding","Pending"],["paid","Paid"]].map(function(pair) {
+        {[["all","All"],["draft","Draft"],["outstanding","Pending"],["paid","Paid"]].map(function(pair) {
           var active = filter===pair[0];
-          return <button key={pair[0]} onClick={function(){ setFilter(pair[0]); }} style={{ background:active ? C.ink : "transparent", color:active ? "#fff" : C.muted, border:"none", padding:"7px 16px", borderRadius:99, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:active?500:400, transition:"all 0.12s" }}>{pair[1]}</button>;
+          return (
+            <button key={pair[0]} onClick={function(){ setFilter(pair[0]); }} style={{ background:active ? C.ink : "transparent", color:active ? "#fff" : C.muted, border:"none", padding:"7px 14px", borderRadius:99, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:active?500:400, transition:"all 0.12s" }}>
+              {pair[1]}
+            </button>
+          );
         })}
       </div>
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+        {filtered.length === 0 && (
+          <div style={{ background:C.surface, borderRadius:16, padding:"48px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint, fontWeight:300 }}>
+            {filter==="all" ? "No invoices yet. Create one in the Generator." : "No "+filter+" invoices."}
+          </div>
+        )}
         {filtered.map(function(inv) {
-          var isOverdue = inv.status==="overdue";
-          var clientName = clientMap[inv.client_id]||"Unknown";
-          var toast = acted[inv.id];
+          var st = inv._status;
+          var isOverdue = st==="overdue";
+          var isDraft = st==="draft";
+          var isSent = st==="sent";
+          var isPaid = st==="paid";
+          var clientName = clientMap[inv.client_id] || inv.client_name || "—";
+          var busy = updating[inv.id];
           return (
-            <div key={inv.id} style={{ background:C.surface, borderRadius:16, boxShadow:isOverdue ? "0 0 0 1.5px "+C.red+"30, 0 2px 8px rgba(10,22,40,0.04)" : "0 1px 4px rgba(10,22,40,0.04)" }}>
+            <div key={inv.id} style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:isOverdue ? "0 0 0 1.5px "+C.red+"30, 0 2px 8px rgba(10,22,40,0.04)" : "0 1px 4px rgba(10,22,40,0.04)" }}>
               <div style={{ display:"flex", alignItems:"center", gap:14, padding:"18px 20px" }}>
                 <div style={{ flex:1, minWidth:0 }}>
-                  {/* Client name dominant */}
                   <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink, marginBottom:3 }}>{clientName}</div>
-                  {/* Number quiet */}
-                  <div style={{ fontFamily:fMono, fontSize:11, color:C.faint }}>{inv.inv_number} · {isOverdue ? "due "+inv.due_date : inv.due_date}</div>
+                  <div style={{ fontFamily:fMono, fontSize:11, color:C.faint }}>
+                    {inv.inv_number || "—"}{inv.due_date ? " · due "+inv.due_date : ""}
+                  </div>
                 </div>
                 <div style={{ textAlign:"right", flexShrink:0 }}>
-                  <div style={{ fontFamily:fMono, fontSize:16, fontWeight:600, color:isOverdue?C.red:C.ink, marginBottom:4 }}>{"€"+inv.amount_gross.toLocaleString()}</div>
-                  <Dot color={stColor[inv.status]||C.muted}>{inv.status}</Dot>
+                  <div style={{ fontFamily:fMono, fontSize:16, fontWeight:600, color:isOverdue?C.red:isPaid?C.green:C.ink, marginBottom:4 }}>
+                    {"€"+((inv.amount_gross||0)).toLocaleString()}
+                  </div>
+                  <Dot color={stColor[st]||C.muted}>{st}</Dot>
                 </div>
               </div>
-              {isOverdue && !toast && (
-                <div style={{ padding:"0 20px 16px" }}>
-                  <Btn variant="danger" onClick={function(){ act(inv.id,"reminder"); }}>Send reminder</Btn>
+              {/* Status action row */}
+              {!isPaid && (
+                <div style={{ padding:"0 20px 16px", display:"flex", gap:8, flexWrap:"wrap" }}>
+                  {isDraft && (
+                    <Btn variant="ghost" sm={true} onClick={function(){ updateStatus(inv, "sent"); }}>
+                      {busy ? "…" : "Mark as sent"}
+                    </Btn>
+                  )}
+                  {(isSent || isOverdue) && (
+                    <Btn variant="ghost" sm={true} onClick={function(){ updateStatus(inv, "paid"); }}>
+                      {busy ? "…" : "Mark as paid"}
+                    </Btn>
+                  )}
+                  {isSent && (
+                    <Btn variant="secondary" sm={true} onClick={function(){ updateStatus(inv, "overdue"); }}>
+                      {busy ? "…" : "Mark overdue"}
+                    </Btn>
+                  )}
+                  {isOverdue && (
+                    <Btn variant="danger" sm={true} onClick={function(){
+                      var clientEmail = clients.find(function(c){ return c.id===inv.client_id; });
+                      alert("Reminder: payment overdue for " + inv.inv_number + ". Email send coming soon.");
+                    }}>
+                      Send reminder
+                    </Btn>
+                  )}
                 </div>
               )}
-              {inv.status==="sent" && !toast && (
-                <div style={{ padding:"0 20px 16px" }}>
-                  <Btn variant="ghost" onClick={function(){ act(inv.id,"followup"); }}>Follow up</Btn>
-                </div>
-              )}
-              {toast && (
-                <div style={{ padding:"10px 20px 14px" }}>
-                  <div style={{ fontFamily:fUI, fontSize:13, color:C.accent }}>✓ {toast==="reminder" ? "Reminder sent" : "Follow-up sent"}</div>
+              {isPaid && (
+                <div style={{ padding:"0 20px 14px" }}>
+                  <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>✓ Settled</span>
                 </div>
               )}
             </div>
@@ -1107,6 +1161,58 @@ export function DBrandKits() {
   );
 }
 
+// ── Settings helper styles (module-level so they don't cause re-renders) ──────
+var S_inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:9, padding:"10px 13px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
+var S_lbl = { display:"block", marginBottom:5, fontFamily:fUI, fontSize:12, color:C.muted, fontWeight:400 };
+
+function SToggle(props) {
+  return (
+    <div onClick={function(){ props.onChange(!props.value); }} style={{ width:40, height:22, borderRadius:99, background:props.value ? C.accent : C.border, cursor:"pointer", position:"relative", transition:"background 0.2s", flexShrink:0 }}>
+      <div style={{ position:"absolute", top:3, left:props.value ? 21 : 3, width:16, height:16, borderRadius:"50%", background:"#fff", transition:"left 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.15)" }} />
+    </div>
+  );
+}
+
+function SSaveBtn(props) {
+  var done = props.saved === props.section;
+  var isSaving = props.saving && !done;
+  return (
+    <button onClick={function(){ props.onSave(props.section); }} disabled={props.saving} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:props.saving?"not-allowed":"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:done?"none":"0 2px 8px rgba(20,153,144,0.18)", opacity:isSaving?0.7:1 }}>
+      {done ? "✓ Saved" : isSaving ? "Saving…" : "Save changes"}
+    </button>
+  );
+}
+
+function SCard(props) {
+  return (
+    <div style={{ background:C.surface, borderRadius:16, padding:"24px 26px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)", marginBottom:16 }}>
+      {props.title && (
+        <div style={{ marginBottom:20, paddingBottom:14, borderBottom:"1px solid "+C.borderLt }}>
+          <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink }}>{props.title}</div>
+          {props.sub && <div style={{ fontFamily:fUI, fontSize:13, color:C.muted, marginTop:3, fontWeight:300 }}>{props.sub}</div>}
+        </div>
+      )}
+      {props.children}
+    </div>
+  );
+}
+
+function SRow2(props) {
+  return <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>{props.children}</div>;
+}
+
+function SField(props) {
+  return (
+    <div style={{ marginBottom:14 }}>
+      <label style={S_lbl}>{props.label}{props.required && <span style={{ color:C.red }}> *</span>}</label>
+      {props.type === "textarea"
+        ? <textarea value={props.value} onChange={function(e){ props.onChange(e.target.value); }} rows={3} placeholder={props.placeholder||""} style={{ ...S_inp, resize:"vertical", lineHeight:1.5 }} />
+        : <input type={props.type||"text"} value={props.value} onChange={function(e){ props.onChange(e.target.value); }} placeholder={props.placeholder||""} style={S_inp} />
+      }
+    </div>
+  );
+}
+
 // ── Settings ──────────────────────────────────────────────────────────────────
 function DSettings(props) {
   var user = props.user;
@@ -1199,58 +1305,6 @@ function DSettings(props) {
     { id:"security",      label:"Security"       },
   ];
 
-  var inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:9, padding:"10px 13px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
-  var lbl = { display:"block", marginBottom:5, fontFamily:fUI, fontSize:12, color:C.muted, fontWeight:400 };
-
-  function Toggle(tProps) {
-    return (
-      <div onClick={function(){ tProps.onChange(!tProps.value); }} style={{ width:40, height:22, borderRadius:99, background:tProps.value ? C.accent : C.border, cursor:"pointer", position:"relative", transition:"background 0.2s", flexShrink:0 }}>
-        <div style={{ position:"absolute", top:3, left:tProps.value ? 21 : 3, width:16, height:16, borderRadius:"50%", background:"#fff", transition:"left 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.15)" }} />
-      </div>
-    );
-  }
-
-  function SaveBtn(tProps) {
-    var done = saved === tProps.section;
-    var isSaving = saving && saved !== tProps.section;
-    return (
-      <button onClick={function(){ save(tProps.section); }} disabled={saving} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:saving?"not-allowed":"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:done?"none":"0 2px 8px rgba(20,153,144,0.18)", opacity:saving&&!done?0.7:1 }}>
-        {done ? "✓ Saved" : isSaving ? "Saving…" : "Save changes"}
-      </button>
-    );
-  }
-
-  function Card(cProps) {
-    return (
-      <div style={{ background:C.surface, borderRadius:16, padding:"24px 26px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)", marginBottom:16 }}>
-        {cProps.title && (
-          <div style={{ marginBottom:20, paddingBottom:14, borderBottom:"1px solid "+C.borderLt }}>
-            <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink }}>{cProps.title}</div>
-            {cProps.sub && <div style={{ fontFamily:fUI, fontSize:13, color:C.muted, marginTop:3, fontWeight:300 }}>{cProps.sub}</div>}
-          </div>
-        )}
-        {cProps.children}
-      </div>
-    );
-  }
-
-  function Row2(rProps) {
-    return <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>{rProps.children}</div>;
-  }
-
-  function Field(fProps) {
-    return (
-      <div style={{ marginBottom:14 }}>
-        <label style={lbl}>{fProps.label}{fProps.required && <span style={{ color:C.red }}> *</span>}</label>
-        {fProps.type === "textarea"
-          ? <textarea value={fProps.value} onChange={function(e){ fProps.onChange(e.target.value); }} rows={3} placeholder={fProps.placeholder||""} style={{ ...inp, resize:"vertical", lineHeight:1.5 }} />
-          : <input type={fProps.type||"text"} value={fProps.value} onChange={function(e){ fProps.onChange(e.target.value); }} placeholder={fProps.placeholder||""} style={inp} />
-        }
-      </div>
-    );
-  }
-
-  return (
     <div style={{ maxWidth:720 }}>
       <div style={{ marginBottom:32 }}>
         <h2 style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:5 }}>Settings</h2>
@@ -1272,7 +1326,7 @@ function DSettings(props) {
       {/* ── Profile ── */}
       {tab === "profile" && (
         <div>
-          <Card title="Personal information" sub="This is how your name appears on invoices and proposals.">
+          <SCard title="Personal information" sub="This is how your name appears on invoices and proposals.">
             {/* Avatar */}
             <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
               <div style={{ width:64, height:64, borderRadius:"50%", background:C.accentMid, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:22, color:C.accent, fontWeight:700, flexShrink:0 }}>
@@ -1283,54 +1337,54 @@ function DSettings(props) {
                 <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{email}</div>
               </div>
             </div>
-            <Row2>
-              <Field label="First name" required={true} value={firstName} onChange={setFirstName} placeholder="Daniel" />
-              <Field label="Last name" value={lastName} onChange={setLastName} placeholder="Speder" />
-            </Row2>
-            <Field label="Email address" required={true} type="email" value={email} onChange={setEmail} placeholder="daniel@studio.de" />
-            <Row2>
-              <Field label="Phone" type="tel" value={phone} onChange={setPhone} placeholder="+49 171 000 0000" />
-              <Field label="Website" type="url" value={website} onChange={setWebsite} placeholder="https://studio.de" />
-            </Row2>
-            <Field label="Short bio" type="textarea" value={bio} onChange={setBio} placeholder="Freelance brand designer based in Berlin. Working with clients across Europe." />
+            <SRow2>
+              <SField label="First name" required={true} value={firstName} onChange={setFirstName} placeholder="Daniel" />
+              <SField label="Last name" value={lastName} onChange={setLastName} placeholder="Speder" />
+            </SRow2>
+            <SField label="Email address" required={true} type="email" value={email} onChange={setEmail} placeholder="daniel@studio.de" />
+            <SRow2>
+              <SField label="Phone" type="tel" value={phone} onChange={setPhone} placeholder="+49 171 000 0000" />
+              <SField label="Website" type="url" value={website} onChange={setWebsite} placeholder="https://studio.de" />
+            </SRow2>
+            <SField label="Short bio" type="textarea" value={bio} onChange={setBio} placeholder="Freelance brand designer based in Berlin. Working with clients across Europe." />
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
-              <SaveBtn section="profile" />
+              <SSaveBtn onSave={save} saved={saved} saving={saving} section="profile" />
             </div>
-          </Card>
+          </SCard>
         </div>
       )}
 
       {/* ── Business ── */}
       {tab === "business" && (
         <div>
-          <Card title="Business details" sub="Used on all invoices, proposals and EU compliance documents.">
-            <Field label="Business / Studio name" required={true} value={bizName} onChange={setBizName} placeholder="Studio Speder GbR" />
-            <Row2>
-              <Field label="VAT number" value={vatNum} onChange={setVatNum} placeholder="DE123456789" />
-              <Field label="Country" value={country} onChange={setCountry} placeholder="DE" />
-            </Row2>
-            <Row2>
-              <Field label="Street address" value={street} onChange={setStreet} placeholder="Leopoldstr. 10" />
-              <Field label="City & postal code" value={city} onChange={setCity} placeholder="80802 München" />
-            </Row2>
+          <SCard title="Business details" sub="Used on all invoices, proposals and EU compliance documents.">
+            <SField label="Business / Studio name" required={true} value={bizName} onChange={setBizName} placeholder="Studio Speder GbR" />
+            <SRow2>
+              <SField label="VAT number" value={vatNum} onChange={setVatNum} placeholder="DE123456789" />
+              <SField label="Country" value={country} onChange={setCountry} placeholder="DE" />
+            </SRow2>
+            <SRow2>
+              <SField label="Street address" value={street} onChange={setStreet} placeholder="Leopoldstr. 10" />
+              <SField label="City & postal code" value={city} onChange={setCity} placeholder="80802 München" />
+            </SRow2>
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
-              <SaveBtn section="business-info" />
+              <SSaveBtn onSave={save} saved={saved} saving={saving} section="business-info" />
             </div>
-          </Card>
-          <Card title="Payment details" sub="Shown in the SEPA payment block on every invoice.">
-            <Field label="IBAN" value={iban} onChange={setIban} placeholder="DE89 3704 0044 0532 0130 00" />
-            <Field label="BIC / SWIFT" value={bic} onChange={setBic} placeholder="COBADEFFXXX" />
+          </SCard>
+          <SCard title="Payment details" sub="Shown in the SEPA payment block on every invoice.">
+            <SField label="IBAN" value={iban} onChange={setIban} placeholder="DE89 3704 0044 0532 0130 00" />
+            <SField label="BIC / SWIFT" value={bic} onChange={setBic} placeholder="COBADEFFXXX" />
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
-              <SaveBtn section="business-payment" />
+              <SSaveBtn onSave={save} saved={saved} saving={saving} section="business-payment" />
             </div>
-          </Card>
+          </SCard>
         </div>
       )}
 
       {/* ── Notifications ── */}
       {tab === "notifications" && (
         <div>
-          <Card title="Email notifications" sub="Choose what you want to be notified about.">
+          <SCard title="Email notifications" sub="Choose what you want to be notified about.">
             {[
               { label:"Proposal viewed",       sub:"When a client opens your proposal",              val:notifProposal, set:setNotifProposal },
               { label:"Invoice activity",      sub:"When an invoice is paid, overdue or opened",     val:notifInvoice,  set:setNotifInvoice  },
@@ -1343,21 +1397,21 @@ function DSettings(props) {
                     <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>{item.label}</div>
                     <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>{item.sub}</div>
                   </div>
-                  <Toggle value={item.val} onChange={item.set} />
+                  <SToggle value={item.val} onChange={item.set} />
                 </div>
               );
             })}
             <div style={{ display:"flex", justifyContent:"flex-end", marginTop:20 }}>
-              <SaveBtn section="notifications" />
+              <SSaveBtn onSave={save} saved={saved} saving={saving} section="notifications" />
             </div>
-          </Card>
+          </SCard>
         </div>
       )}
 
       {/* ── Billing ── */}
       {tab === "billing" && (
         <div>
-          <Card title="Current plan">
+          <SCard title="Current plan">
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
               <div>
                 <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
@@ -1381,8 +1435,8 @@ function DSettings(props) {
               <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe →</button>
               <button style={{ background:"transparent", color:C.muted, border:"1px solid "+C.border, padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
             </div>
-          </Card>
-          <Card title="Billing history" sub="Your last 3 payments.">
+          </SCard>
+          <SCard title="Billing history" sub="Your last 3 payments.">
             {[
               { date:"7 May 2026",  amount:"€59.00", status:"Paid" },
               { date:"7 Apr 2026",  amount:"€59.00", status:"Paid" },
@@ -1399,25 +1453,25 @@ function DSettings(props) {
                 </div>
               );
             })}
-          </Card>
+          </SCard>
         </div>
       )}
 
       {/* ── Security ── */}
       {tab === "security" && (
         <div>
-          <Card title="Change password" sub="Use a strong password of at least 8 characters.">
-            <Field label="Current password" type="password" value={pwCurrent} onChange={setPwCurrent} placeholder="••••••••" />
-            <Field label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="••••••••" />
-            <Field label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="••••••••" />
+          <SCard title="Change password" sub="Use a strong password of at least 8 characters.">
+            <SField label="Current password" type="password" value={pwCurrent} onChange={setPwCurrent} placeholder="••••••••" />
+            <SField label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="••••••••" />
+            <SField label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="••••••••" />
             {pwNew && pwConfirm && pwNew !== pwConfirm && (
               <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginBottom:12 }}>Passwords don't match.</div>
             )}
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
-              <SaveBtn section="password" />
+              <SSaveBtn onSave={save} saved={saved} saving={saving} section="password" />
             </div>
-          </Card>
-          <Card title="Sessions" sub="You are currently logged in on this device.">
+          </SCard>
+          <SCard title="Sessions" sub="You are currently logged in on this device.">
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 0" }}>
               <div>
                 <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>This device</div>
@@ -1425,8 +1479,8 @@ function DSettings(props) {
               </div>
               <span style={{ fontFamily:fMono, fontSize:10, color:C.green, background:C.greenSoft, borderRadius:4, padding:"2px 7px" }}>Active</span>
             </div>
-          </Card>
-          <Card title="Danger zone">
+          </SCard>
+          <SCard title="Danger zone">
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
               <div>
                 <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>Delete account</div>
@@ -1434,7 +1488,7 @@ function DSettings(props) {
               </div>
               <button style={{ background:"transparent", color:C.red, border:"1px solid "+C.red+"44", padding:"8px 16px", borderRadius:8, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500, flexShrink:0, marginLeft:20 }}>Delete account</button>
             </div>
-          </Card>
+          </SCard>
         </div>
       )}
     </div>
