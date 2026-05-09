@@ -1330,7 +1330,7 @@ export function ClientPortal(props) {
             <span style={{ fontFamily:fMono, fontSize:12, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
           </div>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:14, color:L.muted }}>
-            <- Back
+            Back
           </button>
         </div>
       </div>
