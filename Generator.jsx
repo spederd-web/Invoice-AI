@@ -852,6 +852,8 @@ export function ProposalForm(props) {
 
   var inpStyle = { width:"100%", boxSizing:"border-box", border:"1px solid "+L.border, borderRadius:8, padding:"9px 12px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" };
   var lblStyle = { display:"block", marginBottom:5, fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:400 };
+
+  function generate() {
     if (!projDesc.trim()) return;
     setLoading(true); setResult(""); setHistory([]);
 
