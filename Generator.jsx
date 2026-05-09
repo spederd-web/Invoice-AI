@@ -261,10 +261,10 @@ export function InvoicePreviewPanel(props) {
   return (
     <div className="inv-preview-wrap" style={{ padding:"0 20px 48px", maxWidth:960, margin:"0 auto" }}>
 
-      {/* ── Action bar ── */}
+      {/* -- Action bar -- */}
       <div style={{ maxWidth:580, marginBottom:16 }}>
 
-        {/* Primary — Share */}
+        {/* Primary - Share */}
         <button onClick={shareInvoice} disabled={sharePhase === "saving"} style={{
           width:"100%",
           background: sharePhase === "copied" ? L.green : sharePhase === "saving" ? L.border : L.accent,
@@ -277,7 +277,7 @@ export function InvoicePreviewPanel(props) {
           boxShadow: sharePhase === "saving" || sharePhase === "copied" ? "none" : "0 2px 10px rgba(20,153,144,0.2)",
         }}>
           <Icon name={sharePhase === "copied" ? "check" : "send"} size={13} color={sharePhase === "saving" ? L.muted : "#fff"} />
-          {sharePhase === "saving" ? "Saving…" : sharePhase === "copied" ? "✓ Link copied" : "Share with client"}
+          {sharePhase === "saving" ? "Saving..." : sharePhase === "copied" ? "OK Link copied" : "Share with client"}
         </button>
 
         {/* Share URL strip */}
@@ -285,17 +285,17 @@ export function InvoicePreviewPanel(props) {
           <div style={{ marginBottom:8, display:"flex", alignItems:"center", gap:8, background:L.greenGlow, border:"1px solid "+L.green+"33", borderRadius:8, padding:"8px 12px" }}>
             <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{shareUrl}</span>
             <button onClick={copyShareUrl} style={{ background:"transparent", border:"1px solid "+L.green+"44", borderRadius:5, padding:"3px 8px", cursor:"pointer", fontFamily:fMono, fontSize:11, color:L.green, flexShrink:0 }}>
-              {shareCopied ? "✓" : "Copy"}
+              {shareCopied ? "OK" : "Copy"}
             </button>
           </div>
         )}
         {sharePhase === "error" && (
           <div style={{ marginBottom:8, background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"8px 12px", fontFamily:fSans, fontSize:13, color:"#C0392B" }}>
-            Share failed — check Supabase env vars in Vercel.
+            Share failed - check Supabase env vars in Vercel.
           </div>
         )}
 
-        {/* Secondary row — scrollable on mobile */}
+        {/* Secondary row - scrollable on mobile */}
         <div style={{ display:"flex", alignItems:"center", gap:8, overflowX:"auto", WebkitOverflowScrolling:"touch", paddingBottom:2 }}>
           <button onClick={function(){ window.print(); }} style={{
             background:"transparent", color:L.ink,
@@ -316,7 +316,7 @@ export function InvoicePreviewPanel(props) {
             whiteSpace:"nowrap", opacity:xrLoading ? 0.5 : 1,
           }}>
             <Icon name="document" size={12} color={L.muted} />
-            {xrLoading ? "Generating…" : "XRechnung XML"}
+            {xrLoading ? "Generating..." : "XRechnung XML"}
           </button>
           {s.country && s.country.code === "HU" && (
             <button onClick={exportNAV} disabled={navLoading} style={{
@@ -328,10 +328,10 @@ export function InvoicePreviewPanel(props) {
               whiteSpace:"nowrap", opacity:navLoading ? 0.5 : 1,
             }}>
               <Icon name="document" size={12} color={L.muted} />
-              {navLoading ? "Generating…" : "NAV XML"}
+              {navLoading ? "Generating..." : "NAV XML"}
             </button>
           )}
-          {/* Tertiary — save, inline with secondary */}
+          {/* Tertiary - save, inline with secondary */}
           <button onClick={saveToDashboard} disabled={savePhase === "saving"} style={{
             background:"none", border:"none", padding:"7px 4px",
             cursor:savePhase === "saving" ? "not-allowed" : "pointer",
@@ -341,7 +341,7 @@ export function InvoicePreviewPanel(props) {
             whiteSpace:"nowrap",
           }}>
             <Icon name={savePhase === "saved" ? "check" : "document"} size={11} color={savePhase === "saved" ? L.green : savePhase === "error" ? L.red : L.faint} />
-            {savePhase === "saving" ? "Saving…" : savePhase === "saved" ? "Saved" : savePhase === "error" ? "Sign in to save" : "Save to dashboard"}
+            {savePhase === "saving" ? "Saving..." : savePhase === "saved" ? "Saved" : savePhase === "error" ? "Sign in to save" : "Save to dashboard"}
           </button>
         </div>
 
@@ -353,14 +353,14 @@ export function InvoicePreviewPanel(props) {
         {s.creditNote && (
           <div style={{ background:L.goldGlow, border:"1.5px solid "+L.gold+"55", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
             <Icon name="document" size={14} color={L.gold} />
-            <span style={{ fontFamily:fMono, fontSize:11, color:L.gold, letterSpacing:"0.08em", textTransform:"uppercase" }}>Credit Note · {cnNum} · Ref: {invNum}</span>
+            <span style={{ fontFamily:fMono, fontSize:11, color:L.gold, letterSpacing:"0.08em", textTransform:"uppercase" }}>Credit Note . {cnNum} . Ref: {invNum}</span>
           </div>
         )}
         {s.eInvoice && (
           <div style={{ background:L.blueGlow, border:"1.5px solid "+L.blue+"44", borderRadius:7, padding:"6px 12px", marginBottom:14, display:"flex", alignItems:"center", gap:8 }}>
             <Icon name="send" size={14} color={L.blue} />
             <span style={{ fontFamily:fMono, fontSize:11, color:L.blue, letterSpacing:"0.07em" }}>
-              {s.country && s.country.code === "DE" ? "XRechnung 3.0" : s.country && s.country.code === "FR" ? "Factur-X 1.0" : s.country && s.country.code === "IT" ? "XML/SDI" : "EN16931"} · EU e-invoice
+              {s.country && s.country.code === "DE" ? "XRechnung 3.0" : s.country && s.country.code === "FR" ? "Factur-X 1.0" : s.country && s.country.code === "IT" ? "XML/SDI" : "EN16931"} . EU e-invoice
             </span>
           </div>
         )}
@@ -368,7 +368,7 @@ export function InvoicePreviewPanel(props) {
           <div>
             <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:900, color:s.creditNote ? L.gold : L.ink, letterSpacing:"-0.02em" }}>{s.creditNote ? "CREDIT NOTE" : "INVOICE"}</div>
             <div onClick={copyInvNum} title="Click to copy" style={{ fontFamily:fMono, fontSize:12, color:numCopied ? L.green : L.muted, marginTop:2, cursor:"pointer", display:"inline-flex", alignItems:"center", gap:5, userSelect:"none" }}>
-              {numCopied ? "✓ Copied" : "No. " + (s.creditNote ? cnNum : invNum)}
+              {numCopied ? "OK Copied" : "No. " + (s.creditNote ? cnNum : invNum)}
               {!numCopied && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><rect x="4" y="1" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><rect x="1" y="4" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="white"/></svg>}
             </div>
             {s.projRef && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted, marginTop:3, fontStyle:"italic" }}>Re: {s.projRef}</div>}
@@ -378,7 +378,7 @@ export function InvoicePreviewPanel(props) {
             {s.sStreet && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted }}>{s.sStreet}</div>}
             {s.sCity && <div style={{ fontFamily:fSans, fontSize:12, color:L.muted }}>{s.sCity}</div>}
             {s.vatExempt
-              ? <div style={{ fontFamily:fMono, fontSize:11, color:L.gold }}>VAT-exempt · §19 UStG</div>
+              ? <div style={{ fontFamily:fMono, fontSize:11, color:L.gold }}>VAT-exempt . SS19 UStG</div>
               : <div style={{ fontFamily:fMono, fontSize:12, color:L.muted }}>VAT No: {s.sVAT}</div>
             }
           </div>
@@ -396,7 +396,7 @@ export function InvoicePreviewPanel(props) {
         {s.rc && (
           <div style={{ background:"rgba(42,94,154,0.06)", border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
             <Icon name="reverse" size={11} color={L.blue} />
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge — VAT liability transfers to the recipient (Art. 44 EU VAT Dir. 2006/112/EC)</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge - VAT liability transfers to the recipient (Art. 44 EU VAT Dir. 2006/112/EC)</p>
           </div>
         )}
         {s.rc && (
@@ -409,13 +409,13 @@ export function InvoicePreviewPanel(props) {
         {s.country && s.country.eu === false && (
           <div style={{ background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
             <p style={{ fontFamily:fSans, fontSize:13, color:L.gold, margin:0 }}>
-              <strong>Export / Third country:</strong> Service not subject to VAT per §3a UStG. No VAT charged — exempt export. Include reference: "Leistungsort nicht im Inland."
+              <strong>Export / Third country:</strong> Service not subject to VAT per SS3a UStG. No VAT charged - exempt export. Include reference: "Leistungsort nicht im Inland."
             </p>
           </div>
         )}
         {s.vatExempt && (
           <div style={{ background:L.goldGlow, border:"1px solid "+L.gold+"33", borderRadius:6, padding:"7px 10px", marginBottom:14 }}>
-            <p style={{ fontFamily:fSans, fontSize:13, color:L.gold, margin:0 }}>Kein Umsatzsteuerausweis gemäß §19 UStG (Kleinunternehmerregelung)</p>
+            <p style={{ fontFamily:fSans, fontSize:13, color:L.gold, margin:0 }}>Kein Umsatzsteuerausweis gemaess SS19 UStG (Kleinunternehmerregelung)</p>
           </div>
         )}
         <div style={{ marginBottom:14 }}>
@@ -454,12 +454,12 @@ export function InvoicePreviewPanel(props) {
             </div>
             {discAmt > 0 && (
               <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.green, padding:"2px 0" }}>
-                <span>Discount {s.discount}%</span><span style={{ fontFamily:fMono }}>{"−"+sym+discAmt.toFixed(2)}</span>
+                <span>Discount {s.discount}%</span><span style={{ fontFamily:fMono }}>{"-"+sym+discAmt.toFixed(2)}</span>
               </div>
             )}
             <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSans, fontSize:13, color:L.muted, padding:"2px 0" }}>
               <span>{s.vatExempt ? "VAT (exempt)" : "VAT "+vatRate+"%"+(s.rc?" (RC)":"")}</span>
-              <span style={{ fontFamily:fMono }}>{s.vatExempt ? "—" : sym+vatAmt.toFixed(2)}</span>
+              <span style={{ fontFamily:fMono }}>{s.vatExempt ? "-" : sym+vatAmt.toFixed(2)}</span>
             </div>
             <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, borderTop:"1.5px solid "+L.ink, paddingTop:6, marginTop:4 }}>
               <span>Total Due</span><span style={{ color:L.accent }}>{sym+total.toFixed(2)}</span>
@@ -474,7 +474,7 @@ export function InvoicePreviewPanel(props) {
             <div><div style={{ fontFamily:fMono, fontSize:10, color:L.muted, textTransform:"uppercase" }}>Payment Ref</div><div style={{ fontFamily:fMono, fontSize:14, color:L.ink, fontWeight:500 }}>{s.creditNote ? cnNum : invNum}</div></div>
           </div>
         </div>
-        {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:11, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) — EU Regulation 2016/679.</p>}
+        {s.gdpr && <p style={{ marginTop:10, fontFamily:fSans, fontSize:11, color:L.muted, borderTop:"1px solid "+L.border, paddingTop:8 }}>Your personal data is processed for invoicing purposes in accordance with GDPR Art. 6(1)(b) - EU Regulation 2016/679.</p>}
         {s.latePayment && (
           <div style={{ background:"rgba(23,169,158,0.06)", border:"1px solid "+L.accent+"33", borderRadius:6, padding:"8px 12px", marginTop:10 }}>
             <p style={{ fontFamily:fSans, fontSize:11, color:L.accent, margin:0, lineHeight:1.55 }}>
@@ -511,7 +511,7 @@ export function CheckRow(props) {
         <button onClick={onInfo} style={{ width:16, height:16, borderRadius:"50%", background:infoOpen ? L.accent : L.sand, border:"1px solid "+(infoOpen ? L.accent : L.border), color:infoOpen ? "#fff" : L.muted, fontFamily:fMono, fontSize:11, fontWeight:700, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>?</button>
       </div>
       {blocked && <p style={{ fontFamily:fSans, fontSize:12, color:L.faint, margin:"2px 0 4px 22px" }}>{blockedReason}</p>}
-      {warn && checked && <p style={{ fontFamily:fSans, fontSize:12, color:L.gold, margin:"2px 0 4px 22px" }}>⚠ {warn}</p>}
+      {warn && checked && <p style={{ fontFamily:fSans, fontSize:12, color:L.gold, margin:"2px 0 4px 22px" }}>(!) {warn}</p>}
       {infoOpen && (
         <div style={{ margin:"6px 0 6px", padding:"12px 14px", background:L.white, borderRadius:8, border:"1px solid "+L.borderLt }}>
           {[["What it is",infoWhat],["When to tick it",infoWhen],["What it adds",infoEffect]].map(function(row) {
@@ -595,7 +595,7 @@ export function InvoiceForm(props) {
               <FieldError result={validateBIC(s.sBIC)} value={s.sBIC} />
             </div>
             <div><label style={lblStyle}>Street</label><input value={s.sStreet} onChange={function(e){ u("sStreet",e.target.value); }} placeholder="e.g. Leopoldstr. 10" style={inpStyle} /></div>
-            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="e.g. 80802 München" style={inpStyle} /></div>
+            <div><label style={lblStyle}>City</label><input value={s.sCity} onChange={function(e){ u("sCity",e.target.value); }} placeholder="e.g. 80802 Muenchen" style={inpStyle} /></div>
           </div>
         ))}
         {cardWrap("Client", <Tag c={L.blue}>Bill To</Tag>, (
@@ -623,12 +623,12 @@ export function InvoiceForm(props) {
             </div>
             <FieldError result={validateEUVAT(s.cVAT)} value={s.cVAT} />
             {viesStatus === "invalid" && (
-              <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:"3px 0 0" }}>⚠ VAT number not found in EU VIES — reverse charge may not be valid. Verify before sending.</p>
+              <p style={{ fontFamily:fSans, fontSize:12, color:L.accent, margin:"3px 0 0" }}>(!) VAT number not found in EU VIES - reverse charge may not be valid. Verify before sending.</p>
             )}
             {s.rc && (
               <div style={{ background:L.blueGlow, border:"1px solid "+L.blue+"33", borderRadius:6, padding:"7px 10px", marginTop:6, display:"flex", alignItems:"center", gap:6 }}>
                 <Icon name="reverse" size={12} color={L.blue} />
-                <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge auto-detected — VAT 0%</p>
+                <p style={{ fontFamily:fSans, fontSize:13, color:L.blue, margin:0 }}>Reverse charge auto-detected - VAT 0%</p>
               </div>
             )}
           </div>
@@ -652,7 +652,7 @@ export function InvoiceForm(props) {
                   <input type="number" value={line.qty} onChange={function(e){ updLine(line.id,"qty",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
                   <input type="number" value={line.rate} onChange={function(e){ updLine(line.id,"rate",e.target.value); }} style={{ border:"1.5px solid "+L.border, borderRadius:5, padding:"5px 5px", fontFamily:fMono, fontSize:13, color:L.ink, background:L.white, outline:"none", textAlign:"right", width:"100%" }} />
                   <div style={{ fontFamily:fMono, fontSize:13, color:L.ink, textAlign:"right", fontWeight:500 }}>{sym+lt.toFixed(2)}</div>
-                  <button onClick={function(){ remLine(line.id); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontSize:14, padding:0 }}>×</button>
+                  <button onClick={function(){ remLine(line.id); }} style={{ background:"none", border:"none", color:L.muted, cursor:"pointer", fontSize:14, padding:0 }}>x</button>
                 </div>
               );
             })}
@@ -664,7 +664,7 @@ export function InvoiceForm(props) {
               {discAmt > 0 && (
                 <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", width:220 }}>
                   <span style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>Discount {s.discount}%</span>
-                  <span style={{ fontFamily:fMono, fontSize:13, color:L.green }}>{"−"+sym+discAmt.toFixed(2)}</span>
+                  <span style={{ fontFamily:fMono, fontSize:13, color:L.green }}>{"-"+sym+discAmt.toFixed(2)}</span>
                 </div>
               )}
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", width:220, gap:6 }}>
@@ -675,7 +675,7 @@ export function InvoiceForm(props) {
               </div>
               <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSans, fontSize:13, color:L.muted }}>
                 <span>{s.vatExempt ? "VAT Exempt" : s.rc ? "VAT 0% (RC)" : "VAT "+vatRate+"%"}</span>
-                <span style={{ fontFamily:fMono }}>{s.vatExempt ? "—" : sym+vatAmt.toFixed(2)}</span>
+                <span style={{ fontFamily:fMono }}>{s.vatExempt ? "-" : sym+vatAmt.toFixed(2)}</span>
               </div>
               <div style={{ display:"flex", justifyContent:"space-between", width:220, fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, borderTop:"1.5px solid "+L.ink, paddingTop:5, marginTop:2 }}>
                 <span>Total Due</span><span style={{ color:L.accent }}>{sym+total.toFixed(2)}</span>
@@ -696,7 +696,7 @@ export function InvoiceForm(props) {
                 {EU.filter(function(c){ return c.eu; }).map(function(c) { return <option key={c.code} value={c.code}>{c.name+" ("+c.vat+"%)"}</option>; })}
               </optgroup>
               <optgroup label="Non-EU">
-                {EU.filter(function(c){ return !c.eu; }).map(function(c) { return <option key={c.code+c.name} value={c.code}>{c.name+" (0% — export)"}</option>; })}
+                {EU.filter(function(c){ return !c.eu; }).map(function(c) { return <option key={c.code+c.name} value={c.code}>{c.name+" (0% - export)"}</option>; })}
               </optgroup>
               </select>
             </div>
@@ -716,12 +716,12 @@ export function InvoiceForm(props) {
             <span style={{ fontFamily:fSans, fontSize:13, fontWeight:600, color:L.ink }}>EU Compliance</span>
           </div>
           <div style={{ padding:"0 20px 16px", display:"flex", flexDirection:"column", gap:4 }}>
-            <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={(sameCountry && !s.cVAT) || s.vatExempt} blockedReason={s.vatExempt ? "Kleinunternehmer cannot apply reverse charge — no VAT number issued under §19 UStG" : "Same country — RC only applies cross-border EU B2B"} warn={viesStatus === "invalid" ? "VIES could not verify this VAT number — confirm B2B status before applying reverse charge" : null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
-            <CheckRow checked={s.gdpr} onChange={function(v){ u("gdpr",v); }} label="GDPR Notice" badge="GDPR" badgeColor={L.green} blocked={false} blockedReason="" warn={null} infoOpen={activeInfo==="gdpr"} onInfo={function(){ setActiveInfo(activeInfo==="gdpr"?null:"gdpr"); }} infoWhat="A short legal notice that you process your client's personal data for invoicing purposes." infoWhen="Recommended for all EU B2B invoices — it shows you take data protection seriously." infoEffect="Adds one sentence to the bottom of your invoice referencing GDPR Art. 6(1)(b)." infoLaw="GDPR Art. 6(1)(b) — EU Regulation 2016/679" />
+            <CheckRow checked={s.rc} onChange={function(v){ u("rc",v); }} label="Reverse Charge" badge="Art.44" badgeColor={L.blue} blocked={(sameCountry && !s.cVAT) || s.vatExempt} blockedReason={s.vatExempt ? "Kleinunternehmer cannot apply reverse charge - no VAT number issued under SS19 UStG" : "Same country - RC only applies cross-border EU B2B"} warn={viesStatus === "invalid" ? "VIES could not verify this VAT number - confirm B2B status before applying reverse charge" : null} infoOpen={activeInfo==="rc"} onInfo={function(){ setActiveInfo(activeInfo==="rc"?null:"rc"); }} infoWhat="Reverse charge means your client pays the VAT to their tax authority instead of you collecting it." infoWhen="Tick when invoicing a VAT-registered business in a DIFFERENT EU country (B2B cross-border). Auto-detected when you enter client VAT number." infoEffect="Sets VAT to 0% and adds required legal text (Art. 44 EU VAT Directive)." infoLaw="Art. 44 EU VAT Directive 2006/112/EC" />
+            <CheckRow checked={s.gdpr} onChange={function(v){ u("gdpr",v); }} label="GDPR Notice" badge="GDPR" badgeColor={L.green} blocked={false} blockedReason="" warn={null} infoOpen={activeInfo==="gdpr"} onInfo={function(){ setActiveInfo(activeInfo==="gdpr"?null:"gdpr"); }} infoWhat="A short legal notice that you process your client's personal data for invoicing purposes." infoWhen="Recommended for all EU B2B invoices - it shows you take data protection seriously." infoEffect="Adds one sentence to the bottom of your invoice referencing GDPR Art. 6(1)(b)." infoLaw="GDPR Art. 6(1)(b) - EU Regulation 2016/679" />
             <CheckRow checked={s.latePayment} onChange={function(v){ u("latePayment",v); }} label="Late Payment Interest" badge="EU 2011/7" badgeColor={L.accent} blocked={s.creditNote} blockedReason="Cannot charge interest on a credit note" warn={null} infoOpen={activeInfo==="lp"} onInfo={function(){ setActiveInfo(activeInfo==="lp"?null:"lp"); }} infoWhat="EU law gives you the right to charge statutory interest if a B2B client pays late." infoWhen="Tick for B2B invoices where you want to signal late payment will incur interest." infoEffect="Adds a notice: 8% above ECB base rate applies on overdue amounts from due date." infoLaw="EU Directive 2011/7/EU on combating late payment" />
-            <CheckRow checked={s.creditNote} onChange={function(v){ u("creditNote",v); }} label="Credit Note" badge={"CN-"+new Date().getFullYear()+"-001"} badgeColor={L.gold} blocked={s.latePayment} blockedReason="Disable late payment interest first" warn={null} infoOpen={activeInfo==="cn"} onInfo={function(){ setActiveInfo(activeInfo==="cn"?null:"cn"); }} infoWhat="A credit note cancels or corrects a previous invoice, or issues a credit/refund." infoWhen="Use when correcting a sent invoice, issuing a refund, or applying a retroactive discount." infoEffect="Changes document type to CREDIT NOTE with a separate sequential number (CN-YYYY-XXX)." infoLaw="Art. 226 EU VAT Directive — separate number sequence required" />
-            <CheckRow checked={s.vatExempt} onChange={function(v){ u("vatExempt",v); }} label="VAT Exempt" badge="§19 UStG" badgeColor={L.gold} blocked={s.rc} blockedReason="Disable reverse charge first" warn={null} infoOpen={activeInfo==="ve"} onInfo={function(){ setActiveInfo(activeInfo==="ve"?null:"ve"); }} infoWhat="If your revenue is below a threshold you may not need to charge VAT at all." infoWhen="Only tick if registered under a small business exemption AND below the revenue threshold. Verify with your accountant." infoEffect="Removes VAT line entirely and adds the legally required exemption notice." infoLaw="§19 UStG (Germany) · Art. 293B CGI (France) · varies by country" />
-            <CheckRow checked={s.eInvoice} onChange={function(v){ u("eInvoice",v); }} label="E-Invoice XML" badge={s.country && s.country.code==="DE" ? "XRechnung" : s.country && s.country.code==="FR" ? "Factur-X" : s.country && s.country.code==="IT" ? "XML/SDI" : "EN16931"} badgeColor={L.blue} blocked={false} blockedReason="" warn={s.creditNote ? "Credit notes use a different XML schema (type 381 vs 380)" : null} infoOpen={activeInfo==="ei"} onInfo={function(){ setActiveInfo(activeInfo==="ei"?null:"ei"); }} infoWhat="Structured XML invoices readable by accounting software. Mandatory in Italy, upcoming in Germany and France." infoWhen="Use if your client is a public authority (required) or their accounting software supports XML import." infoEffect="Marks your invoice as e-invoice compliant. Full XML export coming Q4 2026." infoLaw="EU Directive 2014/55/EU · EN16931 · XRechnung 3.0" />
+            <CheckRow checked={s.creditNote} onChange={function(v){ u("creditNote",v); }} label="Credit Note" badge={"CN-"+new Date().getFullYear()+"-001"} badgeColor={L.gold} blocked={s.latePayment} blockedReason="Disable late payment interest first" warn={null} infoOpen={activeInfo==="cn"} onInfo={function(){ setActiveInfo(activeInfo==="cn"?null:"cn"); }} infoWhat="A credit note cancels or corrects a previous invoice, or issues a credit/refund." infoWhen="Use when correcting a sent invoice, issuing a refund, or applying a retroactive discount." infoEffect="Changes document type to CREDIT NOTE with a separate sequential number (CN-YYYY-XXX)." infoLaw="Art. 226 EU VAT Directive - separate number sequence required" />
+            <CheckRow checked={s.vatExempt} onChange={function(v){ u("vatExempt",v); }} label="VAT Exempt" badge="SS19 UStG" badgeColor={L.gold} blocked={s.rc} blockedReason="Disable reverse charge first" warn={null} infoOpen={activeInfo==="ve"} onInfo={function(){ setActiveInfo(activeInfo==="ve"?null:"ve"); }} infoWhat="If your revenue is below a threshold you may not need to charge VAT at all." infoWhen="Only tick if registered under a small business exemption AND below the revenue threshold. Verify with your accountant." infoEffect="Removes VAT line entirely and adds the legally required exemption notice." infoLaw="SS19 UStG (Germany) . Art. 293B CGI (France) . varies by country" />
+            <CheckRow checked={s.eInvoice} onChange={function(v){ u("eInvoice",v); }} label="E-Invoice XML" badge={s.country && s.country.code==="DE" ? "XRechnung" : s.country && s.country.code==="FR" ? "Factur-X" : s.country && s.country.code==="IT" ? "XML/SDI" : "EN16931"} badgeColor={L.blue} blocked={false} blockedReason="" warn={s.creditNote ? "Credit notes use a different XML schema (type 381 vs 380)" : null} infoOpen={activeInfo==="ei"} onInfo={function(){ setActiveInfo(activeInfo==="ei"?null:"ei"); }} infoWhat="Structured XML invoices readable by accounting software. Mandatory in Italy, upcoming in Germany and France." infoWhen="Use if your client is a public authority (required) or their accounting software supports XML import." infoEffect="Marks your invoice as e-invoice compliant. Full XML export coming Q4 2026." infoLaw="EU Directive 2014/55/EU . EN16931 . XRechnung 3.0" />
           </div>
         </div>
         <div style={{ marginBottom:8 }}>
@@ -736,7 +736,7 @@ export function InvoiceForm(props) {
             if (errs.length > 0) return (
               <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
                 <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:"#C0392B", marginBottom:4 }}>Please fix before previewing:</div>
-                {errs.map(function(e) { return <div key={e} style={{ fontFamily:fSans, fontSize:12, color:"#C0392B" }}>· {e}</div>; })}
+                {errs.map(function(e) { return <div key={e} style={{ fontFamily:fSans, fontSize:12, color:"#C0392B" }}>. {e}</div>; })}
               </div>
             );
             return null;
@@ -753,7 +753,7 @@ export function InvoiceForm(props) {
             var blocked = errs.length > 0;
             return (
               <button onClick={function(){ if(!blocked){ setView("preview"); window.scrollTo({ top:0, behavior:"smooth" }); } }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.ink, color:blocked ? L.muted : "#fff", border:"none", padding:"15px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSerif, fontSize:16, fontWeight:400, boxShadow:blocked ? "none" : "0 2px 12px rgba(10,22,40,0.15)", letterSpacing:"-0.01em" }}>
-                {blocked ? "Complete form to preview" : "Preview invoice →"}
+                {blocked ? "Complete form to preview" : "Preview invoice ->"}
               </button>
             );
           })()}
@@ -762,11 +762,11 @@ export function InvoiceForm(props) {
         <div style={{ background:L.white, borderRadius:14, marginBottom:16, boxShadow:"0 1px 4px rgba(10,22,40,0.06)", padding:"12px 14px" }}>
           <p style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>EU Compliance</p>
           {[
-            { i:"eu",       l:"Country",        sub:(s.country?s.country.name:"Germany")+" · VAT "+(s.country?s.country.vat:19)+"%", ok:true },
-            { i:"bank",     l:"SEPA / IBAN",    sub: !s.sIBAN ? "⚠ Missing" : validateIBAN(s.sIBAN) === "valid" ? "✓ Valid IBAN" : "✗ Invalid IBAN", ok: !!s.sIBAN && validateIBAN(s.sIBAN) === "valid" },
-            { i:"send",     l:"BIC / SWIFT",    sub: !s.sBIC ? "Not entered" : validateBIC(s.sBIC) === "valid" ? "✓ Valid BIC" : "✗ Invalid BIC", ok: !s.sBIC || validateBIC(s.sBIC) === "valid" },
-            { i:"shield",   l:"Your VAT",       sub: !s.sVAT ? "Not entered" : validateEUVAT(s.sVAT) === "valid" ? "✓ Valid" : "✗ Invalid format", ok: !s.sVAT || validateEUVAT(s.sVAT) === "valid" },
-            { i:"users",    l:"Client VAT",     sub: !s.cVAT ? "Not entered" : validateEUVAT(s.cVAT) === "valid" ? "✓ Valid" : "✗ Invalid format", ok: !s.cVAT || validateEUVAT(s.cVAT) === "valid" },
+            { i:"eu",       l:"Country",        sub:(s.country?s.country.name:"Germany")+" . VAT "+(s.country?s.country.vat:19)+"%", ok:true },
+            { i:"bank",     l:"SEPA / IBAN",    sub: !s.sIBAN ? "(!) Missing" : validateIBAN(s.sIBAN) === "valid" ? "OK Valid IBAN" : "x Invalid IBAN", ok: !!s.sIBAN && validateIBAN(s.sIBAN) === "valid" },
+            { i:"send",     l:"BIC / SWIFT",    sub: !s.sBIC ? "Not entered" : validateBIC(s.sBIC) === "valid" ? "OK Valid BIC" : "x Invalid BIC", ok: !s.sBIC || validateBIC(s.sBIC) === "valid" },
+            { i:"shield",   l:"Your VAT",       sub: !s.sVAT ? "Not entered" : validateEUVAT(s.sVAT) === "valid" ? "OK Valid" : "x Invalid format", ok: !s.sVAT || validateEUVAT(s.sVAT) === "valid" },
+            { i:"users",    l:"Client VAT",     sub: !s.cVAT ? "Not entered" : validateEUVAT(s.cVAT) === "valid" ? "OK Valid" : "x Invalid format", ok: !s.cVAT || validateEUVAT(s.cVAT) === "valid" },
             { i:"reverse",  l:"Reverse Charge", sub:s.rc ? "Active (0%)" : sameCountry ? "N/A same country" : "Standard", ok:s.rc },
             { i:"shield",   l:"GDPR Notice",    sub:s.gdpr ? "Included" : "Off",                   ok:s.gdpr },
             { i:"hash",     l:"Invoice No.",    sub:s.creditNote ? "CN-"+new Date().getFullYear()+"-001" : (s.invNum || (s.country?s.country.code:"DE")+"-"+new Date().getFullYear()+"-001"), ok:true },
@@ -782,7 +782,7 @@ export function InvoiceForm(props) {
                   <div style={{ fontFamily:fSans, fontSize:13, color:L.ink, fontWeight:500 }}>{r.l}</div>
                   <div style={{ fontFamily:fMono, fontSize:10, color: isErr ? "#C0392B" : r.ok ? L.green : L.muted }}>{r.sub}</div>
                 </div>
-                <span style={{ color: isErr ? "#C0392B" : r.ok ? L.green : L.faint, fontSize:12 }}>{isErr ? "✗" : r.ok ? "✓" : "—"}</span>
+                <span style={{ color: isErr ? "#C0392B" : r.ok ? L.green : L.faint, fontSize:12 }}>{isErr ? "x" : r.ok ? "OK" : "-"}</span>
               </div>
             );
           })}
@@ -898,7 +898,7 @@ export function ProposalForm(props) {
         setLoading(false);
         if (!hasGen) { setHasGen(true); setTimeout(function(){ if(onFirstGenerate) onFirstGenerate(); }, 1800); }
       })
-      .catch(function() { setResult("Connection error — please try again."); setLoading(false); });
+      .catch(function() { setResult("Connection error - please try again."); setLoading(false); });
   }
 
   function refine(instruction) {
@@ -908,7 +908,7 @@ export function ProposalForm(props) {
     fetch("/api/claude", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system:"You are refining a project proposal. Apply the requested change and return the full revised proposal only — no commentary.", messages:newHistory }),
+      body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system:"You are refining a project proposal. Apply the requested change and return the full revised proposal only - no commentary.", messages:newHistory }),
     }).then(function(r){ return r.json(); })
       .then(function(data) {
         var text = (data.content || []).map(function(b){ return b.text || ""; }).join("") || result;
@@ -926,7 +926,7 @@ export function ProposalForm(props) {
           if (line === "---") return <hr key={i} style={{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" }} />;
           if (line.startsWith("## ")) return <h3 key={i} style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
           if (line.startsWith("**") && line.endsWith("**")) return <p key={i} style={{ fontFamily:fSans, fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
-          if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:15, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>·</span><span>{line.slice(2)}</span></div>;
+          if (line.startsWith("- ")) return <div key={i} style={{ display:"flex", gap:10, margin:"3px 0", paddingLeft:4, color:L.muted, fontSize:15, lineHeight:1.6 }}><span style={{ color:L.accent, flexShrink:0 }}>.</span><span>{line.slice(2)}</span></div>;
           if (line === "") return <div key={i} style={{ height:8 }} />;
           if (line.indexOf("**") >= 0) {
             var parts = line.split("**");
@@ -980,7 +980,7 @@ export function ProposalForm(props) {
               <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:7, padding:"8px 10px", marginBottom:10 }}>
                 <div style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
                 <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.5 }}>
-                  {PROJ_TEMPLATES[projType].sections.join(" → ")}
+                  {PROJ_TEMPLATES[projType].sections.join(" -> ")}
                 </div>
               </div>
             )}
@@ -1019,7 +1019,7 @@ export function ProposalForm(props) {
           </div>
         </div>
         <button onClick={generate} disabled={loading || !projDesc.trim()} style={{ width:"100%", background:projDesc.trim() && !loading ? L.accent : L.border, color:projDesc.trim() && !loading ? "#fff" : L.muted, border:"none", padding:"13px", borderRadius:9, cursor:projDesc.trim() && !loading ? "pointer" : "not-allowed", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:projDesc.trim() && !loading ? "0 4px 16px rgba(23,169,158,0.25)" : "none" }}>
-          {loading ? "✦ Writing your proposal…" : "✦ Generate Proposal"}
+          {loading ? "* Writing your proposal..." : "* Generate Proposal"}
         </button>
       </div>
       <div style={{ position:"sticky", top:80 }}>
@@ -1029,7 +1029,7 @@ export function ProposalForm(props) {
               {loading ? (
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                   {[0,1,2].map(function(i){ return <div key={i} style={{ width:5, height:5, borderRadius:"50%", background:L.accent, animation:"pulse 1s "+i*0.2+"s infinite" }} />; })}
-                  <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginLeft:5 }}>Writing…</span>
+                  <span style={{ fontFamily:fMono, fontSize:11, color:L.muted, marginLeft:5 }}>Writing...</span>
                 </div>
               ) : (
                 <div style={{ display:"flex", alignItems:"center", gap:10 }}>
@@ -1073,7 +1073,7 @@ export function ProposalForm(props) {
           <div>
             <p style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:10 }}>Example proposal</p>
             <div style={{ background:L.white, border:"1px solid "+L.border, borderRadius:12, padding:"22px 24px", opacity:0.7 }}>
-              {renderProposal("Sarah,\n\nWe've looked at TechFlow carefully — the fintech space in Berlin is crowded, and what you need isn't just a logo. You need a visual identity that signals credibility to investors while still feeling approachable.\n\n## What we'll create\n\n**Brand strategy foundation**\nA half-day positioning session to nail the brand DNA.\n\n**Visual identity system**\nPrimary logo + 2 variants · Colour palette · Typography · Iconography\n\n**Application files**\nFigma system · SVG/AI source files · Brand guidelines PDF\n\n## How it works\n\nWeeks 1–2 · Strategy and concepting\nWeeks 3–4 · Design development (2 review rounds)\nWeek 5 · Refinement and delivery\n\n## Investment\n\n**€8,400 total**\n€4,200 on kickoff · €4,200 on final delivery\n\n---\nReady when you are.")}
+              {renderProposal("Sarah,\n\nWe've looked at TechFlow carefully - the fintech space in Berlin is crowded, and what you need isn't just a logo. You need a visual identity that signals credibility to investors while still feeling approachable.\n\n## What we'll create\n\n**Brand strategy foundation**\nA half-day positioning session to nail the brand DNA.\n\n**Visual identity system**\nPrimary logo + 2 variants . Colour palette . Typography . Iconography\n\n**Application files**\nFigma system . SVG/AI source files . Brand guidelines PDF\n\n## How it works\n\nWeeks 1-2 . Strategy and concepting\nWeeks 3-4 . Design development (2 review rounds)\nWeek 5 . Refinement and delivery\n\n## Investment\n\n**€8,400 total**\n€4,200 on kickoff . €4,200 on final delivery\n\n---\nReady when you are.")}
             </div>
           </div>
         )}
@@ -1177,13 +1177,13 @@ export function InvoiceGen(props) {
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
             <Icon name="check" size={14} color={L.green} />
             <span style={{ fontFamily:fSans, fontSize:14, color:L.green, fontWeight:500 }}>
-              Converting "{convertProposal.title}" — client and amount pre-filled.
+              Converting "{convertProposal.title}" - client and amount pre-filled.
             </span>
           </div>
-          <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss ×</button>
+          <button onClick={function(){ setConvertBanner(false); if(onConvertDone) onConvertDone(); }} style={{ background:"none", border:"none", color:L.green, cursor:"pointer", fontFamily:fMono, fontSize:12, letterSpacing:"0.04em" }}>Dismiss x</button>
         </div>
       )}
-      {/* ── Top navigation ── */}
+      {/* -- Top navigation -- */}
       {view === "form" && (
         <div style={{ padding:"16px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
           <div style={{ display:"flex", alignItems:"center", gap:0 }}>
@@ -1205,7 +1205,7 @@ export function InvoiceGen(props) {
           <div style={{ height:"1px", background:L.border }} />
         </div>
       )}
-      {/* ── Preview back link — appears only in preview mode ── */}
+      {/* -- Preview back link - appears only in preview mode -- */}
       {view === "preview" && mode === "invoice" && (
         <div style={{ padding:"16px 20px 0", maxWidth:960, margin:"0 auto", width:"100%", boxSizing:"border-box" }}>
           <button onClick={function(){ setView("form"); }} style={{
@@ -1242,7 +1242,7 @@ export function InvoiceGen(props) {
   );
 }
 
-// ── Dashboard ─────────────────────────────────────────────────────────────────
+// -- Dashboard -----------------------------------------------------------------
 var CLIENTS = [
   { id:1, name:"Studio Verde GmbH",  flag:"DE", city:"Berlin",    av:"SV", col:"#8A7A6A", status:"active",   balance:8400,  paid:22400, invoices:14 },
   { id:2, name:"Maison Fontaine",    flag:"FR", city:"Paris",     av:"MF", col:"#7A6A5A", status:"overdue",  balance:3200,  paid:18600, invoices:9 },
@@ -1289,7 +1289,7 @@ export function ClientPortal(props) {
               lines:    data.lines || [],
               sub:      data.subtotal || 0,
               vat:      data.vat_amount || 0,
-              vatLabel: data.reverse_charge ? "VAT 0% — Reverse Charge (Art. 44 EU VAT Directive)" : data.vat_exempt ? "VAT Exempt — §19 UStG" : "VAT " + (data.vat_rate || 0) + "%",
+              vatLabel: data.reverse_charge ? "VAT 0% - Reverse Charge (Art. 44 EU VAT Directive)" : data.vat_exempt ? "VAT Exempt - SS19 UStG" : "VAT " + (data.vat_rate || 0) + "%",
               total:    data.total || 0,
               ref:      data.proj_ref || "",
               terms:    "Net " + (data.terms || "30") + " days",
@@ -1320,7 +1320,7 @@ export function ClientPortal(props) {
         <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer" }} onClick={function(){ setPage("Home"); }}>
           <LogoMark size={26} />
           <span style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>· secure invoice portal</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>. secure invoice portal</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
@@ -1328,13 +1328,13 @@ export function ClientPortal(props) {
             <span style={{ fontFamily:fMono, fontSize:12, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
           </div>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.paper, border:"1px solid "+L.border, borderRadius:7, padding:"5px 12px", cursor:"pointer", fontFamily:fSans, fontSize:14, color:L.muted }}>
-            ← Back
+            <- Back
           </button>
         </div>
       </div>
       {(!inv && !loadError) && (
         <div style={{ maxWidth:720, margin:"60px auto", padding:"0 20px", textAlign:"center" }}>
-          <div style={{ fontFamily:fMono, fontSize:13, color:L.muted, letterSpacing:"0.08em" }}>Loading invoice…</div>
+          <div style={{ fontFamily:fMono, fontSize:13, color:L.muted, letterSpacing:"0.08em" }}>Loading invoice...</div>
         </div>
       )}
       {loadError && (
@@ -1349,12 +1349,12 @@ export function ClientPortal(props) {
           <div>
             <div style={{ fontFamily:fMono, fontSize:11, color:L.muted, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Invoice from</div>
             <div style={{ fontFamily:fSerif, fontSize:19, fontWeight:800, color:L.ink, letterSpacing:"-0.02em" }}>{inv.from ? inv.from.name : ""}</div>
-            <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginTop:2 }}>Invoice {inv.num} · Due {inv.due}</div>
+            <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, marginTop:2 }}>Invoice {inv.num} . Due {inv.due}</div>
           </div>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontFamily:fSerif, fontSize:30, fontWeight:900, color:L.accent, letterSpacing:"-0.02em" }}>{"€"+(parseFloat(inv.total)||0).toFixed(2)}</div>
             <div style={{ fontFamily:fMono, fontSize:11, color:status==="paid"?L.green:status==="approved"?L.blue:L.gold, background:(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"18", border:"1px solid "+(status==="paid"?L.green:status==="approved"?L.blue:L.gold)+"44", borderRadius:4, padding:"3px 10px", letterSpacing:"0.07em", display:"inline-block", marginTop:4 }}>
-              {status==="paid" ? "✓ PAID" : status==="approved" ? "APPROVED" : "AWAITING APPROVAL"}
+              {status==="paid" ? "OK PAID" : status==="approved" ? "APPROVED" : "AWAITING APPROVAL"}
             </div>
           </div>
         </div>
@@ -1475,7 +1475,7 @@ export function ClientPortal(props) {
             <div style={{ padding:"14px 24px", background:status==="approved" ? L.greenGlow : L.accentGlow, borderBottom:"1px solid "+L.border, display:"flex", alignItems:"center", gap:8 }}>
               <Icon name={status==="approved" ? "check" : "card"} size={15} color={status==="approved" ? L.green : L.accent} />
               <span style={{ fontFamily:fMono, fontSize:11, color:status==="approved" ? L.green : L.accent, letterSpacing:"0.1em", textTransform:"uppercase" }}>
-                {status==="approved" ? "Approved — ready to pay" : "Action required"}
+                {status==="approved" ? "Approved - ready to pay" : "Action required"}
               </span>
             </div>
             <div style={{ padding:"20px 24px" }}>
@@ -1485,7 +1485,7 @@ export function ClientPortal(props) {
                     Please review the invoice above and approve it. Once approved, you can pay via SEPA transfer or card.
                   </p>
                   <button onClick={function(){ setStatus("approved"); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)", marginRight:10 }}>
-                    ✓ Approve Invoice
+                    OK Approve Invoice
                   </button>
                   <button style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"13px 20px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:15 }}>
                     Request changes
@@ -1494,7 +1494,7 @@ export function ClientPortal(props) {
               )}
               {status === "approved" && !showPay && (
                 <div>
-                  <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:500, marginBottom:14 }}>✓ Invoice approved on 30 Apr 2026</p>
+                  <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:500, marginBottom:14 }}>OK Invoice approved on 30 Apr 2026</p>
                   <p style={{ fontFamily:fSans, fontSize:15, color:L.muted, marginBottom:16, fontWeight:300 }}>Choose your payment method:</p>
                   <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
                     {[["sepa","SEPA Transfer"],["card","Card"],["apple","Apple Pay"]].map(function(pair) {
@@ -1506,7 +1506,7 @@ export function ClientPortal(props) {
                     })}
                   </div>
                   <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)" }}>
-                    Pay €5,400 →
+                    Pay €5,400 ->
                   </button>
                 </div>
               )}
@@ -1518,7 +1518,7 @@ export function ClientPortal(props) {
                     {payMethod === "apple" && "Apple Pay launching Q3 2026. Use SEPA transfer for now."}
                   </p>
                   <button onClick={function(){ setStatus("paid"); setShowPay(false); }} style={{ background:L.green, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>
-                    ✓ Mark as paid
+                    OK Mark as paid
                   </button>
                 </div>
               )}
@@ -1528,7 +1528,7 @@ export function ClientPortal(props) {
 
         {status === "paid" && (
           <div style={{ background:L.greenGlow, border:"1.5px solid "+L.green+"44", borderRadius:16, padding:"24px 28px", marginBottom:16, textAlign:"center" }}>
-            <div style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.green, marginBottom:6 }}>✓ Payment confirmed</div>
+            <div style={{ fontFamily:fSerif, fontSize:22, fontWeight:800, color:L.green, marginBottom:6 }}>OK Payment confirmed</div>
             <p style={{ fontFamily:fSans, fontSize:15, color:L.green, fontWeight:300 }}>Thank you. A receipt has been sent to {inv.to.contact} at {inv.to.name}.</p>
           </div>
         )}
@@ -1536,7 +1536,7 @@ export function ClientPortal(props) {
         <div style={{ textAlign:"center", padding:"20px 0 4px" }}>
           <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>Secured &amp; delivered by </span>
           <span onClick={function(){ setPage("Home"); }} style={{ fontFamily:fSerif, fontSize:13, fontWeight:700, color:L.accent, cursor:"pointer", letterSpacing:"-0.01em" }}>InvoiceAI</span>
-          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}> · EU-native invoicing</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}> . EU-native invoicing</span>
         </div>
       </div>
       )}
