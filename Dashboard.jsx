@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { L, fSans, fMono, fSerif, Icon, LogoMark } from "./constants.jsx";
 
-// ── Design tokens ─────────────────────────────────────────────────────────────
+// -- Design tokens -------------------------------------------------------------
 var C = {
   bg:         "#F4F3F0",
   surface:    "#FFFFFF",
@@ -30,7 +30,7 @@ var C = {
 
 var fUI = "'DM Sans', sans-serif";
 
-// ── Supabase hook ─────────────────────────────────────────────────────────────
+// -- Supabase hook -------------------------------------------------------------
 export function useDB(table, userId, refreshKey) {
   var [rows, setRows] = useState([]);
   var [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ export function useDB(table, userId, refreshKey) {
   return { rows:rows, loading:loading, error:error, refresh:fetch_, insert:insert, update:update, remove:remove };
 }
 
-// ── useProfile — load/save user profile from Supabase ────────────────────────
+// -- useProfile - load/save user profile from Supabase ------------------------
 export function useProfile(userId) {
   var [profile, setProfile] = useState(null);
   var [loading, setLoading] = useState(false);
@@ -92,9 +92,9 @@ var MOCK_INVOICES = [
 ];
 
 var MOCK_PROPOSALS = [
-  { id:"1", client_id:"1", title:"Brand Identity — TechFlow",  status:"won",      value:8400,  view_count:4, days_since:23, last_viewed:"2d ago" },
+  { id:"1", client_id:"1", title:"Brand Identity - TechFlow",  status:"won",      value:8400,  view_count:4, days_since:23, last_viewed:"2d ago" },
   { id:"2", client_id:"4", title:"App UI Kit + Design System", status:"sent",     value:12000, view_count:2, days_since:3,  last_viewed:"3d ago" },
-  { id:"3", client_id:"3", title:"Pitch Deck — Series A",      status:"viewed",   value:2800,  view_count:7, days_since:0,  last_viewed:"6h ago" },
+  { id:"3", client_id:"3", title:"Pitch Deck - Series A",      status:"viewed",   value:2800,  view_count:7, days_since:0,  last_viewed:"6h ago" },
   { id:"4", client_id:"2", title:"Website Redesign",           status:"declined", value:6500,  view_count:1, days_since:63, last_viewed:"8 Mar"  },
 ];
 
@@ -108,7 +108,7 @@ var SPARK_UP   = [52,68,59,74,62,81,78,99];
 var SPARK_DOWN = [72,61,69,58,72,60,69,43];
 var SPARK_FLAT = [50,48,52,49,51,50,52,50];
 
-// ── Sparkline ─────────────────────────────────────────────────────────────────
+// -- Sparkline -----------------------------------------------------------------
 function Spark(props) {
   var data = props.data || [];
   var color = props.color || C.accent;
@@ -132,7 +132,7 @@ function Spark(props) {
   );
 }
 
-// ── Atoms ─────────────────────────────────────────────────────────────────────
+// -- Atoms ---------------------------------------------------------------------
 function Dot(props) {
   var color = props.color || C.muted;
   return <span style={{ display:"inline-flex", alignItems:"center", gap:5, fontFamily:fMono, fontSize:10, color:color, letterSpacing:"0.04em", whiteSpace:"nowrap" }}><span style={{ width:4, height:4, borderRadius:"50%", background:color, flexShrink:0 }} />{props.children}</span>;
@@ -167,7 +167,7 @@ export function StatCard(props) {
   );
 }
 
-// ── Attention card — simplified, spacious ─────────────────────────────────────
+// -- Attention card - simplified, spacious -------------------------------------
 function AttentionCard(props) {
   var item = props.item;
   var onDismiss = props.onDismiss;
@@ -189,7 +189,7 @@ function AttentionCard(props) {
           </div>
           <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:t.color }}>{t.label}</span>
         </div>
-        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>×</button>
+        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>&times;</button>
       </div>
       {/* Title large, desc quieter */}
       <div style={{ fontFamily:fUI, fontSize:16, fontWeight:600, color:C.ink, lineHeight:1.3, marginBottom:10 }}>{item.title}</div>
@@ -199,7 +199,7 @@ function AttentionCard(props) {
   );
 }
 
-// ── Shell ─────────────────────────────────────────────────────────────────────
+// -- Shell ---------------------------------------------------------------------
 export function Dashboard(props) {
   var setPage = props.setPage;
   var setConvertProposal = props.setConvertProposal;
@@ -232,14 +232,14 @@ export function Dashboard(props) {
 
   function forceRefresh() { setRefreshKey(function(k){ return k + 1; }); }
 
-  // ── Real data from Supabase (falls back to mock when userId is null) ──────
+  // -- Real data from Supabase (falls back to mock when userId is null) ------
   var profileHook  = useProfile(userId);
   var profile      = profileHook.profile;
   var invoicesDB   = useDB("invoices",   userId, refreshKey);
   var proposalsDB  = useDB("proposals",  userId, refreshKey);
   var clientsDB    = useDB("clients",    userId, refreshKey);
 
-  // Use real rows when logged in (even if empty — new users start with nothing)
+  // Use real rows when logged in (even if empty - new users start with nothing)
   // Only fall back to mock data when there is no userId (demo/logged-out mode)
   var invoices  = userId ? invoicesDB.rows  : MOCK_INVOICES;
   var proposals = userId ? proposalsDB.rows : MOCK_PROPOSALS;
@@ -262,7 +262,7 @@ export function Dashboard(props) {
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 58px)", background:C.bg }}>
 
-      {/* Sidebar — desktop only */}
+      {/* Sidebar - desktop only */}
       <div className="nav-desktop" style={{ width:210, background:C.navy, flexShrink:0, display:"flex", flexDirection:"column", position:"sticky", top:58, height:"calc(100vh - 58px)" }}>
         <div style={{ padding:"32px 14px 24px" }}>
           <div style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.14em", textTransform:"uppercase", color:"rgba(240,244,248,0.16)", marginBottom:22, paddingLeft:12 }}>Workspace</div>
@@ -317,7 +317,7 @@ export function Dashboard(props) {
         {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} />}
       </div>
 
-      {/* Mobile bottom nav — lighter, shorter */}
+      {/* Mobile bottom nav - lighter, shorter */}
       <div className="nav-burger" style={{ display:"none", position:"fixed", bottom:0, left:0, right:0, zIndex:200, background:"rgba(8,17,32,0.96)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", borderTop:"1px solid rgba(255,255,255,0.04)", padding:"8px 0 16px" }}>
         <div style={{ display:"flex", justifyContent:"space-around" }}>
           {nav.map(function(item) {
@@ -335,7 +335,7 @@ export function Dashboard(props) {
   );
 }
 
-// ── Section header ────────────────────────────────────────────────────────────
+// -- Section header ------------------------------------------------------------
 function SectionHeader(props) {
   return (
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:32, gap:14, flexWrap:"wrap" }}>
@@ -348,7 +348,7 @@ function SectionHeader(props) {
   );
 }
 
-// ── Chart data ────────────────────────────────────────────────────────────────
+// -- Chart data ----------------------------------------------------------------
 var ACTIVITY_LABELS = ["1 May","8 May","15 May","22 May","31 May"];
 var ACTIVITY_REV  = [4200, 6800, 8100, 11200, 14280];
 var ACTIVITY_PAID = [3800, 5900, 7200,  9800, 12100];
@@ -365,7 +365,7 @@ var TOP_CLIENTS = [
   { name:"Nord Digital",    revenue:4200,  color:C.accent },
 ];
 
-// ── Line chart (Activity Overview) ───────────────────────────────────────────
+// -- Line chart (Activity Overview) -------------------------------------------
 function LineChart(props) {
   var series = props.series || [];
   var labels = props.labels || [];
@@ -433,7 +433,7 @@ function LineChart(props) {
   );
 }
 
-// ── Bar chart (Cash Flow) ─────────────────────────────────────────────────────
+// -- Bar chart (Cash Flow) -----------------------------------------------------
 function BarChart(props) {
   var inData  = props.inData  || [];
   var outData = props.outData || [];
@@ -479,7 +479,7 @@ function BarChart(props) {
   );
 }
 
-// ── Overview ──────────────────────────────────────────────────────────────────
+// -- Overview ------------------------------------------------------------------
 function DOverview(props) {
   var setSection = props.setSection;
   var user = props.user;
@@ -496,7 +496,7 @@ function DOverview(props) {
   var allAttention = [
     { id:0, type:"followup", title:"App UI Kit proposal",     sub:"No reply in 3 days",   cta:"Follow up" },
     { id:1, type:"overdue",  title:"Invoice FR-2026-0021",    sub:"Overdue by 5 days",     cta:"Send reminder" },
-    { id:2, type:"viewed",   title:"Pitch Deck — Series A",   sub:"Proposal viewed 7 times", cta:"View" },
+    { id:2, type:"viewed",   title:"Pitch Deck - Series A",   sub:"Proposal viewed 7 times", cta:"View" },
   ];
   var attention = allAttention.filter(function(a){ return dismissed.indexOf(a.id) < 0; });
 
@@ -519,24 +519,24 @@ function DOverview(props) {
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:32, gap:16 }}>
         <div>
           <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,3vw,38px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", lineHeight:1.05, marginBottom:8 }}>{greetingFull}</h1>
-          <p style={{ fontFamily:fMono, fontSize:11, color:C.faint, letterSpacing:"0.04em" }}>{dateStr} · 4 clients · 1 overdue</p>
+          <p style={{ fontFamily:fMono, fontSize:11, color:C.faint, letterSpacing:"0.04em" }}>{dateStr} . 4 clients . 1 overdue</p>
         </div>
         <div style={{ display:"flex", gap:10, alignItems:"center", flexShrink:0 }} className="nav-desktop">
           <div style={{ display:"flex", alignItems:"center", gap:8, background:C.surface, borderRadius:9, padding:"8px 14px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }}>
             <Icon name="users" size={13} color={C.faint} />
-            <span style={{ fontFamily:fUI, fontSize:13, color:C.faint }}>Search…</span>
-            <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, background:C.bg, borderRadius:4, padding:"1px 5px", marginLeft:12 }}>⌘K</span>
+            <span style={{ fontFamily:fUI, fontSize:13, color:C.faint }}>Search...</span>
+            <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, background:C.bg, borderRadius:4, padding:"1px 5px", marginLeft:12 }}>CmdK</span>
           </div>
           <div style={{ width:32, height:32, borderRadius:8, background:C.surface, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 1px 4px rgba(10,22,40,0.05)", cursor:"pointer" }}>
             <Icon name="clock" size={14} color={C.faint} />
           </div>
           <button style={{ display:"flex", alignItems:"center", gap:6, background:C.ink, color:"#fff", border:"none", borderRadius:9, padding:"8px 16px", cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>
-            + New <span style={{ opacity:0.5, fontSize:11 }}>↓</span>
+            + New <span style={{ opacity:0.5, fontSize:11 }}>v</span>
           </button>
         </div>
       </div>
 
-      {/* 4-col KPI row — desktop only */}
+      {/* 4-col KPI row - desktop only */}
       <div className="nav-desktop" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
         <StatCard label="Revenue (May)" value="€14,280" sub="+18% vs April" subColor={C.green} spark={SPARK_UP} sparkColor={C.accent} />
         <StatCard label="Outstanding"   value="€4,320"  sub="4 overdue"    subColor={C.red}   spark={SPARK_DOWN} sparkColor={C.red} />
@@ -544,13 +544,13 @@ function DOverview(props) {
         <StatCard label="Open proposals" value="6"      sub="2 awaiting reply" subColor={C.gold} spark={SPARK_FLAT} sparkColor={C.gold} />
       </div>
 
-      {/* Mobile KPI — 2-col */}
+      {/* Mobile KPI - 2-col */}
       <div className="dash-kpi-grid" style={{ display:"none", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
         <StatCard label="Revenue" value="€14,280" sub="+18%" subColor={C.green} spark={SPARK_UP} sparkColor={C.accent} />
         <StatCard label="Outstanding" value="€4,320" sub="4 overdue" subColor={C.red} spark={SPARK_DOWN} sparkColor={C.red} />
       </div>
 
-      {/* Main body — 3-col on desktop */}
+      {/* Main body - 3-col on desktop */}
       <div className="dash-overview-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 300px", gap:18 }}>
 
         {/* Activity Overview chart */}
@@ -599,7 +599,7 @@ function DOverview(props) {
                     <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.sub}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, flexShrink:0 }}>{a.time}</span>
-                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>→</span>
+                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }>&rarr;</span>
                 </div>
               );
             })}
@@ -610,16 +610,16 @@ function DOverview(props) {
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
               <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Cash flow</span>
             </div>
-            <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>€14,280</div>
+            <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>EUR 14,280</div>
             <div style={{ fontFamily:fUI, fontSize:11, color:C.faint, marginBottom:14 }}>Total cash flow</div>
             <BarChart inData={CASHFLOW_IN} outData={CASHFLOW_OUT} labels={CASHFLOW_LABELS} w={300} h={110} />
           </div>
         </div>
 
-        {/* Right column — dark attention panel + top clients */}
+        {/* Right column - dark attention panel + top clients */}
         <div style={{ display:"flex", flexDirection:"column", gap:18, minWidth:0 }}>
 
-          {/* What needs attention — dark card */}
+          {/* What needs attention - dark card */}
           <div style={{ background:C.navy, borderRadius:16, padding:"20px", boxShadow:"0 4px 16px rgba(10,22,40,0.14)" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
               <span style={{ fontFamily:fUI, fontSize:13, fontWeight:600, color:"rgba(240,244,248,0.9)" }}>What needs attention</span>
@@ -644,7 +644,7 @@ function DOverview(props) {
                 );
               })}
               {attention.length === 0 && (
-                <div style={{ textAlign:"center", padding:"16px 0", fontFamily:fUI, fontSize:13, color:"rgba(240,244,248,0.3)" }}>All clear ✓</div>
+                <div style={{ textAlign:"center", padding:"16px 0", fontFamily:fUI, fontSize:13, color:"rgba(240,244,248,0.3)" }}>All clear OK</div>
               )}
             </div>
           </div>
@@ -670,13 +670,13 @@ function DOverview(props) {
                 );
               })}
             </div>
-            <button onClick={function(){ setSection("clients"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", marginTop:16, padding:0 }}>View all clients →</button>
+            <button onClick={function(){ setSection("clients"); }} style={{ background:"none", border:"none", fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", marginTop:16, padding:0 }}>View all clients -></button>
           </div>
         </div>
 
       </div>
 
-      {/* Mobile fallback — simple activity feed */}
+      {/* Mobile fallback - simple activity feed */}
       <div className="nav-burger" style={{ display:"none", marginTop:16 }}>
         <div style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
           {activity.slice(0,3).map(function(a, i) {
@@ -697,7 +697,7 @@ function DOverview(props) {
   );
 }
 
-// ── Clients ───────────────────────────────────────────────────────────────────
+// -- Clients -------------------------------------------------------------------
 function DClients(props) {
   var setClientId = props.setClientId;
   var setPage = props.setPage;
@@ -789,19 +789,19 @@ function DClients(props) {
               <input value={newCity} onChange={function(e){ setNewCity(e.target.value); }} placeholder="Berlin" style={{ width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" }} />
             </div>
           </div>
-          <Btn onClick={addClient}>{saving ? "Saving…" : "Add client"}</Btn>
+          <Btn onClick={addClient}>{saving ? "Saving..." : "Add client"}</Btn>
           {addError && <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginTop:10 }}>{addError}</div>}
         </div>
       )}
 
       <div style={{ position:"relative", marginBottom:20 }}>
-        <input value={search} onChange={function(e){ setSearch(e.target.value); }} placeholder="Search…" style={{ width:"100%", boxSizing:"border-box", border:"none", borderRadius:12, padding:"11px 14px 11px 38px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.surface, outline:"none", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }} />
+        <input value={search} onChange={function(e){ setSearch(e.target.value); }} placeholder="Search..." style={{ width:"100%", boxSizing:"border-box", border:"none", borderRadius:12, padding:"11px 14px 11px 38px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.surface, outline:"none", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }} />
         <div style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)" }}><Icon name="users" size={14} color={C.faint} /></div>
       </div>
 
       <div style={{ background:C.surface, borderRadius:18, overflow:"hidden", boxShadow:"0 1px 6px rgba(10,22,40,0.05)" }}>
         {loading && (
-          <div style={{ padding:"32px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint }}>Loading…</div>
+          <div style={{ padding:"32px", textAlign:"center", fontFamily:fUI, fontSize:14, color:C.faint }}>Loading...</div>
         )}
         {!loading && filtered.map(function(c, i) {
           var col = c.color || "#6E7A8A";
@@ -814,7 +814,7 @@ function DClients(props) {
               <div style={{ width:40, height:40, borderRadius:12, background:col+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:12, color:col, fontWeight:700, flexShrink:0 }}>{av}</div>
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink, marginBottom:3 }}>{c.name}</div>
-                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}{c.email ? " · "+c.email : ""}</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}{c.email ? " . "+c.email : ""}</div>
               </div>
               {(c.balance||0) > 0
                 ? <div style={{ fontFamily:fMono, fontSize:13, color:C.red, fontWeight:500, flexShrink:0 }}>{"€"+(c.balance||0).toLocaleString()}</div>
@@ -841,7 +841,7 @@ function DClientDetail(props) {
   var pColors = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
   return (
     <div>
-      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}>← Clients</button>
+      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}><- Clients</button>
       <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:36 }}>
         <div style={{ width:48, height:48, borderRadius:14, background:c.color+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.color, fontWeight:700 }}>{c.avatar}</div>
         <div>
@@ -883,7 +883,7 @@ function DClientDetail(props) {
   );
 }
 
-// ── Invoices — calm overview, not admin table ─────────────────────────────────
+// -- Invoices - calm overview, not admin table ---------------------------------
 function DInvoices(props) {
   var invoices = props.invoices || MOCK_INVOICES;
   var clients  = props.clients  || MOCK_CLIENTS;
@@ -902,7 +902,7 @@ function DInvoices(props) {
     setLocalStatus(function(s){ return Object.assign({}, s, { [inv.id]: newStatus }); });
     setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: true }); });
     if (!db || !userId) {
-      // Demo mode — just update locally
+      // Demo mode - just update locally
       setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); });
       return;
     }
@@ -957,7 +957,7 @@ function DInvoices(props) {
           var isDraft = st==="draft";
           var isSent = st==="sent";
           var isPaid = st==="paid";
-          var clientName = clientMap[inv.client_id] || inv.client_name || "—";
+          var clientName = clientMap[inv.client_id] || inv.client_name || "-";
           var busy = updating[inv.id];
           return (
             <div key={inv.id} style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:isOverdue ? "0 0 0 1.5px "+C.red+"30, 0 2px 8px rgba(10,22,40,0.04)" : "0 1px 4px rgba(10,22,40,0.04)" }}>
@@ -965,7 +965,7 @@ function DInvoices(props) {
                 <div style={{ flex:1, minWidth:0 }}>
                   <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink, marginBottom:3 }}>{clientName}</div>
                   <div style={{ fontFamily:fMono, fontSize:11, color:C.faint }}>
-                    {inv.inv_number || "—"}{inv.due_date ? " · due "+inv.due_date : ""}
+                    {inv.inv_number || "-"}{inv.due_date ? " . due "+inv.due_date : ""}
                   </div>
                 </div>
                 <div style={{ textAlign:"right", flexShrink:0 }}>
@@ -980,17 +980,17 @@ function DInvoices(props) {
                 <div style={{ padding:"0 20px 16px", display:"flex", gap:8, flexWrap:"wrap" }}>
                   {isDraft && (
                     <Btn variant="ghost" sm={true} onClick={function(){ updateStatus(inv, "sent"); }}>
-                      {busy ? "…" : "Mark as sent"}
+                      {busy ? "..." : "Mark as sent"}
                     </Btn>
                   )}
                   {(isSent || isOverdue) && (
                     <Btn variant="ghost" sm={true} onClick={function(){ updateStatus(inv, "paid"); }}>
-                      {busy ? "…" : "Mark as paid"}
+                      {busy ? "..." : "Mark as paid"}
                     </Btn>
                   )}
                   {isSent && (
                     <Btn variant="secondary" sm={true} onClick={function(){ updateStatus(inv, "overdue"); }}>
-                      {busy ? "…" : "Mark overdue"}
+                      {busy ? "..." : "Mark overdue"}
                     </Btn>
                   )}
                   {isOverdue && (
@@ -1005,7 +1005,7 @@ function DInvoices(props) {
               )}
               {isPaid && (
                 <div style={{ padding:"0 20px 14px" }}>
-                  <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>✓ Settled</span>
+                  <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>OK Settled</span>
                 </div>
               )}
             </div>
@@ -1016,7 +1016,7 @@ function DInvoices(props) {
   );
 }
 
-// ── Proposals — intelligence layer, simplified ────────────────────────────────
+// -- Proposals - intelligence layer, simplified --------------------------------
 export function DProposals(props) {
   var onConvert = props.onConvert;
   var proposals = props.proposals || MOCK_PROPOSALS;
@@ -1030,14 +1030,14 @@ export function DProposals(props) {
   var stColor = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
 
   function signal(p) {
-    if (p.status==="viewed" && p.view_count >= 5) return { msg:"Viewed "+p.view_count+"× — strong signal.", cta:"Follow up", urgent:true };
+    if (p.status==="viewed" && p.view_count >= 5) return { msg:"Viewed "+p.view_count+"x - strong signal.", cta:"Follow up", urgent:true };
     if ((p.status==="sent"||p.status==="viewed") && p.days_since >= 3) return { msg:"No reply in "+p.days_since+" days.", cta:"Follow up", urgent:false };
     return null;
   }
 
   return (
     <div>
-      <SectionHeader title="Proposals" sub={"Win rate " + winRate + "% · " + MOCK_PROPOSALS.length + " total"} />
+      <SectionHeader title="Proposals" sub={"Win rate " + winRate + "% . " + MOCK_PROPOSALS.length + " total"} />
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
         {proposals.map(function(p) {
           var sig = signal(p);
@@ -1045,29 +1045,29 @@ export function DProposals(props) {
           return (
             <div key={p.id} style={{ background:C.surface, borderRadius:18, overflow:"hidden", boxShadow:"0 1px 6px rgba(10,22,40,0.05)" }}>
               <div style={{ padding:"22px 22px 18px" }}>
-                {/* Title + amount — the two most important things */}
+                {/* Title + amount - the two most important things */}
                 <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:12, marginBottom:10 }}>
                   <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink, lineHeight:1.3, flex:1 }}>{p.title}</div>
                   <div style={{ fontFamily:fMono, fontSize:15, fontWeight:600, color:C.ink, flexShrink:0 }}>{"€"+p.value.toLocaleString()}</div>
                 </div>
-                {/* Client + status — quieter */}
+                {/* Client + status - quieter */}
                 <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                   <span style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{clientMap[p.client_id]||""}</span>
                   <Dot color={sc}>{p.status}</Dot>
                   {p.view_count > 0 && <span style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{p.view_count} views</span>}
                 </div>
               </div>
-              {/* Signal strip — only when relevant */}
+              {/* Signal strip - only when relevant */}
               {sig && (
                 <div style={{ margin:"0 14px 14px", padding:"12px 16px", background:sig.urgent ? C.goldSoft : C.accentSoft, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"space-between", gap:10 }}>
                   <span style={{ fontFamily:fUI, fontSize:13, color:C.inkLight }}>{sig.msg}</span>
                   <Btn variant="ghost" sm={true}>{sig.cta}</Btn>
                 </div>
               )}
-              {/* Convert to invoice — only for won */}
+              {/* Convert to invoice - only for won */}
               {p.status==="won" && (
                 <div style={{ padding:"0 22px 18px" }}>
-                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>Convert to invoice →</Btn>
+                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>Convert to invoice -></Btn>
                 </div>
               )}
             </div>
@@ -1078,7 +1078,7 @@ export function DProposals(props) {
   );
 }
 
-// ── Brand Kits ────────────────────────────────────────────────────────────────
+// -- Brand Kits ----------------------------------------------------------------
 export function DBrandKits() {
   var [kits, setKits] = useState(MOCK_BRAND_KITS);
   var [selId, setSelId] = useState(kits[0]?kits[0].id:null);
@@ -1135,7 +1135,7 @@ export function DBrandKits() {
                   {["DM Sans","DM Serif Display","Playfair Display","Cormorant Garamond","Inter"].map(function(f){ return <option key={f} value={f}>{f}</option>; })}
                 </select>
               </div>
-              <Btn onClick={save} variant={saved?"secondary":"primary"}>{saved?"✓ Saved":"Save kit"}</Btn>
+              <Btn onClick={save} variant={saved?"secondary":"primary"}>{saved?"OK Saved":"Save kit"}</Btn>
             </div>
             {/* Preview */}
             <div style={{ background:C.bg, borderRadius:16, padding:"20px", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
@@ -1149,8 +1149,8 @@ export function DBrandKits() {
                 </div>
                 <div style={{ fontFamily:"'"+editFont+"', sans-serif", fontSize:15, fontWeight:700, color:C.ink, marginBottom:14 }}>{editName}</div>
                 <div style={{ borderTop:"2px solid "+editColor, paddingTop:12 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fUI, fontSize:12, color:C.muted, marginBottom:6 }}><span>Brand Identity</span><span style={{ color:C.ink, fontWeight:500 }}>€1,800</span></div>
-                  <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fUI, fontSize:13, fontWeight:700, color:C.ink, marginTop:10, paddingTop:10, borderTop:"1px solid "+C.borderLt }}><span>Total</span><span style={{ color:editColor }}>€4,998</span></div>
+                  <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fUI, fontSize:12, color:C.muted, marginBottom:6 }}><span>Brand Identity</span><span style={{ color:C.ink, fontWeight:500 }}>EUR 1,800</span></div>
+                  <div style={{ display:"flex", justifyContent:"space-between", fontFamily:fUI, fontSize:13, fontWeight:700, color:C.ink, marginTop:10, paddingTop:10, borderTop:"1px solid "+C.borderLt }}><span>Total</span><span style={{ color:editColor }}>EUR 4,998</span></div>
                 </div>
               </div>
             </div>
@@ -1161,7 +1161,7 @@ export function DBrandKits() {
   );
 }
 
-// ── Settings helper styles (module-level so they don't cause re-renders) ──────
+// -- Settings helper styles (module-level so they don't cause re-renders) ------
 var S_inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:9, padding:"10px 13px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
 var S_lbl = { display:"block", marginBottom:5, fontFamily:fUI, fontSize:12, color:C.muted, fontWeight:400 };
 
@@ -1178,7 +1178,7 @@ function SSaveBtn(props) {
   var isSaving = props.saving && !done;
   return (
     <button onClick={function(){ props.onSave(props.section); }} disabled={props.saving} style={{ background:done ? C.green : C.accent, color:"#fff", border:"none", padding:"10px 22px", borderRadius:9, cursor:props.saving?"not-allowed":"pointer", fontFamily:fUI, fontSize:14, fontWeight:500, transition:"background 0.15s", boxShadow:done?"none":"0 2px 8px rgba(20,153,144,0.18)", opacity:isSaving?0.7:1 }}>
-      {done ? "✓ Saved" : isSaving ? "Saving…" : "Save changes"}
+      {done ? "OK Saved" : isSaving ? "Saving..." : "Save changes"}
     </button>
   );
 }
@@ -1213,14 +1213,14 @@ function SField(props) {
   );
 }
 
-// ── Settings ──────────────────────────────────────────────────────────────────
+// -- Settings ------------------------------------------------------------------
 function DSettings(props) {
   var user = props.user;
   var profile = props.profile || {};
   var profileHook = props.profileHook;
   var [tab, setTab] = useState("profile");
 
-  // Profile state — pre-filled from Supabase profile
+  // Profile state - pre-filled from Supabase profile
   var [firstName, setFirstName]   = useState(profile.first_name || "");
   var [lastName, setLastName]     = useState(profile.last_name  || "");
   var [email, setEmail]           = useState(profile.email      || (user && user.email ? user.email : ""));
@@ -1291,7 +1291,7 @@ function DSettings(props) {
         setTimeout(function(){ setSaved(""); }, 2500);
       }).catch(function() { setSaving(false); });
     } else {
-      // Demo mode — no userId
+      // Demo mode - no userId
       setSaving(false); setSaved(section);
       setTimeout(function(){ setSaved(""); }, 2500);
     }
@@ -1323,7 +1323,7 @@ function DSettings(props) {
         })}
       </div>
 
-      {/* ── Profile ── */}
+      {/* -- Profile -- */}
       {tab === "profile" && (
         <div>
           <SCard title="Personal information" sub="This is how your name appears on invoices and proposals.">
@@ -1354,7 +1354,7 @@ function DSettings(props) {
         </div>
       )}
 
-      {/* ── Business ── */}
+      {/* -- Business -- */}
       {tab === "business" && (
         <div>
           <SCard title="Business details" sub="Used on all invoices, proposals and EU compliance documents.">
@@ -1365,7 +1365,7 @@ function DSettings(props) {
             </SRow2>
             <SRow2>
               <SField label="Street address" value={street} onChange={setStreet} placeholder="Leopoldstr. 10" />
-              <SField label="City & postal code" value={city} onChange={setCity} placeholder="80802 München" />
+              <SField label="City & postal code" value={city} onChange={setCity} placeholder="80802 Munchen" />
             </SRow2>
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
               <SSaveBtn onSave={save} saved={saved} saving={saving} section="business-info" />
@@ -1381,7 +1381,7 @@ function DSettings(props) {
         </div>
       )}
 
-      {/* ── Notifications ── */}
+      {/* -- Notifications -- */}
       {tab === "notifications" && (
         <div>
           <SCard title="Email notifications" sub="Choose what you want to be notified about.">
@@ -1408,7 +1408,7 @@ function DSettings(props) {
         </div>
       )}
 
-      {/* ── Billing ── */}
+      {/* -- Billing -- */}
       {tab === "billing" && (
         <div>
           <SCard title="Current plan">
@@ -1418,29 +1418,29 @@ function DSettings(props) {
                   <span style={{ fontFamily:fSerif, fontSize:22, fontWeight:400, color:C.ink }}>Studio</span>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.accent, background:C.accentSoft, borderRadius:5, padding:"3px 8px", letterSpacing:"0.06em" }}>ACTIVE</span>
                 </div>
-                <div style={{ fontFamily:fUI, fontSize:13, color:C.muted }}>€59/month · Renews 7 June 2026</div>
+                <div style={{ fontFamily:fUI, fontSize:13, color:C.muted }}>EUR 59/month . Renews 7 June 2026</div>
               </div>
               <div style={{ textAlign:"right" }}>
-                <div style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em" }}>€59</div>
+                <div style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em" }}>EUR 59</div>
                 <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>per month</div>
               </div>
             </div>
             <div style={{ background:C.bg, borderRadius:10, padding:"14px 16px", marginBottom:20 }}>
               <div style={{ fontFamily:fUI, fontSize:12, fontWeight:600, color:C.ink, marginBottom:8 }}>Plan includes</div>
               {["Unlimited clients","Unlimited invoices + proposals","AI proposal writer","Brand kits","Client portal + approvals","VIES VAT validation","XRechnung & Factur-X"].map(function(f) {
-                return <div key={f} style={{ display:"flex", alignItems:"center", gap:8, fontFamily:fUI, fontSize:13, color:C.muted, marginBottom:5 }}><span style={{ color:C.green }}>✓</span>{f}</div>;
+                return <div key={f} style={{ display:"flex", alignItems:"center", gap:8, fontFamily:fUI, fontSize:13, color:C.muted, marginBottom:5 }}><span style={{ color:C.green }}>OK</span>{f}</div>;
               })}
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe →</button>
+              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe -></button>
               <button style={{ background:"transparent", color:C.muted, border:"1px solid "+C.border, padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
             </div>
           </SCard>
           <SCard title="Billing history" sub="Your last 3 payments.">
             {[
-              { date:"7 May 2026",  amount:"€59.00", status:"Paid" },
-              { date:"7 Apr 2026",  amount:"€59.00", status:"Paid" },
-              { date:"7 Mar 2026",  amount:"€59.00", status:"Paid" },
+              { date:"7 May 2026",  amount:"EUR 59.00", status:"Paid" },
+              { date:"7 Apr 2026",  amount:"EUR 59.00", status:"Paid" },
+              { date:"7 Mar 2026",  amount:"EUR 59.00", status:"Paid" },
             ].map(function(inv, i) {
               return (
                 <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"13px 0", borderBottom:i<2 ? "1px solid "+C.borderLt : "none" }}>
@@ -1457,7 +1457,7 @@ function DSettings(props) {
         </div>
       )}
 
-      {/* ── Security ── */}
+      {/* -- Security -- */}
       {tab === "security" && (
         <div>
           <SCard title="Change password" sub="Use a strong password of at least 8 characters.">
@@ -1475,7 +1475,7 @@ function DSettings(props) {
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 0" }}>
               <div>
                 <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink }}>This device</div>
-                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>Safari · iPhone · Active now</div>
+                <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, marginTop:2 }}>Safari . iPhone . Active now</div>
               </div>
               <span style={{ fontFamily:fMono, fontSize:10, color:C.green, background:C.greenSoft, borderRadius:4, padding:"2px 7px" }}>Active</span>
             </div>
