@@ -308,7 +308,7 @@ export function Dashboard(props) {
 
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
-        {section==="overview"  && <DOverview setSection={goSection} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
+        {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
         {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
@@ -480,9 +480,56 @@ function BarChart(props) {
 }
 
 // -- Overview ------------------------------------------------------------------
+// -- Onboarding ----------------------------------------------------------------
+function Onboarding(props) {
+  var setPage = props.setPage;
+  var setSection = props.setSection;
+  var steps = [
+    { num:1, title:"Add your business details", sub:"Your name, VAT number and IBAN - used on every invoice.", cta:"Open Settings", action:function(){ setSection("settings"); } },
+    { num:2, title:"Add your first client", sub:"Takes 30 seconds. Name and city is enough to start.", cta:"Add client", action:function(){ setSection("clients"); } },
+    { num:3, title:"Create your first invoice", sub:"Pre-filled from your settings. EU-compliant automatically.", cta:"Create invoice", action:function(){ setPage("Generator"); } },
+  ];
+  return (
+    <div style={{ maxWidth:560 }}>
+      <div style={{ marginBottom:40 }}>
+        <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,3vw,38px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:8 }}>Welcome to InvoiceAI.</h1>
+        <p style={{ fontFamily:fUI, fontSize:14, color:C.muted, fontWeight:300, lineHeight:1.6 }}>Three steps to your first invoice. Takes about 5 minutes.</p>
+      </div>
+      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+        {steps.map(function(step) {
+          return (
+            <div key={step.num} style={{ background:C.surface, borderRadius:16, padding:"22px 24px", boxShadow:"0 1px 6px rgba(10,22,40,0.05)", display:"flex", alignItems:"center", gap:18 }}>
+              <div style={{ width:36, height:36, borderRadius:"50%", background:C.navy, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                <span style={{ fontFamily:fSerif, fontSize:16, color:"rgba(240,244,248,0.9)", fontWeight:400 }}>{step.num}</span>
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:fUI, fontSize:15, fontWeight:600, color:C.ink, marginBottom:3 }}>{step.title}</div>
+                <div style={{ fontFamily:fUI, fontSize:13, color:C.muted, fontWeight:300 }}>{step.sub}</div>
+              </div>
+              <button onClick={step.action} style={{ background:C.accentSoft, color:C.accent, border:"none", padding:"8px 16px", borderRadius:8, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500, flexShrink:0, whiteSpace:"nowrap" }}>{step.cta}</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// -- Overview ------------------------------------------------------------------
 function DOverview(props) {
   var setSection = props.setSection;
+  var setPage = props.setPage;
   var user = props.user;
+  var clients = props.clients || [];
+  var invoices = props.invoices || [];
+  var proposals = props.proposals || [];
+
+  // Show onboarding for new logged-in users with no data
+  var isNewUser = user && clients.length === 0 && invoices.length === 0 && proposals.length === 0;
+  if (isNewUser) {
+    return <Onboarding setPage={setPage} setSection={setSection} />;
+  }
+
   var now = new Date();
   var hour = now.getHours();
   var greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
@@ -892,8 +939,57 @@ function DInvoices(props) {
   var [filter, setFilter] = useState("all");
   var [updating, setUpdating] = useState({});
   var [localStatus, setLocalStatus] = useState({});
+  var [emailSent, setEmailSent] = useState({});
   var clientMap = {};
-  clients.forEach(function(c){ clientMap[c.id] = c.name; });
+  clients.forEach(function(c){ clientMap[c.id] = c; });
+
+  function getStatus(inv) { return localStatus[inv.id] || inv.status || "draft"; }
+
+  function updateStatus(inv, newStatus) {
+    setLocalStatus(function(s){ return Object.assign({}, s, { [inv.id]: newStatus }); });
+    setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: true }); });
+    if (!db || !userId) { setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); return; }
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ table:"invoices", action:"update", id:inv.id, user_id:userId, payload:{ status:newStatus } }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); })
+    .catch(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); });
+  }
+
+  function sendReminder(inv) {
+    var client = clientMap[inv.client_id] || {};
+    if (!client.email) { alert("No email address for this client. Add one in Clients."); return; }
+    setEmailSent(function(s){ return Object.assign({}, s, { [inv.id]: "sending" }); });
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+    fetch("/api/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "reminder",
+        to: client.email,
+        toName: client.name || "",
+        fromName: (user && user.email) ? user.email : "",
+        senderEmail: (user && user.email) ? user.email : "",
+        invoiceNum: inv.inv_number || "",
+        amount: inv.amount_gross ? "EUR " + inv.amount_gross.toLocaleString() : "",
+        dueDate: inv.due_date || "",
+        portalUrl: "",
+      }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      setEmailSent(function(s){ return Object.assign({}, s, { [inv.id]: data.sent ? "sent" : "queued" }); });
+      setTimeout(function(){ setEmailSent(function(s){ var n=Object.assign({},s); delete n[inv.id]; return n; }); }, 4000);
+    })
+    .catch(function(){
+      setEmailSent(function(s){ return Object.assign({}, s, { [inv.id]: "error" }); });
+      setTimeout(function(){ setEmailSent(function(s){ var n=Object.assign({},s); delete n[inv.id]; return n; }); }, 4000);
+    });
+  }
 
   function getStatus(inv) { return localStatus[inv.id] || inv.status || "draft"; }
 
@@ -957,8 +1053,10 @@ function DInvoices(props) {
           var isDraft = st==="draft";
           var isSent = st==="sent";
           var isPaid = st==="paid";
-          var clientName = clientMap[inv.client_id] || inv.client_name || "-";
+          var client = clientMap[inv.client_id] || {};
+          var clientName = (typeof client === "object" ? client.name : client) || inv.client_name || "Unknown";
           var busy = updating[inv.id];
+          var eSent = emailSent[inv.id];
           return (
             <div key={inv.id} style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:isOverdue ? "0 0 0 1.5px "+C.red+"30, 0 2px 8px rgba(10,22,40,0.04)" : "0 1px 4px rgba(10,22,40,0.04)" }}>
               <div style={{ display:"flex", alignItems:"center", gap:14, padding:"18px 20px" }}>
@@ -994,11 +1092,8 @@ function DInvoices(props) {
                     </Btn>
                   )}
                   {isOverdue && (
-                    <Btn variant="danger" sm={true} onClick={function(){
-                      var clientEmail = clients.find(function(c){ return c.id===inv.client_id; });
-                      alert("Reminder: payment overdue for " + inv.inv_number + ". Email send coming soon.");
-                    }}>
-                      Send reminder
+                    <Btn variant="danger" sm={true} onClick={function(){ sendReminder(inv); }}>
+                      {eSent === "sending" ? "Sending..." : eSent === "sent" ? "Sent!" : eSent === "queued" ? "Queued" : "Send reminder"}
                     </Btn>
                   )}
                 </div>
@@ -1022,8 +1117,40 @@ export function DProposals(props) {
   var proposals = props.proposals || MOCK_PROPOSALS;
   var clients   = props.clients   || MOCK_CLIENTS;
   var db = props.db;
+  var [followUpSent, setFollowUpSent] = useState({});
   var clientMap = {};
-  clients.forEach(function(c){ clientMap[c.id] = c.name; });
+  clients.forEach(function(c){ clientMap[c.id] = c; });
+
+  function sendFollowUp(p) {
+    var client = clientMap[p.client_id] || {};
+    var clientEmail = typeof client === "object" ? client.email : null;
+    if (!clientEmail) { alert("No email for this client. Add one in Clients."); return; }
+    setFollowUpSent(function(s){ return Object.assign({}, s, { [p.id]: "sending" }); });
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+    fetch("/api/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "followup",
+        to: clientEmail,
+        toName: (typeof client === "object" ? client.name : "") || "",
+        fromName: (user && user.email) ? user.email : "",
+        senderEmail: (user && user.email) ? user.email : "",
+        proposalTitle: p.title || "",
+        portalUrl: "",
+      }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      setFollowUpSent(function(s){ return Object.assign({}, s, { [p.id]: data.sent ? "sent" : "queued" }); });
+      setTimeout(function(){ setFollowUpSent(function(s){ var n=Object.assign({},s); delete n[p.id]; return n; }); }, 4000);
+    })
+    .catch(function(){
+      setFollowUpSent(function(s){ return Object.assign({}, s, { [p.id]: "error" }); });
+      setTimeout(function(){ setFollowUpSent(function(s){ var n=Object.assign({},s); delete n[p.id]; return n; }); }, 4000);
+    });
+  }
   var won = proposals.filter(function(p){ return p.status==="won"; }).length;
   var total = proposals.filter(function(p){ return p.status!=="draft"; }).length;
   var winRate = total > 0 ? Math.round(won/total*100) : 0;
@@ -1037,8 +1164,15 @@ export function DProposals(props) {
 
   return (
     <div>
-      <SectionHeader title="Proposals" sub={"Win rate " + winRate + "% . " + MOCK_PROPOSALS.length + " total"} />
+      <SectionHeader title="Proposals" sub={"Win rate " + winRate + "% . " + proposals.length + " total"} />
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+        {proposals.length === 0 && (
+          <div style={{ background:C.surface, borderRadius:16, padding:"48px 32px", textAlign:"center", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
+            <div style={{ fontFamily:fSerif, fontSize:20, fontWeight:400, color:C.ink, marginBottom:8 }}>No proposals yet.</div>
+            <div style={{ fontFamily:fUI, fontSize:13, color:C.muted, fontWeight:300, marginBottom:20, lineHeight:1.6 }}>Write your first AI proposal in under 60 seconds.</div>
+            <Btn onClick={function(){ if (onConvert) onConvert(null); }}>Create proposal</Btn>
+          </div>
+        )}
         {proposals.map(function(p) {
           var sig = signal(p);
           var sc = stColor[p.status]||C.muted;
@@ -1061,7 +1195,9 @@ export function DProposals(props) {
               {sig && (
                 <div style={{ margin:"0 14px 14px", padding:"12px 16px", background:sig.urgent ? C.goldSoft : C.accentSoft, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"space-between", gap:10 }}>
                   <span style={{ fontFamily:fUI, fontSize:13, color:C.inkLight }}>{sig.msg}</span>
-                  <Btn variant="ghost" sm={true}>{sig.cta}</Btn>
+                  <Btn variant="ghost" sm={true} onClick={function(){ sendFollowUp(p); }}>
+                    {followUpSent[p.id] === "sending" ? "Sending..." : followUpSent[p.id] === "sent" ? "Sent!" : followUpSent[p.id] === "queued" ? "Queued" : sig.cta}
+                  </Btn>
                 </div>
               )}
               {/* Convert to invoice - only for won */}

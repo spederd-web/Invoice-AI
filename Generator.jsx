@@ -817,10 +817,41 @@ export function ProposalForm(props) {
     }
   }, [convertToInvoice]);
 
+  var [savePhase, setSavePhase] = useState("idle");
+
+  function saveProposalToDashboard() {
+    setSavePhase("saving");
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+    if (!user || !user.id) { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); return; }
+    var budgetNum = parseInt((budget||"").replace(/[^0-9]/g,"")) || 0;
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        table: "proposals",
+        action: "insert",
+        user_id: user.id,
+        payload: {
+          title: (projType || "Project") + (clientCo ? " - " + clientCo : clientName ? " - " + clientName : ""),
+          status: "draft",
+          value: budgetNum,
+          sent_at: null,
+          view_count: 0,
+          data: { client: clientCo || clientName, country: clientCountry, type: projType, brief: projDesc, budget: budget, timeline: timeline, tone: tone, content: result },
+        },
+      }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.error) { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); return; }
+      setSavePhase("saved"); setTimeout(function(){ setSavePhase("idle"); }, 3000);
+    })
+    .catch(function(){ setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); });
+  }
+
   var inpStyle = { width:"100%", boxSizing:"border-box", border:"1px solid "+L.border, borderRadius:8, padding:"9px 12px", fontFamily:fSans, fontSize:14, color:L.ink, background:L.paper, outline:"none" };
   var lblStyle = { display:"block", marginBottom:5, fontFamily:fSans, fontSize:12, color:L.muted, fontWeight:400 };
-
-  function generate() {
     if (!projDesc.trim()) return;
     setLoading(true); setResult(""); setHistory([]);
 
@@ -1013,9 +1044,12 @@ export function ProposalForm(props) {
               )}
               {result && !loading && (
                 <div style={{ display:"flex", gap:5 }}>
-                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>↺ Redo</button>
-                  <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>Export PDF ↓</button>
-                  <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>→ Invoice</button>
+                  <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>Redo</button>
+                  <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>PDF</button>
+                  <button onClick={saveProposalToDashboard} style={{ background:savePhase==="saved" ? L.green : L.navy, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
+                    {savePhase==="saving" ? "..." : savePhase==="saved" ? "Saved" : savePhase==="error" ? "Sign in" : "Save"}
+                  </button>
+                  <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>Invoice</button>
                 </div>
               )}
             </div>
