@@ -189,7 +189,7 @@ function AttentionCard(props) {
           </div>
           <span style={{ fontFamily:fMono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:t.color }}>{t.label}</span>
         </div>
-        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>"x"</button>
+        <button onClick={onDismiss} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontSize:18, lineHeight:1, padding:"0 2px", opacity:0.5 }}>x</button>
       </div>
       {/* Title large, desc quieter */}
       <div style={{ fontFamily:fUI, fontSize:16, fontWeight:600, color:C.ink, lineHeight:1.3, marginBottom:10 }}>{item.title}</div>
@@ -599,7 +599,7 @@ function DOverview(props) {
                     <div style={{ fontFamily:fMono, fontSize:10, color:C.faint }}>{a.sub}</div>
                   </div>
                   <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, flexShrink:0 }}>{a.time}</span>
-                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>"Go"</span>
+                  <span style={{ fontFamily:fUI, fontSize:11, color:C.accent, cursor:"pointer", flexShrink:0 }}>Go</span>
                 </div>
               );
             })}
@@ -841,7 +841,7 @@ function DClientDetail(props) {
   var pColors = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
   return (
     <div>
-      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}>"Back"</button>
+      <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}>Back</button>
       <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:36 }}>
         <div style={{ width:48, height:48, borderRadius:14, background:c.color+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.color, fontWeight:700 }}>{c.avatar}</div>
         <div>
@@ -1305,6 +1305,7 @@ function DSettings(props) {
     { id:"security",      label:"Security"       },
   ];
 
+  return (
     <div style={{ maxWidth:720 }}>
       <div style={{ marginBottom:32 }}>
         <h2 style={{ fontFamily:fSerif, fontSize:28, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:5 }}>Settings</h2>
@@ -1465,7 +1466,7 @@ function DSettings(props) {
             <SField label="New password" type="password" value={pwNew} onChange={setPwNew} placeholder="Password" />
             <SField label="Confirm new password" type="password" value={pwConfirm} onChange={setPwConfirm} placeholder="Password" />
             {pwNew && pwConfirm && pwNew !== pwConfirm && (
-              <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginBottom:12 }}>Passwords don't match.</div>
+              <div style={{ fontFamily:fUI, fontSize:13, color:C.red, marginBottom:12 }}>{"Passwords do not match."}</div>
             )}
             <div style={{ display:"flex", justifyContent:"flex-end" }}>
               <SSaveBtn onSave={save} saved={saved} saving={saving} section="password" />
