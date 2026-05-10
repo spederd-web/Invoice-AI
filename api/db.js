@@ -163,7 +163,10 @@ export default async function handler(req, res) {
     // Update
     if (action === "update") {
       if (!id) return res.status(400).json({ error: "id required for update" });
-      const updates = Object.assign({}, payload, { updated_at: new Date().toISOString() });
+      // Only profiles has updated_at — don't add it to other tables
+      const updates = table === "profiles"
+        ? Object.assign({}, payload, { updated_at: new Date().toISOString() })
+        : Object.assign({}, payload);
       const { data, error } = await supabase
         .from(table)
         .update(updates)
