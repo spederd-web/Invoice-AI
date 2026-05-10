@@ -229,6 +229,7 @@ export function Dashboard(props) {
     setSelectedClient(client);
   }
   var [refreshKey, setRefreshKey] = useState(0);
+  var [settingsTab, setSettingsTab] = useState("profile");
 
   function forceRefresh() { setRefreshKey(function(k){ return k + 1; }); }
 
@@ -245,7 +246,7 @@ export function Dashboard(props) {
   var isPaidPlan   = planStatus === "active" && planName !== "free";
   var invoiceCount = invoicesDB.rows.length;
 
-  // Use real rows when logged in (even if empty - new users start with nothing)
+  var brandKitsDB  = useDB("brand_kits", userId, refreshKey);
   // Only fall back to mock data when there is no userId (demo/logged-out mode)
   var invoices  = userId ? invoicesDB.rows  : MOCK_INVOICES;
   var proposals = userId ? proposalsDB.rows : MOCK_PROPOSALS;
@@ -290,9 +291,13 @@ export function Dashboard(props) {
           })}
           <div style={{ height:1, background:"rgba(255,255,255,0.05)", margin:"12px 0" }} />
           {navBottom.map(function(item) {
-            var active = section === item.id;
+            var active = section === item.id || (item.id === "integrations" && section === "settings" && tab === "integrations");
             return (
-              <button key={item.id} onClick={function(){ goSection(item.id); }} style={{ width:"100%", display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:10, border:"none", marginBottom:1, cursor:"pointer", background:"transparent", color:C.navyItem, fontFamily:fUI, fontSize:13, fontWeight:400, transition:"all 0.14s", textAlign:"left", opacity:0.7 }}
+              <button key={item.id} onClick={function(){
+                if (item.id === "integrations") { goSection("settings"); setSettingsTab("integrations"); }
+                else if (item.id === "reports") { goSection("overview"); }
+                else goSection(item.id);
+              }} style={{ width:"100%", display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:10, border:"none", marginBottom:1, cursor:"pointer", background:"transparent", color:C.navyItem, fontFamily:fUI, fontSize:13, fontWeight:400, transition:"all 0.14s", textAlign:"left", opacity:0.7 }}
                 onMouseEnter={function(e){ e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.opacity = "1"; }}
                 onMouseLeave={function(e){ e.currentTarget.style.background = "transparent"; e.currentTarget.style.opacity = "0.7"; }}
               >
@@ -322,14 +327,20 @@ export function Dashboard(props) {
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} userId={userId} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} userId={userId} onConvert={handleConvert} />}
-        {section==="brandkits" && <DBrandKits />}
-        {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} />}
+        {section==="brandkits" && <DBrandKits userId={userId} db={brandKitsDB} />}
+        {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} tab={settingsTab} setTab={setSettingsTab} />}
       </div>
 
       {/* Mobile bottom nav - lighter, shorter */}
       <div className="nav-burger" style={{ display:"none", position:"fixed", bottom:0, left:0, right:0, zIndex:200, background:"rgba(8,17,32,0.96)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)", borderTop:"1px solid rgba(255,255,255,0.04)", padding:"8px 0 16px" }}>
         <div style={{ display:"flex", justifyContent:"space-around" }}>
-          {nav.map(function(item) {
+          {[
+            { id:"overview",  label:"Overview",  icon:"overview"  },
+            { id:"clients",   label:"Clients",   icon:"users"     },
+            { id:"invoices",  label:"Invoices",  icon:"document"  },
+            { id:"proposals", label:"Proposals", icon:"proposal"  },
+            { id:"settings",  label:"Settings",  icon:"settings"  },
+          ].map(function(item) {
             var active = section === item.id;
             return (
               <button key={item.id} onClick={function(){ goSection(item.id); }} style={{ background:"none", border:"none", display:"flex", flexDirection:"column", alignItems:"center", gap:5, padding:"4px 8px", cursor:"pointer", minWidth:52 }}>
@@ -645,7 +656,7 @@ function DOverview(props) {
     return events;
   })();
 
-  // Build real chart data — weekly buckets for this month
+  // Build real chart data - weekly buckets for this month
   var chartData = (function() {
     if (!invoices.length) return null;
     var now4 = new Date();
@@ -1497,22 +1508,56 @@ export function DProposals(props) {
 }
 
 // -- Brand Kits ----------------------------------------------------------------
-export function DBrandKits() {
-  var [kits, setKits] = useState(MOCK_BRAND_KITS);
-  var [selId, setSelId] = useState(kits[0]?kits[0].id:null);
-  var sel = kits.find(function(k){ return k.id===selId; })||null;
-  var [editName, setEditName] = useState(sel?sel.name:"");
-  var [editColor, setEditColor] = useState(sel?sel.primary_color:"#17A99E");
-  var [editFont, setEditFont] = useState(sel?sel.font:"DM Sans");
-  var [saved, setSaved] = useState(false);
+export function DBrandKits(props) {
+  var userId = props.userId;
+  var db = props.db;
 
+  // Load real kits from DB, fall back to mock for demo
+  var dbKits = db ? db.rows : [];
+  var kits = userId && dbKits.length > 0 ? dbKits : (userId && db && !db.loading ? [] : MOCK_BRAND_KITS);
+
+  var [selId, setSelId] = useState(null);
+  var sel = kits.find(function(k){ return k.id===selId; }) || kits[0] || null;
+
+  var [editName,  setEditName]  = useState("");
+  var [editColor, setEditColor] = useState("#17A99E");
+  var [editFont,  setEditFont]  = useState("DM Sans");
+  var [saved,     setSaved]     = useState(false);
+  var [saving,    setSaving]    = useState(false);
+
+  // Sync edit fields when selection changes
   useEffect(function() {
-    if (sel) { setEditName(sel.name); setEditColor(sel.primary_color); setEditFont(sel.font||"DM Sans"); }
-  }, [selId]);
+    var k = kits.find(function(k){ return k.id===selId; }) || kits[0] || null;
+    if (k) { setEditName(k.name||""); setEditColor(k.primary_color||"#17A99E"); setEditFont(k.font||"DM Sans"); }
+  }, [selId, kits.length]);
 
   function save() {
-    setKits(function(prev){ return prev.map(function(k){ return k.id===selId?Object.assign({},k,{name:editName,primary_color:editColor,font:editFont}):k; }); });
-    setSaved(true); setTimeout(function(){ setSaved(false); },2000);
+    if (!sel) return;
+    setSaving(true);
+    var payload = { name:editName, primary_color:editColor, font:editFont };
+    if (userId && db) {
+      // Real kit from DB - update it
+      if (sel.user_id) {
+        db.update(sel.id, payload).then(function(){ setSaving(false); setSaved(true); setTimeout(function(){ setSaved(false); }, 2000); });
+      } else {
+        // Mock kit - insert as new real kit
+        db.insert(Object.assign({ logo_text: editName.slice(0,2).toUpperCase() }, payload))
+          .then(function(){ setSaving(false); setSaved(true); setTimeout(function(){ setSaved(false); }, 2000); });
+      }
+    } else {
+      setSaving(false); setSaved(true); setTimeout(function(){ setSaved(false); }, 2000);
+    }
+  }
+
+  function addKit() {
+    if (userId && db) {
+      db.insert({ name:"New Kit", primary_color:C.accent, font:"DM Sans", logo_text:"NK" })
+        .then(function(data){ if (data && data.id) setSelId(data.id); });
+    } else {
+      // Demo mode - local only
+      var id = "local-" + Date.now();
+      setSelId(id);
+    }
   }
 
   var inp = { width:"100%", boxSizing:"border-box", border:"none", borderRadius:9, padding:"10px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
@@ -1524,17 +1569,17 @@ export function DBrandKits() {
       <div className="dash-brandkit-grid" style={{ display:"grid", gridTemplateColumns:"170px 1fr", gap:18 }}>
         <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
           {kits.map(function(kit) {
-            var active = selId===kit.id;
+            var active = sel && sel.id === kit.id;
             return (
               <div key={kit.id} onClick={function(){ setSelId(kit.id); }} style={{ background:active?C.surface:"transparent", borderRadius:12, padding:"10px 12px", cursor:"pointer", transition:"all 0.12s", boxShadow:active?"0 1px 6px rgba(10,22,40,0.07)":"none", outline:active?"1.5px solid "+C.accent+"35":"none" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  <div style={{ width:26, height:26, borderRadius:6, background:kit.primary_color, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:10, color:"#fff", fontWeight:700, flexShrink:0 }}>{kit.logo_text}</div>
+                  <div style={{ width:26, height:26, borderRadius:6, background:kit.primary_color||"#17A99E", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:10, color:"#fff", fontWeight:700, flexShrink:0 }}>{kit.logo_text||(kit.name||"?").slice(0,2).toUpperCase()}</div>
                   <div style={{ fontFamily:fUI, fontSize:13, fontWeight:active?500:400, color:active?C.ink:C.muted, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{kit.name}</div>
                 </div>
               </div>
             );
           })}
-          <button onClick={function(){ var id=String(Date.now()); setKits(function(p){ return p.concat([{id:id,name:"New Kit",primary_color:C.accent,font:"DM Sans",logo_text:"NK"}]); }); setSelId(id); }} style={{ background:"none", border:"1.5px dashed "+C.border, borderRadius:12, padding:"10px 12px", cursor:"pointer", color:C.faint, fontFamily:fUI, fontSize:13, textAlign:"left" }}>+ New</button>
+          <button onClick={addKit} style={{ background:"none", border:"1.5px dashed "+C.border, borderRadius:12, padding:"10px 12px", cursor:"pointer", color:C.faint, fontFamily:fUI, fontSize:13, textAlign:"left" }}>+ New</button>
         </div>
         {sel && (
           <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
@@ -1553,13 +1598,13 @@ export function DBrandKits() {
                   {["DM Sans","DM Serif Display","Playfair Display","Cormorant Garamond","Inter"].map(function(f){ return <option key={f} value={f}>{f}</option>; })}
                 </select>
               </div>
-              <Btn onClick={save} variant={saved?"secondary":"primary"}>{saved?"OK Saved":"Save kit"}</Btn>
+              <Btn onClick={save} variant={saved?"secondary":"primary"}>{saving ? "Saving..." : saved ? "Saved" : "Save kit"}</Btn>
             </div>
             {/* Preview */}
             <div style={{ background:C.bg, borderRadius:16, padding:"20px", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
               <div style={{ background:"#fff", borderRadius:14, padding:"20px 22px", boxShadow:"0 2px 16px rgba(10,22,40,0.08)" }}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:16 }}>
-                  <div style={{ width:30, height:30, borderRadius:8, background:editColor, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"monospace", fontSize:11, color:"#fff", fontWeight:700 }}>{sel.logo_text||editName[0]||"B"}</div>
+                  <div style={{ width:30, height:30, borderRadius:8, background:editColor, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"monospace", fontSize:11, color:"#fff", fontWeight:700 }}>{(sel&&sel.logo_text)||editName.slice(0,2).toUpperCase()||"B"}</div>
                   <div style={{ textAlign:"right" }}>
                     <div style={{ fontFamily:fMono, fontSize:9, color:C.faint, letterSpacing:"0.1em", textTransform:"uppercase" }}>Invoice</div>
                     <div style={{ fontFamily:fMono, fontSize:12, color:C.ink, fontWeight:500, marginTop:1 }}>DE-2026-001</div>
@@ -1636,7 +1681,8 @@ function DSettings(props) {
   var user = props.user;
   var profile = props.profile || {};
   var profileHook = props.profileHook;
-  var [tab, setTab] = useState("profile");
+  var tab = props.tab || "profile";
+  var setTab = props.setTab || function() {};
 
   // Profile state - pre-filled from Supabase profile
   var [firstName, setFirstName]   = useState(profile.first_name || "");
@@ -1738,6 +1784,7 @@ function DSettings(props) {
     { id:"business",      label:"Business"       },
     { id:"notifications", label:"Notifications"  },
     { id:"billing",       label:"Plan & Billing" },
+    { id:"integrations",  label:"Integrations"   },
     { id:"security",      label:"Security"       },
   ];
 
@@ -1748,12 +1795,12 @@ function DSettings(props) {
         <p style={{ fontFamily:fUI, fontSize:13, color:C.muted, fontWeight:300 }}>Manage your account, business details and preferences.</p>
       </div>
 
-      {/* Tab bar */}
-      <div style={{ display:"flex", gap:2, borderBottom:"1px solid "+C.border, marginBottom:28 }}>
+      {/* Tab bar - scrollable on mobile */}
+      <div style={{ display:"flex", gap:0, borderBottom:"1px solid "+C.border, marginBottom:28, overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
         {tabs.map(function(t) {
           var active = tab === t.id;
           return (
-            <button key={t.id} onClick={function(){ setTab(t.id); }} style={{ background:"none", border:"none", borderBottom:"2px solid "+(active ? C.accent : "transparent"), padding:"10px 16px 11px", cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:active ? 500 : 400, color:active ? C.ink : C.muted, transition:"all 0.15s", marginBottom:-1 }}>
+            <button key={t.id} onClick={function(){ setTab(t.id); }} style={{ background:"none", border:"none", borderBottom:"2px solid "+(active ? C.accent : "transparent"), padding:"10px 14px 11px", cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:active ? 500 : 400, color:active ? C.ink : C.muted, transition:"all 0.15s", marginBottom:-1, whiteSpace:"nowrap", flexShrink:0 }}>
               {t.label}
             </button>
           );
@@ -1890,6 +1937,43 @@ function DSettings(props) {
                 </div>
               );
             })}
+          </SCard>
+        </div>
+      )}
+
+      {/* -- Integrations -- */}
+      {tab === "integrations" && (
+        <div>
+          <SCard title="Connected services" sub="Sync your invoicing data with third-party tools.">
+            {[
+              { name:"Lexoffice", desc:"Sync invoices and clients automatically.", status:"coming", color:"#FF6B35" },
+              { name:"Stripe",    desc:"Payment processing and subscription billing.", status:"active", color:"#635BFF" },
+              { name:"Loops",     desc:"Transactional email for reminders and follow-ups.", status:"active", color:"#06B6D4" },
+              { name:"Peppol",    desc:"E-invoicing network for B2G and public sector.", status:"coming", color:"#10B981" },
+              { name:"DATEV",     desc:"German accounting software integration.", status:"coming", color:"#003087" },
+            ].map(function(svc, i, arr) {
+              return (
+                <div key={svc.name} style={{ display:"flex", alignItems:"center", gap:14, padding:"16px 0", borderBottom:i<arr.length-1 ? "1px solid "+C.borderLt : "none" }}>
+                  <div style={{ width:36, height:36, borderRadius:9, background:svc.color+"15", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    <div style={{ width:10, height:10, borderRadius:2, background:svc.color }} />
+                  </div>
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ fontFamily:fUI, fontSize:14, fontWeight:500, color:C.ink, marginBottom:2 }}>{svc.name}</div>
+                    <div style={{ fontFamily:fUI, fontSize:12, color:C.faint, fontWeight:300 }}>{svc.desc}</div>
+                  </div>
+                  {svc.status === "active"
+                    ? <span style={{ fontFamily:fMono, fontSize:10, color:C.green, background:C.greenSoft, borderRadius:5, padding:"3px 8px", flexShrink:0 }}>Active</span>
+                    : <span style={{ fontFamily:fMono, fontSize:10, color:C.faint, background:C.bg, borderRadius:5, padding:"3px 8px", flexShrink:0 }}>Soon</span>
+                  }
+                </div>
+              );
+            })}
+          </SCard>
+          <SCard title="API access" sub="Build custom integrations with the InvoiceAI API.">
+            <div style={{ background:C.bg, borderRadius:9, padding:"12px 14px", fontFamily:fMono, fontSize:12, color:C.muted, marginBottom:14 }}>
+              API keys available on Agency plan
+            </div>
+            <Btn variant="secondary" onClick={function(){ setTab("billing"); }}>Upgrade plan</Btn>
           </SCard>
         </div>
       )}
