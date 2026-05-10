@@ -583,7 +583,17 @@ function DOverview(props) {
   var openProposals = proposals.filter(function(p){ return p.status === "sent" || p.status === "viewed"; }).length;
   var awaitingReply = proposals.filter(function(p){ return p.status === "sent"; }).length;
 
-  function fmtEur(n) { return "EUR " + Math.round(n).toLocaleString(); }
+  function fmtEur(n) {
+    var currencies = {};
+    invoices.forEach(function(inv) {
+      var cur = inv.currency || "EUR";
+      currencies[cur] = (currencies[cur] || 0) + (inv.amount_gross || 0);
+    });
+    var keys = Object.keys(currencies);
+    if (keys.length === 1 || keys.length === 0) return (keys[0] || "EUR") + " " + Math.round(n).toLocaleString();
+    // Mixed currencies — show EUR equivalent only
+    return "EUR " + Math.round(n).toLocaleString();
+  }
 
   // Use mock data for demo mode (no real invoices yet)
   var usingMock = user && !user.id && invoices.length === 0 && proposals.length === 0;
@@ -1163,11 +1173,12 @@ function DClientDetail(props) {
 
 // -- Invoices - calm overview, not admin table ---------------------------------
 function DInvoices(props) {
-  var invoices = props.invoices || MOCK_INVOICES;
-  var clients  = props.clients  || MOCK_CLIENTS;
+  var invoices = props.invoices || [];
+  var clients  = props.clients  || [];
   var db = props.db;
   var userId = props.userId;
   var [filter, setFilter] = useState("all");
+  var [search, setSearch] = useState("");
   var [updating, setUpdating] = useState({});
   var [localStatus, setLocalStatus] = useState({});
   var [emailSent, setEmailSent] = useState({});
@@ -1235,9 +1246,15 @@ function DInvoices(props) {
 
   var enriched = invoices.map(function(inv){ return Object.assign({}, inv, { _status: getStatus(inv) }); });
   var filtered = enriched.filter(function(inv){
-    if (filter==="outstanding") return inv._status==="sent" || inv._status==="overdue";
-    if (filter==="paid") return inv._status==="paid";
-    if (filter==="draft") return inv._status==="draft";
+    if (filter==="outstanding") { if (inv._status!=="sent" && inv._status!=="overdue") return false; }
+    else if (filter==="paid") { if (inv._status!=="paid") return false; }
+    else if (filter==="draft") { if (inv._status!=="draft") return false; }
+    if (search.trim()) {
+      var q = search.toLowerCase();
+      var client = clientMap[inv.client_id] || {};
+      var name = (typeof client === "object" ? client.name : "") || inv.client_name || "";
+      if (name.toLowerCase().indexOf(q) < 0 && (inv.inv_number||"").toLowerCase().indexOf(q) < 0) return false;
+    }
     return true;
   });
   var outstanding = enriched.filter(function(i){ return i._status==="sent"||i._status==="overdue"; }).reduce(function(s,i){ return s+(i.amount_gross||0); }, 0);
@@ -1252,6 +1269,9 @@ function DInvoices(props) {
             </div>
           : null
       } />
+      <div style={{ display:"flex", gap:10, marginBottom:16, alignItems:"center" }}>
+        <input value={search} onChange={function(e){ setSearch(e.target.value); }} placeholder="Search invoices..." style={{ flex:1, border:"1px solid "+C.border, borderRadius:9, padding:"9px 13px", fontFamily:fUI, fontSize:13, color:C.ink, background:C.bg, outline:"none" }} />
+      </div>
       <div style={{ display:"flex", gap:2, marginBottom:24 }}>
         {[["all","All"],["draft","Draft"],["outstanding","Pending"],["paid","Paid"]].map(function(pair) {
           var active = filter===pair[0];
@@ -1351,8 +1371,8 @@ function DInvoices(props) {
 // -- Proposals - intelligence layer, simplified --------------------------------
 export function DProposals(props) {
   var onConvert = props.onConvert;
-  var proposals = props.proposals || MOCK_PROPOSALS;
-  var clients   = props.clients   || MOCK_CLIENTS;
+  var proposals = props.proposals || [];
+  var clients   = props.clients   || [];
   var db = props.db;
   var userId = props.userId;
   var [followUpSent, setFollowUpSent] = useState({});

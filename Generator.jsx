@@ -1666,8 +1666,19 @@ export function ProposalPortal(props) {
             </div>
 
             {proposal.content ? (
-              <div style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8, whiteSpace:"pre-wrap" }}>
-                {proposal.content}
+              <div style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
+                {proposal.content.split("\n").map(function(line, idx) {
+                  var trimmed = line.trim();
+                  if (!trimmed) return React.createElement("div", { key:idx, style:{ height:10 } });
+                  if (trimmed.startsWith("# ")) return React.createElement("h1", { key:idx, style:{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:L.ink, letterSpacing:"-0.02em", margin:"28px 0 8px" } }, trimmed.slice(2));
+                  if (trimmed.startsWith("## ")) return React.createElement("h2", { key:idx, style:{ fontFamily:fSerif, fontSize:20, fontWeight:400, color:L.ink, letterSpacing:"-0.01em", margin:"22px 0 6px" } }, trimmed.slice(3));
+                  if (trimmed.startsWith("### ")) return React.createElement("h3", { key:idx, style:{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink, margin:"16px 0 4px" } }, trimmed.slice(4));
+                  if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) return React.createElement("div", { key:idx, style:{ display:"flex", gap:10, marginBottom:4 } }, React.createElement("span", { style:{ color:L.accent, flexShrink:0, marginTop:2 } }, "*"), React.createElement("span", null, trimmed.slice(2)));
+                  if (trimmed.match(/^\d+\.\s/)) return React.createElement("div", { key:idx, style:{ display:"flex", gap:10, marginBottom:4 } }, React.createElement("span", { style:{ color:L.accent, flexShrink:0, fontFamily:fMono, fontSize:12, marginTop:2 } }, trimmed.match(/^\d+/)[0]+"."), React.createElement("span", null, trimmed.replace(/^\d+\.\s/, "")));
+                  if (trimmed.startsWith("---") || trimmed.startsWith("***")) return React.createElement("hr", { key:idx, style:{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" } });
+                  return React.createElement("p", { key:idx, style:{ margin:"0 0 8px" } }, trimmed);
+                })}
+              </div>
               </div>
             ) : (
               <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontStyle:"italic" }}>No content available for this proposal.</div>
