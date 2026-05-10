@@ -310,9 +310,9 @@ export function Dashboard(props) {
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
         {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
         {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
-        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} />}
+        {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} userId={userId} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
-        {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} onConvert={handleConvert} />}
+        {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} userId={userId} onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits />}
         {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} />}
       </div>
@@ -530,8 +530,45 @@ function DOverview(props) {
     return <Onboarding setPage={setPage} setSection={setSection} />;
   }
 
-  var now = new Date();
-  var hour = now.getHours();
+  // Compute real KPIs from live data
+  var now2 = new Date();
+  var thisMonth = now2.getMonth();
+  var thisYear = now2.getFullYear();
+
+  function isThisMonth(dateStr) {
+    if (!dateStr) return false;
+    var d = new Date(dateStr);
+    return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
+  }
+
+  var revenue = invoices
+    .filter(function(i){ return (i.status === "paid") && isThisMonth(i.issue_date || i.created_at); })
+    .reduce(function(s, i){ return s + (i.amount_gross || 0); }, 0);
+
+  var outstanding = invoices
+    .filter(function(i){ return i.status === "sent" || i.status === "overdue"; })
+    .reduce(function(s, i){ return s + (i.amount_gross || 0); }, 0);
+
+  var overdueCount = invoices.filter(function(i){ return i.status === "overdue"; }).length;
+
+  var collected = invoices
+    .filter(function(i){ return i.status === "paid" && isThisMonth(i.issue_date || i.created_at); })
+    .reduce(function(s, i){ return s + (i.amount_gross || 0); }, 0);
+
+  var openProposals = proposals.filter(function(p){ return p.status === "sent" || p.status === "viewed"; }).length;
+  var awaitingReply = proposals.filter(function(p){ return p.status === "sent"; }).length;
+
+  function fmtEur(n) { return "EUR " + Math.round(n).toLocaleString(); }
+
+  // Use mock data for demo mode (no real invoices yet)
+  var usingMock = userId && invoices.length === 0 && proposals.length === 0;
+  var kpiRevenue    = usingMock ? "EUR 14,280" : fmtEur(revenue);
+  var kpiOutstanding = usingMock ? "EUR 4,320"  : fmtEur(outstanding);
+  var kpiCollected  = usingMock ? "EUR 9,960"   : fmtEur(collected);
+  var kpiOpenProps  = usingMock ? "6"            : String(openProposals);
+  var kpiOverdueSub = usingMock ? "4 overdue"   : (overdueCount > 0 ? overdueCount + " overdue" : "all current");
+  var kpiAwaitSub   = usingMock ? "2 awaiting reply" : (awaitingReply + " awaiting reply");
+  var hour = now2.getHours();
   var greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   var firstName = user && user.email ? user.email.split("@")[0].split(".")[0] : null;
   var greetingFull = firstName ? greeting + ", " + firstName[0].toUpperCase() + firstName.slice(1) + "." : greeting + ".";
@@ -657,7 +694,7 @@ function DOverview(props) {
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
               <span style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:C.ink }}>Cash flow</span>
             </div>
-            <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>EUR 14,280</div>
+            <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>{kpiRevenue}</div>
             <div style={{ fontFamily:fUI, fontSize:11, color:C.faint, marginBottom:14 }}>Total cash flow</div>
             <BarChart inData={CASHFLOW_IN} outData={CASHFLOW_OUT} labels={CASHFLOW_LABELS} w={300} h={110} />
           </div>
@@ -882,31 +919,88 @@ function DClients(props) {
 function DClientDetail(props) {
   var c = props.client;
   var setClientId = props.setClientId;
+  var userId = props.userId;
   var clientInvoices = (props.invoices||[]).filter(function(i){ return i.client_id===c.id; });
   var clientProposals = (props.proposals||[]).filter(function(p){ return p.client_id===c.id; });
   var stColor = { sent:C.blue, paid:C.green, overdue:C.red };
   var pColors = { won:C.green, sent:C.blue, viewed:C.gold, declined:C.muted };
+
+  var [editing, setEditing] = useState(false);
+  var [editName, setEditName] = useState(c.name || "");
+  var [editEmail, setEditEmail] = useState(c.email || "");
+  var [editCity, setEditCity] = useState(c.city || "");
+  var [saving, setSaving] = useState(false);
+  var [deleting, setDeleting] = useState(false);
+
+  function saveEdit() {
+    if (!editName.trim()) return;
+    setSaving(true);
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ table:"clients", action:"update", id:c.id, user_id:userId, payload:{ name:editName.trim(), email:editEmail.trim()||null, city:editCity.trim()||null } }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(){ setSaving(false); setEditing(false); setClientId(null); })
+    .catch(function(){ setSaving(false); });
+  }
+
+  function deleteClient() {
+    if (!confirm("Delete " + c.name + "? This cannot be undone.")) return;
+    setDeleting(true);
+    fetch("/api/db", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ table:"clients", action:"delete", id:c.id, user_id:userId }),
+    })
+    .then(function(){ setClientId(null); })
+    .catch(function(){ setDeleting(false); });
+  }
+
+  var inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
+  var lbl = { display:"block", marginBottom:4, fontFamily:fUI, fontSize:12, color:C.muted };
+
   return (
-    <div>
+    <div style={{ maxWidth:640 }}>
       <button onClick={function(){ setClientId(null); }} style={{ background:"none", border:"none", color:C.faint, cursor:"pointer", fontFamily:fUI, fontSize:13, marginBottom:28, padding:0 }}>Back</button>
-      <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:36 }}>
-        <div style={{ width:48, height:48, borderRadius:14, background:c.color+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.color, fontWeight:700 }}>{c.avatar}</div>
-        <div>
-          <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:400, color:C.ink, letterSpacing:"-0.025em", marginBottom:2 }}>{c.name}</h2>
-          <p style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}</p>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:28 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+          <div style={{ width:48, height:48, borderRadius:14, background:(c.color||"#6E7A8A")+"16", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:fMono, fontSize:16, color:c.color||"#6E7A8A", fontWeight:700 }}>{c.avatar||(c.name||"?").slice(0,2).toUpperCase()}</div>
+          <div>
+            <h2 style={{ fontFamily:fSerif, fontSize:24, fontWeight:400, color:C.ink, letterSpacing:"-0.025em", marginBottom:2 }}>{c.name}</h2>
+            <p style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}{c.email ? " . "+c.email : ""}</p>
+          </div>
+        </div>
+        <div style={{ display:"flex", gap:8 }}>
+          <Btn variant="secondary" sm={true} onClick={function(){ setEditing(function(e){ return !e; }); }}>{editing ? "Cancel" : "Edit"}</Btn>
+          <Btn variant="danger" sm={true} onClick={deleteClient}>{deleting ? "..." : "Delete"}</Btn>
         </div>
       </div>
-      <div className="dash-kpi-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:24 }}>
-        <StatCard label="Billed" value={"€"+c.paid.toLocaleString()} />
-        <StatCard label="Outstanding" value={"€"+c.balance.toLocaleString()} color={c.balance>0?C.red:C.green} />
+
+      {editing && (
+        <div style={{ background:C.surface, borderRadius:14, padding:"20px 22px", marginBottom:20, boxShadow:"0 1px 6px rgba(10,22,40,0.06)" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:14 }}>
+            <div><label style={lbl}>Name *</label><input value={editName} onChange={function(e){ setEditName(e.target.value); }} style={inp} /></div>
+            <div><label style={lbl}>Email</label><input value={editEmail} onChange={function(e){ setEditEmail(e.target.value); }} style={inp} /></div>
+            <div><label style={lbl}>City</label><input value={editCity} onChange={function(e){ setEditCity(e.target.value); }} style={inp} /></div>
+          </div>
+          <Btn onClick={saveEdit}>{saving ? "Saving..." : "Save changes"}</Btn>
+        </div>
+      )}
+
+      <div className="dash-kpi-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
+        <StatCard label="Total billed" value={"€"+(c.paid||0).toLocaleString()} />
+        <StatCard label="Outstanding" value={"€"+(c.balance||0).toLocaleString()} color={(c.balance||0)>0?C.red:C.green} />
       </div>
+
       {clientInvoices.length > 0 && (
         <div style={{ background:C.surface, borderRadius:16, overflow:"hidden", marginBottom:14, boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
+          <div style={{ padding:"14px 20px 10px", fontFamily:fUI, fontSize:13, fontWeight:600, color:C.ink }}>Invoices</div>
           {clientInvoices.map(function(inv, i) {
             return (
-              <div key={inv.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"15px 20px", borderBottom:i<clientInvoices.length-1?"1px solid "+C.borderLt:"none" }}>
+              <div key={inv.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 20px", borderTop:"1px solid "+C.borderLt }}>
                 <div style={{ fontFamily:fMono, fontSize:12, color:C.ink, flex:1 }}>{inv.inv_number}</div>
-                <div style={{ fontFamily:fMono, fontSize:13, fontWeight:500, color:C.ink }}>{"€"+inv.amount_gross.toLocaleString()}</div>
+                <div style={{ fontFamily:fMono, fontSize:13, fontWeight:500, color:C.ink }}>{"€"+(inv.amount_gross||0).toLocaleString()}</div>
                 <Dot color={stColor[inv.status]||C.muted}>{inv.status}</Dot>
               </div>
             );
@@ -915,11 +1009,12 @@ function DClientDetail(props) {
       )}
       {clientProposals.length > 0 && (
         <div style={{ background:C.surface, borderRadius:16, overflow:"hidden", boxShadow:"0 1px 4px rgba(10,22,40,0.04)" }}>
+          <div style={{ padding:"14px 20px 10px", fontFamily:fUI, fontSize:13, fontWeight:600, color:C.ink }}>Proposals</div>
           {clientProposals.map(function(p, i) {
             return (
-              <div key={p.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"15px 20px", borderBottom:i<clientProposals.length-1?"1px solid "+C.borderLt:"none" }}>
+              <div key={p.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 20px", borderTop:"1px solid "+C.borderLt }}>
                 <div style={{ flex:1, fontFamily:fUI, fontSize:13, color:C.ink }}>{p.title}</div>
-                <div style={{ fontFamily:fMono, fontSize:13, fontWeight:500, color:C.ink }}>{"€"+p.value.toLocaleString()}</div>
+                <div style={{ fontFamily:fMono, fontSize:13, fontWeight:500, color:C.ink }}>{"€"+(p.value||0).toLocaleString()}</div>
                 <Dot color={pColors[p.status]||C.muted}>{p.status}</Dot>
               </div>
             );
@@ -1099,8 +1194,12 @@ function DInvoices(props) {
                 </div>
               )}
               {isPaid && (
-                <div style={{ padding:"0 20px 14px" }}>
-                  <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>OK Settled</span>
+                <div style={{ padding:"0 20px 14px", display:"flex", gap:8, alignItems:"center" }}>
+                  <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>Settled</span>
+                  <Btn variant="secondary" sm={true} onClick={function(){
+                    if (!db) return;
+                    db.remove(inv.id);
+                  }}>Delete</Btn>
                 </div>
               )}
             </div>
@@ -1117,9 +1216,42 @@ export function DProposals(props) {
   var proposals = props.proposals || MOCK_PROPOSALS;
   var clients   = props.clients   || MOCK_CLIENTS;
   var db = props.db;
+  var userId = props.userId;
   var [followUpSent, setFollowUpSent] = useState({});
+  var [sharePhase, setSharePhase] = useState({});
   var clientMap = {};
   clients.forEach(function(c){ clientMap[c.id] = c; });
+
+  function shareProposal(p) {
+    setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "saving" }); });
+    fetch("/api/share-proposal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ proposal_id: p.id, title: p.title, value: p.value, user_id: userId }),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.id) {
+        var url = window.location.origin + "/?proposal=" + data.id;
+        navigator.clipboard.writeText(url).catch(function(){});
+        setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "copied" }); });
+        setTimeout(function(){ setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "idle" }); }); }, 3000);
+      } else {
+        setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "idle" }); });
+      }
+    })
+    .catch(function(){ setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "idle" }); }); });
+  }
+
+  function deleteProposal(p) {
+    if (!db || !userId) return;
+    db.remove(p.id);
+  }
+
+  function deleteInvoiceById(id, dbInvoices) {
+    if (!dbInvoices) return;
+    dbInvoices.remove(id);
+  }
 
   function sendFollowUp(p) {
     var client = clientMap[p.client_id] || {};
@@ -1200,12 +1332,16 @@ export function DProposals(props) {
                   </Btn>
                 </div>
               )}
-              {/* Convert to invoice - only for won */}
-              {p.status==="won" && (
-                <div style={{ padding:"0 22px 18px" }}>
-                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>Convert to invoice</Btn>
-                </div>
-              )}
+              {/* Actions row */}
+              <div style={{ padding:"0 22px 18px", display:"flex", gap:8, flexWrap:"wrap" }}>
+                {p.status==="won" && (
+                  <Btn variant="ghost" sm={true} onClick={function(){ if(onConvert) onConvert(p); }}>To invoice</Btn>
+                )}
+                <Btn variant="secondary" sm={true} onClick={function(){ shareProposal(p); }}>
+                  {sharePhase[p.id] === "saving" ? "..." : sharePhase[p.id] === "copied" ? "Link copied!" : "Share link"}
+                </Btn>
+                <Btn variant="secondary" sm={true} onClick={function(){ deleteProposal(p); }}>Delete</Btn>
+              </div>
             </div>
           );
         })}
@@ -1420,6 +1556,24 @@ function DSettings(props) {
       payload = { iban:iban, bic:bic };
     } else if (section === "notifications") {
       payload = { notif_proposal:notifProposal, notif_invoice:notifInvoice, notif_overdue:notifOverdue, notif_digest:notifDigest };
+    } else if (section === "password") {
+      if (!pwNew || pwNew !== pwConfirm) { setSaving(false); setSaved(""); return; }
+      var user = null;
+      try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+      if (!user || !user.id) { setSaving(false); return; }
+      fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action:"updatepassword", user_id:user.id, new_password:pwNew }),
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        setSaving(false);
+        if (d.updated) { setSaved("password"); setPwCurrent(""); setPwNew(""); setPwConfirm(""); setTimeout(function(){ setSaved(""); }, 2500); }
+        else { setSaved(""); }
+      })
+      .catch(function(){ setSaving(false); });
+      return;
     }
     if (profileHook && profileHook.save && Object.keys(payload).length > 0) {
       profileHook.save(payload).then(function() {

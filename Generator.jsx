@@ -1116,29 +1116,51 @@ export function InvoiceGen(props) {
       : [{ id:1, desc:"Brand Identity Workshop", qty:1, rate:1800 },{ id:2, desc:"Logo Design + 3 variations", qty:1, rate:2400 },{ id:3, desc:"Brand Guidelines PDF", qty:1, rate:1200 }],
   };
 
-  // Load profile from Supabase to pre-fill seller fields
+  // Load profile and auto-increment invoice number
   var [invState, setInvState] = useState(defaultInvState);
 
   useEffect(function() {
     var user = null;
     try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
     if (!user || !user.id) return;
-    fetch("/api/db?table=profiles&user_id=" + encodeURIComponent(user.id))
-      .then(function(r) { return r.json(); })
-      .then(function(profile) {
-        if (!profile || !profile.biz_name) return;
-        setInvState(function(s) {
-          return Object.assign({}, s, {
-            sName:   profile.biz_name    || s.sName,
-            sVAT:    profile.vat_number  || s.sVAT,
-            sIBAN:   profile.iban        || s.sIBAN,
-            sBIC:    profile.bic         || s.sBIC,
-            sStreet: profile.street      || s.sStreet,
-            sCity:   profile.city        || s.sCity,
-          });
+
+    // Load profile and last invoice number in parallel
+    var profilePromise = fetch("/api/db?table=profiles&user_id=" + encodeURIComponent(user.id))
+      .then(function(r) { return r.json(); }).catch(function(){ return {}; });
+
+    var invoicePromise = fetch("/api/db?table=invoices&user_id=" + encodeURIComponent(user.id))
+      .then(function(r) { return r.json(); }).catch(function(){ return []; });
+
+    Promise.all([profilePromise, invoicePromise]).then(function(results) {
+      var profile = results[0] || {};
+      var invoices = Array.isArray(results[1]) ? results[1] : [];
+      var yr = new Date().getFullYear();
+      var countryCode = profile.country || "DE";
+
+      // Find highest number for this year
+      var prefix = countryCode + "-" + yr + "-";
+      var maxNum = 0;
+      invoices.forEach(function(inv) {
+        if (inv.inv_number && inv.inv_number.indexOf(prefix) === 0) {
+          var n = parseInt(inv.inv_number.slice(prefix.length)) || 0;
+          if (n > maxNum) maxNum = n;
+        }
+      });
+      var nextNum = String(maxNum + 1).padStart(3, "0");
+      var nextInvNum = prefix + nextNum;
+
+      setInvState(function(s) {
+        return Object.assign({}, s, {
+          invNum:  nextInvNum,
+          sName:   profile.biz_name   || s.sName,
+          sVAT:    profile.vat_number || s.sVAT,
+          sIBAN:   profile.iban       || s.sIBAN,
+          sBIC:    profile.bic        || s.sBIC,
+          sStreet: profile.street     || s.sStreet,
+          sCity:   profile.city       || s.sCity,
         });
-      })
-      .catch(function(){});
+      });
+    });
   }, []);
 
   function updateInv(key, val) {
