@@ -317,7 +317,7 @@ export function Dashboard(props) {
 
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
-        {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} isPaidPlan={isPaidPlan} invoiceCount={invoiceCount} />}
+        {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} isPaidPlan={isPaidPlan} invoiceCount={invoiceCount} dataLoading={invoicesDB.loading || clientsDB.loading} />}
         {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} userId={userId} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
@@ -533,12 +533,13 @@ function DOverview(props) {
   var invoices = props.invoices || [];
   var proposals = props.proposals || [];
   var isPaidPlan = props.isPaidPlan;
+  var dataLoading = props.dataLoading;
   var invoiceCount = props.invoiceCount || 0;
   var FREE_INVOICE_LIMIT = 3;
   var hitLimit = user && !isPaidPlan && invoiceCount >= FREE_INVOICE_LIMIT;
 
-  // Show onboarding for new logged-in users with no data
-  var isNewUser = user && clients.length === 0 && invoices.length === 0 && proposals.length === 0;
+  // Only show onboarding after data has finished loading and is genuinely empty
+  var isNewUser = user && !dataLoading && clients.length === 0 && invoices.length === 0 && proposals.length === 0;
   if (isNewUser) {
     return <Onboarding setPage={setPage} setSection={setSection} />;
   }
@@ -587,7 +588,7 @@ function DOverview(props) {
   var greetingFull = firstName ? greeting + ", " + firstName[0].toUpperCase() + firstName.slice(1) + "." : greeting + ".";
   var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var dateStr = days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+  var dateStr = days[now2.getDay()] + ", " + now2.getDate() + " " + months[now2.getMonth()] + " " + now2.getFullYear();
 
   var [dismissed, setDismissed] = useState([]);
   var allAttention = [
