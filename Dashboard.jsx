@@ -1919,13 +1919,28 @@ function DSettings(props) {
             </div>
             <div style={{ display:"flex", gap:10 }}>
               <button onClick={function(){
-                // Open Stripe customer portal
-                var portalUrl = "https://billing.stripe.com/p/login/test_00g000000000000"; // replace with your Stripe portal URL
-                window.open(portalUrl, "_blank");
+                var user = null;
+                try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+                fetch("/api/stripe-portal", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email: user && user.email ? user.email : "" }),
+                })
+                .then(function(r){ return r.json(); })
+                .then(function(d){ if (d.url) window.open(d.url, "_blank"); })
+                .catch(function(){ window.open("https://billing.stripe.com", "_blank"); });
               }} style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe</button>
               <button onClick={function(){
-                var portalUrl = "https://billing.stripe.com/p/login/test_00g000000000000"; // replace with your Stripe portal URL
-                window.open(portalUrl, "_blank");
+                var user = null;
+                try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
+                fetch("/api/stripe-portal", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email: user && user.email ? user.email : "" }),
+                })
+                .then(function(r){ return r.json(); })
+                .then(function(d){ if (d.url) window.open(d.url, "_blank"); })
+                .catch(function(){ window.open("https://billing.stripe.com", "_blank"); });
               }} style={{ background:"transparent", color:C.red, border:"1px solid "+C.red+"44", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
             </div>
           </SCard>
