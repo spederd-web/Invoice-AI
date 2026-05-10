@@ -570,7 +570,7 @@ function DOverview(props) {
   function fmtEur(n) { return "EUR " + Math.round(n).toLocaleString(); }
 
   // Use mock data for demo mode (no real invoices yet)
-  var usingMock = userId && invoices.length === 0 && proposals.length === 0;
+  var usingMock = user && !user.id && invoices.length === 0 && proposals.length === 0;
   var kpiRevenue    = usingMock ? "EUR 14,280" : fmtEur(revenue);
   var kpiOutstanding = usingMock ? "EUR 4,320"  : fmtEur(outstanding);
   var kpiCollected  = usingMock ? "EUR 9,960"   : fmtEur(collected);
@@ -630,7 +630,7 @@ function DOverview(props) {
       else e.time = Math.floor(diff/86400) + "d ago";
     });
     // Fallback to mock if no real events
-    if (events.length === 0 && (!userId || (invoices.length === 0 && proposals.length === 0))) {
+    if (events.length === 0 && (!user || (invoices.length === 0 && proposals.length === 0))) {
       return [
         { icon:"eye",      color:C.blue,  label:"Proposal viewed",  sub:"Brand Redesign",   time:"2h ago"    },
         { icon:"check",    color:C.green, label:"Invoice paid",      sub:"FR-2026-0018",     time:"Yesterday" },
