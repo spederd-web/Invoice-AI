@@ -1163,22 +1163,6 @@ function DInvoices(props) {
   var clientMap = {};
   clients.forEach(function(c){ clientMap[c.id] = c; });
 
-  function getStatus(inv) { return localStatus[inv.id] || inv.status || "draft"; }
-
-  function updateStatus(inv, newStatus) {
-    setLocalStatus(function(s){ return Object.assign({}, s, { [inv.id]: newStatus }); });
-    setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: true }); });
-    if (!db || !userId) { setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); return; }
-    fetch("/api/db", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ table:"invoices", action:"update", id:inv.id, user_id:userId, payload:{ status:newStatus } }),
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); })
-    .catch(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); });
-  }
-
   var [emailErrors, setEmailErrors] = useState({});
 
   function sendReminder(inv) {
