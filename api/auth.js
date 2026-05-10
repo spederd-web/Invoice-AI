@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const { createClient } = await import("@supabase/supabase-js");
 
-    const { action, email, password, access_token, refresh_token } = req.body;
+    const { action, email, password, access_token, refresh_token, new_password } = req.body;
 
     // ── verify — exchange magic link token for user session ───────────────────
     // Called client-side after detecting #access_token in URL hash
@@ -66,6 +66,16 @@ export default async function handler(req, res) {
       });
       if (error) return res.status(400).json({ error: error.message });
       return res.status(200).json({ sent: true });
+    }
+
+    // updatepassword - requires user_id and new_password
+    if (action === "updatepassword") {
+      const { user_id } = req.body;
+      if (!user_id || !new_password) return res.status(400).json({ error: "user_id and new_password required" });
+      if (new_password.length < 8) return res.status(400).json({ error: "Password must be at least 8 characters" });
+      const { data, error } = await supabase.auth.admin.updateUserById(user_id, { password: new_password });
+      if (error) return res.status(400).json({ error: error.message });
+      return res.status(200).json({ updated: true });
     }
 
     return res.status(400).json({ error: "Unknown action: " + action });
