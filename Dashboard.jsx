@@ -328,7 +328,7 @@ export function Dashboard(props) {
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
         {section==="proposals" && <DProposals proposals={proposals} clients={clients} db={proposalsDB} userId={userId} onConvert={handleConvert} />}
         {section==="brandkits" && <DBrandKits userId={userId} db={brandKitsDB} />}
-        {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} tab={settingsTab} setTab={setSettingsTab} />}
+        {section==="settings"  && <DSettings user={user} profile={profile} profileHook={profileHook} tab={settingsTab} setTab={setSettingsTab} setPage={setPage} setSection={goSection} />}
       </div>
 
       {/* Mobile bottom nav - lighter, shorter */}
@@ -720,7 +720,7 @@ function DOverview(props) {
             <div style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:"#92400E", marginBottom:2 }}>Free plan limit reached</div>
             <div style={{ fontFamily:fUI, fontSize:13, color:"#B45309", fontWeight:300 }}>You have created {invoiceCount} invoices. Upgrade to create unlimited invoices and proposals.</div>
           </div>
-          <Btn onClick={function(){ setPage("Pricing"); }}>Upgrade</Btn>
+          <Btn onClick={function(){ setSection("settings"); setSettingsTab("billing"); }}>Upgrade</Btn>
         </div>
       )}
 
@@ -1683,6 +1683,8 @@ function DSettings(props) {
   var profileHook = props.profileHook;
   var tab = props.tab || "profile";
   var setTab = props.setTab || function() {};
+  var setPage = props.setPage || function() {};
+  var setSection = props.setSection || function() {};
 
   // Profile state - pre-filled from Supabase profile
   var [firstName, setFirstName]   = useState(profile.first_name || "");
@@ -1916,8 +1918,15 @@ function DSettings(props) {
               })}
             </div>
             <div style={{ display:"flex", gap:10 }}>
-              <button style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe</button>
-              <button style={{ background:"transparent", color:C.muted, border:"1px solid "+C.border, padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
+              <button onClick={function(){
+                // Open Stripe customer portal
+                var portalUrl = "https://billing.stripe.com/p/login/test_00g000000000000"; // replace with your Stripe portal URL
+                window.open(portalUrl, "_blank");
+              }} style={{ background:C.accent, color:"#fff", border:"none", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13, fontWeight:500 }}>Manage via Stripe</button>
+              <button onClick={function(){
+                var portalUrl = "https://billing.stripe.com/p/login/test_00g000000000000"; // replace with your Stripe portal URL
+                window.open(portalUrl, "_blank");
+              }} style={{ background:"transparent", color:C.red, border:"1px solid "+C.red+"44", padding:"10px 20px", borderRadius:9, cursor:"pointer", fontFamily:fUI, fontSize:13 }}>Cancel plan</button>
             </div>
           </SCard>
           <SCard title="Billing history" sub="Your last 3 payments.">
