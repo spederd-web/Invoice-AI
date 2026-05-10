@@ -235,6 +235,11 @@ export function Dashboard(props) {
   // -- Real data from Supabase (falls back to mock when userId is null) ------
   var profileHook  = useProfile(userId);
   var profile      = profileHook.profile;
+  // Plan enforcement: free users get 3 invoices, unlimited on paid plans
+  var planStatus   = profile ? (profile.plan_status || "free") : "free";
+  var planName     = profile ? (profile.plan || "free") : "free";
+  var isPaidPlan   = planStatus === "active" && planName !== "free";
+  var invoiceCount = invoicesDB.rows.length;
   var invoicesDB   = useDB("invoices",   userId, refreshKey);
   var proposalsDB  = useDB("proposals",  userId, refreshKey);
   var clientsDB    = useDB("clients",    userId, refreshKey);
@@ -308,7 +313,7 @@ export function Dashboard(props) {
 
       {/* Content */}
       <div className="dash-main" style={{ flex:1, overflowY:"auto", overflowX:"hidden", padding:"44px 48px", minWidth:0 }}>
-        {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} />}
+        {section==="overview"  && <DOverview setSection={goSection} setPage={setPage} user={user} profile={profile} invoices={invoices} proposals={proposals} clients={clients} isPaidPlan={isPaidPlan} invoiceCount={invoiceCount} />}
         {section==="clients"   && !clientId && <DClients key={refreshKey} setClientId={selectClient} setPage={setPage} clients={clients} db={clientsDB} userId={userId} onRefresh={forceRefresh} />}
         {section==="clients"   && clientId && selectedClient && <DClientDetail client={selectedClient} setClientId={function(){ selectClient(null); }} invoices={invoices} proposals={proposals} userId={userId} />}
         {section==="invoices"  && <DInvoices invoices={invoices} clients={clients} db={invoicesDB} userId={userId} />}
@@ -523,6 +528,10 @@ function DOverview(props) {
   var clients = props.clients || [];
   var invoices = props.invoices || [];
   var proposals = props.proposals || [];
+  var isPaidPlan = props.isPaidPlan;
+  var invoiceCount = props.invoiceCount || 0;
+  var FREE_INVOICE_LIMIT = 3;
+  var hitLimit = user && !isPaidPlan && invoiceCount >= FREE_INVOICE_LIMIT;
 
   // Show onboarding for new logged-in users with no data
   var isNewUser = user && clients.length === 0 && invoices.length === 0 && proposals.length === 0;
@@ -586,24 +595,124 @@ function DOverview(props) {
 
   var attnColor = { followup:C.gold, overdue:C.red, viewed:C.blue };
 
-  var activity = [
-    { icon:"eye",      color:C.blue,  label:"Proposal viewed",     sub:"Brand Redesign",    time:"2h ago"    },
-    { icon:"check",    color:C.green, label:"Invoice paid",         sub:"FR-2026-0018",      time:"Yesterday" },
-    { icon:"clock",    color:C.red,   label:"Invoice overdue",      sub:"FR-2026-0021",      time:"5d"        },
-    { icon:"bank",     color:C.green, label:"Payment received",     sub:"FR-2026-0017",      time:"6d"        },
-    { icon:"proposal", color:C.accent,label:"Proposal accepted",    sub:"Website Design",    time:"1w ago"    },
-  ];
+  // Build activity feed from real data
+  var activity = (function() {
+    var events = [];
+    invoices.forEach(function(inv) {
+      var clientName = (function() {
+        var c = clients.find(function(c){ return c.id === inv.client_id; });
+        return c ? c.name : inv.client_name || "Unknown";
+      })();
+      var amt = inv.amount_gross ? " . EUR " + Math.round(inv.amount_gross).toLocaleString() : "";
+      if (inv.status === "paid") events.push({ icon:"check", color:C.green, label:"Invoice paid", sub:clientName + amt, time:inv.updated_at || inv.created_at, _ts: new Date(inv.updated_at || inv.created_at).getTime() });
+      else if (inv.status === "overdue") events.push({ icon:"clock", color:C.red, label:"Invoice overdue", sub:clientName + amt, time:inv.due_date || inv.created_at, _ts: new Date(inv.due_date || inv.created_at).getTime() });
+      else if (inv.status === "sent") events.push({ icon:"document", color:C.blue, label:"Invoice sent", sub:clientName + amt, time:inv.created_at, _ts: new Date(inv.created_at).getTime() });
+    });
+    proposals.forEach(function(p) {
+      var clientName = (function() {
+        var c = clients.find(function(c){ return c.id === p.client_id; });
+        return c ? c.name : "Unknown";
+      })();
+      if (p.status === "won") events.push({ icon:"check", color:C.green, label:"Proposal accepted", sub:p.title || clientName, time:p.updated_at || p.created_at, _ts: new Date(p.updated_at || p.created_at).getTime() });
+      else if (p.status === "viewed") events.push({ icon:"eye", color:C.blue, label:"Proposal viewed", sub:p.title || clientName, time:p.last_viewed_at || p.created_at, _ts: new Date(p.last_viewed_at || p.created_at).getTime() });
+      else if (p.status === "sent") events.push({ icon:"proposal", color:C.accent, label:"Proposal sent", sub:p.title || clientName, time:p.sent_at || p.created_at, _ts: new Date(p.sent_at || p.created_at).getTime() });
+    });
+    // Sort newest first, take top 5
+    events.sort(function(a, b){ return b._ts - a._ts; });
+    events = events.slice(0, 5);
+    // Format time
+    var now3 = Date.now();
+    events.forEach(function(e) {
+      var diff = Math.floor((now3 - e._ts) / 1000);
+      if (diff < 3600) e.time = Math.floor(diff/60) + "m ago";
+      else if (diff < 86400) e.time = Math.floor(diff/3600) + "h ago";
+      else if (diff < 172800) e.time = "Yesterday";
+      else e.time = Math.floor(diff/86400) + "d ago";
+    });
+    // Fallback to mock if no real events
+    if (events.length === 0 && (!userId || (invoices.length === 0 && proposals.length === 0))) {
+      return [
+        { icon:"eye",      color:C.blue,  label:"Proposal viewed",  sub:"Brand Redesign",   time:"2h ago"    },
+        { icon:"check",    color:C.green, label:"Invoice paid",      sub:"FR-2026-0018",     time:"Yesterday" },
+        { icon:"clock",    color:C.red,   label:"Invoice overdue",   sub:"FR-2026-0021",     time:"5d ago"    },
+      ];
+    }
+    return events;
+  })();
 
-  var maxRev = Math.max.apply(null, TOP_CLIENTS.map(function(c){ return c.revenue; }));
+  // Build real chart data — weekly buckets for this month
+  var chartData = (function() {
+    if (!invoices.length) return null;
+    var now4 = new Date();
+    var yr4 = now4.getFullYear();
+    var mo4 = now4.getMonth();
+    var weeks = ["1","8","15","22","31"];
+    var revBuckets  = [0, 0, 0, 0, 0];
+    var paidBuckets = [0, 0, 0, 0, 0];
+    var outBuckets  = [0, 0, 0, 0, 0];
+    var cfIn  = [0, 0, 0, 0, 0];
+    var cfOut = [0, 0, 0, 0, 0];
+    invoices.forEach(function(inv) {
+      var d = new Date(inv.created_at || inv.issue_date);
+      if (d.getFullYear() !== yr4 || d.getMonth() !== mo4) return;
+      var day = d.getDate();
+      var bucket = day < 8 ? 0 : day < 15 ? 1 : day < 22 ? 2 : day < 28 ? 3 : 4;
+      var amt = inv.amount_gross || 0;
+      revBuckets[bucket]  += amt;
+      if (inv.status === "paid") { paidBuckets[bucket] += amt; cfIn[bucket] += amt; }
+      if (inv.status === "sent" || inv.status === "overdue") outBuckets[bucket] += amt;
+      if (inv.status === "overdue") cfOut[bucket] += amt;
+    });
+    // Running totals for line chart
+    for (var i = 1; i < 5; i++) {
+      revBuckets[i]  += revBuckets[i-1];
+      paidBuckets[i] += paidBuckets[i-1];
+      outBuckets[i]  += outBuckets[i-1];
+    }
+    return { weeks:weeks, rev:revBuckets, paid:paidBuckets, out:outBuckets, cfIn:cfIn, cfOut:cfOut };
+  })();
+
+  var chartLabels = chartData ? chartData.weeks.map(function(w){ return w + " " + ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][now2.getMonth()]; }) : ACTIVITY_LABELS;
+  var chartRev  = chartData ? chartData.rev  : ACTIVITY_REV;
+  var chartPaid = chartData ? chartData.paid : ACTIVITY_PAID;
+  var chartOut  = chartData ? chartData.out  : ACTIVITY_OUT;
+  var cfIn  = chartData ? chartData.cfIn  : CASHFLOW_IN;
+  var cfOut = chartData ? chartData.cfOut : CASHFLOW_OUT;
+
+  // Top clients from real data
+  var topClients = (function() {
+    if (!invoices.length || !clients.length) return TOP_CLIENTS;
+    var byClient = {};
+    invoices.forEach(function(inv) {
+      if (!inv.client_id) return;
+      byClient[inv.client_id] = (byClient[inv.client_id] || 0) + (inv.amount_gross || 0);
+    });
+    return Object.keys(byClient).map(function(cid) {
+      var c = clients.find(function(x){ return x.id === cid; }) || {};
+      return { name: c.name || "Unknown", revenue: byClient[cid], color: C.accent };
+    }).sort(function(a, b){ return b.revenue - a.revenue; }).slice(0, 5);
+  })();
+  var maxRev = Math.max.apply(null, topClients.map(function(c){ return c.revenue; })) || 1;
 
   return (
     <div style={{ width:"100%", minWidth:0 }}>
+
+      {/* Plan limit banner */}
+      {hitLimit && (
+        <div style={{ background:"#FEF3C7", border:"1px solid #F59E0B", borderRadius:12, padding:"14px 20px", marginBottom:24, display:"flex", alignItems:"center", justifyContent:"space-between", gap:16 }}>
+          <div>
+            <div style={{ fontFamily:fUI, fontSize:14, fontWeight:600, color:"#92400E", marginBottom:2 }}>Free plan limit reached</div>
+            <div style={{ fontFamily:fUI, fontSize:13, color:"#B45309", fontWeight:300 }}>You have created {invoiceCount} invoices. Upgrade to create unlimited invoices and proposals.</div>
+          </div>
+          <Btn onClick={function(){ setPage("Pricing"); }}>Upgrade</Btn>
+        </div>
+      )}
 
       {/* Header row with greeting + search + new button */}
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:32, gap:16 }}>
         <div>
           <h1 style={{ fontFamily:fSerif, fontSize:"clamp(28px,3vw,38px)", fontWeight:400, color:C.ink, letterSpacing:"-0.03em", lineHeight:1.05, marginBottom:8 }}>{greetingFull}</h1>
-          <p style={{ fontFamily:fMono, fontSize:11, color:C.faint, letterSpacing:"0.04em" }}>{dateStr} . 4 clients . 1 overdue</p>
+          <p style={{ fontFamily:fMono, fontSize:11, color:C.faint, letterSpacing:"0.04em" }}>{dateStr} . {clients.length} clients . {overdueCount} overdue</p>
         </div>
         <div style={{ display:"flex", gap:10, alignItems:"center", flexShrink:0 }} className="nav-desktop">
           <div style={{ display:"flex", alignItems:"center", gap:8, background:C.surface, borderRadius:9, padding:"8px 14px", boxShadow:"0 1px 4px rgba(10,22,40,0.05)" }}>
@@ -654,11 +763,11 @@ function DOverview(props) {
           </div>
           <LineChart
             series={[
-              { key:"rev", color:C.accent, data:ACTIVITY_REV  },
-              { key:"paid",color:C.green,  data:ACTIVITY_PAID },
-              { key:"out", color:C.red,    data:ACTIVITY_OUT  },
+              { key:"rev",  color:C.accent, data:chartRev  },
+              { key:"paid", color:C.green,  data:chartPaid },
+              { key:"out",  color:C.red,    data:chartOut  },
             ]}
-            labels={ACTIVITY_LABELS}
+            labels={chartLabels}
             w={480} h={170}
           />
         </div>
@@ -696,7 +805,7 @@ function DOverview(props) {
             </div>
             <div style={{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:C.ink, letterSpacing:"-0.03em", marginBottom:2 }}>{kpiRevenue}</div>
             <div style={{ fontFamily:fUI, fontSize:11, color:C.faint, marginBottom:14 }}>Total cash flow</div>
-            <BarChart inData={CASHFLOW_IN} outData={CASHFLOW_OUT} labels={CASHFLOW_LABELS} w={300} h={110} />
+            <BarChart inData={cfIn} outData={cfOut} labels={chartData ? chartData.weeks : CASHFLOW_LABELS} w={300} h={110} />
           </div>
         </div>
 
@@ -739,7 +848,7 @@ function DOverview(props) {
               <span style={{ fontFamily:fUI, fontSize:13, fontWeight:600, color:C.ink }}>Top clients by revenue</span>
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-              {TOP_CLIENTS.map(function(c) {
+              {topClients.map(function(c) {
                 var pct = Math.round(c.revenue / maxRev * 100);
                 return (
                   <div key={c.name}>
@@ -945,8 +1054,10 @@ function DClientDetail(props) {
     .catch(function(){ setSaving(false); });
   }
 
+  var [confirmDelete, setConfirmDelete] = useState(false);
+
   function deleteClient() {
-    if (!confirm("Delete " + c.name + "? This cannot be undone.")) return;
+    if (!confirmDelete) { setConfirmDelete(true); return; }
     setDeleting(true);
     fetch("/api/db", {
       method: "POST",
@@ -954,7 +1065,7 @@ function DClientDetail(props) {
       body: JSON.stringify({ table:"clients", action:"delete", id:c.id, user_id:userId }),
     })
     .then(function(){ setClientId(null); })
-    .catch(function(){ setDeleting(false); });
+    .catch(function(){ setDeleting(false); setConfirmDelete(false); });
   }
 
   var inp = { width:"100%", boxSizing:"border-box", border:"1px solid "+C.border, borderRadius:8, padding:"9px 12px", fontFamily:fUI, fontSize:14, color:C.ink, background:C.bg, outline:"none" };
@@ -971,10 +1082,19 @@ function DClientDetail(props) {
             <p style={{ fontFamily:fUI, fontSize:12, color:C.faint }}>{c.city}{c.email ? " . "+c.email : ""}</p>
           </div>
         </div>
-        <div style={{ display:"flex", gap:8 }}>
-          <Btn variant="secondary" sm={true} onClick={function(){ setEditing(function(e){ return !e; }); }}>{editing ? "Cancel" : "Edit"}</Btn>
-          <Btn variant="danger" sm={true} onClick={deleteClient}>{deleting ? "..." : "Delete"}</Btn>
-        </div>
+          <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+            <Btn variant="secondary" sm={true} onClick={function(){ setEditing(function(e){ return !e; }); }}>{editing ? "Cancel" : "Edit"}</Btn>
+            {confirmDelete
+              ? (
+                <div style={{ display:"flex", gap:6, alignItems:"center" }}>
+                  <span style={{ fontFamily:fUI, fontSize:12, color:C.red }}>Sure?</span>
+                  <Btn variant="danger" sm={true} onClick={deleteClient}>{deleting ? "..." : "Yes, delete"}</Btn>
+                  <Btn variant="secondary" sm={true} onClick={function(){ setConfirmDelete(false); }}>No</Btn>
+                </div>
+              )
+              : <Btn variant="secondary" sm={true} onClick={deleteClient}>Delete</Btn>
+            }
+          </div>
       </div>
 
       {editing && (
@@ -1054,9 +1174,15 @@ function DInvoices(props) {
     .catch(function(){ setUpdating(function(s){ return Object.assign({}, s, { [inv.id]: false }); }); });
   }
 
+  var [emailErrors, setEmailErrors] = useState({});
+
   function sendReminder(inv) {
     var client = clientMap[inv.client_id] || {};
-    if (!client.email) { alert("No email address for this client. Add one in Clients."); return; }
+    if (!client.email) {
+      setEmailErrors(function(s){ return Object.assign({}, s, { [inv.id]: "No email for this client" }); });
+      setTimeout(function(){ setEmailErrors(function(s){ var n=Object.assign({},s); delete n[inv.id]; return n; }); }, 4000);
+      return;
+    }
     setEmailSent(function(s){ return Object.assign({}, s, { [inv.id]: "sending" }); });
     var user = null;
     try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
@@ -1187,19 +1313,31 @@ function DInvoices(props) {
                     </Btn>
                   )}
                   {isOverdue && (
-                    <Btn variant="danger" sm={true} onClick={function(){ sendReminder(inv); }}>
-                      {eSent === "sending" ? "Sending..." : eSent === "sent" ? "Sent!" : eSent === "queued" ? "Queued" : "Send reminder"}
-                    </Btn>
+                    <div>
+                      <Btn variant="danger" sm={true} onClick={function(){ sendReminder(inv); }}>
+                        {eSent === "sending" ? "Sending..." : eSent === "sent" ? "Sent!" : eSent === "queued" ? "Queued" : "Send reminder"}
+                      </Btn>
+                      {emailErrors[inv.id] && <div style={{ fontFamily:fUI, fontSize:12, color:C.red, marginTop:4 }}>{emailErrors[inv.id]}</div>}
+                    </div>
                   )}
                 </div>
               )}
               {isPaid && (
-                <div style={{ padding:"0 20px 14px", display:"flex", gap:8, alignItems:"center" }}>
+                <div style={{ padding:"0 20px 14px", display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
                   <span style={{ fontFamily:fUI, fontSize:13, color:C.green }}>Settled</span>
-                  <Btn variant="secondary" sm={true} onClick={function(){
-                    if (!db) return;
-                    db.remove(inv.id);
-                  }}>Delete</Btn>
+                  {acted[inv.id] === "confirm-delete"
+                    ? (
+                      <div style={{ display:"flex", gap:6, alignItems:"center" }}>
+                        <span style={{ fontFamily:fUI, fontSize:12, color:C.red }}>Delete?</span>
+                        <Btn variant="danger" sm={true} onClick={function(){
+                          if (db) db.remove(inv.id);
+                          act(inv.id, "deleted");
+                        }}>Yes</Btn>
+                        <Btn variant="secondary" sm={true} onClick={function(){ act(inv.id, null); }}>No</Btn>
+                      </div>
+                    )
+                    : <Btn variant="secondary" sm={true} onClick={function(){ act(inv.id, "confirm-delete"); }}>Delete</Btn>
+                  }
                 </div>
               )}
             </div>
@@ -1243,20 +1381,27 @@ export function DProposals(props) {
     .catch(function(){ setSharePhase(function(s){ return Object.assign({}, s, { [p.id]: "idle" }); }); });
   }
 
+  var [deletingId, setDeletingId] = useState(null);
+  var [confirmDeleteId, setConfirmDeleteId] = useState(null);
+
   function deleteProposal(p) {
-    if (!db || !userId) return;
-    db.remove(p.id);
+    if (confirmDeleteId !== p.id) { setConfirmDeleteId(p.id); return; }
+    setDeletingId(p.id); setConfirmDeleteId(null);
+    if (db && userId) {
+      db.remove(p.id).then(function(){ setDeletingId(null); }).catch(function(){ setDeletingId(null); });
+    }
   }
 
-  function deleteInvoiceById(id, dbInvoices) {
-    if (!dbInvoices) return;
-    dbInvoices.remove(id);
-  }
+  var [followUpErrors, setFollowUpErrors] = useState({});
 
   function sendFollowUp(p) {
     var client = clientMap[p.client_id] || {};
     var clientEmail = typeof client === "object" ? client.email : null;
-    if (!clientEmail) { alert("No email for this client. Add one in Clients."); return; }
+    if (!clientEmail) {
+      setFollowUpErrors(function(s){ return Object.assign({}, s, { [p.id]: "No email for this client" }); });
+      setTimeout(function(){ setFollowUpErrors(function(s){ var n=Object.assign({},s); delete n[p.id]; return n; }); }, 4000);
+      return;
+    }
     setFollowUpSent(function(s){ return Object.assign({}, s, { [p.id]: "sending" }); });
     var user = null;
     try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
@@ -1327,9 +1472,12 @@ export function DProposals(props) {
               {sig && (
                 <div style={{ margin:"0 14px 14px", padding:"12px 16px", background:sig.urgent ? C.goldSoft : C.accentSoft, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"space-between", gap:10 }}>
                   <span style={{ fontFamily:fUI, fontSize:13, color:C.inkLight }}>{sig.msg}</span>
-                  <Btn variant="ghost" sm={true} onClick={function(){ sendFollowUp(p); }}>
-                    {followUpSent[p.id] === "sending" ? "Sending..." : followUpSent[p.id] === "sent" ? "Sent!" : followUpSent[p.id] === "queued" ? "Queued" : sig.cta}
-                  </Btn>
+                  <div>
+                    <Btn variant="ghost" sm={true} onClick={function(){ sendFollowUp(p); }}>
+                      {followUpSent[p.id] === "sending" ? "Sending..." : followUpSent[p.id] === "sent" ? "Sent!" : followUpSent[p.id] === "queued" ? "Queued" : sig.cta}
+                    </Btn>
+                    {followUpErrors[p.id] && <div style={{ fontFamily:fUI, fontSize:12, color:C.red, marginTop:4 }}>{followUpErrors[p.id]}</div>}
+                  </div>
                 </div>
               )}
               {/* Actions row */}
@@ -1340,7 +1488,16 @@ export function DProposals(props) {
                 <Btn variant="secondary" sm={true} onClick={function(){ shareProposal(p); }}>
                   {sharePhase[p.id] === "saving" ? "..." : sharePhase[p.id] === "copied" ? "Link copied!" : "Share link"}
                 </Btn>
-                <Btn variant="secondary" sm={true} onClick={function(){ deleteProposal(p); }}>Delete</Btn>
+                {confirmDeleteId === p.id
+                  ? (
+                    <div style={{ display:"flex", gap:6, alignItems:"center" }}>
+                      <span style={{ fontFamily:fUI, fontSize:12, color:C.red }}>Sure?</span>
+                      <Btn variant="danger" sm={true} onClick={function(){ deleteProposal(p); }}>{deletingId === p.id ? "..." : "Delete"}</Btn>
+                      <Btn variant="secondary" sm={true} onClick={function(){ setConfirmDeleteId(null); }}>No</Btn>
+                    </div>
+                  )
+                  : <Btn variant="secondary" sm={true} onClick={function(){ deleteProposal(p); }}>Delete</Btn>
+                }
               </div>
             </div>
           );

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FONTS, PAGES, L } from "./constants.jsx";
 import { Nav, PaymentStrip, Footer, SupportBot, SignupModal, AuthModal, CookieBanner } from "./Nav.jsx";
 import { Landing, PricingSection } from "./Landing.jsx";
-import { InvoiceGen, ClientPortal } from "./Generator.jsx";
+import { InvoiceGen, ClientPortal, ProposalPortal } from "./Generator.jsx";
 import { Dashboard } from "./Dashboard.jsx";
 import { PageAbout, PageBlog, PageCareers, PagePrivacy, PageTerms, PageGDPR, PageEUCompliance, PageFAQ, PageCookies } from "./Pages.jsx";
 
@@ -12,7 +12,9 @@ var GLOBAL_CSS = "* { margin: 0; padding: 0; box-sizing: border-box; } body { ba
 export default function App() {
   var [page, setPage] = useState(function() {
     var params = new URLSearchParams(window.location.search);
-    return params.get("portal") ? "ClientPortal" : "Home";
+    if (params.get("portal")) return "ClientPortal";
+    if (params.get("proposal")) return "ProposalPortal";
+    return "Home";
   });
   var [modal, setModal] = useState(null);
   var [lang, setLang] = useState("de");
@@ -75,13 +77,14 @@ export default function App() {
     .catch(function() {});
   }, []);
 
+  var isPortal = page === "ClientPortal" || page === "ProposalPortal";
   var showFooter = ["Home","Pricing","About","Blog","Careers","Privacy","Terms","GDPR","Cookies","FAQ","EUCompliance"].indexOf(page) >= 0;
 
   return (
     <>
       <style>{FONTS}</style>
       <style>{GLOBAL_CSS}</style>
-      {page !== "ClientPortal" && (
+      {!isPortal && (
         <Nav
           page={page}
           setPage={setPage}
@@ -94,25 +97,26 @@ export default function App() {
           onSignOut={handleSignOut}
         />
       )}
-      {page==="Home"         && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Generator"    && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} initialMode={genMode} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
-      {page==="Pricing"      && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
-      {page==="Dashboard"    && <Dashboard setPage={setPage} setConvertProposal={setConvertProposal} user={user} />}
-      {page==="ClientPortal" && <ClientPortal setPage={setPage} />}
-      {page==="About"        && <PageAbout setPage={setPage} openModal={openModal} />}
-      {page==="Blog"         && <PageBlog />}
-      {page==="Careers"      && <PageCareers />}
-      {page==="Privacy"      && <PagePrivacy />}
-      {page==="Terms"        && <PageTerms />}
-      {page==="GDPR"         && <PageGDPR />}
-      {page==="Cookies"      && <PageCookies />}
-      {page==="EUCompliance" && <PageEUCompliance setPage={setPage} openModal={openModal} />}
-      {page==="FAQ"          && <PageFAQ setPage={setPage} openModal={openModal} />}
+      {page==="Home"           && <><Landing setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
+      {page==="Generator"      && <InvoiceGen onFirstGenerate={null} setPage={setPage} lang={lang} initialMode={genMode} convertProposal={convertProposal} onConvertDone={function(){ setConvertProposal(null); }} />}
+      {page==="Pricing"        && <><PricingSection setPage={setPage} openModal={openModal} lang={lang} /><PaymentStrip /></>}
+      {page==="Dashboard"      && <Dashboard setPage={setPage} setConvertProposal={setConvertProposal} user={user} />}
+      {page==="ClientPortal"   && <ClientPortal setPage={setPage} />}
+      {page==="ProposalPortal" && <ProposalPortal setPage={setPage} />}
+      {page==="About"          && <PageAbout setPage={setPage} openModal={openModal} />}
+      {page==="Blog"           && <PageBlog />}
+      {page==="Careers"        && <PageCareers />}
+      {page==="Privacy"        && <PagePrivacy />}
+      {page==="Terms"          && <PageTerms />}
+      {page==="GDPR"           && <PageGDPR />}
+      {page==="Cookies"        && <PageCookies />}
+      {page==="EUCompliance"   && <PageEUCompliance setPage={setPage} openModal={openModal} />}
+      {page==="FAQ"            && <PageFAQ setPage={setPage} openModal={openModal} />}
       {showFooter && <Footer setPage={setPage} openModal={openModal} lang={lang} />}
-      {page !== "ClientPortal" && <SupportBot isDashboard={page === "Dashboard"} />}
+      {!isPortal && <SupportBot isDashboard={page === "Dashboard"} />}
       {modal && <SignupModal source={modal} onClose={closeModal} lang={lang} />}
       {authOpen && <AuthModal onClose={function(){ setAuthOpen(false); }} onAuth={handleAuth} lang={lang} />}
-      {!cookieDismissed && page !== "ClientPortal" && (
+      {!cookieDismissed && !isPortal && (
         <CookieBanner
           onAccept={function(){ setCookieDismissed(true); }}
           onDecline={function(){ setCookieDismissed(true); }}

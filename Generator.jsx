@@ -13,7 +13,7 @@ export function InvoicePreviewPanel(props) {
   var sym = s.country && s.country.cur === "SEK" ? "kr" : "€";
   var yr = new Date().getFullYear();
   var invNum = s.invNum || ((s.country ? s.country.code : "DE") + "-" + yr + "-001");
-  var cnNum = "CN-" + yr + "-001";
+  var cnNum = s.cnNum || ("CN-" + yr + "-001");
   var [xrLoading, setXrLoading] = useState(false);
   var [xrError, setXrError] = useState("");
   var [navLoading, setNavLoading] = useState(false);
@@ -162,6 +162,33 @@ export function InvoicePreviewPanel(props) {
     var user = null;
     try { user = JSON.parse(localStorage.getItem("invoiceai_user")); } catch(e) {}
     if (!user || !user.id) { setSavePhase("error"); setTimeout(function(){ setSavePhase("idle"); }, 3000); return; }
+    // Check invoice count against free limit
+    fetch("/api/db?table=invoices&user_id=" + encodeURIComponent(user.id))
+      .then(function(r){ return r.json(); })
+      .then(function(existing) {
+        var count = Array.isArray(existing) ? existing.length : 0;
+        // Will check plan in profile — for now allow up to 3 on free
+        if (count >= 3) {
+          // Check if paid plan
+          return fetch("/api/db?table=profiles&user_id=" + encodeURIComponent(user.id))
+            .then(function(r){ return r.json(); })
+            .then(function(profile) {
+              var isPaid = profile && profile.plan_status === "active" && profile.plan !== "free";
+              if (!isPaid && count >= 3) {
+                setSavePhase("limit");
+                setTimeout(function(){ setSavePhase("idle"); }, 4000);
+                return null;
+              }
+              return doSave(user);
+            });
+        }
+        return doSave(user);
+      })
+      .catch(function(){ return doSave(user); });
+  }
+
+  function doSave(user) {
+    if (!user) return;
     fetch("/api/db", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1049,7 +1076,7 @@ export function ProposalForm(props) {
                   <button onClick={function(){ setResult(""); }} style={{ background:"none", border:"1px solid "+L.border, color:L.muted, padding:"3px 9px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>Redo</button>
                   <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12 }}>PDF</button>
                   <button onClick={saveProposalToDashboard} style={{ background:savePhase==="saved" ? L.green : L.navy, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>
-                    {savePhase==="saving" ? "..." : savePhase==="saved" ? "Saved" : savePhase==="error" ? "Sign in" : "Save"}
+                    {savePhase === "saving" ? "..." : savePhase === "saved" ? "Saved" : savePhase === "error" ? "Sign in" : savePhase === "limit" ? "Upgrade" : "Save"}
                   </button>
                   <button onClick={function(){ setConvertToInvoice(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"3px 11px", borderRadius:5, cursor:"pointer", fontFamily:fSans, fontSize:12, fontWeight:500 }}>Invoice</button>
                 </div>
@@ -1139,19 +1166,27 @@ export function InvoiceGen(props) {
 
       // Find highest number for this year
       var prefix = countryCode + "-" + yr + "-";
+      var cnPrefix = "CN-" + yr + "-";
       var maxNum = 0;
+      var maxCN = 0;
       invoices.forEach(function(inv) {
         if (inv.inv_number && inv.inv_number.indexOf(prefix) === 0) {
           var n = parseInt(inv.inv_number.slice(prefix.length)) || 0;
           if (n > maxNum) maxNum = n;
         }
+        if (inv.inv_number && inv.inv_number.indexOf(cnPrefix) === 0) {
+          var n = parseInt(inv.inv_number.slice(cnPrefix.length)) || 0;
+          if (n > maxCN) maxCN = n;
+        }
       });
       var nextNum = String(maxNum + 1).padStart(3, "0");
+      var nextCN  = String(maxCN  + 1).padStart(3, "0");
       var nextInvNum = prefix + nextNum;
 
       setInvState(function(s) {
         return Object.assign({}, s, {
           invNum:  nextInvNum,
+          cnNum:   cnPrefix + nextCN,
           sName:   profile.biz_name   || s.sName,
           sVAT:    profile.vat_number || s.sVAT,
           sIBAN:   profile.iban       || s.sIBAN,
@@ -1569,3 +1604,82 @@ export function ClientPortal(props) {
 }
 
 
+
+export function ProposalPortal(props) {
+  var setPage = props.setPage;
+  var [proposal, setProposal] = useState(null);
+  var [loadError, setLoadError] = useState("");
+
+  useEffect(function() {
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get("proposal");
+    if (!id) { setLoadError("No proposal ID found."); return; }
+    fetch("/api/share-proposal?id=" + encodeURIComponent(id))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.title) {
+          setProposal(data);
+        } else {
+          setLoadError("Proposal not found.");
+        }
+      })
+      .catch(function() { setLoadError("Could not load proposal."); });
+  }, []);
+
+  return (
+    <div style={{ background:"#F0EDE6", minHeight:"100vh" }}>
+      <div style={{ background:L.white, borderBottom:"1px solid "+L.border, padding:"0 24px", height:52, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer" }} onClick={function(){ setPage("Home"); }}>
+          <LogoMark size={26} />
+          <span style={{ fontFamily:fSerif, fontSize:15, fontWeight:700, color:L.ink, letterSpacing:"-0.02em" }}>InvoiceAI</span>
+          <span style={{ fontFamily:fMono, fontSize:11, color:L.faint, letterSpacing:"0.08em" }}>. secure proposal portal</span>
+        </div>
+        <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+          <div style={{ width:7, height:7, borderRadius:"50%", background:L.green }} />
+          <span style={{ fontFamily:fMono, fontSize:12, color:L.green, letterSpacing:"0.06em" }}>SSL encrypted</span>
+        </div>
+      </div>
+
+      {(!proposal && !loadError) && (
+        <div style={{ maxWidth:640, margin:"80px auto", padding:"0 20px", textAlign:"center" }}>
+          <div style={{ fontFamily:fSans, fontSize:14, color:L.muted }}>Loading proposal...</div>
+        </div>
+      )}
+
+      {loadError && (
+        <div style={{ maxWidth:640, margin:"80px auto", padding:"0 20px", textAlign:"center" }}>
+          <div style={{ fontFamily:fSans, fontSize:15, color:L.muted }}>{loadError}</div>
+          <button onClick={function(){ setPage("Home"); }} style={{ marginTop:20, background:L.accent, color:"#fff", border:"none", padding:"10px 24px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>Back to InvoiceAI</button>
+        </div>
+      )}
+
+      {proposal && (
+        <div style={{ maxWidth:760, margin:"0 auto", padding:"40px 20px 80px" }}>
+          <div style={{ background:L.white, borderRadius:16, padding:"40px 48px", boxShadow:"0 4px 32px rgba(10,22,40,0.09)" }}>
+            <div style={{ marginBottom:32, paddingBottom:24, borderBottom:"2px solid "+L.accent }}>
+              <div style={{ fontFamily:fMono, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:L.muted, marginBottom:8 }}>Proposal</div>
+              <h1 style={{ fontFamily:fSerif, fontSize:"clamp(24px,4vw,36px)", fontWeight:400, color:L.ink, letterSpacing:"-0.03em", marginBottom:6 }}>{proposal.title}</h1>
+              <div style={{ fontFamily:fSans, fontSize:13, color:L.muted }}>
+                {proposal.value > 0 && <span style={{ fontFamily:fMono, fontSize:16, fontWeight:600, color:L.accent, marginRight:16 }}>{"EUR " + (proposal.value || 0).toLocaleString()}</span>}
+                {proposal.created_at && <span>Sent {new Date(proposal.created_at).toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" })}</span>}
+              </div>
+            </div>
+
+            {proposal.content ? (
+              <div style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8, whiteSpace:"pre-wrap" }}>
+                {proposal.content}
+              </div>
+            ) : (
+              <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontStyle:"italic" }}>No content available for this proposal.</div>
+            )}
+
+            <div style={{ marginTop:40, paddingTop:24, borderTop:"1px solid "+L.border, display:"flex", gap:12, flexWrap:"wrap" }}>
+              <button onClick={function(){ window.print(); }} style={{ background:L.ink, color:"#fff", border:"none", padding:"11px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500 }}>Download PDF</button>
+              <button onClick={function(){ setPage("Home"); }} style={{ background:"transparent", color:L.muted, border:"1px solid "+L.border, padding:"11px 24px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14 }}>Back to InvoiceAI</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
