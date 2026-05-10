@@ -1701,6 +1701,12 @@ function DSettings(props) {
   var [city, setCity]         = useState(profile.city         || "");
   var [country, setCountry]   = useState(profile.country      || "DE");
 
+  // Notifications state - must be before useEffect that references setters
+  var [notifProposal, setNotifProposal] = useState(profile.notif_proposal !== false);
+  var [notifInvoice, setNotifInvoice]   = useState(profile.notif_invoice   !== false);
+  var [notifOverdue, setNotifOverdue]   = useState(profile.notif_overdue   !== false);
+  var [notifDigest, setNotifDigest]     = useState(!!profile.notif_digest);
+
   // Sync when profile loads from Supabase
   useEffect(function() {
     if (!profile || !profile.first_name) return;
@@ -1722,12 +1728,6 @@ function DSettings(props) {
     setNotifOverdue(profile.notif_overdue   !== false);
     setNotifDigest(!!profile.notif_digest);
   }, [profile]);
-
-  // Notifications
-  var [notifProposal, setNotifProposal] = useState(profile.notif_proposal !== false);
-  var [notifInvoice, setNotifInvoice]   = useState(profile.notif_invoice   !== false);
-  var [notifOverdue, setNotifOverdue]   = useState(profile.notif_overdue   !== false);
-  var [notifDigest, setNotifDigest]     = useState(!!profile.notif_digest);
 
   // Password state
   var [pwCurrent, setPwCurrent]   = useState("");
