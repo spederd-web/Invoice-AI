@@ -235,14 +235,15 @@ export function Dashboard(props) {
   // -- Real data from Supabase (falls back to mock when userId is null) ------
   var profileHook  = useProfile(userId);
   var profile      = profileHook.profile;
+  var invoicesDB   = useDB("invoices",   userId, refreshKey);
+  var proposalsDB  = useDB("proposals",  userId, refreshKey);
+  var clientsDB    = useDB("clients",    userId, refreshKey);
+
   // Plan enforcement: free users get 3 invoices, unlimited on paid plans
   var planStatus   = profile ? (profile.plan_status || "free") : "free";
   var planName     = profile ? (profile.plan || "free") : "free";
   var isPaidPlan   = planStatus === "active" && planName !== "free";
   var invoiceCount = invoicesDB.rows.length;
-  var invoicesDB   = useDB("invoices",   userId, refreshKey);
-  var proposalsDB  = useDB("proposals",  userId, refreshKey);
-  var clientsDB    = useDB("clients",    userId, refreshKey);
 
   // Use real rows when logged in (even if empty - new users start with nothing)
   // Only fall back to mock data when there is no userId (demo/logged-out mode)
@@ -263,6 +264,9 @@ export function Dashboard(props) {
   ];
   function handleConvert(p) { if (setConvertProposal) setConvertProposal(p); if (setPage) setPage("Generator"); }
   function goSection(id) { setSection(id); selectClient(null); }
+
+  // Safety: don't render until hooks are initialized
+  if (!invoicesDB || !clientsDB || !proposalsDB) return null;
 
   return (
     <div className="dash-layout" style={{ display:"flex", minHeight:"calc(100vh - 58px)", background:C.bg }}>
