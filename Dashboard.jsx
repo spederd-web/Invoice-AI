@@ -291,7 +291,7 @@ export function Dashboard(props) {
           })}
           <div style={{ height:1, background:"rgba(255,255,255,0.05)", margin:"12px 0" }} />
           {navBottom.map(function(item) {
-            var active = section === item.id || (item.id === "integrations" && section === "settings" && tab === "integrations");
+            var active = section === item.id || (item.id === "integrations" && section === "settings" && settingsTab === "integrations");
             return (
               <button key={item.id} onClick={function(){
                 if (item.id === "integrations") { goSection("settings"); setSettingsTab("integrations"); }
