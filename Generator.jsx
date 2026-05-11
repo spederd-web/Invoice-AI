@@ -1065,8 +1065,8 @@ export function ProposalForm(props) {
                   <span style={{ fontFamily:fMono, fontSize:11, color:L.green, letterSpacing:"0.08em" }}>{t(lang,"propReady")}</span>
                   {result && (
                     <>
-                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{result.split(/\s+/).filter(Boolean).length} words</span>
-                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{Math.ceil(result.split(/\s+/).filter(Boolean).length / 200)} min read</span>
+                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{result.split(" ").filter(Boolean).length} words</span>
+                      <span style={{ fontFamily:fMono, fontSize:10, color:L.faint }}>{Math.ceil(result.split(" ").filter(Boolean).length / 200)} min read</span>
                     </>
                   )}
                 </div>
