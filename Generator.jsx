@@ -168,7 +168,7 @@ export function InvoicePreviewPanel(props) {
       .then(function(r){ return r.json(); })
       .then(function(existing) {
         var count = Array.isArray(existing) ? existing.length : 0;
-        // Will check plan in profile — for now allow up to 3 on free
+        // Will check plan in profile - for now allow up to 3 on free
         if (count >= 3) {
           // Check if paid plan
           return fetch("/api/db?table=profiles&user_id=" + encodeURIComponent(user.id))
@@ -599,6 +599,27 @@ export function InvoiceForm(props) {
     );
   }
 
+  function getValidationErrors() {
+    var errs = [];
+    if (!s.sName || !s.sName.trim()) errs.push("Business name required");
+    if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push("IBAN invalid");
+    if (s.sBIC && validateBIC(s.sBIC) !== "valid") errs.push("BIC/SWIFT invalid");
+    if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") errs.push("Your VAT number format invalid");
+    if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") errs.push("Client VAT format invalid");
+    if (s.lines.every(function(l) { return !l.desc || !l.rate; })) errs.push("At least one invoice line required");
+    return errs;
+  }
+
+  function getIsBlocked() {
+    if (!s.sName || !s.sName.trim()) return true;
+    if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") return true;
+    if (s.sBIC && validateBIC(s.sBIC) !== "valid") return true;
+    if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") return true;
+    if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") return true;
+    if (s.lines.every(function(l) { return !l.desc || !l.rate; })) return true;
+    return false;
+  }
+
   return (
     <div className="inv-grid desktop-inv" style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 260px", gap:14, padding:"24px 20px 64px" }}>
       <div>
@@ -753,38 +774,16 @@ export function InvoiceForm(props) {
           </div>
         </div>
         <div style={{ marginBottom:8 }}>
-        {(function() {
-            var errs = [];
-            if (!s.sName || !s.sName.trim()) errs.push("Business name required");
-            if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push("IBAN invalid");
-            if (s.sBIC && validateBIC(s.sBIC) !== "valid") errs.push("BIC/SWIFT invalid");
-            if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") errs.push("Your VAT number format invalid");
-            if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") errs.push("Client VAT format invalid");
-            if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push("At least one invoice line required");
-            if (errs.length > 0) return (
-              <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
-                <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:"#C0392B", marginBottom:4 }}>Please fix before previewing:</div>
-                {errs.map(function(e) { return <div key={e} style={{ fontFamily:fSans, fontSize:12, color:"#C0392B" }}>. {e}</div>; })}
-              </div>
-            );
-            return null;
-          })()}
+          {getValidationErrors().length > 0 && (
+            <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
+              <div style={{ fontFamily:fSans, fontSize:12, fontWeight:600, color:"#C0392B", marginBottom:4 }}>Please fix before previewing:</div>
+              {getValidationErrors().map(function(e) { return <div key={e} style={{ fontFamily:fSans, fontSize:12, color:"#C0392B" }}>. {e}</div>; })}
+            </div>
+          )}
         </div>
-        {(function() {
-            var errs = [];
-            if (!s.sName || !s.sName.trim()) errs.push(true);
-            if (s.sIBAN && validateIBAN(s.sIBAN) !== "valid") errs.push(true);
-            if (s.sBIC && validateBIC(s.sBIC) !== "valid") errs.push(true);
-            if (s.sVAT && validateEUVAT(s.sVAT) !== "valid") errs.push(true);
-            if (s.cVAT && validateEUVAT(s.cVAT) !== "valid") errs.push(true);
-            if (s.lines.every(function(l){ return !l.desc || !l.rate; })) errs.push(true);
-            var blocked = errs.length > 0;
-            return (
-              <button onClick={function(){ if(!blocked){ setView("preview"); window.scrollTo({ top:0, behavior:"smooth" }); } }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.ink, color:blocked ? L.muted : "#fff", border:"none", padding:"15px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSerif, fontSize:16, fontWeight:400, boxShadow:blocked ? "none" : "0 2px 12px rgba(10,22,40,0.15)", letterSpacing:"-0.01em" }}>
-                {blocked ? "Complete form to preview" : "Preview invoice " + ARR}
-              </button>
-            );
-          })()}
+        <button onClick={function(){ if(!getIsBlocked()){ setView("preview"); window.scrollTo({ top:0, behavior:"smooth" }); } }} disabled={getIsBlocked()} style={{ width:"100%", background:getIsBlocked() ? L.border : L.ink, color:getIsBlocked() ? L.muted : "#fff", border:"none", padding:"15px", borderRadius:10, cursor:getIsBlocked() ? "not-allowed" : "pointer", fontFamily:fSerif, fontSize:16, fontWeight:400, boxShadow:getIsBlocked() ? "none" : "0 2px 12px rgba(10,22,40,0.15)", letterSpacing:"-0.01em" }}>
+          {getIsBlocked() ? "Complete form to preview" : "Preview invoice " + ARR}
+        </button>
       </div>
       <div style={{ position:"sticky", top:72, alignSelf:"start" }}>
         <div style={{ background:L.white, borderRadius:14, marginBottom:16, boxShadow:"0 1px 4px rgba(10,22,40,0.06)", padding:"12px 14px" }}>
@@ -1613,6 +1612,35 @@ export function ProposalPortal(props) {
   var [loadError, setLoadError] = useState("");
   var newline = "\n";
 
+  function renderContent(content) {
+    var reNum = new RegExp("^\\d+\\.\\s");
+    var reNumGet = new RegExp("^\\d+");
+    return content.split(newline).map(function(line, idx) {
+      var trimmed = line.trim();
+      if (!trimmed) return React.createElement("div", { key: idx, style: { height: 10 } });
+      if (trimmed.indexOf("# ") === 0 && trimmed.indexOf("## ") < 0 && trimmed.indexOf("### ") < 0)
+        return React.createElement("h1", { key: idx, style: { fontFamily: fSerif, fontSize: 26, fontWeight: 400, color: L.ink, letterSpacing: "-0.02em", margin: "28px 0 8px" } }, trimmed.slice(2));
+      if (trimmed.indexOf("## ") === 0 && trimmed.indexOf("### ") < 0)
+        return React.createElement("h2", { key: idx, style: { fontFamily: fSerif, fontSize: 20, fontWeight: 400, color: L.ink, letterSpacing: "-0.01em", margin: "22px 0 6px" } }, trimmed.slice(3));
+      if (trimmed.indexOf("### ") === 0)
+        return React.createElement("h3", { key: idx, style: { fontFamily: fSans, fontSize: 15, fontWeight: 600, color: L.ink, margin: "16px 0 4px" } }, trimmed.slice(4));
+      if (trimmed.indexOf("- ") === 0 || trimmed.indexOf("* ") === 0)
+        return React.createElement("div", { key: idx, style: { display: "flex", gap: 10, marginBottom: 4 } },
+          React.createElement("span", { style: { color: L.accent, flexShrink: 0, marginTop: 2 } }, "-"),
+          React.createElement("span", null, trimmed.slice(2)));
+      if (reNum.test(trimmed)) {
+        var num = (reNumGet.exec(trimmed) || [""])[0];
+        var rest = trimmed.slice(num.length + 2);
+        return React.createElement("div", { key: idx, style: { display: "flex", gap: 10, marginBottom: 4 } },
+          React.createElement("span", { style: { color: L.accent, flexShrink: 0, fontFamily: fMono, fontSize: 12, marginTop: 2 } }, num + "."),
+          React.createElement("span", null, rest));
+      }
+      if (trimmed.indexOf("---") === 0 || trimmed.indexOf("***") === 0)
+        return React.createElement("hr", { key: idx, style: { border: "none", borderTop: "1px solid " + L.border, margin: "16px 0" } });
+      return React.createElement("p", { key: idx, style: { margin: "0 0 8px" } }, trimmed);
+    });
+  }
+
   useEffect(function() {
     var params = new URLSearchParams(window.location.search);
     var id = params.get("proposal");
@@ -1670,21 +1698,7 @@ export function ProposalPortal(props) {
 
             {proposal.content ? (
               <div style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
-                {(function() {
-                  var reNum = new RegExp("^\\d+\\.\\s");
-                  var reNumGet = new RegExp("^\\d+");
-                  return proposal.content.split(newline).map(function(line, idx) {
-                    var trimmed = line.trim();
-                    if (!trimmed) return React.createElement("div", { key:idx, style:{ height:10 } });
-                    if (trimmed.indexOf("# ") === 0 && trimmed.indexOf("## ") < 0 && trimmed.indexOf("### ") < 0) return React.createElement("h1", { key:idx, style:{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:L.ink, letterSpacing:"-0.02em", margin:"28px 0 8px" } }, trimmed.slice(2));
-                    if (trimmed.indexOf("## ") === 0 && trimmed.indexOf("### ") < 0) return React.createElement("h2", { key:idx, style:{ fontFamily:fSerif, fontSize:20, fontWeight:400, color:L.ink, letterSpacing:"-0.01em", margin:"22px 0 6px" } }, trimmed.slice(3));
-                    if (trimmed.indexOf("### ") === 0) return React.createElement("h3", { key:idx, style:{ fontFamily:fSans, fontSize:15, fontWeight:600, color:L.ink, margin:"16px 0 4px" } }, trimmed.slice(4));
-                    if (trimmed.indexOf("- ") === 0 || trimmed.indexOf("* ") === 0) return React.createElement("div", { key:idx, style:{ display:"flex", gap:10, marginBottom:4 } }, React.createElement("span", { style:{ color:L.accent, flexShrink:0, marginTop:2 } }, "*"), React.createElement("span", null, trimmed.slice(2)));
-                    if (reNum.test(trimmed)) return React.createElement("div", { key:idx, style:{ display:"flex", gap:10, marginBottom:4 } }, React.createElement("span", { style:{ color:L.accent, flexShrink:0, fontFamily:fMono, fontSize:12, marginTop:2 } }, (reNumGet.exec(trimmed)||[""])[0]+"."), React.createElement("span", null, trimmed.replace(reNum, "")));
-                    if (trimmed.indexOf("---") === 0 || trimmed.indexOf("***") === 0) return React.createElement("hr", { key:idx, style:{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" } });
-                    return React.createElement("p", { key:idx, style:{ margin:"0 0 8px" } }, trimmed);
-                  });
-                })()}
+                {renderContent(proposal.content)}
               </div>
               </div>
               </div>

@@ -591,7 +591,7 @@ function DOverview(props) {
     });
     var keys = Object.keys(currencies);
     if (keys.length === 1 || keys.length === 0) return (keys[0] || "EUR") + " " + Math.round(n).toLocaleString();
-    // Mixed currencies — show EUR equivalent only
+    // Mixed currencies - show EUR equivalent only
     return "EUR " + Math.round(n).toLocaleString();
   }
 
