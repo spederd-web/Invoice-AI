@@ -949,9 +949,10 @@ export function ProposalForm(props) {
   }
 
   function renderProposal(text) {
+    var NL = "\n";
     return (
       <div style={{ fontFamily:fSans }}>
-        {text.split("\n").map(function(line, i) {
+        {text.split(NL).map(function(line, i) {
           if (line === "---") return <hr key={i} style={{ border:"none", borderTop:"1px solid "+L.border, margin:"16px 0" }} />;
           if (line.indexOf("## ") === 0) return <h3 key={i} style={{ fontFamily:fSerif, fontSize:17, fontWeight:700, color:L.ink, margin:"20px 0 8px" }}>{line.slice(3)}</h3>;
           if (line.indexOf("**") === 0 && line.lastIndexOf("**") === line.length-2 && line.length > 4) return <p key={i} style={{ fontFamily:fSans, fontWeight:600, color:L.ink, fontSize:14, margin:"8px 0 4px" }}>{line.slice(2,-2)}</p>;
