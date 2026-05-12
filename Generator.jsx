@@ -1700,8 +1700,6 @@ export function ProposalPortal(props) {
               <div style={{ fontFamily:fSans, fontSize:14, color:L.ink, lineHeight:1.8 }}>
                 {renderContent(proposal.content)}
               </div>
-              </div>
-              </div>
             ) : (
               <div style={{ fontFamily:fSans, fontSize:14, color:L.muted, fontStyle:"italic" }}>No content available for this proposal.</div>
             )}
