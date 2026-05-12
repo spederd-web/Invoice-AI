@@ -1609,6 +1609,7 @@ export function ProposalPortal(props) {
   var setPage = props.setPage;
   var [proposal, setProposal] = useState(null);
   var [loadError, setLoadError] = useState("");
+  var newline = "\n";
 
   useEffect(function() {
     var params = new URLSearchParams(window.location.search);
@@ -1670,7 +1671,7 @@ export function ProposalPortal(props) {
                 {(function() {
                   var reNum = new RegExp("^\\d+\\.\\s");
                   var reNumGet = new RegExp("^\\d+");
-                  return proposal.content.split("\n").map(function(line, idx) {
+                  return proposal.content.split(newline).map(function(line, idx) {
                     var trimmed = line.trim();
                     if (!trimmed) return React.createElement("div", { key:idx, style:{ height:10 } });
                     if (trimmed.indexOf("# ") === 0 && trimmed.indexOf("## ") < 0 && trimmed.indexOf("### ") < 0) return React.createElement("h1", { key:idx, style:{ fontFamily:fSerif, fontSize:26, fontWeight:400, color:L.ink, letterSpacing:"-0.02em", margin:"28px 0 8px" } }, trimmed.slice(2));
