@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { L, fSans, fMono, fSerif, t, EU_FEATURES, FEATURES, PLANS, REVIEWS, HOW_STEPS, Icon, LogoMark, Stars, Pill, Tag } from "./constants.jsx";
+var ARR = String.fromCharCode(8594);
 
 export function Landing(props) {
   var setPage = props.setPage;
@@ -222,7 +223,7 @@ export function HowItWorksSection(props) {
         </div>
         <div style={{ textAlign:"center", marginTop:44 }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.accent, color:L.navy, border:"none", padding:"13px 30px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
-            {lang==="de" ? "Jetzt ausprobieren ->" : lang==="fr" ? "Essayer maintenant ->" : lang==="es" ? "Probarlo ahora ->" : lang==="it" ? "Provalo adesso ->" : lang==="hu" ? "Probald ki most ->" : "Try it now ->"}
+            {lang==="de" ? "Jetzt ausprobieren" + ARR : lang==="fr" ? "Essayer maintenant" + ARR : lang==="es" ? "Probarlo ahora" + ARR : lang==="it" ? "Provalo adesso" + ARR : lang==="hu" ? "Probald ki most" + ARR : "Try it now" + ARR}
           </button>
         </div>
       </div>
@@ -321,7 +322,7 @@ export function FlowSection(props) {
 
         <div style={{ marginTop:60, textAlign:"center" }}>
           <button onClick={function(){ setPage("Generator"); }} style={{ background:L.navy, color:"#EEF2F7", border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, letterSpacing:"-0.01em" }}>
-            {lang==="de" ? "Jetzt ausprobieren ->" : lang==="fr" ? "Essayer maintenant ->" : "Try it now ->"}
+            {lang==="de" ? "Jetzt ausprobieren" + ARR : lang==="fr" ? "Essayer maintenant" + ARR : "Try it now" + ARR}
           </button>
         </div>
       </div>
@@ -372,7 +373,7 @@ export function WhyItWorksSection(props) {
         })}
         <div style={{ marginTop:52, paddingTop:40, borderTop:"1px solid rgba(255,255,255,0.07)" }}>
           <button onClick={function(){ openModal("why"); }} style={{ background:"#17A99E", color:L.navy, border:"none", padding:"13px 28px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:600, letterSpacing:"-0.01em" }}>
-            {lang==="de" ? "Fruehen Zugang erhalten ->" : lang==="fr" ? "Acces anticipe ->" : "Get early access ->"}
+            {lang==="de" ? "Fruehen Zugang erhalten" + ARR : lang==="fr" ? "Acces anticipe" + ARR : "Get early access" + ARR}
           </button>
         </div>
       </div>
@@ -464,7 +465,7 @@ export function EUComplianceSection(props) {
             </div>
           </div>
           <button onClick={function(){ if(setPage) setPage("EUCompliance"); }} style={{ background:"transparent", color:"rgba(240,244,248,0.8)", border:"1px solid rgba(255,255,255,0.15)", padding:"10px 20px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:13, fontWeight:400, whiteSpace:"nowrap" }}>
-            Full compliance guide ->
+            Full compliance guide &#8594;
           </button>
         </div>
       </div>

@@ -379,7 +379,7 @@ export function PageEUCompliance(props) {
           <div style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>The support bot knows EU compliance well. Or email us at hello@invoice-ai.de</div>
         </div>
         <button onClick={function(){ if(openModal) openModal("eu-compliance"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500, whiteSpace:"nowrap" }}>
-          Get early access ->
+          Get early access &#8594;
         </button>
       </div>
     </SubLayout>
@@ -477,7 +477,7 @@ export function PageFAQ(props) {
           <div style={{ fontFamily:fSans, fontSize:15, color:"rgba(255,255,255,0.7)", fontWeight:300 }}>Chat with us or email hello@invoice-ai.de</div>
         </div>
         <button onClick={function(){ openModal("faq"); }} style={{ background:"rgba(255,255,255,0.15)", color:"#fff", border:"1.5px solid rgba(255,255,255,0.3)", padding:"10px 22px", borderRadius:8, cursor:"pointer", fontFamily:fSans, fontSize:15, fontWeight:500 }}>
-          Get early access ->
+          Get early access &#8594;
         </button>
       </div>
     </SubLayout>

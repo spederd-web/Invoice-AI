@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { L, fSans, fMono, fSerif, t, EU, validateIBAN, validateBIC, validateEUVAT, validateGermanTax, fmtDate, useVIES, VIESBadge, Icon, Tag, FieldError, PROJ_TYPES, BUDGETS, TIMELINES, PROJ_TEMPLATES, COUNTRY_TONE, PORTAL_INVOICE } from "./constants.jsx";
+var ARR = String.fromCharCode(8594);
 
 export function InvoicePreviewPanel(props) {
   var s = props.state;
@@ -780,7 +781,7 @@ export function InvoiceForm(props) {
             var blocked = errs.length > 0;
             return (
               <button onClick={function(){ if(!blocked){ setView("preview"); window.scrollTo({ top:0, behavior:"smooth" }); } }} disabled={blocked} style={{ width:"100%", background:blocked ? L.border : L.ink, color:blocked ? L.muted : "#fff", border:"none", padding:"15px", borderRadius:10, cursor:blocked ? "not-allowed" : "pointer", fontFamily:fSerif, fontSize:16, fontWeight:400, boxShadow:blocked ? "none" : "0 2px 12px rgba(10,22,40,0.15)", letterSpacing:"-0.01em" }}>
-                {blocked ? "Complete form to preview" : "Preview invoice ->"}
+                {blocked ? "Complete form to preview" : "Preview invoice " + ARR}
               </button>
             );
           })()}
@@ -1010,7 +1011,7 @@ export function ProposalForm(props) {
               <div style={{ background:L.accentGlow, border:"1px solid "+L.accent+"33", borderRadius:7, padding:"8px 10px", marginBottom:10 }}>
                 <div style={{ fontFamily:fMono, fontSize:10, color:L.accent, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:4 }}>Template: {projType}</div>
                 <div style={{ fontFamily:fSans, fontSize:13, color:L.muted, lineHeight:1.5 }}>
-                  {PROJ_TEMPLATES[projType].sections.join(" -> ")}
+                  {PROJ_TEMPLATES[projType].sections.join(" " + ARR + " ")}
                 </div>
               </div>
             )}
@@ -1566,7 +1567,7 @@ export function ClientPortal(props) {
                     })}
                   </div>
                   <button onClick={function(){ setShowPay(true); }} style={{ background:L.accent, color:"#fff", border:"none", padding:"13px 32px", borderRadius:9, cursor:"pointer", fontFamily:fSans, fontSize:14, fontWeight:500, boxShadow:"0 4px 14px rgba(23,169,158,0.25)" }}>
-                    Pay €5,400 ->
+                    Pay €5,400 &#8594;
                   </button>
                 </div>
               )}
